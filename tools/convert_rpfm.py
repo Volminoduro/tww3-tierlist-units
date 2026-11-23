@@ -59,6 +59,14 @@ CANDIDATES = {
     "perm_faction":  ["faction"],
 }
 
+CULTURE_FR = {"wh_main_grn_greenskins": "Peaux-Vertes", "wh_dlc08_nor_norsca": "Norsca", "wh2_main_skv_skaven": "Skavens",
+    "wh_main_chs_chaos": "Guerriers du Chaos", "wh3_main_ogr_ogre_kingdoms": "Royaumes Ogres", "wh_main_emp_empire": "Empire",
+    "wh_dlc05_wef_wood_elves": "Elfes Sylvains", "wh2_main_def_dark_elves": "Elfes Noirs", "wh2_main_lzd_lizardmen": "Hommes-Lézards",
+    "wh_main_dwf_dwarfs": "Nains", "wh2_main_hef_high_elves": "Hauts Elfes", "wh_main_brt_bretonnia": "Bretonnie",
+    "wh_main_vmp_vampire_counts": "Comtes Vampires", "wh_dlc03_bst_beastmen": "Hommes-Bêtes", "wh3_main_cth_cathay": "Grand Cathay",
+    "wh2_dlc09_tmb_tomb_kings": "Rois des Tombes", "wh2_dlc11_cst_vampire_coast": "Côte Vampire", "wh3_main_kho_khorne": "Khorne",
+    "wh3_main_tze_tzeentch": "Tzeentch", "wh3_main_ksl_kislev": "Kislev", "wh3_main_nur_nurgle": "Nurgle", "wh3_main_sla_slaanesh": "Slaanesh",
+    "wh3_dlc23_chd_chaos_dwarfs": "Nains du Chaos", "wh3_main_dae_daemons": "Démons du Chaos", "wh3_dlc29_nag_undead_legions": "Légions des morts"}
 SPEED_UI = 12  # run_speed brut (ex. 3.0 pour l'infanterie) -> échelle d'affichage du site (~36)
 
 def norm_table(path):
@@ -78,7 +86,8 @@ def read_tsv(path):
     return list(csv.DictReader(lines, delimiter="\t", quoting=csv.QUOTE_NONE))
 
 NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missile_weapons", "projectiles",
-          "unit_armour_types", "armour_types", "units_custom_battle_permissions", "mounts", "factions"}
+          "unit_armour_types", "armour_types", "mounts", "factions", "units_custom_battle_permissions", "cultures_subcultures",
+          "custom_battle_factions", "units_to_groupings_military_permissions"}
 
 def load_tables(root, only_needed=False):
     tables = defaultdict(list)
@@ -135,11 +144,23 @@ def main():
         if t.startswith("text") or "loc" in t:
             for r in rows:
                 if r.get("key"): loc[r["key"]] = r.get("text", "")
-    # factions par unité (permissions de bataille personnalisée)
-    fac_of = defaultdict(set)
+    # Hiérarchie race (culture) -> faction -> groupe militaire -> unités recrutables
+    fac_rows = index(T.get("factions", []))
+    sub2cul = {r["subculture"]: r["culture"] for r in T.get("cultures_subcultures", [])}
+    groups_of = defaultdict(set)
+    for r in T.get("units_to_groupings_military_permissions", []): groups_of[r["unit"]].add(r["military_group"])
+    facinfo = {}
+    for r in T.get("custom_battle_factions", []):
+        fk = r.get("faction_key"); fr = fac_rows.get(fk, {})
+        cul = sub2cul.get(fr.get("subculture"))
+        if fr.get("military_group") and cul:
+            facinfo[fk] = {"culture": cul, "group": fr["military_group"], "sort": int(num(r.get("sort_order"))), "cs": int(num(r.get("culture_sort_order")))}
+    if not facinfo: sys.exit("Aucune faction trouvée (tables custom_battle_factions / factions / cultures_subcultures ?)")
+    used_groups = {i["group"] for i in facinfo.values()}
+    perm_of = defaultdict(set)  # permissions de bataille personnalisée (seigneurs, héros et unités par faction)
     for r in T.get("units_custom_battle_permissions", []):
-        u, f = col(r, "perm_unit"), col(r, "perm_faction")
-        if u and f: fac_of[u].add(f)
+        pu, pf = col(r, "perm_unit"), col(r, "perm_faction")
+        if pu and pf in facinfo: perm_of[pu].add(pf)
 
     units, warn = [], defaultdict(int)
     for mu in T["main_units"]:
@@ -148,7 +169,8 @@ def main():
         if not key or not lu: continue
         caste = (col(mu, "caste") or "").lower()
         if caste in ("lord", "hero") and a.no_heroes: continue
-        if key not in fac_of: warn["sans_faction"] += 1; continue
+        ugroups = sorted(groups_of.get(key, set()) & used_groups)
+        if not ugroups and key not in perm_of: warn["sans_faction"] += 1; continue
 
         men = num(col(mu, "men") or col(lu, "land_men"), 0)
         ent = ents.get(col(lu, "man_entity") or "", {})
@@ -178,7 +200,8 @@ def main():
             "mpCost": num(col(mu, "mp_cost")),
             "recruitTurns": num(col(mu, "recruit_turns"), 1),
             "tier": num(col(mu, "tier")),
-            "factions": sorted(fac_of[key]),
+            "groups": ugroups, "facs": sorted(perm_of.get(key, ())) if caste not in ("lord", "hero") else [],
+            "cultures": sorted({facinfo[f]["culture"] for f in perm_of.get(key, ())}) if caste in ("lord", "hero") else [],
         }
         if pj:
             u["ranged"] = {"dmg": num(col(pj, "w_dmg")), "ap": num(col(pj, "w_ap")),
@@ -199,11 +222,17 @@ def main():
             if not u[k]: warn[f"{k}=0"] += 1
         units.append(u)
 
-    flist = sorted({f for u in units for f in u["factions"]})
-    factions = {f: loc.get(f"factions_screen_name_{f}") or humanise(f) for f in flist}
-    flag_rows = index(T.get("factions", []))
-    flags = {f: (flag_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in flist}
-    out = {"demo": False, "factions": factions, "flags": flags, "units": units}
+    names = {f: loc.get(f"factions_screen_name_{f}") or humanise(f) for f in facinfo}
+    dup = defaultdict(list)
+    for f, n in names.items(): dup[n].append(f)
+    for n, fs_ in dup.items():
+        if len(fs_) > 1:
+            for f in fs_: names[f] = f"{n} ({f.split('_', 2)[-1]})"
+    cult_keys = sorted({i["culture"] for i in facinfo.values()}, key=lambda c: min(i["cs"] for i in facinfo.values() if i["culture"] == c))
+    cultures = {c: CULTURE_FR.get(c) or humanise(c) for c in cult_keys}
+    flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
+    out = {"demo": False, "cultures": cultures, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
+    factions = names
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, "units.json"), "w", encoding="utf-8") as f: json.dump(out, f, ensure_ascii=False, indent=1)
     with open(os.path.join(a.out, "units.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_DATA=" + json.dumps(out, ensure_ascii=False) + ";")

@@ -28,5 +28,5 @@ function crest(key, cls = "") {
   return `<span class="crest ${cls}">${svg}${img}</span>`;
 }
 function factionBanner(key, n) {
-  return `<div class="fb">${crest(key)}<div><div class="fbn">${D.factions[key] || key}</div><small>${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
+  return `<div class="fb">${crest(key)}<div><div class="fbn">${D.factions[key] || key}</div><small>${D.cultures[(D.facInfo[key] || {}).culture] || ""} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
 }
