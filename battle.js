@@ -23,7 +23,8 @@ const $$ = (s, r=document) => r.querySelector(s);
 const unitsOf = f => D.units.filter(u => inScope(u, f)).sort((a,b) => a.name.localeCompare(b.name));
 document.querySelectorAll("#nav button").forEach(b => b.onclick = () => {
   document.querySelectorAll("#nav button").forEach(x => x.classList.toggle("on", x === b));
-  document.querySelectorAll("[id^=tab-]").forEach(e => e.hidden = e.id !== "tab-" + b.dataset.tab); });
+  document.querySelectorAll("[id^=tab-]").forEach(e => e.hidden = e.id !== "tab-" + b.dataset.tab);
+  $("#detail").hidden = true; }); // la fiche d'unité appartient à l'onglet Tier list
 $("#bhow").innerHTML = "<b>Repris du jeu :</b> chance de toucher = 35 + attaque − défense (bornée 8–90 %) ; jet d'armure uniforme entre 0 et la valeur d'armure (plafond 100) qui réduit les dégâts de base, pas les perforants ; bonus contre grands/infanterie répartis entre base et perforants ; cadence d'attaque de l'arme ; munitions. <b>Approximé :</b> engagement (60 % des hommes au contact, 100 % pour monstres), élan de charge (6 s, + attaque et dégâts), précision des tirs (réglable), vitesse convertie en m/s (×0,2), cibles réparties au prorata des effectifs adverses (pas de ciblage ni de flanquement), <b>protection de l'arrière</b> (réglable ou « Auto » : tant que la ligne de front tient, la mêlée adverse n'atteint tireurs et artillerie qu'à (1 − protection) ; « Auto » = 80 % si au moins autant d'unités de ligne que d'unités de tir), <b>armée limitée à 20 unités</b>, moral = déroute quand les pertes dépassent 15 % + 0,6 × moral. Résultat déterministe (valeurs attendues) : il sert à comparer des compositions, pas à prédire une bataille précise. Les unités doivent venir de ton export de données.";
 document.querySelectorAll(".army").forEach(el => {
   const side = el.dataset.side, fs = $$(".fac", el), us = $$(".usel", el);

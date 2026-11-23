@@ -133,7 +133,14 @@ function render(){
   const f=v=>typeof v==="number"?(v>=100?Math.round(v):v.toFixed(2)):v;
   $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}">${c[0]}</th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map(c=>`<td>${f(c[1](x))}</td>`).join("")}</tr>`).join("")}</table>`;
  }
- window._us=us;
+ window._us=us; syncDetail(us);
+}
+/* La fiche d'unité suit la liste : elle se met à jour si l'unité reste affichée, et se ferme si un filtre la fait disparaître. */
+function syncDetail(us){
+ const dt=$("#detail"); if(dt.hidden||!dt.dataset.id) return;
+ const x=us.find(y=>y.u.id===dt.dataset.id);
+ if(!x){dt.hidden=true;return;}
+ const st=dt.scrollTop; detail(x); dt.scrollTop=st;
 }
 document.addEventListener("click",e=>{
  const th=e.target.closest("th[data-k]"); if(th){sortDir=sortKey===th.dataset.k?-sortDir:-1;sortKey=th.dataset.k;return render();}
@@ -141,7 +148,7 @@ document.addEventListener("click",e=>{
  if(e.target.id==="close")$("#detail").hidden=true;
 });
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
- $("#detail").hidden=false; $("#detail").innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3>${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small></div></div>
+ $("#detail").hidden=false; $("#detail").dataset.id=u.id; $("#detail").innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3>${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small></div></div>
  <dl><dt>Hommes × PV</dt><dd>${u.men} × ${u.hp}</dd><dt>Armure</dt><dd>${u.armour}</dd><dt>Attaque / Défense</dt><dd>${u.ma} / ${u.md}</dd><dt>Charge</dt><dd>${u.charge}</dd><dt>Moral</dt><dd>${u.ld}</dd><dt>Vitesse</dt><dd>${u.speed}</dd>
  <dt>Arme (dégâts / perf. / intervalle)</dt><dd>${m.dmg} / ${m.ap} / ${m.interval}s</dd><dt>Bonus vs grands / infanterie</dt><dd>${m.bvl} / ${m.bvi}</dd>
  ${r?`<dt>Distance (dég./perf.)</dt><dd>${r.dmg} / ${r.ap}</dd><dt>Portée / recharg.</dt><dd>${r.range} / ${r.reload}s</dd>`:""}
