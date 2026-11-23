@@ -28,5 +28,8 @@ function crest(key, cls = "", labelOverride = "") {
   return `<span class="crest ${cls}">${svg}${img}</span>`;
 }
 function factionBanner(key, n) {
-  return `<div class="fb">${crest(key)}<div><div class="fbn">${D.factions[key] || key}</div><small>${key === ALL ? "Toutes les races" : D.cultures[D.facInfo[key].culture]} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
+  const c = cultOf(key), race = isRace(key), icon = race ? crest(mainFacOf(c), "", D.cultures[c]) : crest(key);
+  const nm = race ? D.cultures[c] + " — toute la race" : D.factions[key] || key;
+  const sub = key === ALL ? "Toutes les races" : race ? `${factionsOfRace(c).length} factions` : D.cultures[c];
+  return `<div class="fb">${icon}<div><div class="fbn">${nm}</div><small>${sub} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
 }

@@ -40,3 +40,5 @@ Le workflow `.github/workflows/build-data.yml` régénère données et duels (d�
 - **20 unités maximum par armée** (limite du jeu), appliquée dans l'onglet Combat et dans les duels (paires dont le rapport de coût dépasse 20 ignorées).
 - **Protection de l'arrière** : réglage par armée (0–100 %, ou « Auto »). Tant qu'une unité de ligne est debout, la mêlée adverse n'atteint tireurs et artillerie qu'à (1 − protection). « Auto » = 80 % si au moins autant d'unités de ligne que d'unités de tir.
 - **Typologie « anti-X » par résultats** : unités de mêlée = taux de victoire en duel contre la catégorie ; **unités à distance = efficacité de DPS** contre un défenseur moyen de la catégorie (un duel contre de la mêlée ne les représente pas). Visible dans la fiche d'unité, dans les colonnes « Duels » de l'onglet Unités par faction et via « Tier par résultats de duels ».
+
+**Menu race/faction** : cliquer sur le nom d'une race choisit la **race entière** (unités de toutes ses factions) ; le chevron ▸ déplie la liste de ses factions. Entrée « Toutes les factions » en tête.

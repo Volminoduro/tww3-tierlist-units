@@ -20,7 +20,7 @@ const equalK = opts => TWW3Sim.equalK(ARMY, BON, opts);
 
 /* ---------- UI ---------- */
 const $$ = (s, r=document) => r.querySelector(s);
-const unitsOf = f => D.units.filter(u => f === ALL || u.factions.includes(f)).sort((a,b) => a.name.localeCompare(b.name));
+const unitsOf = f => D.units.filter(u => inScope(u, f)).sort((a,b) => a.name.localeCompare(b.name));
 document.querySelectorAll("#nav button").forEach(b => b.onclick = () => {
   document.querySelectorAll("#nav button").forEach(x => x.classList.toggle("on", x === b));
   document.querySelectorAll("[id^=tab-]").forEach(e => e.hidden = e.id !== "tab-" + b.dataset.tab); });

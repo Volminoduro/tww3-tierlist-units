@@ -93,8 +93,8 @@ function score(u){
  return {power, cost, value: power/Math.max(1,cost), ehp, mel, rng, rt, arche: archeScores(u), duels: (duelOf(u)||{}).wr ?? 0};
 }
 function compute(){
- const f=fsel.value, all=f===ALL, seen=new Set();
- let us=D.units.filter(u=>(all||u.factions.includes(f))&&($("#heroes").checked||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
+ const f=fsel.value, seen=new Set();
+ let us=D.units.filter(u=>inScope(u,f)&&($("#heroes").checked||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
  us=us.filter(x=>!seen.has(x.u.id)&&seen.add(x.u.id));
  const key=$("#metric").value, ar=$("#arch").value;
  us.forEach(x=>x.score= ar==="global" ? x[key] : key==="value" ? x.arche[ar]/Math.max(1,x.cost) : x.arche[ar]);
@@ -113,7 +113,7 @@ function render(){
  us=typoApply(us,x=>x.u,TYPO,$("#typo"));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
- const all=fsel.value===ALL, fn=u=>all?`<div class="f">${u.factions.length} factions</div>`:"";
+ const all=fsel.value===ALL||isRace(fsel.value), fn=u=>all?`<div class="f">${u.factions.length} factions</div>`:"";
  const cardInfo=x=>`${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
