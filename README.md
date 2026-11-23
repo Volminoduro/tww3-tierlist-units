@@ -8,6 +8,7 @@
 
 ## Onglets
 - **Tier list** : tiers S→F par efficacité ou puissance, par faction, avec une *typologie d'usage* au choix (anti-infanterie, anti-large, anti-armure, encaisser la ligne de front, tir, charge, mobilité) et une *matrice typologique* (percentiles par usage).
+- **Unités par faction** : toutes les stats de chaque unité, chacune avec son rang (« Top 8 % » / « Bottom 20 % ») comparé à la même catégorie, la faction ou tout le jeu.
 - **Combat d'armées** : simulation de deux armées avec entretien affiché et rendement par entretien.
 
 ## Données

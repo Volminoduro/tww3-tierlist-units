@@ -47,3 +47,13 @@ details summary{cursor:pointer;color:var(--m)}#bhow{font-size:13px;color:var(--m
 [hidden]{display:none!important}
 .res td:nth-child(2),.res th:nth-child(2),.res td:nth-child(5),.res th:nth-child(5){text-align:left}
 #matrix td:nth-child(2),#matrix th:nth-child(2),#matrix td:last-child,#matrix th:last-child{text-align:left}
+
+#tab-browse{padding:16px;display:grid;gap:12px}
+#bctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}#bctl select,#bctl input{width:auto;margin:0;padding:7px;background:var(--p2);color:var(--t);border:1px solid var(--b);border-radius:6px}
+#brole,#bgrp{display:flex;gap:6px;flex-wrap:wrap}#bgrp label{font-size:12px;color:var(--m);display:flex;gap:3px;align-items:center}
+.btab{overflow:auto;max-height:78vh;border:1px solid var(--b);border-radius:8px;background:var(--p)}
+.btab table{width:auto;min-width:100%}.btab th,.btab td{text-align:right;padding:4px 8px;vertical-align:top}
+.btab td:first-child,.btab th:first-child{position:sticky;left:0;background:var(--p);text-align:left;z-index:1;min-width:190px}
+.btab th:first-child{z-index:3}.btab tr:hover td{background:var(--p2)}.btab tr:hover td:first-child{background:var(--p2)}
+.btab td small{display:block;color:var(--m)}.pb{display:inline-block;margin-top:2px;padding:0 5px;border-radius:9px;font-size:10px;font-weight:700;color:#111;white-space:nowrap}
+.btab .na{color:var(--m)}#bnote{font-size:12px;color:var(--m)}

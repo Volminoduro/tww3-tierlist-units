@@ -83,7 +83,7 @@ const $$ = (s, r=document) => r.querySelector(s);
 const unitsOf = f => D.units.filter(u => u.factions.includes(f)).sort((a,b) => a.name.localeCompare(b.name));
 document.querySelectorAll("#nav button").forEach(b => b.onclick = () => {
   document.querySelectorAll("#nav button").forEach(x => x.classList.toggle("on", x === b));
-  $("#tab-tier").hidden = b.dataset.tab !== "tier"; $("#tab-battle").hidden = b.dataset.tab !== "battle"; });
+  document.querySelectorAll("[id^=tab-]").forEach(e => e.hidden = e.id !== "tab-" + b.dataset.tab); });
 $("#bhow").innerHTML = "<b>Repris du jeu :</b> chance de toucher = 35 + attaque − défense (bornée 8–90 %) ; jet d'armure uniforme entre 0 et la valeur d'armure (plafond 100) qui réduit les dégâts de base, pas les perforants ; bonus contre grands/infanterie répartis entre base et perforants ; cadence d'attaque de l'arme ; munitions. <b>Approximé :</b> engagement (60 % des hommes au contact, 100 % pour monstres), élan de charge (6 s, + attaque et dégâts), précision des tirs (réglable), vitesse convertie en m/s (×0,2), cibles réparties au prorata des effectifs adverses (pas de ciblage ni de flanquement), moral = déroute quand les pertes dépassent 15 % + 0,6 × moral. Résultat déterministe (valeurs attendues) : il sert à comparer des compositions, pas à prédire une bataille précise. Les unités doivent venir de ton export de données.";
 const facSel = Object.entries(D.factions).sort((a,b) => a[1].localeCompare(b[1]));
 document.querySelectorAll(".army").forEach(el => {

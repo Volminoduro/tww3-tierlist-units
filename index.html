@@ -2,7 +2,7 @@
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tier List TW:Warhammer 3</title><link rel="stylesheet" href="style.css"></head>
 <body>
-<header><h1>⚔ Total War: Warhammer III</h1><nav id="nav"><button data-tab="tier" class="on">Tier list</button><button data-tab="battle">Combat d'armées</button></nav>
+<header><h1>⚔ Total War: Warhammer III</h1><nav id="nav"><button data-tab="tier" class="on">Tier list</button><button data-tab="browse">Unités par faction</button><button data-tab="battle">Combat d'armées</button></nav>
 <div id="demo" hidden>⚠ Données de démonstration (valeurs approximatives, non officielles). Importe tes tables avec <code>tools/convert_rpfm.py</code>.</div></header>
 <main id="tab-tier">
 <aside>
@@ -25,6 +25,13 @@
  <div id="tiers"></div><div id="table" hidden></div><div id="matrix" hidden></div>
 </section>
 </main>
+<section id="tab-browse" hidden>
+ <div id="bctl"><select id="bfac"></select>
+  <select id="bpool"><option value="role_all">Comparé à : même catégorie, toutes factions</option><option value="role_fac">Comparé à : même catégorie, cette faction</option><option value="all">Comparé à : toutes les unités du jeu</option><option value="fac">Comparé à : toutes les unités de la faction</option></select>
+  <input id="bq" placeholder="Rechercher…"><div id="brole"></div><div id="bgrp"></div></div>
+ <div class="btab" id="btab"></div>
+ <p id="bnote"></p>
+</section>
 <section id="tab-battle" hidden>
  <div id="armies">
   <div class="army" data-side="A"><h2>Armée A</h2>
@@ -48,4 +55,4 @@
  <details open><summary>Ce que le simulateur reprend du jeu… et ce qu'il approxime</summary><p id="bhow"></p></details>
 </section>
 <div id="detail" hidden></div>
-<script src="data/units.js"></script><script src="app.js"></script><script src="battle.js"></script></body></html>
+<script src="data/units.js"></script><script src="app.js"></script><script src="battle.js"></script><script src="browse.js"></script></body></html>
