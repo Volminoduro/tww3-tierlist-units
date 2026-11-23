@@ -22,7 +22,8 @@
   Seuls les curseurs de bonus et le menu « Seigneur » de l'onglet Combat les modifient, et uniquement dans le simulateur.</p>
 
   <h2>Formules reprises de la fiche d'unité</h2>
-  <p>Certaines valeurs sont des cellules de table telles quelles (attaque, défense, moral, bonus de charge, coût, entretien) ; d'autres combinent plusieurs tables :</p>
+  <p>Ces formules sont celles que décrit la page de méthode de <a href="https://twdatabase.com" target="_blank" rel="noopener">TW Database</a> (voir « Crédits » plus bas) ; nous les avons réimplémentées nous-mêmes à partir des tables du jeu.
+  Certaines valeurs sont des cellules de table telles quelles (attaque, défense, moral, bonus de charge, coût, entretien) ; d'autres combinent plusieurs tables :</p>
   <div class="mgrid">
   ${card("Santé", "(PV du soldat + PV de la monture + bonus de PV) × modèles. Le simulateur utilise la valeur totale, répartie par modèle combattant.")}
   ${card("Santé de l'artillerie", "(équipage + pièces) × bonus + équipage × PV du soldat + pièces × PV de la pièce, avec équipage = hommes − pièces. La fiche compte les pièces.")}
@@ -47,6 +48,15 @@
     <li><b>Effets par défaut du seigneur</b> : seuls les effets de stats d'unités, non conditionnels, de l'effet de départ et des compétences innées.</li>
   </ul>
 
+  <h2>Crédits</h2>
+  <ul>
+    <li><b><a href="https://twdatabase.com" target="_blank" rel="noopener">TW Database</a></b> : la page de méthode de ce site nous a servi de modèle. Nous leur devons l'idée de présenter la provenance des chiffres, la valeur de référence (taille Ultra, rang 0, sans compétence, objet, technologie ni bonus),
+    la liste des formules de la fiche d'unité (santé des unités, de l'artillerie et des véhicules, vitesse, munitions en volées, dégâts de tir avec explosions, dégâts par 10 s) et le principe de ne jamais mélanger deux versions du jeu.
+    Cette méthode nous a aussi permis de repérer et corriger des erreurs dans notre import. Nous ne reprenons ni leurs pages, ni leurs données, ni leur code : tout est recalculé ici à partir des tables ci-dessous.</li>
+    <li><b><a href="${src}" target="_blank" rel="noopener">Shazbot/wh3-dump</a></b> : les tables du jeu en TSV, sans lesquelles ce site n'existerait pas. Elles sont exportées avec <b>RPFM</b>, l'outil de la communauté pour les fichiers du jeu.</li>
+    <li><b>Creative Assembly / SEGA / Games Workshop</b> : le jeu <i>Total War: Warhammer III</i> et son univers, dont ce projet de fan n'est pas affilié.</li>
+  </ul>
+
   <h2>Limites connues</h2>
   <ul>
     <li>Pas de sorts, capacités, compétences à choisir, technologies, bâtiments, objets ni effets de faction hors seigneur de départ.</li>
@@ -55,6 +65,6 @@
     <li>Ce site est généré par une IA : une erreur est possible, merci de recouper avec le jeu.</li>
   </ul>`;
   const f = $("#foot-meta");
-  if (f && m.patch) f.innerHTML = `Données : ${m.patch}${m.build ? " build " + m.build : ""}, dump <a href="${src}" target="_blank" rel="noopener">wh3-dump</a>${short ? " commit " + short : ""}. <a href="#" data-goto="method">Méthode</a>`;
+  if (f && m.patch) f.innerHTML = `Données : ${m.patch}${m.build ? " build " + m.build : ""}, dump <a href="${src}" target="_blank" rel="noopener">wh3-dump</a>${short ? " commit " + short : ""}. Méthode inspirée de <a href="https://twdatabase.com" target="_blank" rel="noopener">TW Database</a> — <a href="#" data-goto="method">détails et crédits</a>`;
   document.addEventListener("click", e => { const g = e.target.closest("[data-goto]"); if (g) { e.preventDefault(); document.querySelector(`#nav [data-tab=${g.dataset.goto}]`).click(); scrollTo(0, 0); } });
 })();
