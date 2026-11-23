@@ -102,7 +102,7 @@ document.querySelectorAll(".army").forEach(el => {
 });
 function draw(side) {
   const el = $$(`.army[data-side=${side}]`), a = ARMY[side];
-  $$(".list", el).innerHTML = a.map((e,i) => `<div class="it"><span>${e.u.name}<br><small>${ROLES[e.u.role]||e.u.role}</small></span>
+  $$(".list", el).innerHTML = a.map((e,i) => `<div class="it"><span class="nm">${portrait(e.u,"s")}<span>${e.u.name}<br><small>${ROLES[e.u.role]||e.u.role}</small></span></span>
     <input type="number" min="1" max="40" value="${e.count}" data-i="${i}"><span class="up" title="Entretien par unité">⚙ ${Math.round(upk(side,e))}<br><small>= ${fmt(upk(side,e)*e.count)}</small></span><button class="x" data-i="${i}">✕</button></div>`).join("") || "<small>Ajoute des unités ci-dessus.</small>";
   const nU = a.reduce((s,e) => s+e.count, 0), up = a.reduce((s,e) => s+upk(side,e)*e.count, 0), c = a.reduce((s,e) => s+e.u.cost*e.count, 0);
   $$(".tot", el).innerHTML = `<b>${nU}</b> unité(s)${nU>20?' <span style="color:#ff6a6a">⚠ plus de 20</span>':""} · entretien total <b class="up">⚙ ${fmt(up)}</b> · recrutement <b>${fmt(c)}</b>`;

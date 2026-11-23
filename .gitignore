@@ -1,0 +1,3 @@
+# Portraits extraits du jeu (visuels sous copyright) : ne pas publier sans autorisation
+img/units/*
+!img/units/.gitkeep

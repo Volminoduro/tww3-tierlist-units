@@ -19,3 +19,9 @@ git clone --depth 1 https://github.com/Shazbot/wh3-dump
 python tools/convert_rpfm.py wh3-dump
 ```
 Les unités sont celles de la bataille personnalisée (27 factions-cultures, DLC compris), hors seigneurs et héros. La vitesse est remise à l'échelle du site (×12) ; les données de jeu appartiennent à Creative Assembly / SEGA. `data/demo.json` est un petit jeu de démonstration fictif.
+
+## Illustrations des unités
+Par défaut, chaque unité affiche un **emblème de rôle** dessiné en SVG (infanterie, tireurs, cavalerie, monstres, chars, artillerie, bêtes). Pour afficher les **portraits du jeu** en local :
+1. Dans RPFM, extrais `ui/units/icons` depuis les packs du jeu.
+2. `python tools/copy_icons.py DOSSIER_EXTRAIT/ui/units/icons`
+Les portraits sont copiés dans `img/units/` (ignoré par git : ce sont des visuels sous copyright) et remplacent automatiquement les emblèmes.

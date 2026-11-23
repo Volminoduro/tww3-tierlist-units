@@ -75,7 +75,7 @@ function render(){
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
   $("#tiers").innerHTML=TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
-   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card" data-id="${x.u.id}"><b>${x.u.name}</b><small>${cardInfo(x)}</small>${fn(x.u)}</div>`).join("")}</div></div>`}).join("");
+   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b><small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
@@ -98,7 +98,7 @@ document.addEventListener("click",e=>{
  if(e.target.id==="close")$("#detail").hidden=true;
 });
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
- $("#detail").hidden=false; $("#detail").innerHTML=`<button class="x" id="close">✕</button><h3>${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small>
+ $("#detail").hidden=false; $("#detail").innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3>${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small></div></div>
  <dl><dt>Hommes × PV</dt><dd>${u.men} × ${u.hp}</dd><dt>Armure</dt><dd>${u.armour}</dd><dt>Attaque / Défense</dt><dd>${u.ma} / ${u.md}</dd><dt>Charge</dt><dd>${u.charge}</dd><dt>Moral</dt><dd>${u.ld}</dd><dt>Vitesse</dt><dd>${u.speed}</dd>
  <dt>Arme (dégâts / perf. / intervalle)</dt><dd>${m.dmg} / ${m.ap} / ${m.interval}s</dd><dt>Bonus vs grands / infanterie</dt><dd>${m.bvl} / ${m.bvi}</dd>
  ${r?`<dt>Distance (dég./perf.)</dt><dd>${r.dmg} / ${r.ap}</dd><dt>Portée / recharg.</dt><dd>${r.range} / ${r.reload}s</dd>`:""}

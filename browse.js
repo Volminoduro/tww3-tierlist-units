@@ -57,7 +57,7 @@
     rows.sort((a,b) => (val(a) - val(b)) * sortD || a.name.localeCompare(b.name));
     $b("#btab").innerHTML = `<table><tr><th>Unité (${rows.length})</th><th>Catégorie</th>${cols.map(s => `<th data-k="${s.k}" title="${s.g}">${s.l}${s.k===sortK?(sortD>0?" ▲":" ▼"):""}</th>`).join("")}</tr>` +
       rows.map(u => { const P = pools[keyOf(u)];
-        return `<tr><td>${u.name}</td><td style="text-align:left">${ROLES[u.role]||u.role}<small>vs ${P.n} unités</small></td>` + cols.map(s => {
+        return `<tr><td><div class="nm">${portrait(u,"s")}<span>${u.name}</span></div></td><td style="text-align:left">${ROLES[u.role]||u.role}<small>vs ${P.n} unités</small></td>` + cols.map(s => {
           if (!applies(s,u)) return `<td class="na">—</td>`;
           const p = pct(s, u, P.st[s.k]); const rank = P.st[s.k].length - upper(P.st[s.k], s.d * s.v(u)) + 1;
           return `<td>${f(s.v(u))}<br>${badge(p, `${s.l} : ${rank}ᵉ sur ${P.st[s.k].length}${s.d<0?" (moins = mieux)":""}`)}</td>`; }).join("") + "</tr>"; }).join("") + "</table>";
