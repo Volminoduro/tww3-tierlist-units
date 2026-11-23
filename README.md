@@ -18,7 +18,7 @@
 git clone --depth 1 https://github.com/Shazbot/wh3-dump
 python tools/convert_rpfm.py wh3-dump
 ```
-Les **359 factions** de bataille/campagne (DLC et seigneurs légendaires compris) sont regroupées par **race** (25 cultures) : on choisit d'abord la race, puis la faction. Les unités d'une faction sont celles de son groupe militaire (`units_to_groupings_military_permissions`) plus les permissions explicites de bataille personnalisée. Les seigneurs et héros sont rattachés à la race entière (approximation). La vitesse est remise à l'échelle du site (×12) ; les données de jeu appartiennent à Creative Assembly / SEGA. `data/demo.json` est un petit jeu de démonstration fictif.
+Les **359 factions** de bataille/campagne (DLC et seigneurs légendaires compris) sont regroupées par **race** (25 cultures) : un menu en arbre unique (races puis factions, par ordre alphabétique, avec icônes) permet de choisir. Les unités d'une faction sont celles de son groupe militaire (`units_to_groupings_military_permissions`) plus les permissions explicites de bataille personnalisée. Les seigneurs et héros sont rattachés à la race entière (approximation). La vitesse est remise à l'échelle du site (×12) ; les données de jeu appartiennent à Creative Assembly / SEGA. `data/demo.json` est un petit jeu de démonstration fictif.
 
 ## Illustrations des unités
 Par défaut, chaque unité affiche un **emblème de rôle** dessiné en SVG (infanterie, tireurs, cavalerie, monstres, chars, artillerie, bêtes). Pour afficher les **portraits du jeu** en local :

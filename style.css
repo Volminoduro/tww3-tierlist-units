@@ -114,3 +114,17 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 .crest img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .fban{margin-bottom:10px}.fb{display:flex;align-items:center;gap:14px;padding:8px 14px;background:linear-gradient(90deg,#2a2013,#14100c);border:1px solid var(--gold3);border-radius:3px;box-shadow:inset 0 0 0 1px #000,0 4px 14px #000a}
 .fbn{font:900 22px var(--serif);letter-spacing:.1em;text-transform:uppercase;color:var(--gold2)}.fb small{color:var(--m)}
+/* Sélecteur en arbre race > faction */
+.tp{position:relative;margin-bottom:6px}.army .tp,#bctl .tp{margin:0}
+.tp-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:5px 10px;letter-spacing:0;background:linear-gradient(#0b0907,#14100c)}
+.tp-t{min-width:0;display:block}.tp-t b{display:block;font:700 13px var(--serif);color:var(--gold2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tp-t small{color:var(--m);font-weight:400}.tp-c{margin-left:auto;color:var(--gold)}
+#bctl .tp{min-width:300px}
+.tp-pop{position:fixed;z-index:60;display:flex;flex-direction:column;background:linear-gradient(#1b1611,#120f0b);border:1px solid var(--gold);border-radius:3px;box-shadow:inset 0 0 0 1px #000,0 10px 30px #000d}
+.tp-pop[hidden]{display:none}
+.tp-q{margin:8px!important;width:calc(100% - 16px)!important}
+.tp-list{overflow:auto;padding-bottom:6px}
+.tp-race{display:flex;align-items:center;gap:8px;padding:6px 10px;margin-top:2px;background:#251b0f;border-top:1px solid var(--b);border-bottom:1px solid #000;cursor:pointer;font:700 12px var(--serif);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.tp-race span{flex:1}.tp-race small{color:var(--m);font-family:var(--sans);letter-spacing:0}.tp-race i{font-style:normal;color:var(--gold2)}.tp-race:hover{background:#33250f}
+.tp-it{display:flex;align-items:center;gap:8px;padding:3px 10px 3px 30px;cursor:pointer}.tp-it:hover{background:#ffffff10}.tp-it.sel{background:#c9a45a2e;box-shadow:inset 3px 0 var(--gold)}
+.tp-none{padding:12px;color:var(--m)}
+.crest.s{width:24px;height:28px}

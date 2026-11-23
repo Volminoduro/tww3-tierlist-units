@@ -18,7 +18,7 @@ $("#how").innerHTML = "Puissance = √(PV effectifs × dégâts/s) × bonus vite
 for (const [id,l,mn,mx,df,st,g] of W) { S[id]=df;
  $("#"+g).insertAdjacentHTML("beforeend",`<div class="sl"><span>${l}</span><b id="v_${id}">${df}</b><input type="range" id="${id}" min="${mn}" max="${mx}" step="${st}" value="${df}"></div>`);
  $("#"+id).oninput = e => { S[id]=+e.target.value; $("#v_"+id).textContent=e.target.value; render(); }; }
-const fsel=$("#faction"); initPicker($("#race"),fsel,"wh_main_emp_empire");
+const fsel=$("#faction"); initPicker(fsel,"wh_main_emp_empire");
 const roles = [...new Set(D.units.map(u=>u.role))];
 $("#roles").innerHTML = `<button data-r="">Toutes</button>` + roles.map(r=>`<button data-r="${r}">${ROLES[r]||r}</button>`).join("");
 $("#roles").onclick = e => { if(e.target.dataset.r!==undefined){ role=e.target.dataset.r||null; render(); } };

@@ -227,7 +227,10 @@ def main():
     for f, n in names.items(): dup[n].append(f)
     for n, fs_ in dup.items():
         if len(fs_) > 1:
-            for f in fs_: names[f] = f"{n} ({f.split('_', 2)[-1]})"
+            cs = [facinfo[f]["culture"] for f in fs_]  # homonymes : on précise la race, sinon la fin de la clé
+            for f in fs_:
+                suffix = CULTURE_FR.get(facinfo[f]["culture"], "") if len(set(cs)) == len(cs) else f.split("_", 2)[-1]
+                names[f] = f"{n} ({suffix})"
     cult_keys = sorted({i["culture"] for i in facinfo.values()}, key=lambda c: min(i["cs"] for i in facinfo.values() if i["culture"] == c))
     cultures = {c: CULTURE_FR.get(c) or humanise(c) for c in cult_keys}
     flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
