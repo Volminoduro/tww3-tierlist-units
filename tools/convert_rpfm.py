@@ -78,7 +78,7 @@ def read_tsv(path):
     return list(csv.DictReader(lines, delimiter="\t", quoting=csv.QUOTE_NONE))
 
 NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missile_weapons", "projectiles",
-          "unit_armour_types", "armour_types", "units_custom_battle_permissions", "mounts"}
+          "unit_armour_types", "armour_types", "units_custom_battle_permissions", "mounts", "factions"}
 
 def load_tables(root, only_needed=False):
     tables = defaultdict(list)
@@ -111,7 +111,7 @@ def humanise(k):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("src"); ap.add_argument("--inspect", action="store_true")
-    ap.add_argument("--include-heroes", action="store_true")
+    ap.add_argument("--no-heroes", action="store_true", help="exclut seigneurs et héros")
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "data"))
     a = ap.parse_args()
     T = load_tables(a.src, only_needed=not a.inspect)
@@ -147,7 +147,7 @@ def main():
         lu = land.get(col(mu, "land_unit") or "")
         if not key or not lu: continue
         caste = (col(mu, "caste") or "").lower()
-        if caste in ("lord", "hero") and not a.include_heroes: continue
+        if caste in ("lord", "hero") and a.no_heroes: continue
         if key not in fac_of: warn["sans_faction"] += 1; continue
 
         men = num(col(mu, "men") or col(lu, "land_men"), 0)
@@ -188,8 +188,9 @@ def main():
                            "ammo": num(col(lu, "ammo"))}
         ROLE = {"melee_infantry": "inf_melee", "missile_infantry": "inf_ranged", "monstrous_infantry": "monster",
                 "monster": "monster", "monstrous_cavalry": "monster", "melee_cavalry": "cav_melee",
-                "missile_cavalry": "cav_ranged", "warmachine": "artillery", "chariot": "chariot", "war_beast": "beast"}
+                "missile_cavalry": "cav_ranged", "lord": "lord", "hero": "hero", "warmachine": "artillery", "chariot": "chariot", "war_beast": "beast"}
         u["role"] = ROLE.get(caste)
+        if "(Custom VO)" in u["name"]: warn["doublons_custom_vo"] += 1; continue
         if not u["role"]:
             warn["caste_inconnue:" + caste] += 1; continue
         if not u["cost"] and not u["mpCost"]: warn["sans_cout"] += 1; continue
@@ -200,7 +201,9 @@ def main():
 
     flist = sorted({f for u in units for f in u["factions"]})
     factions = {f: loc.get(f"factions_screen_name_{f}") or humanise(f) for f in flist}
-    out = {"demo": False, "factions": factions, "units": units}
+    flag_rows = index(T.get("factions", []))
+    flags = {f: (flag_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in flist}
+    out = {"demo": False, "factions": factions, "flags": flags, "units": units}
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, "units.json"), "w", encoding="utf-8") as f: json.dump(out, f, ensure_ascii=False, indent=1)
     with open(os.path.join(a.out, "units.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_DATA=" + json.dumps(out, ensure_ascii=False) + ";")

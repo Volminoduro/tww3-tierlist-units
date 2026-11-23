@@ -25,3 +25,7 @@ Par défaut, chaque unité affiche un **emblème de rôle** dessiné en SVG (inf
 1. Dans RPFM, extrais `ui/units/icons` depuis les packs du jeu.
 2. `python tools/copy_icons.py DOSSIER_EXTRAIT/ui/units/icons`
 Les portraits sont copiés dans `img/units/` (ignoré par git : ce sont des visuels sous copyright) et remplacent automatiquement les emblèmes.
+
+## Seigneurs, héros et emblèmes de factions
+`convert_rpfm.py` inclut maintenant les **seigneurs et héros** (`--no-heroes` pour les exclure ; masqués par défaut dans le tier list, case « Inclure seigneurs & héros »). Leurs capacités et sorts ne sont pas modélisés.
+`tools/copy_icons.py DOSSIER_EXTRAIT` copie aussi les **drapeaux de factions** (`ui/flags/…`) vers `img/factions/`. Les chemins exacts des images dans les packs n'ont pas été vérifiés faute d'accès aux fichiers du jeu : si une image manque, ajuste le dossier passé au script.

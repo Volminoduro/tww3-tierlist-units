@@ -1,6 +1,6 @@
 "use strict";
 const D = window.TWW3_DATA, $ = s => document.querySelector(s);
-const ROLES = {inf_melee:"Infanterie CàC",inf_ranged:"Tireurs",cav_melee:"Cavalerie CàC",cav_ranged:"Cavalerie à distance",monster:"Monstres",chariot:"Chars",artillery:"Artillerie",beast:"Bêtes de guerre"};
+const ROLES = {inf_melee:"Infanterie CàC",inf_ranged:"Tireurs",cav_melee:"Cavalerie CàC",cav_ranged:"Cavalerie à distance",monster:"Monstres",chariot:"Chars",artillery:"Artillerie",beast:"Bêtes de guerre",lord:"Seigneurs",hero:"Héros"};
 const TIERS = [["S",.10],["A",.30],["B",.55],["C",.80],["D",.93],["F",1]];
 const W = [ // [id,label,min,max,default,step,group]
  ["wMelee","Poids mêlée",0,2,1,.1,"w1"],["wRanged","Poids distance",0,2,1,.1,"w1"],["wDef","Poids survie (PV+armure)",0,2,1,.1,"w1"],
@@ -22,7 +22,7 @@ const fsel=$("#faction"); Object.entries(factions).sort((a,b)=>a[1].localeCompar
 const roles = [...new Set(D.units.map(u=>u.role))];
 $("#roles").innerHTML = `<button data-r="">Toutes</button>` + roles.map(r=>`<button data-r="${r}">${ROLES[r]||r}</button>`).join("");
 $("#roles").onclick = e => { if(e.target.dataset.r!==undefined){ role=e.target.dataset.r||null; render(); } };
-["faction","allfac","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
+["faction","allfac","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
 $("#viewsel").onchange=()=>{view=$("#viewsel").value;render()};
 $("#reset").onclick=()=>{for(const w of W){S[w[0]]=w[4];$("#"+w[0]).value=w[4];$("#v_"+w[0]).textContent=w[4]}render()};
 
@@ -53,7 +53,7 @@ function score(u){
 }
 function compute(){
  const all=$("#allfac").checked, f=fsel.value, seen=new Set();
- let us=D.units.filter(u=>all||u.factions.includes(f)).map(u=>({u,...score(u)}));
+ let us=D.units.filter(u=>(all||u.factions.includes(f))&&($("#heroes").checked||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
  us=us.filter(x=>!seen.has(x.u.id)&&seen.add(x.u.id));
  const key=$("#metric").value, ar=$("#arch").value;
  us.forEach(x=>x.score= ar==="global" ? x[key] : key==="value" ? x.arche[ar]/Math.max(1,x.cost) : x.arche[ar]);
@@ -70,6 +70,7 @@ function render(){
  $("#roles").querySelectorAll("button").forEach(b=>b.classList.toggle("on",(b.dataset.r||null)===role));
  us=us.filter(x=>(!role||x.u.role===role)&&x.u.name.toLowerCase().includes(q));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
+ $("#fban").innerHTML=$("#allfac").checked?"":factionBanner(fsel.value,us.length);
  const all=$("#allfac").checked, fn=u=>all?`<div class="f">${u.factions.map(k=>factions[k]).join(", ")}</div>`:"";
  const cardInfo=x=>`${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){

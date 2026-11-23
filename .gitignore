@@ -1,3 +1,5 @@
-# Portraits extraits du jeu (visuels sous copyright) : ne pas publier sans autorisation
+# Illustrations extraites du jeu (visuels sous copyright) : ne pas publier sans autorisation
 img/units/*
+img/factions/*
 !img/units/.gitkeep
+!img/factions/.gitkeep
