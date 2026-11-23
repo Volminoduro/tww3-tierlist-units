@@ -4,3 +4,5 @@ img/factions/*
 !img/units/.gitkeep
 !img/factions/.gitkeep
 data/duels.json
+__pycache__/
+*.pyc
