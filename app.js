@@ -22,6 +22,30 @@ const fsel=$("#faction"); initPicker(fsel,"wh_main_emp_empire");
 const roles = [...new Set(D.units.map(u=>u.role))];
 $("#roles").innerHTML = `<button data-r="">Toutes</button>` + roles.map(r=>`<button data-r="${r}">${ROLES[r]||r}</button>`).join("");
 $("#roles").onclick = e => { if(e.target.dataset.r!==undefined){ role=e.target.dataset.r||null; render(); } };
+/* Filtre par typologie d'usage : une unité « peut faire » un usage selon des règles simples sur ses stats (voir ARCH_RULE). */
+const ARCH_RULE={inf:"Dégâts de base dominants (≥ 50 % des dégâts) ou bonus contre l'infanterie",armour:"Dégâts perforants dominants (≥ 50 % des dégâts)",large:"Bonus contre les grands, ou dégâts perforants dominants",tank:"Armure ≥ 50, défense ≥ 40 ou PV totaux ≥ 12 000",ranged:"Possède une arme à distance",charge:"Bonus de charge ≥ 25",speed:"Vitesse ≥ 48 (cavalerie, bêtes rapides, vol…)"};
+function canDo(u,k){
+ const m=u.melee,r=u.ranged,tot=m.dmg+m.ap+(r?r.dmg+r.ap:0),apS=(m.ap+(r?r.ap:0))/Math.max(1,tot);
+ switch(k){
+  case "inf": return tot>0&&(apS<=.5||m.bvi>0);
+  case "armour": return tot>0&&apS>=.5;
+  case "large": return m.bvl>0||(tot>0&&apS>=.5);
+  case "tank": return u.armour>=50||u.md>=40||u.men*u.hp>=12000;
+  case "ranged": return !!r&&r.dmg+r.ap>0;
+  case "charge": return u.charge>=25;
+  case "speed": return u.speed>=48;
+ } return false;
+}
+/* Applique les pastilles actives (ET) et redessine la rangée : une pastille est grisée si plus aucune unité de la sélection ne la permet. */
+function typoApply(items,get,state,el){
+ const ok=(x,skip)=>[...state].every(o=>o===skip||canDo(get(x),o));
+ for(let g=0;g<ARCHK.length;g++){let pr=false;for(const k of [...state])if(!items.some(x=>canDo(get(x),k)&&ok(x,k))){state.delete(k);pr=true;} if(!pr)break;}
+ el.innerHTML=`<span class="lbl">Usage</span>`+ARCHK.map(k=>{const n=items.filter(x=>canDo(get(x),k)&&ok(x,k)).length,on=state.has(k),dis=!n&&!on;
+  return `<button data-k="${k}" class="${on?"on":""}" ${dis?"disabled":""} title="${ARCH_RULE[k]}${dis?" — aucune unité de la sélection actuelle":""}">${ARCH[k]}<small>${n}</small></button>`;}).join("")+(state.size?`<button data-k="" class="clr">Effacer</button>`:"");
+ return items.filter(x=>ok(x,null));
+}
+const TYPO=new Set();
+$("#typo").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)return;const k=b.dataset.k;k===""?TYPO.clear():TYPO.has(k)?TYPO.delete(k):TYPO.add(k);render();};
 ["faction","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
 $("#viewsel").onchange=()=>{view=$("#viewsel").value;render()};
 $("#reset").onclick=()=>{for(const w of W){S[w[0]]=w[4];$("#"+w[0]).value=w[4];$("#v_"+w[0]).textContent=w[4]}render()};
@@ -69,6 +93,7 @@ function render(){
  let us=compute(); const q=$("#q").value.toLowerCase();
  $("#roles").querySelectorAll("button").forEach(b=>b.classList.toggle("on",(b.dataset.r||null)===role));
  us=us.filter(x=>(!role||x.u.role===role)&&x.u.name.toLowerCase().includes(q));
+ us=typoApply(us,x=>x.u,TYPO,$("#typo"));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
  const all=fsel.value===ALL, fn=u=>all?`<div class="f">${u.factions.length} factions</div>`:"";

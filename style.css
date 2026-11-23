@@ -130,3 +130,11 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 .crest.s{width:24px;height:28px}
 .tp-all{display:flex;align-items:center;gap:8px;padding:7px 10px;cursor:pointer;font:700 13px var(--serif);letter-spacing:.06em;color:var(--gold2);background:#2d210f}.tp-all:hover{background:#3a2a12}.tp-all.sel{box-shadow:inset 3px 0 var(--gold)}
 .tp-all{position:sticky;top:0;z-index:2;border-bottom:1px solid var(--gold3)}
+/* Filtre par typologie d'usage (pastilles grisées si aucune unité de la sélection ne le permet) */
+.typo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:12px}
+.typo .lbl{font:700 11px var(--serif);letter-spacing:.14em;text-transform:uppercase;color:var(--m);margin-right:4px}
+.typo button small{opacity:.7;margin-left:6px;font-size:11px}
+.typo button:disabled{opacity:.3;cursor:not-allowed;filter:grayscale(1);box-shadow:none}
+.typo button:disabled:hover{border-color:var(--gold3);color:var(--gold2)}
+.typo .clr{background:none;border-style:dashed}
+#tab-browse .typo{margin-bottom:0}

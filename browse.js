@@ -39,6 +39,8 @@
   $b("#bgrp").onchange = e => { e.target.checked ? shown.add(e.target.dataset.g) : shown.delete(e.target.dataset.g); render(); };
   ["bfac","bpool","bq"].forEach(i => $b("#"+i).addEventListener("input", render));
   $b("#brole").onclick = e => { if (e.target.dataset.r !== undefined) { role = e.target.dataset.r || null; render(); } };
+  const BTYPO = new Set();
+  $b("#btypo").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return; const k = b.dataset.k; k === "" ? BTYPO.clear() : BTYPO.has(k) ? BTYPO.delete(k) : BTYPO.add(k); render(); };
   $b("#btab").onclick = e => { const th = e.target.closest("th[data-k]"); if (th) { sortD = sortK === th.dataset.k ? -sortD : 1; sortK = th.dataset.k; render(); } };
   $b("#bnote").textContent = "Chaque stat est suivie de son rang parmi le groupe de comparaison choisi : « Top 8 % » = dans les 8 % meilleurs, « Bottom 20 % » = dans les 20 % moins bons. Pour le coût, l'entretien, l'intervalle d'attaque et le rechargement, « mieux » = plus bas. Les stats non applicables (ex. tir pour une unité de mêlée) sont ignorées. Survole un badge pour voir le détail. Clique un en-tête pour trier.";
 
@@ -48,7 +50,7 @@
     const roles = [...new Set(inFac.map(u => u.role))];
     $b("#bfban").innerHTML = factionBanner(fac, inFac.length);
     $b("#brole").innerHTML = `<button data-r="" class="${role?"":"on"}">Toutes</button>` + roles.map(r => `<button data-r="${r}" class="${role===r?"on":""}">${ROLES[r]||r}</button>`).join("");
-    const rows = inFac.filter(u => (!role || u.role === role) && u.name.toLowerCase().includes(q));
+    const rows = typoApply(inFac.filter(u => (!role || u.role === role) && u.name.toLowerCase().includes(q)), u => u, BTYPO, $b("#btypo"));
     const poolOf = u => mode === "all" ? D.units : mode === "fac" ? inFac : mode === "role_fac" ? inFac.filter(x => x.role === u.role) : D.units.filter(x => x.role === u.role);
     const keyOf = u => `${mode}|${mode.endsWith("fac") ? fac : ""}|${mode.startsWith("role") ? u.role : ""}`;
     const pools = {}; rows.forEach(u => { const k = keyOf(u); if (!pools[k]) { const p = uniq(poolOf(u)); pools[k] = {n: p.length, st: stats(p, k)}; } });
