@@ -10,6 +10,7 @@ candidats sont listés dans CANDIDATES. Si une stat sort vide/0, lance --inspect
 repère le vrai nom de colonne et ajoute-le à la liste correspondante.
 """
 import argparse, csv, json, os, re, sys
+csv.field_size_limit(10**9)
 from collections import defaultdict
 
 CANDIDATES = {
@@ -18,7 +19,7 @@ CANDIDATES = {
     "cost":          ["recruitment_cost"],
     "upkeep":        ["upkeep_cost"],
     "mp_cost":       ["multiplayer_cost", "mp_cost"],
-    "recruit_turns": ["recruitment_turns", "turns_to_recruit", "num_turns", "unit_recruitment_time", "recruit_time"],
+    "recruit_turns": ["create_time", "recruitment_turns", "turns_to_recruit", "num_turns", "unit_recruitment_time", "recruit_time"],
     "caste":         ["caste"],
     "group":         ["ui_unit_group_land", "unit_group", "category"],
     "tier":          ["tier"],
@@ -33,7 +34,7 @@ CANDIDATES = {
     "melee_weapon":  ["primary_melee_weapon"],
     "missile_weapon":["primary_missile_weapon"],
     "man_entity":    ["man_entity"],
-    "ammo":          ["ammo", "ammunition"],
+    "ammo":          ["primary_ammo", "ammo", "ammunition"],
     "land_men":      ["num_men", "unit_size", "num_models"],
     "mounts":        ["num_mounts"],
     "engines":       ["num_engines"],
@@ -49,12 +50,16 @@ CANDIDATES = {
     "w_bvl":         ["bonus_v_large"],
     "m_projectile":  ["projectile", "default_projectile"],
     "m_reload":      ["base_reload_time", "reload_time"],
-    "m_shots":       ["shots_per_volley", "projectile_number"],
+    "m_shots":       ["projectile_number", "shots_per_volley"],
+    "acc":           ["accuracy"],
+    "mount_entity":  ["entity"],
     "p_range":       ["effective_range", "range"],
     # permissions
     "perm_unit":     ["unit"],
     "perm_faction":  ["faction"],
 }
+
+SPEED_UI = 12  # run_speed brut (ex. 3.0 pour l'infanterie) -> échelle d'affichage du site (~36)
 
 def norm_table(path):
     parts = path.replace("\\", "/").lower().split("/")
@@ -70,14 +75,20 @@ def read_tsv(path):
     with open(path, encoding="utf-8-sig", newline="") as f:
         lines = [l for l in f.read().splitlines() if l and not l.startswith("#")]
     if not lines: return []
-    return list(csv.DictReader(lines, delimiter="\t"))
+    return list(csv.DictReader(lines, delimiter="\t", quoting=csv.QUOTE_NONE))
 
-def load_tables(root):
+NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missile_weapons", "projectiles",
+          "unit_armour_types", "armour_types", "units_custom_battle_permissions", "mounts"}
+
+def load_tables(root, only_needed=False):
     tables = defaultdict(list)
     for dp, _, fs in os.walk(root):
         for fn in fs:
             if fn.lower().endswith(".tsv"):
                 p = os.path.join(dp, fn)
+                if only_needed:
+                    name = norm_table(p) if "_tables" in p.lower() else fn.lower()
+                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__")): continue
                 tables[norm_table(p) if "_tables" in p.lower() else re.sub(r"\.tsv$","",fn.lower())].extend(read_tsv(p))
     return tables
 
@@ -103,7 +114,7 @@ def main():
     ap.add_argument("--include-heroes", action="store_true")
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "data"))
     a = ap.parse_args()
-    T = load_tables(a.src)
+    T = load_tables(a.src, only_needed=not a.inspect)
     if a.inspect:
         for t, rows in sorted(T.items()):
             print(f"{t}: {len(rows)} lignes | colonnes: {', '.join(rows[0].keys()) if rows else '-'}")
@@ -117,6 +128,7 @@ def main():
     missile = index(T.get("missile_weapons", []))
     proj = index(T.get("projectiles", []))
     arm = index(T.get("unit_armour_types", []) or T.get("armour_types", []))
+    mounts = index(T.get("mounts", []))
     # localisation
     loc = {}
     for t, rows in T.items():
@@ -140,7 +152,10 @@ def main():
 
         men = num(col(mu, "men") or col(lu, "land_men"), 0)
         ent = ents.get(col(lu, "man_entity") or "", {})
-        hp = num(col(ent, "entity_hp")) + num(col(lu, "hp_bonus"))
+        mnt = mounts.get(col(lu, "mount") or "", {})
+        ment = ents.get(col(mnt, "mount_entity") or "", {})
+        # PV d'un modèle = cavalier + monture ; vitesse = celle de la monture si présente
+        hp = num(col(ent, "entity_hp")) + num(col(ment, "entity_hp")) + num(col(lu, "hp_bonus"))
         a_raw = col(lu, "armour")
         armour = num(a_raw) if a_raw and re.fullmatch(r"[\d.,]+", a_raw) else num(col(arm.get(a_raw, {}), "armour") if a_raw in arm else None)
         mw = melee.get(col(lu, "melee_weapon") or "", {})
@@ -153,7 +168,8 @@ def main():
             "men": men, "hp": hp, "armour": armour,
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
             "charge": num(col(lu, "charge")), "ld": num(col(lu, "morale")),
-            "speed": num(col(ent, "speed")),
+            "speed": SPEED_UI * (num(col(ment, "speed")) if ment else num(col(ent, "speed"))),
+            "acc": num(col(lu, "acc")), "caste": caste,
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
                       "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl"))},
@@ -167,17 +183,17 @@ def main():
         if pj:
             u["ranged"] = {"dmg": num(col(pj, "w_dmg")), "ap": num(col(pj, "w_ap")),
                            "range": num(col(pj, "p_range")),
-                           "shots": num(col(ms, "m_shots"), 1) or 1,
-                           "reload": num(col(ms, "m_reload"), 8) or 8,
+                           "shots": num(col(pj, "m_shots"), 1) or 1,
+                           "reload": num(col(pj, "m_reload"), 8) or 8,
                            "ammo": num(col(lu, "ammo"))}
-        g = (u["group"] + " " + key).lower()
-        mounted = bool(col(lu, "mount")) or "cav" in g or num(col(lu, "mounts")) > 0
-        if num(col(lu, "engines")) > 0 or "artil" in g or "war_machine" in g or "cannon" in g: u["role"] = "artillery"
-        elif "monster" in g or "beast" in g or "mon" in caste: u["role"] = "monster"
-        elif "chariot" in g: u["role"] = "chariot"
-        elif mounted: u["role"] = "cav_ranged" if u["ranged"] and u["ranged"]["dmg"] + u["ranged"]["ap"] > u["melee"]["dmg"] + u["melee"]["ap"] else "cav_melee"
-        elif u["ranged"] and u["ranged"]["dmg"] + u["ranged"]["ap"] > 0: u["role"] = "inf_ranged"
-        else: u["role"] = "inf_melee"
+        ROLE = {"melee_infantry": "inf_melee", "missile_infantry": "inf_ranged", "monstrous_infantry": "monster",
+                "monster": "monster", "monstrous_cavalry": "monster", "melee_cavalry": "cav_melee",
+                "missile_cavalry": "cav_ranged", "warmachine": "artillery", "chariot": "chariot", "war_beast": "beast"}
+        u["role"] = ROLE.get(caste)
+        if not u["role"]:
+            warn["caste_inconnue:" + caste] += 1; continue
+        if not u["cost"] and not u["mpCost"]: warn["sans_cout"] += 1; continue
+        if not u["cost"]: u["cost"] = u["mpCost"]
         for k in ("hp", "men", "ma", "cost"):
             if not u[k]: warn[f"{k}=0"] += 1
         units.append(u)

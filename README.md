@@ -10,4 +10,11 @@
 - **Tier list** : tiers S→F par efficacité ou puissance, par faction, avec une *typologie d'usage* au choix (anti-infanterie, anti-large, anti-armure, encaisser la ligne de front, tir, charge, mobilité) et une *matrice typologique* (percentiles par usage).
 - **Combat d'armées** : simulation de deux armées avec entretien affiché et rendement par entretien.
 
-Les données incluses dans `data/` sont des valeurs de démonstration, non officielles.
+## Données
+`data/units.js` est généré par `tools/convert_rpfm.py` à partir du dump de tables public **Shazbot/wh3-dump** (`db/*_tables/data__.tsv` + `text/db`), qui reflète les données du jeu à la version du dump :
+
+```bash
+git clone --depth 1 https://github.com/Shazbot/wh3-dump
+python tools/convert_rpfm.py wh3-dump
+```
+Les unités sont celles de la bataille personnalisée (27 factions-cultures, DLC compris), hors seigneurs et héros. La vitesse est remise à l'échelle du site (×12) ; les données de jeu appartiennent à Creative Assembly / SEGA. `data/demo.json` est un petit jeu de démonstration fictif.
