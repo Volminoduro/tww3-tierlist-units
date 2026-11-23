@@ -18,13 +18,17 @@ const upk = (BON, side, e) => e.u.upkeep * (1 - BON[side].up/100);
 
 function simulate(ARMY, BON, opts) {
   const mk = side => ARMY[side].map(e => {
-    const u = e.u, b = BON[side], cnt = e.count * (opts.k?.[side] ?? 1);
-    const hp = u.hp * (1 + b.hp/100), pool = cnt * u.men * hp;
-    return {side, u, cnt, hp, pool, pool0: pool, arm: Math.min(100, u.armour*(1+b.arm/100)), dm: 1 + b.dmg/100,
-            ld: u.ld * (1 + b.mor/100), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) : 0, out: false, routed: false};
+    // e.mods (optionnel) : modificateurs propres à l'unité, issus des effets de seigneur/faction : ma, md, arm, ld, charge (points) ; ws, ms, spd, hp, ammo, range (%)
+    const u = e.u, b = BON[side], m = e.mods || {}, cnt = e.count * (opts.k?.[side] ?? 1);
+    const hp = u.hp * (1 + b.hp/100) * (1 + (m.hp||0)/100), pool = cnt * u.men * hp;
+    return {side, u, cnt, hp, pool, pool0: pool, arm: Math.min(100, u.armour*(1+b.arm/100) + (m.arm||0)), dm: 1 + b.dmg/100,
+            mdm: (1 + b.dmg/100) * (1 + (m.ws||0)/100), rdm: (1 + b.dmg/100) * (1 + (m.ms||0)/100),
+            ma: u.ma + (m.ma||0), md: u.md + (m.md||0), charge: u.charge + (m.charge||0), spd: u.speed * (1 + (m.spd||0)/100),
+            range: u.ranged ? u.ranged.range * (1 + (m.range||0)/100) : 0,
+            ld: u.ld * (1 + b.mor/100) + (m.ld||0), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false};
   });
   const S = {A: mk("A"), B: mk("B")};
-  const spd = s => { let w=0, t=0; S[s].forEach(x => { w += x.cnt*x.u.men; t += x.cnt*x.u.men*x.u.speed; }); return w ? t/w*SIM.SPEED_SCALE : 0; };
+  const spd = s => { let w=0, t=0; S[s].forEach(x => { w += x.cnt*x.u.men; t += x.cnt*x.u.men*x.spd; }); return w ? t/w*SIM.SPEED_SCALE : 0; };
   const vA = spd("A"), vB = opts.staticB ? 0 : spd("B"), closing = Math.max(0.5, vA + vB);
   const T0 = opts.dist / closing, upTot = s => S[s].reduce((a,x) => a + x.up, 0);
   const tot = {A: upTot("A"), B: upTot("B")}, timeline = [];
@@ -50,21 +54,21 @@ function simulate(ARMY, BON, opts) {
           const w = (d.pool/d.hp) / W; let dps = 0, dpsM = 0;
           if (t >= T0) { // mêlée
             const m = u.melee, eng = n * (u.men <= 6 ? 1 : SIM.ENGAGE);
-            const ma = u.ma + (charging ? u.charge : 0), hit = clamp(35 + ma - d.u.md, 8, 90) / 100;
+            const ma = a.ma + (charging ? a.charge : 0), hit = clamp(35 + ma - d.md, 8, 90) / 100;
             let dm = m.dmg, ap = m.ap, bonus = isLarge(d.u) ? m.bvl : isInf(d.u) ? m.bvi : 0;
             if (bonus && dm + ap > 0) { const s = dm + ap; dm += bonus*dm/s; ap += bonus*ap/s; }
-            const cm = charging ? 1 + u.charge/SIM.CHARGE_DMG : 1;
-            dpsM = eng * hit * ((dm*cm*a.dm) * (1 - d.arm/200) + ap*cm*a.dm) / Math.max(1, m.interval);
+            const cm = charging ? 1 + a.charge/SIM.CHARGE_DMG : 1;
+            dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval);
             dps += dpsM;
           }
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
-            const inRange = opts.dist - closing*t <= r.range, f = t >= T0 ? SIM.RANGED_IN_MELEE : 1;
-            if (inRange || t >= T0) dps += n * r.shots * ((r.dmg*a.dm)*(1 - d.arm/200) + r.ap*a.dm) * opts.acc * f / Math.max(1, r.reload);
+            const inRange = opts.dist - closing*t <= a.range, f = t >= T0 ? SIM.RANGED_IN_MELEE : 1;
+            if (inRange || t >= T0) dps += n * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / Math.max(1, r.reload);
           }
           if (dps) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (frontAlive ? (dps - dpsM) * w + dpsM * (wt(d) / Wm) : dps * w));
         }
-        if (u.ranged && a.ammo > 0 && (opts.dist - closing*t <= u.ranged.range || t >= T0)) a.ammo -= 1/Math.max(1, u.ranged.reload);
+        if (u.ranged && a.ammo > 0 && (opts.dist - closing*t <= a.range || t >= T0)) a.ammo -= 1/Math.max(1, u.ranged.reload);
       }
     }
     for (const s of ["A","B"]) for (const [d, v] of dmgIn[s]) d.pool = Math.max(0, d.pool - v);

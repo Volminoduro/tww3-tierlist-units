@@ -87,7 +87,11 @@ def read_tsv(path):
 
 NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missile_weapons", "projectiles",
           "unit_armour_types", "armour_types", "mounts", "factions", "units_custom_battle_permissions", "cultures_subcultures",
-          "custom_battle_factions", "units_to_groupings_military_permissions"}
+          "custom_battle_factions", "units_to_groupings_military_permissions",
+          # effets par défaut des seigneurs (tools/effects_extract.py)
+          "agent_subtypes", "faction_starting_general_effects", "effect_bundles_to_effects_junctions", "character_skill_nodes",
+          "character_skill_node_sets", "character_skill_node_set_items", "character_skill_level_to_effects_junctions",
+          "effect_bonus_value_ids_unit_sets", "unit_set_to_unit_junctions", "frontend_faction_leaders"}
 
 def load_tables(root, only_needed=False):
     tables = defaultdict(list)
@@ -97,7 +101,7 @@ def load_tables(root, only_needed=False):
                 p = os.path.join(dp, fn)
                 if only_needed:
                     name = norm_table(p) if "_tables" in p.lower() else fn.lower()
-                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__")): continue
+                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__") or name.startswith("effects__")): continue
                 tables[norm_table(p) if "_tables" in p.lower() else re.sub(r"\.tsv$","",fn.lower())].extend(read_tsv(p))
     return tables
 
@@ -192,7 +196,7 @@ def main():
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
             "charge": num(col(lu, "charge")), "ld": num(col(lu, "morale")),
             "speed": SPEED_UI * (num(col(ment, "speed")) if ment else num(col(ent, "speed"))),
-            "acc": num(col(lu, "acc")), "caste": caste,
+            "acc": num(col(lu, "acc")), "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
                       "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl"))},
@@ -237,7 +241,11 @@ def main():
     flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
     out = {"demo": False, "cultures": cultures, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
     factions = names
+    from effects_extract import build_effects  # effets par défaut des seigneurs et de leur trait
+    effects = build_effects(T, units, loc, facinfo)
     os.makedirs(a.out, exist_ok=True)
+    with open(os.path.join(a.out, "effects.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_EFFECTS=" + json.dumps(effects, ensure_ascii=False) + ";")
+    print(f"effets par défaut : {len(effects['lords'])} seigneurs, {sum(len(v) for v in effects['leaders'].values())} associations faction -> seigneur de départ")
     with open(os.path.join(a.out, "units.json"), "w", encoding="utf-8") as f: json.dump(out, f, ensure_ascii=False, indent=1)
     with open(os.path.join(a.out, "units.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_DATA=" + json.dumps(out, ensure_ascii=False) + ";")
     print(f"{len(units)} unités, {len(factions)} factions -> {os.path.abspath(a.out)}")
