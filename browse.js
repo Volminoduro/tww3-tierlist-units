@@ -15,6 +15,8 @@
     ["rdmg","Tir : dégâts","Tir",u=>R(u,"dmg"),1,hasR],["rap","Tir : perforants","Tir",u=>R(u,"ap"),1,hasR],["rng","Portée","Tir",u=>R(u,"range"),1,hasR],
     ["rel","Rechargement (s)","Tir",u=>R(u,"reload"),-1,hasR],["amm","Munitions","Tir",u=>R(u,"ammo"),1,u=>hasR(u)&&R(u,"ammo")>0],
     ["spd","Vitesse","Mobilité",u=>u.speed,1],
+    ["dwr","Victoires en duel, à entretien égal (%)","Duels",u=>{const d=duelOf(u,"upkeep");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
+    ["dwc","Victoires en duel, à recrutement égal (%)","Duels",u=>{const d=duelOf(u,"cost");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
   ].map(([k,l,g,v,d,ok,z]) => ({k,l,g,v,d,ok:typeof ok==="function"?ok:()=>true,z:!!z}));
   const GROUPS = [...new Set(ST.map(s => s.g))], shown = new Set(GROUPS), $b = s => document.querySelector(s);
   const applies = (s, u) => { const v = s.v(u); return s.ok(u) && Number.isFinite(v) && (s.z || v > 0); };

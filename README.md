@@ -35,3 +35,8 @@ Les portraits sont copiés dans `img/units/` (ignoré par git : ce sont des visu
 `node tools/build_duels.js` joue tous les duels deux à deux **à budget équivalent** (entretien, puis coût de recrutement ; budget 2000, ≥ 1 et ≤ 20 exemplaires par camp si possible) et écrit `data/duels.json`/`duels.js` (~4 Mo, ~2 min) : taux de victoire global et par catégorie, meilleurs adversaires et pires adversaires de chaque unité.
 **Seigneurs et héros inclus**, mais leurs sorts, capacités et objets ne sont pas modélisés : leurs résultats sont indicatifs (voir `notes` dans le fichier).
 Le workflow `.github/workflows/build-data.yml` régénère données et duels (déclenchement manuel).
+
+### Compositions d'armées
+- **20 unités maximum par armée** (limite du jeu), appliquée dans l'onglet Combat et dans les duels (paires dont le rapport de coût dépasse 20 ignorées).
+- **Protection de l'arrière** : réglage par armée (0–100 %, ou « Auto »). Tant qu'une unité de ligne est debout, la mêlée adverse n'atteint tireurs et artillerie qu'à (1 − protection). « Auto » = 80 % si au moins autant d'unités de ligne que d'unités de tir.
+- **Typologie « anti-X » par résultats** : unités de mêlée = taux de victoire en duel contre la catégorie ; **unités à distance = efficacité de DPS** contre un défenseur moyen de la catégorie (un duel contre de la mêlée ne les représente pas). Visible dans la fiche d'unité, dans les colonnes « Duels » de l'onglet Unités par faction et via « Tier par résultats de duels ».

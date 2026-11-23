@@ -3,3 +3,4 @@ img/units/*
 img/factions/*
 !img/units/.gitkeep
 !img/factions/.gitkeep
+data/duels.json

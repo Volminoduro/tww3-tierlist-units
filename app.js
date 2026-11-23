@@ -62,6 +62,23 @@ function archeScores(u){
   tank:u.men*hp/(1-arm0/200)*(1+u.md/150)*(1+.5*(u.ld-60)/100),
   ranged:r?vs(REF.inf,false).rg*(1+r.range/400):0, charge:vs(REF.inf,true).mel*6, speed:u.speed};
 }
+/* Résultats de duels précalculés (data/duels.js, générés par tools/build_duels.js avec le même sim.js) */
+const DU = window.TWW3_DUELS || null, UNIT_BY_ID = Object.fromEntries(D.units.map(u => [u.id, u]));
+const duelMode = () => $("#mode").value === "mp" ? "cost" : "upkeep";
+const duelOf = (u, mode) => DU && DU.modes[mode || duelMode()] ? DU.modes[mode || duelMode()][u.id] || null : null;
+function duelPanel(u){
+ if(!DU) return "";
+ const d=duelOf(u), rl=r=>ROLES[r]||r, nm=id=>(UNIT_BY_ID[id]||{name:id}).name;
+ if(!d) return `<h4>Résultats de duels</h4><small>Pas de duels précalculés pour cette unité (entretien ou coût nul).</small>`;
+ const ranged=d.basis==="dps", lbl=duelMode()==="cost"?"à coût de recrutement équivalent":"à entretien équivalent";
+ const rows=Object.keys(d.vs).filter(r=>ranged?d.dps[r]>0:d.vs[r]!=null).map(r=>`<dt style="padding-left:8px">${ranged?"DPS /100 vs ":"Victoires vs "}${rl(r)}</dt><dd>${ranged?d.dps[r]:Math.round(d.vs[r]*100)+" %"}</dd>`).join("");
+ const top=l=>l.slice(0,3).map(([id,m])=>`${nm(id)} (${m>0?"+":""}${Math.round(m*100)})`).join(", ");
+ return `<h4>Résultats de duels (${lbl})</h4><dl><dt>Taux de victoire global</dt><dd>${Math.round(d.wr*100)} %</dd>
+  <dt>Typologie « anti » (${ranged?"efficacité de DPS":"duels"})</dt><dd>${d.anti.length?d.anti.map(([r,p])=>`${rl(r)} (top ${Math.max(1,100-p)} %)`).join(", "):"aucune dominante"}</dd>${rows}</dl>
+  <small>Bat le mieux : ${top(d.best)}<br>Battue par : ${top(d.worst)}</small>
+  ${DU.caveat.includes(u.id)?`<p class="dn">Seigneur / héros : sorts, capacités et objets non modélisés, résultats indicatifs.</p>`:""}
+  ${ranged?`<p class="dn">Unité à distance : la typologie vient du DPS contre un défenseur moyen de chaque catégorie, pas de duels contre de la mêlée.</p>`:""}`;
+}
 function score(u){
  const mp=$("#mode").value==="mp", k=1;
  const hp=u.hp*(1+S.tHp/100), arm=Math.min(100,u.armour*(1+S.tArm/100)), dm=1+S.tDmg/100;
@@ -73,7 +90,7 @@ function score(u){
  const power=Math.sqrt(Math.max(1,off)*Math.pow(ehp,S.wDef))*(1+S.wMob*(u.speed-40)/100)*(1+S.wMor*(u.ld-60)/100);
  const rt=Math.max(0,u.recruitTurns-S.tRt);
  const cost=mp? u.mpCost : u.cost*(1-S.tCost/100)+u.upkeep*(1-S.tUp/100)*S.turns+rt*S.turnVal;
- return {power, cost, value: power/Math.max(1,cost), ehp, mel, rng, rt, arche: archeScores(u)};
+ return {power, cost, value: power/Math.max(1,cost), ehp, mel, rng, rt, arche: archeScores(u), duels: (duelOf(u)||{}).wr ?? 0};
 }
 function compute(){
  const f=fsel.value, all=f===ALL, seen=new Set();
@@ -129,5 +146,5 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  <dt>Arme (dégâts / perf. / intervalle)</dt><dd>${m.dmg} / ${m.ap} / ${m.interval}s</dd><dt>Bonus vs grands / infanterie</dt><dd>${m.bvl} / ${m.bvi}</dd>
  ${r?`<dt>Distance (dég./perf.)</dt><dd>${r.dmg} / ${r.ap}</dd><dt>Portée / recharg.</dt><dd>${r.range} / ${r.reload}s</dd>`:""}
  <dt>Coût / entretien</dt><dd>${u.cost} / ${u.upkeep}</dd><dt>Coût MP</dt><dd>${u.mpCost}</dd><dt>Recrutement</dt><dd>${u.recruitTurns} tour(s)</dd>
- <dt>Profil d'usage (percentile)</dt><dd></dd>${ARCHK.map(k=>`<dt style="padding-left:8px">${ARCH[k]}</dt><dd>${x.pct[k]}</dd>`).join("")}<dt>Puissance</dt><dd>${Math.round(x.power)}</dd><dt>Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl>`;}
+ <dt>Profil d'usage (percentile)</dt><dd></dd>${ARCHK.map(k=>`<dt style="padding-left:8px">${ARCH[k]}</dt><dd>${x.pct[k]}</dd>`).join("")}<dt>Puissance</dt><dd>${Math.round(x.power)}</dd><dt>Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl>${duelPanel(u)}`;}
 render();

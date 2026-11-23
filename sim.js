@@ -12,6 +12,7 @@
 const SIM = {SPEED_SCALE:0.2, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6};
 const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.role);
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
+const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front
 const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
 const upk = (BON, side, e) => e.u.upkeep * (1 - BON[side].up/100);
 
@@ -38,25 +39,30 @@ function simulate(ARMY, BON, opts) {
       const foe = me === "A" ? "B" : "A", tg = S[foe].filter(x => !x.out);
       const W = tg.reduce((a,x) => a + x.pool/x.hp, 0);
       if (!W) continue;
+      // Protection de l'arrière : tant qu'une unité de ligne du camp attaqué est debout, la mêlée adverse n'atteint les tireurs/artillerie qu'à (1 − protection)
+      const protF = (BON[foe].prot || 0) / 100, frontAlive = protF > 0 && tg.some(x => !isBack(x.u));
+      const wt = x => (frontAlive && isBack(x.u) ? 1 - protF : 1) * x.pool / x.hp;
+      const Wm = frontAlive ? tg.reduce((a, x) => a + wt(x), 0) : W;
       for (const a of S[me]) {
         if (a.out) continue;
         const n = a.pool / a.hp, u = a.u, charging = t >= T0 && t < T0 + SIM.CHARGE_T;
         for (const d of tg) {
-          const w = (d.pool/d.hp) / W; let dps = 0;
+          const w = (d.pool/d.hp) / W; let dps = 0, dpsM = 0;
           if (t >= T0) { // mêlée
             const m = u.melee, eng = n * (u.men <= 6 ? 1 : SIM.ENGAGE);
             const ma = u.ma + (charging ? u.charge : 0), hit = clamp(35 + ma - d.u.md, 8, 90) / 100;
             let dm = m.dmg, ap = m.ap, bonus = isLarge(d.u) ? m.bvl : isInf(d.u) ? m.bvi : 0;
             if (bonus && dm + ap > 0) { const s = dm + ap; dm += bonus*dm/s; ap += bonus*ap/s; }
             const cm = charging ? 1 + u.charge/SIM.CHARGE_DMG : 1;
-            dps += eng * hit * ((dm*cm*a.dm) * (1 - d.arm/200) + ap*cm*a.dm) / Math.max(1, m.interval);
+            dpsM = eng * hit * ((dm*cm*a.dm) * (1 - d.arm/200) + ap*cm*a.dm) / Math.max(1, m.interval);
+            dps += dpsM;
           }
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
             const inRange = opts.dist - closing*t <= r.range, f = t >= T0 ? SIM.RANGED_IN_MELEE : 1;
             if (inRange || t >= T0) dps += n * r.shots * ((r.dmg*a.dm)*(1 - d.arm/200) + r.ap*a.dm) * opts.acc * f / Math.max(1, r.reload);
           }
-          if (dps) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + dps * w);
+          if (dps) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (frontAlive ? (dps - dpsM) * w + dpsM * (wt(d) / Wm) : dps * w));
         }
         if (u.ranged && a.ammo > 0 && (opts.dist - closing*t <= u.ranged.range || t >= T0)) a.ammo -= 1/Math.max(1, u.ranged.reload);
       }
@@ -79,5 +85,5 @@ function equalK(ARMY, BON, opts) { // multiplicateur de l'armée A pour obtenir 
   for (let i = 0; i < 30; i++) { const mid = (lo+hi)/2; f(Math.exp(mid)) > 0 ? hi = mid : lo = mid; }
   return {k: Math.exp((lo+hi)/2)};
 }
-return {SIM, isLarge, isInf, clamp, simulate, equalK, upk};
+return {SIM, isLarge, isInf, isBack, clamp, simulate, equalK, upk};
 });
