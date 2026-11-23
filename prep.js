@@ -63,8 +63,8 @@ function initPicker(facEl, defaultKey) {
       const fs = !t || raceHit ? byCul[c] : byCul[c].filter(f => D.factions[f].toLowerCase().includes(t));
       if (!fs.length) return "";
       const isOpen = !!t || open.has(c);
-      return `<div class="tp-race${facEl.value === RACE + c ? " sel" : ""}" data-c="${c}" title="Cliquer : choisir toute la race — chevron : déplier">${crest(mainFacOf(c), "s", D.cultures[c])}<span>${D.cultures[c]}</span><small>${byCul[c].length}</small><i title="Déplier / replier">${isOpen ? "▾" : "▸"}</i></div>` +
-        (isOpen ? fs.map(f => `<div class="tp-it${f === facEl.value ? " sel" : ""}" data-f="${f}">${crest(f, "s")}<span>${D.factions[f]}</span></div>`).join("") : "");
+      return `<div class="tp-race${facEl.value === RACE + c ? " sel" : ""}" data-c="${c}" title="Cliquer pour déplier / replier">${crest(mainFacOf(c), "s", D.cultures[c])}<span>${D.cultures[c]}</span><small>${byCul[c].length}</small><button type="button" class="tp-pick" title="Choisir toute la race">Tout</button><i>${isOpen ? "▾" : "▸"}</i></div>` +
+        (isOpen ? `<div class="tp-it tp-whole${facEl.value === RACE + c ? " sel" : ""}" data-f="${RACE + c}"><span class="tp-wi">✦</span><span>Toute la race — ${D.cultures[c]} (${byCul[c].length} factions)</span></div>` + fs.map(f => `<div class="tp-it${f === facEl.value ? " sel" : ""}" data-f="${f}">${crest(f, "s")}<span>${D.factions[f]}</span></div>`).join("") : "");
     }).join("") || (allRow ? "" : '<div class="tp-none">Aucun résultat</div>');
   };
   const close = () => { pop.hidden = true; };
@@ -78,9 +78,11 @@ function initPicker(facEl, defaultKey) {
   btn.onclick = () => pop.hidden ? openPop() : close();
   q.oninput = render;
   list.onclick = e => {
-    const it = e.target.closest(".tp-it,.tp-all"), rc = e.target.closest(".tp-race");
-    if (it) choose(it.dataset.f);
-    else if (rc) { const c = rc.dataset.c; if (e.target.closest("i")) { open.has(c) ? open.delete(c) : open.add(c); render(); } else choose(RACE + c); }
+    // un clic sur une race la déplie ; « Tout » (ou la ligne « Toute la race ») la choisit en entier ; un clic sur une faction la choisit
+    const pk = e.target.closest(".tp-pick"), it = e.target.closest(".tp-it,.tp-all"), rc = e.target.closest(".tp-race");
+    if (pk) choose(RACE + pk.closest(".tp-race").dataset.c);
+    else if (it) choose(it.dataset.f);
+    else if (rc) { const c = rc.dataset.c; open.has(c) ? open.delete(c) : open.add(c); render(); }
   };
   document.addEventListener("click", e => { if (!e.composedPath().includes(root)) close(); });
   document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });

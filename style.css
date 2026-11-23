@@ -157,3 +157,6 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 .mcard b{display:block;font:700 13px var(--serif);letter-spacing:.06em;color:var(--gold2);margin-bottom:4px}.mcard p{margin:0;color:var(--m);font-size:14px}
 #foot-meta{font-size:12px}#foot-meta a{color:var(--gold2)}
 .mcard p b{display:inline;font:700 14px var(--sans);letter-spacing:0;color:var(--gold2);margin:0}
+/* Sélecteur : bouton « Tout » d'une race et ligne « Toute la race » */
+.tp-pick{padding:1px 9px;font:700 11px var(--sans);letter-spacing:.04em;margin-right:4px}
+.tp-whole{padding-left:14px;font-weight:700;color:var(--gold2);background:#ffffff08;border-bottom:1px solid #2d2418}.tp-whole .tp-wi{width:24px;text-align:center;color:var(--gold)}
