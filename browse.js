@@ -35,7 +35,7 @@
     `<span class="pb" style="background:hsl(${p*1.2},55%,62%)" title="${tip}">${p >= 50 ? "Top " + Math.max(1, Math.round(100-p)) : "Bottom " + Math.max(1, Math.round(p))} %</span>`;
   const f = v => v >= 1000 ? Math.round(v).toLocaleString("fr-FR") : (Math.round(v*10)/10).toString();
 
-  const fs = $b("#bfac"); initPicker(fs, "wh_main_emp_empire");
+  const fs = $b("#bfac"); initPicker(fs, ALL); // sélection de départ : toutes les factions
   let role = new Set(), sortK = "cost", sortD = 1; // catégories : sélection multiple (vide = toutes)
   $b("#bgrp").innerHTML = GROUPS.map(g => `<label><input type="checkbox" data-g="${g}" checked>${g}</label>`).join("");
   $b("#bgrp").onchange = e => { e.target.checked ? shown.add(e.target.dataset.g) : shown.delete(e.target.dataset.g); render(); };
