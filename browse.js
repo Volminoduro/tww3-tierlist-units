@@ -36,11 +36,11 @@
   const f = v => v >= 1000 ? Math.round(v).toLocaleString("fr-FR") : (Math.round(v*10)/10).toString();
 
   const fs = $b("#bfac"); initPicker(fs, "wh_main_emp_empire");
-  let role = null, sortK = "cost", sortD = 1;
+  let role = new Set(), sortK = "cost", sortD = 1; // catégories : sélection multiple (vide = toutes)
   $b("#bgrp").innerHTML = GROUPS.map(g => `<label><input type="checkbox" data-g="${g}" checked>${g}</label>`).join("");
   $b("#bgrp").onchange = e => { e.target.checked ? shown.add(e.target.dataset.g) : shown.delete(e.target.dataset.g); render(); };
   ["bfac","bpool","bq"].forEach(i => $b("#"+i).addEventListener("input", render));
-  $b("#brole").onclick = e => { if (e.target.dataset.r !== undefined) { role = e.target.dataset.r || null; render(); } };
+  $b("#brole").onclick = e => { const b = e.target.closest("button[data-r]"); if (!b) return; const r = b.dataset.r; if (!r) role.clear(); else role.has(r) ? role.delete(r) : role.add(r); render(); };
   const BTYPO = new Set();
   $b("#btypo").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return; const k = b.dataset.k; k === "" ? BTYPO.clear() : BTYPO.has(k) ? BTYPO.delete(k) : BTYPO.add(k); render(); };
   $b("#btab").onclick = e => { const th = e.target.closest("th[data-k]"); if (th) { sortD = sortK === th.dataset.k ? -sortD : 1; sortK = th.dataset.k; render(); } };
@@ -49,10 +49,12 @@
   function render() {
     const fac = fs.value, mode = $b("#bpool").value, q = $b("#bq").value.toLowerCase();
     const inFac = uniq(D.units.filter(u => inScope(u, fac)));
-    const roles = [...new Set(inFac.map(u => u.role))];
+    const byName = inFac.filter(u => u.name.toLowerCase().includes(q));
+    const cnt = r => byName.filter(u => (!r || u.role === r) && [...BTYPO].every(k => canDo(u, k))).length; // périmètre, recherche et usages actifs
     $b("#bfban").innerHTML = factionBanner(fac, inFac.length);
-    $b("#brole").innerHTML = `<button data-r="" class="${role?"":"on"}">Toutes</button>` + roles.map(r => `<button data-r="${r}" class="${role===r?"on":""}">${ROLES[r]||r}</button>`).join("");
-    const rows = typoApply(inFac.filter(u => (!role || u.role === role) && u.name.toLowerCase().includes(q)), u => u, BTYPO, $b("#btypo"));
+    [...role].forEach(r => { if (!cnt(r)) role.delete(r); }); // une catégorie devenue vide est retirée de la sélection
+    $b("#brole").innerHTML = roleChips(roles, role, cnt);
+    const rows = typoApply(byName.filter(u => !role.size || role.has(u.role)), u => u, BTYPO, $b("#btypo"));
     const poolOf = u => mode === "all" ? D.units : mode === "fac" ? inFac : mode === "role_fac" ? inFac.filter(x => x.role === u.role) : D.units.filter(x => x.role === u.role);
     const keyOf = u => `${mode}|${mode.endsWith("fac") ? fac : ""}|${mode.startsWith("role") ? u.role : ""}`;
     const pools = {}; rows.forEach(u => { const k = keyOf(u); if (!pools[k]) { const p = uniq(poolOf(u)); pools[k] = {n: p.length, st: stats(p, k)}; } });

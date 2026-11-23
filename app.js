@@ -11,7 +11,7 @@ const W = [ // [id,label,min,max,default,step,group]
 const ARCH = {global:"Typologie : globale (tout usage)",inf:"Anti-infanterie",large:"Anti-large (monstres, cavalerie)",armour:"Anti-armure",tank:"Encaisser la ligne de front",ranged:"Dégâts à distance",charge:"Charge / briseur de flanc",speed:"Mobilité"};
 const ARCHK = Object.keys(ARCH).filter(k=>k!=="global");
 Object.entries(ARCH).forEach(([k,l])=>$("#arch").add(new Option(l,k)));
-const S = {}; let view = "tiers", role = null, sortKey = "score", sortDir = -1;
+const S = {}; let view = "tiers", role = new Set(), sortKey = "score", sortDir = -1;
 const factions = D.factions;
 $("#demo").hidden = !D.demo;
 $("#how").innerHTML = "Puissance = √(PV effectifs × dégâts/s) × bonus vitesse × bonus moral. PV effectifs = hommes × PV ÷ (1 − armure/200). Dégâts : (dégâts + 0,7×perforants) × chance de toucher ÷ intervalle (mêlée, pondéré par la charge et le bonus vs grands) ; tireurs : projectiles × dégâts ÷ rechargement × portée. Coût effectif (campagne) = recrutement + entretien × durée + tours d'attente × valeur du tour. Les typologies comparent chaque unité à des cibles de référence (infanterie moyenne, grande cible, très blindé) ou à un attaquant moyen (encaisser). Tier = rang en percentile (S top 10 %, A 20 %, B 25 %, C 25 %, D 13 %, F 7 %). C'est un modèle simplifié et ajustable : il ne remplace pas le jugement.";
@@ -21,7 +21,8 @@ for (const [id,l,mn,mx,df,st,g] of W) { S[id]=df;
 const fsel=$("#faction"); initPicker(fsel,"wh_main_emp_empire");
 const roles = [...new Set(D.units.map(u=>u.role))];
 $("#roles").innerHTML = `<button data-r="">Toutes</button>` + roles.map(r=>`<button data-r="${r}">${ROLES[r]||r}</button>`).join("");
-$("#roles").onclick = e => { if(e.target.dataset.r!==undefined){ role=e.target.dataset.r||null; render(); } };
+/* Catégories : sélection multiple (aucune sélectionnée = « Toutes ») */
+$("#roles").onclick = e => { const b=e.target.closest("button[data-r]"); if(!b) return; const r=b.dataset.r; if(!r) role.clear(); else role.has(r)?role.delete(r):role.add(r); render(); };
 /* Filtre par typologie d'usage : une unité « peut faire » un usage selon des règles simples sur ses stats (voir ARCH_RULE). */
 const ARCH_RULE={inf:"Dégâts de base dominants (≥ 50 % des dégâts) ou bonus contre l'infanterie",armour:"Dégâts perforants dominants (≥ 50 % des dégâts)",large:"Bonus contre les grands, ou dégâts perforants dominants",tank:"Armure ≥ 50, défense ≥ 40 ou PV totaux ≥ 12 000",ranged:"Possède une arme à distance",charge:"Bonus de charge ≥ 25",speed:"Vitesse ≥ 48 (cavalerie, bêtes rapides, vol…)"};
 function canDo(u,k){
@@ -41,7 +42,7 @@ function typoApply(items,get,state,el){
  const ok=(x,skip)=>[...state].every(o=>o===skip||canDo(get(x),o));
  for(let g=0;g<ARCHK.length;g++){let pr=false;for(const k of [...state])if(!items.some(x=>canDo(get(x),k)&&ok(x,k))){state.delete(k);pr=true;} if(!pr)break;}
  el.innerHTML=`<span class="lbl">Usage</span>`+ARCHK.map(k=>{const n=items.filter(x=>canDo(get(x),k)&&ok(x,k)).length,on=state.has(k),dis=!n&&!on;
-  return `<button data-k="${k}" class="${on?"on":""}" ${dis?"disabled":""} title="${ARCH_RULE[k]}${dis?" — aucune unité de la sélection actuelle":""}">${ARCH[k]}<small>${n}</small></button>`;}).join("")+(state.size?`<button data-k="" class="clr">Effacer</button>`:"");
+  return `<button data-k="${k}" class="${on?"on":""}" ${dis?"disabled":""} title="${ARCH_RULE[k]}${dis?" — aucune unité de la sélection actuelle":""}">${ARCH[k]} <small>(${n})</small></button>`;}).join("")+(state.size?`<button data-k="" class="clr">Effacer</button>`:"");
  return items.filter(x=>ok(x,null));
 }
 const TYPO=new Set();
@@ -106,10 +107,18 @@ function compute(){
   g.forEach((x,i)=>{const p=(i+.5)/g.length; x.tier=TIERS.find(t=>1-p<=t[1])[0]; });}
  return us;
 }
+/* Pastilles de catégories : « Nom (nombre d'unités disponibles) », grisées s'il n'y en a aucune. cnt(r) = effectif pour la catégorie r (null = toutes). */
+function roleChips(list,sel,cnt){
+ return `<button data-r="" class="${sel.size?"":"on"}">Toutes (${cnt(null)})</button>`+list.map(r=>{const n=cnt(r),on=sel.has(r);
+  return `<button data-r="${r}" class="${on?"on":""}" ${!n&&!on?"disabled":""}>${ROLES[r]||r} (${n})</button>`;}).join("");
+}
 function render(){
  let us=compute(); const q=$("#q").value.toLowerCase();
- $("#roles").querySelectorAll("button").forEach(b=>b.classList.toggle("on",(b.dataset.r||null)===role));
- us=us.filter(x=>(!role||x.u.role===role)&&x.u.name.toLowerCase().includes(q));
+ const byName=us.filter(x=>x.u.name.toLowerCase().includes(q));
+ const cnt=r=>byName.filter(x=>(!r||x.u.role===r)&&[...TYPO].every(k=>canDo(x.u,k))).length; // périmètre, héros, recherche et usages actifs
+ [...role].forEach(r=>{if(!cnt(r))role.delete(r);}); // une catégorie devenue vide est retirée de la sélection
+ $("#roles").innerHTML=roleChips(roles,role,cnt);
+ us=byName.filter(x=>!role.size||role.has(x.u.role));
  us=typoApply(us,x=>x.u,TYPO,$("#typo"));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
