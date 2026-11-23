@@ -53,7 +53,7 @@ function dpsVs(u, d) { // dégâts/s d'un exemplaire de l'unité contre le défe
     if (bonus && dm + ap > 0) { const s = dm + ap; dm += bonus * dm / s; ap += bonus * ap / s; }
     mel = u.men * (u.men <= 6 ? 1 : Sim.SIM.ENGAGE) * hit * (dm * (1 - arm / 200) + ap) / Math.max(1, m.interval);
   }
-  if (r && r.dmg + r.ap > 0) rng = u.men * r.shots * (r.dmg * (1 - arm / 200) + r.ap) * OPTS.acc / Math.max(1, r.reload);
+  if (r && r.dmg + r.ap > 0) rng = u.men * (r.share ?? 1) * r.shots * (r.dmg * (1 - arm / 200) + r.ap) * OPTS.acc / Math.max(1, r.reload);
   return {mel, rng};
 }
 const isRanged = u => { if (["inf_ranged", "cav_ranged", "artillery"].includes(u.role)) return true; const d = dpsVs(u, {role: "inf_melee", armour: 40, md: 30}); return d.rng > 0 && d.rng >= d.mel; };

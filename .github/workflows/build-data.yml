@@ -3,7 +3,12 @@ name: Régénérer les données et les duels
 # Déclenchement manuel (onglet Actions > « Régénérer les données et les duels » > Run workflow).
 # Pour une mise à jour automatique, ajouter par exemple :  schedule: [{cron: "0 6 * * 1"}]
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      dump_commit:
+        description: "Commit du dump wh3-dump à utiliser (vide = dernier commit). Le fixer garantit qu'une version du site ne mélange jamais deux versions du jeu."
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -20,9 +25,18 @@ jobs:
           node-version: 22
 
       - name: Récupérer le dump des tables du jeu (Shazbot/wh3-dump)
-        run: git clone --depth 1 https://github.com/Shazbot/wh3-dump "$RUNNER_TEMP/wh3-dump"
+        run: |
+          if [ -n "$DUMP_COMMIT" ]; then
+            git init "$RUNNER_TEMP/wh3-dump"
+            git -C "$RUNNER_TEMP/wh3-dump" fetch --depth 1 https://github.com/Shazbot/wh3-dump "$DUMP_COMMIT"
+            git -C "$RUNNER_TEMP/wh3-dump" checkout FETCH_HEAD
+          else
+            git clone --depth 1 https://github.com/Shazbot/wh3-dump "$RUNNER_TEMP/wh3-dump"
+          fi
+          git -C "$RUNNER_TEMP/wh3-dump" log -1 --format='Dump utilisé : %H %cI %s'
         env:
           GIT_LFS_SKIP_SMUDGE: "1"
+          DUMP_COMMIT: ${{ github.event.inputs.dump_commit }}
 
       - name: Convertir les tables en data/units.js
         run: python3 tools/convert_rpfm.py "$RUNNER_TEMP/wh3-dump"

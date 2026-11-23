@@ -9,7 +9,7 @@ Le script a été écrit SANS accès aux fichiers du jeu : les noms de colonnes
 candidats sont listés dans CANDIDATES. Si une stat sort vide/0, lance --inspect,
 repère le vrai nom de colonne et ajoute-le à la liste correspondante.
 """
-import argparse, csv, json, os, re, sys
+import argparse, csv, json, os, re, subprocess, sys
 csv.field_size_limit(10**9)
 from collections import defaultdict
 
@@ -67,7 +67,7 @@ CULTURE_FR = {"wh_main_grn_greenskins": "Peaux-Vertes", "wh_dlc08_nor_norsca": "
     "wh2_dlc09_tmb_tomb_kings": "Rois des Tombes", "wh2_dlc11_cst_vampire_coast": "Côte Vampire", "wh3_main_kho_khorne": "Khorne",
     "wh3_main_tze_tzeentch": "Tzeentch", "wh3_main_ksl_kislev": "Kislev", "wh3_main_nur_nurgle": "Nurgle", "wh3_main_sla_slaanesh": "Slaanesh",
     "wh3_dlc23_chd_chaos_dwarfs": "Nains du Chaos", "wh3_main_dae_daemons": "Démons du Chaos", "wh3_dlc29_nag_undead_legions": "Légions des morts"}
-SPEED_UI = 12  # run_speed brut (ex. 3.0 pour l'infanterie) -> échelle d'affichage du site (~36)
+SPEED_UI = 10  # vitesse de la carte d'unité du jeu = vitesse de course brute × 10 (ex. 3.0 -> 30)
 
 def norm_table(path):
     parts = path.replace("\\", "/").lower().split("/")
@@ -91,7 +91,9 @@ NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missi
           # effets par défaut des seigneurs (tools/effects_extract.py)
           "agent_subtypes", "faction_starting_general_effects", "effect_bundles_to_effects_junctions", "character_skill_nodes",
           "character_skill_node_sets", "character_skill_node_set_items", "character_skill_level_to_effects_junctions",
-          "effect_bonus_value_ids_unit_sets", "unit_set_to_unit_junctions", "frontend_faction_leaders"}
+          "effect_bonus_value_ids_unit_sets", "unit_set_to_unit_junctions", "frontend_faction_leaders",
+          # véhicules / artillerie (machines) et dégâts d'explosion des projectiles
+          "battlefield_engines", "projectiles_explosions"}
 
 def load_tables(root, only_needed=False):
     tables = defaultdict(list)
@@ -116,6 +118,20 @@ def num(v, d=0.0):
 
 def index(rows, keycol="key"):
     return {r.get(keycol): r for r in rows if r.get(keycol)}
+
+def provenance(src, units):
+    """Provenance des données : dépôt source, commit (si le dossier est un dépôt git), version du jeu (text/build_info)."""
+    meta = {"source": "Shazbot/wh3-dump", "sourceUrl": "https://github.com/Shazbot/wh3-dump", "units": len(units)}
+    def git(*args):
+        try: return subprocess.run(["git", "-C", src, *args], capture_output=True, text=True, timeout=20).stdout.strip()
+        except Exception: return ""
+    c = git("log", "-1", "--format=%H|%cI|%s")
+    if c.count("|") >= 2: h, d, subj = c.split("|", 2); meta.update({"commit": h, "commitDate": d, "commitSubject": subj})
+    try:
+        lines = open(os.path.join(src, "text", "build_info"), encoding="utf-8").read().splitlines()
+        meta.update({"patch": lines[2] if len(lines) > 2 else "", "build": lines[4] if len(lines) > 4 else "", "buildDate": lines[6] if len(lines) > 6 else ""})
+    except OSError: pass
+    return meta
 
 def humanise(k):
     k = re.sub(r"^wh\d?_(main|dlc\d+|pro\d+)_[a-z]{3}_", "", k)
@@ -142,6 +158,8 @@ def main():
     proj = index(T.get("projectiles", []))
     arm = index(T.get("unit_armour_types", []) or T.get("armour_types", []))
     mounts = index(T.get("mounts", []))
+    engines_t = index(T.get("battlefield_engines", []), "key")
+    explo = index(T.get("projectiles_explosions", []), "key")
     # localisation
     loc = {}
     for t, rows in T.items():
@@ -180,12 +198,28 @@ def main():
         ent = ents.get(col(lu, "man_entity") or "", {})
         mnt = mounts.get(col(lu, "mount") or "", {})
         ment = ents.get(col(mnt, "mount_entity") or "", {})
-        # PV d'un modèle = cavalier + monture ; vitesse = celle de la monture si présente
-        hp = num(col(ent, "entity_hp")) + num(col(ment, "entity_hp")) + num(col(lu, "hp_bonus"))
+        eng = engines_t.get(lu.get("engine") or "")            # machine : canon, char, véhicule
+        eent = ents.get(eng.get("battle_entity", ""), {}) if eng else {}
+        n_eng = num(lu.get("num_engines")) if eng else 0
+        soldier_hp, bonus_hp = num(col(ent, "entity_hp")), num(col(lu, "hp_bonus"))
+        mount_hp, n_mount = num(col(ment, "entity_hp")), num(col(lu, "mounts"))
+        # PV totaux selon les formules de la fiche d'unité (cf. page « Méthode ») puis ramenés à un PV par modèle combattant
+        if eng and n_eng > 0 and eng.get("missile_weapon"):    # artillerie : (équipage + pièces) × bonus + équipage × PV soldat + pièces × PV pièce
+            guns, crew = n_eng, max(0.0, men - n_eng)
+            total_hp = (crew + guns) * bonus_hp + crew * soldier_hp + guns * num(col(eent, "entity_hp"))
+        elif eng and n_eng > 0:                                 # char / véhicule : (équipage + machines tractées) × PV soldat + machines × (PV machine + bonus) + bêtes de trait
+            drawn = n_eng if n_mount > 0 else 0
+            total_hp = (men + drawn) * soldier_hp + n_eng * (num(col(eent, "entity_hp")) + bonus_hp) + n_mount * mount_hp
+        else:                                                   # cas général : (PV soldat + PV monture + bonus) × modèles
+            total_hp = men * (soldier_hp + mount_hp + bonus_hp)
+        hp = total_hp / men if men else 0
+        # vitesse de la carte = vitesse de course (ou de vol si plus élevée) de la monture, de la machine ou du soldat, × 10
+        sp_ent = ment if ment else (eent if eng else ent)
+        speed_card = SPEED_UI * max(num(col(sp_ent, "speed")), num(sp_ent.get("fly_speed")))
         a_raw = col(lu, "armour")
         armour = num(a_raw) if a_raw and re.fullmatch(r"[\d.,]+", a_raw) else num(col(arm.get(a_raw, {}), "armour") if a_raw in arm else None)
         mw = melee.get(col(lu, "melee_weapon") or "", {})
-        ms = missile.get(col(lu, "missile_weapon") or "", {})
+        ms = missile.get((eng.get("missile_weapon") if eng and eng.get("missile_weapon") else col(lu, "missile_weapon")) or "", {})
         pj = proj.get(col(ms, "m_projectile") or "", {})
         u = {
             "id": key,
@@ -195,7 +229,7 @@ def main():
             "men": men, "hp": hp, "armour": armour,
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
             "charge": num(col(lu, "charge")), "ld": num(col(lu, "morale")),
-            "speed": SPEED_UI * (num(col(ment, "speed")) if ment else num(col(ent, "speed"))),
+            "speed": speed_card,
             "acc": num(col(lu, "acc")), "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
@@ -209,11 +243,17 @@ def main():
             "cultures": sorted({facinfo[f]["culture"] for f in perm_of.get(key, ())}) if caste in ("lord", "hero") else [],
         }
         if pj:
-            u["ranged"] = {"dmg": num(col(pj, "w_dmg")), "ap": num(col(pj, "w_ap")),
-                           "range": num(col(pj, "p_range")),
-                           "shots": num(col(pj, "m_shots"), 1) or 1,
-                           "reload": num(col(pj, "m_reload"), 8) or 8,
-                           "ammo": num(col(lu, "ammo"))}
+            # dégâts par projectile = base + dégâts d'explosion ; projectiles par volée = nombre × tirs × rafale ; munitions de la carte = volées = munitions ÷ tirs par volée
+            ex = explo.get(pj.get("explosion_type", ""), {})
+            spv = max(1.0, num(pj.get("shots_per_volley"), 1))
+            volley = max(1.0, num(pj.get("projectile_number"), 1)) * spv * max(1.0, num(pj.get("burst_size"), 1))
+            reload_ = num(col(pj, "m_reload"))
+            if reload_ > 0:  # sans temps de rechargement dans la table, la fiche n'indique ni rechargement ni DPS : on n'invente rien
+                u["ranged"] = {"dmg": num(col(pj, "w_dmg")) + num(ex.get("detonation_damage")), "ap": num(col(pj, "w_ap")) + num(ex.get("detonation_damage_ap")),
+                               "range": num(col(pj, "p_range")), "shots": volley, "reload": reload_,
+                               "ammo": round(num(col(lu, "ammo")) / spv, 2),
+                               "share": round(n_eng / men, 4) if eng and n_eng > 0 and men else 1}   # part des modèles qui tirent (pièces d'artillerie)
+            else: warn["tir_sans_rechargement"] += 1
         ROLE = {"melee_infantry": "inf_melee", "missile_infantry": "inf_ranged", "monstrous_infantry": "monster",
                 "monster": "monster", "monstrous_cavalry": "monster", "melee_cavalry": "cav_melee",
                 "missile_cavalry": "cav_ranged", "lord": "lord", "hero": "hero", "warmachine": "artillery", "chariot": "chariot", "war_beast": "beast"}
@@ -239,7 +279,8 @@ def main():
     cult_keys = sorted({i["culture"] for i in facinfo.values()}, key=lambda c: min(i["cs"] for i in facinfo.values() if i["culture"] == c))
     cultures = {c: CULTURE_FR.get(c) or humanise(c) for c in cult_keys}
     flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
-    out = {"demo": False, "cultures": cultures, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
+    meta = provenance(a.src, units)
+    out = {"demo": False, "meta": meta, "cultures": cultures, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
     factions = names
     from effects_extract import build_effects  # effets par défaut des seigneurs et de leur trait
     effects = build_effects(T, units, loc, facinfo)

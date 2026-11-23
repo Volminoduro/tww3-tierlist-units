@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.2, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6};
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6};
 const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.role);
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
 const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front
@@ -64,7 +64,7 @@ function simulate(ARMY, BON, opts) {
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
             const inRange = opts.dist - closing*t <= a.range, f = t >= T0 ? SIM.RANGED_IN_MELEE : 1;
-            if (inRange || t >= T0) dps += n * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / Math.max(1, r.reload);
+            if (inRange || t >= T0) dps += n * (r.share ?? 1) * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / Math.max(1, r.reload);
           }
           if (dps) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (frontAlive ? (dps - dpsM) * w + dpsM * (wt(d) / Wm) : dps * w));
         }

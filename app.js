@@ -24,7 +24,7 @@ $("#roles").innerHTML = `<button data-r="">Toutes</button>` + roles.map(r=>`<but
 /* Catégories : sélection multiple (aucune sélectionnée = « Toutes ») */
 $("#roles").onclick = e => { const b=e.target.closest("button[data-r]"); if(!b) return; const r=b.dataset.r; if(!r) role.clear(); else role.has(r)?role.delete(r):role.add(r); render(); };
 /* Filtre par typologie d'usage : une unité « peut faire » un usage selon des règles simples sur ses stats (voir ARCH_RULE). */
-const ARCH_RULE={inf:"Dégâts de base dominants (≥ 50 % des dégâts) ou bonus contre l'infanterie",armour:"Dégâts perforants dominants (≥ 50 % des dégâts)",large:"Bonus contre les grands, ou dégâts perforants dominants",tank:"Armure ≥ 50, défense ≥ 40 ou PV totaux ≥ 12 000",ranged:"Possède une arme à distance",charge:"Bonus de charge ≥ 25",speed:"Vitesse ≥ 48 (cavalerie, bêtes rapides, vol…)"};
+const ARCH_RULE={inf:"Dégâts de base dominants (≥ 50 % des dégâts) ou bonus contre l'infanterie",armour:"Dégâts perforants dominants (≥ 50 % des dégâts)",large:"Bonus contre les grands, ou dégâts perforants dominants",tank:"Armure ≥ 50, défense ≥ 40 ou PV totaux ≥ 12 000",ranged:"Possède une arme à distance",charge:"Bonus de charge ≥ 25",speed:"Vitesse ≥ 40 (cavalerie, bêtes rapides, vol…)"};
 function canDo(u,k){
  const m=u.melee,r=u.ranged,tot=m.dmg+m.ap+(r?r.dmg+r.ap:0),apS=(m.ap+(r?r.ap:0))/Math.max(1,tot);
  switch(k){
@@ -34,7 +34,7 @@ function canDo(u,k){
   case "tank": return u.armour>=50||u.md>=40||u.men*u.hp>=12000;
   case "ranged": return !!r&&r.dmg+r.ap>0;
   case "charge": return u.charge>=25;
-  case "speed": return u.speed>=48;
+  case "speed": return u.speed>=40;
  } return false;
 }
 /* Applique les pastilles actives (ET) et redessine la rangée : une pastille est grisée si plus aucune unité de la sélection ne la permet. */
@@ -57,7 +57,7 @@ function archeScores(u){
  const vs=(t,ch)=>{const hit=Math.min(90,Math.max(8,35+u.ma+(ch?u.charge:0)-t.md))/100; let d=m.dmg,a=m.ap,b=t.large?m.bvl:t.inf?m.bvi:0;
   if(b&&d+a>0){const s=d+a;d+=b*d/s;a+=b*a/s;} const cm=ch?1+u.charge/200:1, red=1-t.arm/200;
   const mel=u.men*eng*hit*((d*cm*dm)*red+a*cm*dm)/Math.max(1,m.interval);
-  const rg=r?u.men*r.shots*((r.dmg*dm)*red+r.ap*dm)*.5/Math.max(1,r.reload):0; return {mel,rg};};
+  const rg=r?u.men*(r.share??1)*r.shots*((r.dmg*dm)*red+r.ap*dm)*.5/Math.max(1,r.reload):0; return {mel,rg};};
  const tot=t=>{const v=vs(t,false);return v.mel+v.rg;};
  return {inf:tot(REF.inf), large:tot(REF.large), armour:tot(REF.armour),
   tank:u.men*hp/(1-arm0/200)*(1+u.md/150)*(1+.5*(u.ld-60)/100),
@@ -86,7 +86,7 @@ function score(u){
  const ehp=u.men*hp/(1-arm/200)*(1+u.md/150);
  const hit=Math.min(90,Math.max(8,35+u.ma-40))/100, m=u.melee;
  let mel=u.men*.6*((m.dmg+.7*m.ap)*dm*(1+m.bvl/Math.max(1,m.dmg+m.ap)*.25))*hit/Math.max(1,m.interval)*(1+u.charge/150);
- let rng=0; if(u.ranged){const r=u.ranged; rng=u.men*r.shots*(r.dmg+.7*r.ap)*dm*.5/Math.max(1,r.reload)*(1+r.range/400);}
+ let rng=0; if(u.ranged){const r=u.ranged; rng=u.men*(r.share??1)*r.shots*(r.dmg+.7*r.ap)*dm*.5/Math.max(1,r.reload)*(1+r.range/400);}
  const off=mel*S.wMelee+rng*S.wRanged, def=Math.pow(ehp,S.wDef/1);
  const power=Math.sqrt(Math.max(1,off)*Math.pow(ehp,S.wDef))*(1+S.wMob*(u.speed-40)/100)*(1+S.wMor*(u.ld-60)/100);
  const rt=Math.max(0,u.recruitTurns-S.tRt);
@@ -160,7 +160,7 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  $("#detail").hidden=false; $("#detail").dataset.id=u.id; $("#detail").innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3>${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small></div></div>
  <dl><dt>Hommes × PV</dt><dd>${u.men} × ${u.hp}</dd><dt>Armure</dt><dd>${u.armour}</dd><dt>Attaque / Défense</dt><dd>${u.ma} / ${u.md}</dd><dt>Charge</dt><dd>${u.charge}</dd><dt>Moral</dt><dd>${u.ld}</dd><dt>Vitesse</dt><dd>${u.speed}</dd>
  <dt>Arme (dégâts / perf. / intervalle)</dt><dd>${m.dmg} / ${m.ap} / ${m.interval}s</dd><dt>Bonus vs grands / infanterie</dt><dd>${m.bvl} / ${m.bvi}</dd>
- ${r?`<dt>Distance (dég./perf.)</dt><dd>${r.dmg} / ${r.ap}</dd><dt>Portée / recharg.</dt><dd>${r.range} / ${r.reload}s</dd>`:""}
- <dt>Coût / entretien</dt><dd>${u.cost} / ${u.upkeep}</dd><dt>Coût MP</dt><dd>${u.mpCost}</dd><dt>Recrutement</dt><dd>${u.recruitTurns} tour(s)</dd>
+ ${r?`<dt>Distance (dég./perf.)</dt><dd>${r.dmg} / ${r.ap}</dd><dt>Portée / recharg.</dt><dd>${r.range} / ${r.reload}s</dd><dt>Projectiles par volée / munitions (volées)</dt><dd>${r.shots} / ${r.ammo}</dd><dt>Dégâts de tir par 10 s, par tireur (calculé)</dt><dd>${Math.round((r.dmg+r.ap)*r.shots*10/r.reload)}</dd>`:""}
+ <dt>Coût / entretien</dt><dd>${u.cost} / ${u.upkeep}</dd><dt>Coût MP</dt><dd>${u.mpCost}</dd><dt>Clé de l'unité (pour vérifier dans les tables)</dt><dd><code>${u.id}</code></dd><dt>Recrutement</dt><dd>${u.recruitTurns} tour(s)</dd>
  <dt>Profil d'usage (percentile)</dt><dd></dd>${ARCHK.map(k=>`<dt style="padding-left:8px">${ARCH[k]}</dt><dd>${x.pct[k]}</dd>`).join("")}<dt>Puissance</dt><dd>${Math.round(x.power)}</dd><dt>Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl>${duelPanel(u)}`;}
 render();
