@@ -15357,7 +15357,7 @@
   },
   {
    "id": "wh2_dlc13_lzd_cha_slann_mage_priest_beasts_0",
-   "name": "{{tr:agent_subtypes_onscreen_name_override_wh2_dlc13_lzd_slann_mage_priest_beasts}}",
+   "name": "Cha Slann Mage Priest Beasts 0",
    "role": "lord",
    "group": "lord_wizard_beasts",
    "men": 1.0,
@@ -15391,7 +15391,7 @@
   },
   {
    "id": "wh2_dlc13_lzd_cha_slann_mage_priest_death_0",
-   "name": "{{tr:agent_subtypes_onscreen_name_override_wh2_dlc13_lzd_slann_mage_priest_death}}",
+   "name": "Cha Slann Mage Priest Death 0",
    "role": "lord",
    "group": "lord_wizard_death",
    "men": 1.0,
@@ -15493,7 +15493,7 @@
   },
   {
    "id": "wh2_dlc13_lzd_cha_slann_mage_priest_metal_0",
-   "name": "{{tr:agent_subtypes_onscreen_name_override_wh2_dlc13_lzd_slann_mage_priest_metal}}",
+   "name": "Cha Slann Mage Priest Metal 0",
    "role": "lord",
    "group": "lord_wizard_metal",
    "men": 1.0,
@@ -15527,7 +15527,7 @@
   },
   {
    "id": "wh2_dlc13_lzd_cha_slann_mage_priest_shadows_0",
-   "name": "{{tr:agent_subtypes_onscreen_name_override_wh2_dlc13_lzd_slann_mage_priest_shadows}}",
+   "name": "Cha Slann Mage Priest Shadows 0",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -46550,7 +46550,7 @@
   },
   {
    "id": "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain_razorgor_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc25_nur_cha_bray_shaman_wild_chieftain}}",
+   "name": "Grukmur Three-Horn",
    "role": "hero",
    "group": "wizard_wild_chariot",
    "men": 2.0,
@@ -46586,7 +46586,7 @@
   },
   {
    "id": "wh3_dlc25_nur_cha_bray_shaman_wild_chieftain_tuskgor_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc25_nur_cha_bray_shaman_wild_chieftain}}",
+   "name": "Grukmur Three-Horn",
    "role": "hero",
    "group": "wizard_wild_chariot",
    "men": 2.0,
@@ -46696,7 +46696,7 @@
   },
   {
    "id": "wh3_dlc25_nur_cha_exalted_hero_chieftain_chaos_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc25_nur_cha_exalted_hero_chieftain}}",
+   "name": "Khargan the Crazed",
    "role": "hero",
    "group": "chs_exalted_hero_chariot",
    "men": 2.0,
@@ -46732,7 +46732,7 @@
   },
   {
    "id": "wh3_dlc25_nur_cha_exalted_hero_chieftain_chaos_dragon",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc25_nur_cha_exalted_hero_chieftain}}",
+   "name": "Khargan the Crazed",
    "role": "hero",
    "group": "lord_dragon",
    "men": 1.0,
@@ -46768,7 +46768,7 @@
   },
   {
    "id": "wh3_dlc25_nur_cha_exalted_hero_chieftain_chaos_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc25_nur_cha_exalted_hero_chieftain}}",
+   "name": "Khargan the Crazed",
    "role": "hero",
    "group": "chs_exalted_hero_cavalry",
    "men": 1.0,
@@ -48212,7 +48212,7 @@
   },
   {
    "id": "wh3_dlc26_grn_cha_savage_orc_great_shaman_boar",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc26_grn_cha_savage_orc_great_shaman}}",
+   "name": "Savage Orc Great Shaman",
    "role": "lord",
    "group": "lord_wizard_big_waaagh",
    "men": 1.0,
@@ -48248,7 +48248,7 @@
   },
   {
    "id": "wh3_dlc26_grn_cha_savage_orc_great_shaman_wyvern",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc26_grn_cha_savage_orc_great_shaman}}",
+   "name": "Savage Orc Great Shaman",
    "role": "lord",
    "group": "lord_wizard_big_waaagh",
    "men": 1.0,
@@ -50067,7 +50067,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_exalted_hero_msla_chaos_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_exalted_hero_msla}}",
+   "name": "Exalted Hero of Slaanesh",
    "role": "hero",
    "group": "chs_exalted_hero_chariot",
    "men": 2.0,
@@ -50104,7 +50104,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_exalted_hero_msla_chaos_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_exalted_hero_msla}}",
+   "name": "Exalted Hero of Slaanesh",
    "role": "hero",
    "group": "chs_exalted_hero_cavalry",
    "men": 1.0,
@@ -50141,7 +50141,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_exalted_hero_msla_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_exalted_hero_msla}}",
+   "name": "Exalted Hero of Slaanesh",
    "role": "hero",
    "group": "chs_exalted_hero_cavalry",
    "men": 1.0,
@@ -50215,7 +50215,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla_chaos_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla}}",
+   "name": "Chaos Sorcerer Lord of Slaanesh (Shadows)",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -50252,7 +50252,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla}}",
+   "name": "Chaos Sorcerer Lord of Slaanesh (Shadows)",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -50289,7 +50289,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla_warshrine",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_sorcerer_lord_shadows_msla}}",
+   "name": "Chaos Sorcerer Lord of Slaanesh (Shadows)",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -50363,7 +50363,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla_chaos_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla}}",
+   "name": "Chaos Sorcerer Lord of Slaanesh (Slaanesh)",
    "role": "lord",
    "group": "wh3_lord_wizard_slaanesh",
    "men": 1.0,
@@ -50400,7 +50400,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla}}",
+   "name": "Chaos Sorcerer Lord of Slaanesh (Slaanesh)",
    "role": "lord",
    "group": "wh3_lord_wizard_slaanesh",
    "men": 1.0,
@@ -50437,7 +50437,7 @@
   },
   {
    "id": "wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla_warshrine",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_chs_cha_sorcerer_lord_slaanesh_msla}}",
+   "name": "Chaos Sorcerer Lord of Slaanesh (Slaanesh)",
    "role": "lord",
    "group": "wh3_lord_wizard_slaanesh",
    "men": 1.0,
@@ -50749,7 +50749,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_caradryan_ashtari",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_caradryan}}",
+   "name": "Caradryan",
    "role": "hero",
    "group": "wh3_dlc27_hef_caradryan",
    "men": 1.0,
@@ -50786,7 +50786,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_caradryan_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_caradryan}}",
+   "name": "Caradryan",
    "role": "hero",
    "group": "wh3_dlc27_hef_caradryan",
    "men": 2.0,
@@ -50823,7 +50823,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_caradryan_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_caradryan}}",
+   "name": "Caradryan",
    "role": "hero",
    "group": "wh3_dlc27_hef_caradryan",
    "men": 1.0,
@@ -50897,7 +50897,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_mist_mage_eagle",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_mist_mage}}",
+   "name": "Mist Mage",
    "role": "hero",
    "group": "wizard_mists",
    "men": 1.0,
@@ -50934,7 +50934,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_mist_mage_skycutter",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_mist_mage}}",
+   "name": "Mist Mage",
    "role": "hero",
    "group": "wizard_mists",
    "men": 2.0,
@@ -51007,7 +51007,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_sea_helm_eagle",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_sea_helm}}",
+   "name": "Sea Helm",
    "role": "lord",
    "group": "lord",
    "men": 1.0,
@@ -51043,7 +51043,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_sea_helm_skycutter",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_sea_helm}}",
+   "name": "Sea Helm",
    "role": "lord",
    "group": "lord",
    "men": 2.0,
@@ -51115,7 +51115,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_sea_lord_aislinn_dragon",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_sea_lord_aislinn}}",
+   "name": "Sea Lord Aislinn",
    "role": "lord",
    "group": "lord",
    "men": 1.0,
@@ -51149,7 +51149,7 @@
   },
   {
    "id": "wh3_dlc27_hef_cha_sea_lord_aislinn_skycutter",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_hef_cha_sea_lord_aislinn}}",
+   "name": "Sea Lord Aislinn",
    "role": "lord",
    "group": "lord",
    "men": 2.0,
@@ -51844,7 +51844,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_death}}",
+   "name": "Great Shaman-Sorcerer (Death)",
    "role": "lord",
    "group": "wizard_death_chariot",
    "men": 2.0,
@@ -51881,7 +51881,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_mammoth",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_death}}",
+   "name": "Great Shaman-Sorcerer (Death)",
    "role": "lord",
    "group": "wizard_death_cavalry",
    "men": 1.0,
@@ -51918,7 +51918,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_death_warhorse",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_death}}",
+   "name": "Great Shaman-Sorcerer (Death)",
    "role": "lord",
    "group": "wizard_death_cavalry",
    "men": 1.0,
@@ -51992,7 +51992,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_fire}}",
+   "name": "Great Shaman-Sorcerer (Fire)",
    "role": "lord",
    "group": "wizard_fire_chariot",
    "men": 2.0,
@@ -52029,7 +52029,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_mammoth",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_fire}}",
+   "name": "Great Shaman-Sorcerer (Fire)",
    "role": "lord",
    "group": "wizard_fire_cavalry",
    "men": 1.0,
@@ -52066,7 +52066,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_fire_warhorse",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_fire}}",
+   "name": "Great Shaman-Sorcerer (Fire)",
    "role": "lord",
    "group": "wizard_fire_cavalry",
    "men": 1.0,
@@ -52140,7 +52140,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_metal}}",
+   "name": "Great Shaman-Sorcerer (Metal)",
    "role": "lord",
    "group": "wizard_metal_chariot",
    "men": 2.0,
@@ -52177,7 +52177,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_mammoth",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_metal}}",
+   "name": "Great Shaman-Sorcerer (Metal)",
    "role": "lord",
    "group": "wizard_metal_cavalry",
    "men": 1.0,
@@ -52214,7 +52214,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_great_shaman_sorcerer_metal_warhorse",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_great_shaman_sorcerer_metal}}",
+   "name": "Great Shaman-Sorcerer (Metal)",
    "role": "lord",
    "group": "wizard_metal_cavalry",
    "men": 1.0,
@@ -52287,7 +52287,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_sayl_the_faithless_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_sayl_the_faithless}}",
+   "name": "Sayl the Faithless",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 2.0,
@@ -52323,7 +52323,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_sayl_the_faithless_mammoth",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_sayl_the_faithless}}",
+   "name": "Sayl the Faithless",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -52359,7 +52359,7 @@
   },
   {
    "id": "wh3_dlc27_nor_cha_sayl_the_faithless_warhorse",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_nor_cha_sayl_the_faithless}}",
+   "name": "Sayl the Faithless",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -52967,7 +52967,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_alluress_shadow_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_main_sla_cha_alluress_shadow_0}}",
+   "name": "Alluress (Shadows)",
    "role": "hero",
    "group": "wizard_shadows",
    "men": 1.0,
@@ -53005,7 +53005,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_alluress_slaanesh_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_main_sla_cha_alluress_slaanesh_0}}",
+   "name": "Alluress (Slaanesh)",
    "role": "hero",
    "group": "wh3_main_wizard_slaanesh",
    "men": 1.0,
@@ -53116,7 +53116,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_druchii_anointed_cold_one",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_sla_cha_druchii_anointed}}",
+   "name": "Druchii Anointed",
    "role": "hero",
    "group": "wh3_dlc27_druchii_anointed",
    "men": 1.0,
@@ -53152,7 +53152,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_druchii_anointed_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_sla_cha_druchii_anointed}}",
+   "name": "Druchii Anointed",
    "role": "hero",
    "group": "wh3_dlc27_druchii_anointed",
    "men": 1.0,
@@ -53188,7 +53188,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_herald_of_slaanesh_shadow_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_main_sla_cha_herald_of_slaanesh_shadow_0}}",
+   "name": "Herald of Slaanesh (Shadows)",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -53226,7 +53226,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_herald_of_slaanesh_slaanesh_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_main_sla_cha_herald_of_slaanesh_slaanesh_0}}",
+   "name": "Herald of Slaanesh (Slaanesh)",
    "role": "lord",
    "group": "wh3_lord_wizard_slaanesh",
    "men": 1.0,
@@ -53342,7 +53342,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_styrkaar_the_sortsvinaer_daemonic_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_sla_cha_styrkaar_the_sortsvinaer}}",
+   "name": "Styrkaar of the Sortsvinaer",
    "role": "hero",
    "group": "wh3_dlc27_sla_cha_styrkaar_the_sortsvinaer",
    "men": 1.0,
@@ -53384,7 +53384,7 @@
   },
   {
    "id": "wh3_dlc27_sla_cha_styrkaar_the_sortsvinaer_steed_of_slaanesh",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc27_sla_cha_styrkaar_the_sortsvinaer}}",
+   "name": "Styrkaar of the Sortsvinaer",
    "role": "hero",
    "group": "wh3_dlc27_sla_cha_styrkaar_the_sortsvinaer",
    "men": 1.0,
@@ -54390,7 +54390,7 @@
   },
   {
    "id": "wh3_dlc29_chs_cha_bloab_bilespurter",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_chs_cha_bloab}}",
+   "name": "Bloab Rotspawned",
    "role": "hero",
    "group": "wh3_dlc29_chs_bloab",
    "men": 1.0,
@@ -54517,7 +54517,7 @@
   },
   {
    "id": "wh3_dlc29_chs_cha_gutrot_spume_warshrine",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_chs_cha_gutrot_spume}}",
+   "name": "Gutrot Spume",
    "role": "hero",
    "group": "wh3_dlc29_chs_gutrot",
    "men": 1.0,
@@ -54602,7 +54602,7 @@
   },
   {
    "id": "wh3_dlc29_chs_cha_morbidex_tripletongue",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_chs_cha_morbidex}}",
+   "name": "Morbidex Twiceborn",
    "role": "hero",
    "group": "wh3_dlc29_chs_morbidex",
    "men": 1.0,
@@ -54686,7 +54686,7 @@
   },
   {
    "id": "wh3_dlc29_chs_cha_orghotts_whippermaw",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_chs_cha_orghotts}}",
+   "name": "Orghotts Daemonspew",
    "role": "hero",
    "group": "wh3_dlc29_chs_orghotts",
    "men": 1.0,
@@ -55194,7 +55194,7 @@
   },
   {
    "id": "wh3_dlc29_cst_cha_vampire_fleet_admiral_female_undeath_rotting_promethean",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_cst_cha_vampire_fleet_admiral_female_undeath}}",
+   "name": "Vampire Fleet Admiral (Pistol – Undeath)",
    "role": "lord",
    "group": "wh3_dlc29_lord_wizard_undeath",
    "men": 1.0,
@@ -55273,7 +55273,7 @@
   },
   {
    "id": "wh3_dlc29_cst_cha_vampire_fleet_admiral_undeath_rotting_promethean",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_cst_cha_vampire_fleet_admiral_undeath}}",
+   "name": "Vampire Fleet Admiral (Polearms – Undeath)",
    "role": "lord",
    "group": "wh3_dlc29_lord_wizard_undeath",
    "men": 1.0,
@@ -55345,7 +55345,7 @@
   },
   {
    "id": "wh3_dlc29_cst_cha_vampire_fleet_captain_undeath_rotting_promethean",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_cst_cha_vampire_fleet_captain_undeath}}",
+   "name": "Vampire Fleet Captain (Undeath)",
    "role": "hero",
    "group": "wh3_dlc29_wizard_undeath",
    "men": 1.0,
@@ -55535,7 +55535,7 @@
   },
   {
    "id": "wh3_dlc29_emp_cha_emil_valgeir_warhorse",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_emp_cha_emil_valgeir}}",
+   "name": "Emil Valgeir",
    "role": "hero",
    "group": "emp_emil_valgeir",
    "men": 1.0,
@@ -55605,7 +55605,7 @@
   },
   {
    "id": "wh3_dlc29_emp_cha_priest_of_ulric_warhorse",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_emp_cha_priest_of_ulric}}",
+   "name": "Priest of Ulric",
    "role": "hero",
    "group": "emp_priest_of_ulric",
    "men": 1.0,
@@ -55677,7 +55677,7 @@
   },
   {
    "id": "wh3_dlc29_emp_cha_seneschal_of_the_white_wolf_warhorse",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_emp_cha_seneschal_of_the_white_wolf}}",
+   "name": "Seneschal of the White Wolf",
    "role": "lord",
    "group": "lord",
    "men": 1.0,
@@ -56065,7 +56065,7 @@
   },
   {
    "id": "wh3_dlc29_skv_cha_lord_skrolk_cauldron",
-   "name": "{{tr:land_units_onscreen_name_wh2_main_skv_cha_lord_skrolk}}",
+   "name": "Lord Skrolk",
    "role": "lord",
    "group": "wh2_main_lord_wizard_plague",
    "men": 1.0,
@@ -56205,7 +56205,7 @@
   },
   {
    "id": "wh3_dlc29_skv_cha_thanquol_boneripper_warpfire_braziers",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_skv_cha_thanquol}}",
+   "name": "Thanquol",
    "role": "lord",
    "group": "wh2_main_lord_wizard_plague",
    "men": 1.0,
@@ -56241,7 +56241,7 @@
   },
   {
    "id": "wh3_dlc29_skv_cha_thanquol_boneripper_warpfire_projectors",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_skv_cha_thanquol}}",
+   "name": "Thanquol",
    "role": "lord",
    "group": "wh2_main_lord_wizard_plague",
    "men": 1.0,
@@ -56837,7 +56837,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_arkhan_dread_abyssal",
-   "name": "{{tr:land_units_onscreen_name_wh2_dlc09_tmb_cha_arkhan_0}}",
+   "name": "Arkhan the Black",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -56871,7 +56871,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_arkhan_the_black_mp",
-   "name": "{{tr:land_units_onscreen_name_wh2_dlc09_tmb_cha_arkhan_0}}",
+   "name": "Arkhan the Black",
    "role": "lord",
    "group": "lord_wizard_death",
    "men": 1.0,
@@ -56905,7 +56905,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_arkhan_the_black_skeletal_steed_mp",
-   "name": "{{tr:land_units_onscreen_name_wh2_dlc09_tmb_cha_arkhan_0}}",
+   "name": "Arkhan the Black",
    "role": "lord",
    "group": "lord_wizard_death",
    "men": 1.0,
@@ -56939,7 +56939,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_arkhan_the_black_skeleton_chariot_mp",
-   "name": "{{tr:land_units_onscreen_name_wh2_dlc09_tmb_cha_arkhan_0}}",
+   "name": "Arkhan the Black",
    "role": "lord",
    "group": "lord_wizard_death",
    "men": 6.0,
@@ -57011,7 +57011,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_liche_high_priest_death_skeletal_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_tmb_cha_liche_high_priest_death}}",
+   "name": "Liche High Priest (Death)",
    "role": "lord",
    "group": "lord_wizard_death",
    "men": 1.0,
@@ -57084,7 +57084,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_liche_high_priest_light_skeletal_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_tmb_cha_liche_high_priest_light}}",
+   "name": "Liche High Priest (Light)",
    "role": "lord",
    "group": "lord_wizard_light",
    "men": 1.0,
@@ -57157,7 +57157,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_liche_high_priest_nehekhara_skeletal_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_tmb_cha_liche_high_priest_nehekhara}}",
+   "name": "Liche High Priest (Nehekhara)",
    "role": "lord",
    "group": "lord_wizard_nehekhara",
    "men": 1.0,
@@ -57230,7 +57230,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_liche_high_priest_shadow_skeletal_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_tmb_cha_liche_high_priest_shadow}}",
+   "name": "Liche High Priest (Shadows)",
    "role": "lord",
    "group": "lord_wizard_shadows",
    "men": 1.0,
@@ -57447,7 +57447,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_tomb_herald_skeletal_steed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_tmb_cha_tomb_herald}}",
+   "name": "Tomb Herald",
    "role": "hero",
    "group": "wh3_dlc29_tmb_tomb_herald",
    "men": 1.0,
@@ -57482,7 +57482,7 @@
   },
   {
    "id": "wh3_dlc29_tmb_cha_tomb_herald_skeleton_chariot",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_tmb_cha_tomb_herald}}",
+   "name": "Tomb Herald",
    "role": "hero",
    "group": "wh3_dlc29_tmb_tomb_herald",
    "men": 2.0,
@@ -57672,7 +57672,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_bloodline_lahmian_lord_coven_throne",
-   "name": "{{tr:land_units_onscreen_name_wh2_dlc11_vmp_cha_bloodline_lahmian_lord_0}}",
+   "name": "Lahmian Vampire Lord",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 17.0,
@@ -57749,7 +57749,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_dieter_helsnicht_undead_manticore",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_dieter_helsnicht}}",
+   "name": "Dieter Helsnicht",
    "role": "hero",
    "group": "wizard_vampires",
    "men": 1.0,
@@ -57866,7 +57866,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_lahmian_vampire_barded_nightmare",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_lahmian_vampire}}",
+   "name": "Lahmian Vampire",
    "role": "hero",
    "group": "vmp_lahmian_vampires_cavalry",
    "men": 1.0,
@@ -57905,7 +57905,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_lahmian_vampire_hellsteed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_lahmian_vampire}}",
+   "name": "Lahmian Vampire",
    "role": "hero",
    "group": "vmp_lahmian_vampires_flying",
    "men": 1.0,
@@ -57944,7 +57944,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_mannfred_von_carstein_barded_nightmare_mp",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_mannfred_von_carstein_0}}",
+   "name": "Mannfred von Carstein",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -57978,7 +57978,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_mannfred_von_carstein_dread_abyssal",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_mannfred_von_carstein_0}}",
+   "name": "Mannfred von Carstein",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58015,7 +58015,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_mannfred_von_carstein_hellsteed_mp",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_mannfred_von_carstein_0}}",
+   "name": "Mannfred von Carstein",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58049,7 +58049,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_mannfred_von_carstein_mp",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_mannfred_von_carstein_0}}",
+   "name": "Mannfred von Carstein",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58083,7 +58083,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_mannfred_von_carstein_zombie_dragon_mp",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_mannfred_von_carstein_0}}",
+   "name": "Mannfred von Carstein",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58154,7 +58154,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_master_necromancer_undeath_barded_nightmare",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_master_necromancer_undeath}}",
+   "name": "Master Necromancer (Undeath)",
    "role": "lord",
    "group": "wh3_dlc29_lord_wizard_undeath",
    "men": 1.0,
@@ -58189,7 +58189,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_master_necromancer_undeath}}",
+   "name": "Master Necromancer (Undeath)",
    "role": "lord",
    "group": "wh3_dlc29_lord_wizard_undeath",
    "men": 1.0,
@@ -58224,7 +58224,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart_balefire",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_master_necromancer_undeath}}",
+   "name": "Master Necromancer (Undeath)",
    "role": "lord",
    "group": "wh3_dlc29_lord_wizard_undeath",
    "men": 1.0,
@@ -58259,7 +58259,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_master_necromancer_undeath_corpse_cart_lodestone",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_master_necromancer_undeath}}",
+   "name": "Master Necromancer (Undeath)",
    "role": "lord",
    "group": "wh3_dlc29_lord_wizard_undeath",
    "men": 1.0,
@@ -58294,7 +58294,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_master_necromancer_undeath_hellsteed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_master_necromancer_undeath}}",
+   "name": "Master Necromancer (Undeath)",
    "role": "lord",
    "group": "wh3_dlc29_lord_wizard_undeath",
    "men": 1.0,
@@ -58363,7 +58363,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_nagash_vampire_lord",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_vampire_lord_0}}",
+   "name": "Vampire Lord",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58397,7 +58397,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_nagash_vampire_lord_barded_nightmare",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_vampire_lord_0}}",
+   "name": "Vampire Lord",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58431,7 +58431,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_nagash_vampire_lord_hellsteed",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_vampire_lord_0}}",
+   "name": "Vampire Lord",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58465,7 +58465,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_nagash_vampire_lord_zombie_dragon",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_vampire_lord_0}}",
+   "name": "Vampire Lord",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58536,7 +58536,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_necromancer_undeath_barded_nightmare",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_necromancer_undeath}}",
+   "name": "Necromancer (Undeath)",
    "role": "hero",
    "group": "wh3_dlc29_wizard_undeath",
    "men": 1.0,
@@ -58571,7 +58571,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_necromancer_undeath}}",
+   "name": "Necromancer (Undeath)",
    "role": "hero",
    "group": "wh3_dlc29_wizard_undeath",
    "men": 1.0,
@@ -58606,7 +58606,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart_balefire",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_necromancer_undeath}}",
+   "name": "Necromancer (Undeath)",
    "role": "hero",
    "group": "wh3_dlc29_wizard_undeath",
    "men": 1.0,
@@ -58641,7 +58641,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_necromancer_undeath_corpse_cart_lodestone",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_necromancer_undeath}}",
+   "name": "Necromancer (Undeath)",
    "role": "hero",
    "group": "wh3_dlc29_wizard_undeath",
    "men": 1.0,
@@ -58713,7 +58713,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_barded_nightmare",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58750,7 +58750,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_barded_nightmare_mp",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58784,7 +58784,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_coven_throne",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 17.0,
@@ -58821,7 +58821,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_coven_throne_mp",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 17.0,
@@ -58855,7 +58855,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_dread_abyssal",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58892,7 +58892,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_hellsteed",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58929,7 +58929,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_hellsteed_mp",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58963,7 +58963,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_mp",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -58997,7 +58997,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_zombie_dragon",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -59034,7 +59034,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_neferata_zombie_dragon_mp",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_neferata}}",
+   "name": "Neferata",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -59068,7 +59068,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_vampire_lord_coven_throne",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_vampire_lord_0}}",
+   "name": "Vampire Lord",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 17.0,
@@ -59143,7 +59143,7 @@
   },
   {
    "id": "wh3_dlc29_vmp_cha_walach_harkon_barded_nightmare",
-   "name": "{{tr:land_units_onscreen_name_wh3_dlc29_vmp_cha_walach_harkon}}",
+   "name": "Walach Harkon",
    "role": "hero",
    "group": "wh3_dlc29_vmp_walach_harkon",
    "men": 1.0,
@@ -59780,7 +59780,7 @@
   },
   {
    "id": "wh3_main_cth_cha_alchemist_2",
-   "name": "{{tr:land_units_onscreen_name_wh3_main_cth_cha_alchemist_1}}",
+   "name": "Alchemist",
    "role": "hero",
    "group": "wizard_metal",
    "men": 5.0,
@@ -75044,7 +75044,7 @@
   },
   {
    "id": "wh_dlc04_vmp_cha_master_necromancer_2",
-   "name": "{{tr:land_units_onscreen_name_wh_dlc04_vmp_cha_master_necromancer_1}}",
+   "name": "Master Necromancer (Vampires)",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -75079,7 +75079,7 @@
   },
   {
    "id": "wh_dlc04_vmp_cha_master_necromancer_3",
-   "name": "{{tr:land_units_onscreen_name_wh_dlc04_vmp_cha_master_necromancer_1}}",
+   "name": "Master Necromancer (Vampires)",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -75114,7 +75114,7 @@
   },
   {
    "id": "wh_dlc04_vmp_cha_necromancer_1",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_necromancer_0}}",
+   "name": "Necromancer (Vampires)",
    "role": "hero",
    "group": "wizard_vampires",
    "men": 1.0,
@@ -75149,7 +75149,7 @@
   },
   {
    "id": "wh_dlc04_vmp_cha_necromancer_2",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_necromancer_0}}",
+   "name": "Necromancer (Vampires)",
    "role": "hero",
    "group": "wizard_vampires",
    "men": 1.0,
@@ -75184,7 +75184,7 @@
   },
   {
    "id": "wh_dlc04_vmp_cha_necromancer_3",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_necromancer_0}}",
+   "name": "Necromancer (Vampires)",
    "role": "hero",
    "group": "wizard_vampires",
    "men": 1.0,
@@ -91787,7 +91787,7 @@
   },
   {
    "id": "wh_main_vmp_cha_master_necromancer_0",
-   "name": "{{tr:land_units_onscreen_name_wh_dlc04_vmp_cha_master_necromancer_1}}",
+   "name": "Master Necromancer (Vampires)",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -91826,7 +91826,7 @@
   },
   {
    "id": "wh_main_vmp_cha_master_necromancer_4",
-   "name": "{{tr:land_units_onscreen_name_wh_dlc04_vmp_cha_master_necromancer_1}}",
+   "name": "Master Necromancer (Vampires)",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -91865,7 +91865,7 @@
   },
   {
    "id": "wh_main_vmp_cha_master_necromancer_5",
-   "name": "{{tr:land_units_onscreen_name_wh_dlc04_vmp_cha_master_necromancer_1}}",
+   "name": "Master Necromancer (Vampires)",
    "role": "lord",
    "group": "lord_wizard_vampires",
    "men": 1.0,
@@ -91943,7 +91943,7 @@
   },
   {
    "id": "wh_main_vmp_cha_necromancer_5",
-   "name": "{{tr:land_units_onscreen_name_wh_main_vmp_cha_necromancer_0}}",
+   "name": "Necromancer (Vampires)",
    "role": "hero",
    "group": "wizard_vampires_cavalry",
    "men": 1.0,

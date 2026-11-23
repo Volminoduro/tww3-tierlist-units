@@ -1,0 +1,43 @@
+name: Régénérer les données et les duels
+
+# Déclenchement manuel (onglet Actions > « Régénérer les données et les duels » > Run workflow).
+# Pour une mise à jour automatique, ajouter par exemple :  schedule: [{cron: "0 6 * * 1"}]
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Récupérer le dump des tables du jeu (Shazbot/wh3-dump)
+        run: git clone --depth 1 https://github.com/Shazbot/wh3-dump "$RUNNER_TEMP/wh3-dump"
+        env:
+          GIT_LFS_SKIP_SMUDGE: "1"
+
+      - name: Convertir les tables en data/units.js
+        run: python3 tools/convert_rpfm.py "$RUNNER_TEMP/wh3-dump"
+
+      - name: Calculer les duels (même simulateur sim.js que le site)
+        run: node tools/build_duels.js
+
+      - name: Enregistrer les fichiers générés
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/units.js data/units.json data/duels.js data/duels.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Données et duels régénérés"
+            git push
+          else
+            echo "Aucun changement."
+          fi

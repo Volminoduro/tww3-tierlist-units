@@ -29,3 +29,9 @@ Les portraits sont copiés dans `img/units/` (ignoré par git : ce sont des visu
 ## Seigneurs, héros et emblèmes de factions
 `convert_rpfm.py` inclut maintenant les **seigneurs et héros** (`--no-heroes` pour les exclure ; masqués par défaut dans le tier list, case « Inclure seigneurs & héros »). Leurs capacités et sorts ne sont pas modélisés.
 `tools/copy_icons.py DOSSIER_EXTRAIT` copie aussi les **drapeaux de factions** (`ui/flags/…`) vers `img/factions/`. Les chemins exacts des images dans les packs n'ont pas été vérifiés faute d'accès aux fichiers du jeu : si une image manque, ajuste le dossier passé au script.
+
+## Simulateur partagé et duels précalculés
+`sim.js` est **le seul** simulateur : il est chargé par le navigateur (onglet Combat) et par Node (`tools/build_duels.js`), donc aucune différence possible entre le site et les duels précalculés.
+`node tools/build_duels.js` joue tous les duels deux à deux **à budget équivalent** (entretien, puis coût de recrutement ; budget 2000, ≥ 1 et ≤ 20 exemplaires par camp si possible) et écrit `data/duels.json`/`duels.js` (~4 Mo, ~2 min) : taux de victoire global et par catégorie, meilleurs adversaires et pires adversaires de chaque unité.
+**Seigneurs et héros inclus**, mais leurs sorts, capacités et objets ne sont pas modélisés : leurs résultats sont indicatifs (voir `notes` dans le fichier).
+Le workflow `.github/workflows/build-data.yml` régénère données et duels (déclenchement manuel).

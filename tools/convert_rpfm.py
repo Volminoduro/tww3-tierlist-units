@@ -185,7 +185,8 @@ def main():
         pj = proj.get(col(ms, "m_projectile") or "", {})
         u = {
             "id": key,
-            "name": loc.get(f"land_units_onscreen_name_{col(mu,'land_unit')}") or humanise(key),
+            # certains noms sont des renvois « {{tr:autre_clé}} » vers une autre entrée de localisation
+            "name": (lambda v: loc.get(v[5:-2]) if v and v.startswith("{{tr:") else v)(loc.get(f"land_units_onscreen_name_{col(mu,'land_unit')}")) or humanise(key),
             "role": None, "group": col(mu, "group") or "",
             "men": men, "hp": hp, "armour": armour,
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
