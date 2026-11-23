@@ -128,3 +128,5 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 .tp-it{display:flex;align-items:center;gap:8px;padding:3px 10px 3px 30px;cursor:pointer}.tp-it:hover{background:#ffffff10}.tp-it.sel{background:#c9a45a2e;box-shadow:inset 3px 0 var(--gold)}
 .tp-none{padding:12px;color:var(--m)}
 .crest.s{width:24px;height:28px}
+.tp-all{display:flex;align-items:center;gap:8px;padding:7px 10px;cursor:pointer;font:700 13px var(--serif);letter-spacing:.06em;color:var(--gold2);background:#2d210f}.tp-all:hover{background:#3a2a12}.tp-all.sel{box-shadow:inset 3px 0 var(--gold)}
+.tp-all{position:sticky;top:0;z-index:2;border-bottom:1px solid var(--gold3)}

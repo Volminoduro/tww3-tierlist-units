@@ -44,7 +44,7 @@
 
   function render() {
     const fac = fs.value, mode = $b("#bpool").value, q = $b("#bq").value.toLowerCase();
-    const inFac = uniq(D.units.filter(u => u.factions.includes(fac)));
+    const inFac = uniq(D.units.filter(u => fac === ALL || u.factions.includes(fac)));
     const roles = [...new Set(inFac.map(u => u.role))];
     $b("#bfban").innerHTML = factionBanner(fac, inFac.length);
     $b("#brole").innerHTML = `<button data-r="" class="${role?"":"on"}">Toutes</button>` + roles.map(r => `<button data-r="${r}" class="${role===r?"on":""}">${ROLES[r]||r}</button>`).join("");

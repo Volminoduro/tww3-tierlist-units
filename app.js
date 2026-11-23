@@ -22,7 +22,7 @@ const fsel=$("#faction"); initPicker(fsel,"wh_main_emp_empire");
 const roles = [...new Set(D.units.map(u=>u.role))];
 $("#roles").innerHTML = `<button data-r="">Toutes</button>` + roles.map(r=>`<button data-r="${r}">${ROLES[r]||r}</button>`).join("");
 $("#roles").onclick = e => { if(e.target.dataset.r!==undefined){ role=e.target.dataset.r||null; render(); } };
-["faction","allfac","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
+["faction","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
 $("#viewsel").onchange=()=>{view=$("#viewsel").value;render()};
 $("#reset").onclick=()=>{for(const w of W){S[w[0]]=w[4];$("#"+w[0]).value=w[4];$("#v_"+w[0]).textContent=w[4]}render()};
 
@@ -52,7 +52,7 @@ function score(u){
  return {power, cost, value: power/Math.max(1,cost), ehp, mel, rng, rt, arche: archeScores(u)};
 }
 function compute(){
- const all=$("#allfac").checked, f=fsel.value, seen=new Set();
+ const f=fsel.value, all=f===ALL, seen=new Set();
  let us=D.units.filter(u=>(all||u.factions.includes(f))&&($("#heroes").checked||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
  us=us.filter(x=>!seen.has(x.u.id)&&seen.add(x.u.id));
  const key=$("#metric").value, ar=$("#arch").value;
@@ -70,8 +70,8 @@ function render(){
  $("#roles").querySelectorAll("button").forEach(b=>b.classList.toggle("on",(b.dataset.r||null)===role));
  us=us.filter(x=>(!role||x.u.role===role)&&x.u.name.toLowerCase().includes(q));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
- $("#fban").innerHTML=$("#allfac").checked?"":factionBanner(fsel.value,us.length);
- const all=$("#allfac").checked, fn=u=>all?`<div class="f">${u.factions.length} factions</div>`:"";
+ $("#fban").innerHTML=factionBanner(fsel.value,us.length);
+ const all=fsel.value===ALL, fn=u=>all?`<div class="f">${u.factions.length} factions</div>`:"";
  const cardInfo=x=>`${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};

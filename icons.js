@@ -22,11 +22,11 @@ function portrait(u, cls = "") {
 
 /* Emblème de faction : drapeau extrait du jeu (img/factions/<clé>.png) ou écusson avec initiales. */
 function crest(key, cls = "", labelOverride = "") {
-  const name = (labelOverride || D.factions[key] || key).replace(/^(the|les?|la) /i, ""), ini = name.split(/[\s'’-]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+  const name = (labelOverride || D.factions[key] || key).replace(/^(the|les?|la) /i, ""), ini = key === ALL ? "✦" : name.split(/[\s'’-]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
   const svg = `<svg viewBox="0 0 48 56" aria-hidden="true"><path d="M24 3 43 9v20c0 12-8 20-19 24C13 49 5 41 5 29V9z" fill="none" stroke="currentColor" stroke-width="2.2"/><text x="24" y="35" text-anchor="middle" font-family="Cinzel,serif" font-weight="700" font-size="17" fill="currentColor">${ini}</text></svg>`;
   const img = FLAG_SET.has(key) ? `<img src="img/factions/${key}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
   return `<span class="crest ${cls}">${svg}${img}</span>`;
 }
 function factionBanner(key, n) {
-  return `<div class="fb">${crest(key)}<div><div class="fbn">${D.factions[key] || key}</div><small>${D.cultures[(D.facInfo[key] || {}).culture] || ""} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
+  return `<div class="fb">${crest(key)}<div><div class="fbn">${D.factions[key] || key}</div><small>${key === ALL ? "Toutes les races" : D.cultures[D.facInfo[key].culture]} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
 }
