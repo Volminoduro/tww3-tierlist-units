@@ -178,6 +178,13 @@ aside{grid-template-columns:minmax(0,1fr)}aside section,.tp{min-width:0}.tp-btn{
 /* Icônes de stats dans la fiche d'unité */
 .si{width:15px;height:15px;vertical-align:-3px;margin-right:6px;color:var(--gold);flex:none}
 img.sig{width:18px;height:18px;vertical-align:-5px}
+/* Images du jeu : catégorie d'unité, monture, attributs d'attaque, bandeau de race */
+img.cati{width:16px;height:16px;vertical-align:-4px;margin-right:4px}
+img.mnti{width:20px;height:20px;vertical-align:-6px;margin-left:6px;border-radius:50%}
+.attrs{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.attr{display:inline-flex;align-items:center;gap:3px;font:600 10px var(--sans);font-style:normal;color:var(--m);border:1px solid var(--b);border-radius:8px;padding:0 6px 0 3px;white-space:nowrap}.attr img{width:14px;height:14px}
+.pt.full.info{background:none}.pt.full.info::before{display:none}.pt.full.info img{object-fit:contain;background:none}
+.fb.hasrb{background:linear-gradient(90deg,#2a2013 0,#14100c 38%,#14100c00 70%),var(--rb) right center/auto 100% no-repeat,#14100c}
 #detail dt{display:flex;align-items:center}
 #detail dt[style]{padding-left:8px}
 /* Fiche d'unité : stats avec rang et barre de remplissage */

@@ -144,7 +144,7 @@ function render(){
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
  const all=fsel.value===ALL||isRace(fsel.value), fn=u=>all?`<div class="f">${u.factions.length} faction${u.factions.length>1?"s":""}</div>`:"";
- const cardInfo=x=>`${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
+ const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
   $("#tiers").innerHTML=TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
@@ -208,12 +208,16 @@ const STAT_ICON={
 STAT_ICON.defence=STAT_ICON.armour; STAT_ICON.range=STAT_ICON.target; STAT_ICON.reload=STAT_ICON.clock;
 /* Icônes de stats du jeu (img/stats/icon_stat_*.png, ui/skins/default de ui2.pack, copiées par tools/copy_icons.py) : utilisées
    à la place du tracé quand le jeu en a une ; le DPS estimé, le coût, l'entretien et les usages gardent leur tracé. */
-const GAME_STAT={hp:"health",armour:"armour",defence:"defence",attack:"attack",charge:"charge_bonus",morale:"morale",speed:"speed",weapon:"damage",bow:"ranged_damage",range:"range",reload:"reload_time",ammo:"ammo"};
+const GAME_STAT={hp:"icon_stat_health",armour:"icon_stat_armour",defence:"icon_stat_defence",attack:"icon_stat_attack",charge:"icon_stat_charge_bonus",morale:"icon_stat_morale",speed:"icon_stat_speed",weapon:"icon_stat_damage",bow:"icon_stat_ranged_damage",range:"icon_stat_range",reload:"icon_stat_reload_time",ammo:"icon_stat_ammo",
+ vs_large:"modifier_icon_bonus_vs_large",vs_inf:"modifier_icon_bonus_vs_infantry",ap:"modifier_icon_armour_piercing",rap:"modifier_icon_armour_piercing_ranged",
+ // usages du site : icône du jeu la plus proche (anti-X = modificateur « bonus contre X » du jeu)
+ u_inf:"modifier_icon_bonus_vs_infantry",u_large:"modifier_icon_bonus_vs_large",u_armour:"modifier_icon_armour_piercing",u_ranged:"icon_stat_ranged_damage",u_tank:"icon_stat_armour",u_charge:"icon_stat_charge_bonus",u_speed:"icon_stat_speed"};
+STAT_ICON.vs_large=STAT_ICON.target; STAT_ICON.vs_inf=STAT_ICON.target; STAT_ICON.ap=STAT_ICON.weapon; STAT_ICON.rap=STAT_ICON.bow;
 const uic=k=>si("u_"+k);
-const si=k=>GAME_STAT[k]?`<img class="si sig" src="img/stats/icon_stat_${GAME_STAT[k]}.png" alt="" onerror="this.remove()">`:`<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${STAT_ICON[k]||""}</svg>`;
+const si=k=>GAME_STAT[k]?`<img class="si sig" src="img/stats/${GAME_STAT[k]}.png" alt="" onerror="this.remove()">`:`<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${STAT_ICON[k]||""}</svg>`;
 /* Fiche d'unité : chaque stat avec son rang (« Top 8 % » / « Bottom 20 % ») et une barre remplie à valeur ÷ 95ᵉ centile du groupe de comparaison (pleine au-delà). */
 let DPOOL="role_all"; // groupe de comparaison : même catégorie (tout le jeu), toutes les unités, ou périmètre affiché
-const STAT_IC={cost:"coin",upkeep:"upkeep",rt:"calendar",mp:"coin",men:"men",hp:"hp",thp:"hp",arm:"armour",md:"defence",ld:"morale",ma:"attack",ch:"charge",dmg:"weapon",ap:"weapon",str:"weapon",int:"clock",dps:"bolt",bvl:"target",bvi:"target",rdmg:"bow",rap:"bow",rng:"range",rel:"reload",amm:"ammo",spd:"speed",dwc:"attack"};
+const STAT_IC={cost:"coin",upkeep:"upkeep",rt:"calendar",mp:"coin",men:"men",hp:"hp",thp:"hp",arm:"armour",md:"defence",ld:"morale",ma:"attack",ch:"charge",dmg:"weapon",ap:"ap",str:"weapon",int:"clock",dps:"bolt",bvl:"vs_large",bvi:"vs_inf",rdmg:"bow",rap:"rap",rng:"range",rel:"reload",amm:"ammo",spd:"speed",dwc:"attack"};
 /* Tuile : chiffres clés (PV totaux, armure, dégâts/s estimés, vitesse) et les deux meilleurs usages (icône + percentile), pour remplir la tuile avec de l'information utile */
 const kfmt=v=>v>=10000?Math.round(v/1000)+"k":v>=1000?(v/1000).toFixed(1).replace(".",",")+"k":String(Math.round(v));
 function cardStats(x){
@@ -265,9 +269,9 @@ function usageBlock(x){
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
  const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false;
- dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${ROLES[u.role]||u.role}</small>${rortag(u)}${gtier(u)}</div><button class="x" id="close">✕</button></div>
+ dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><button class="x" id="close">✕</button></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label></div>
- <div class="dbrief">${portrait(u,"full")}${briefTiles(list)}</div>
+ <div class="dbrief">${fullPic(u)}${briefTiles(list)}</div>
  ${usageBlock(x)}
  ${duelPanel(u)}
  <details class="more all"><summary>Toutes les statistiques (${list.length})</summary>${statRows(list)}

@@ -182,13 +182,46 @@ for n in range(1, 6):
         os.makedirs(os.path.join(root, "img", "tiers"), exist_ok=True)
         shutil.copy(p[0], os.path.join(root, "img", "tiers", f"unit_tier_{n}.png")); tiers += 1
 print(f"{tiers} icônes de tier sur 5")
-STATS = ["health", "armour", "defence", "attack", "charge_bonus", "morale", "speed", "damage", "ranged_damage", "range", "reload_time", "ammo"]
-stats = 0                                           # icônes de stats du jeu (ui2.pack : ui/skins/default/icon_stat_*.png), utilisées par app.js (GAME_STAT)
+STATS = ["icon_stat_" + n for n in ("health", "armour", "defence", "attack", "charge_bonus", "morale", "speed", "damage", "ranged_damage", "range", "reload_time", "ammo")] \
+      + ["modifier_icon_" + n for n in ("armour_piercing", "armour_piercing_ranged", "bonus_vs_infantry", "bonus_vs_large", "magical", "flaming", "shield")]
+stats = 0                                           # icônes de stats et de modificateurs du jeu (ui2.pack : ui/skins/default), utilisées par app.js (GAME_STAT) et icons.js (attributs)
 for n in STATS:
-    p = pngs.get(f"icon_stat_{n}")
+    p = pngs.get(n)
     if p:
         os.makedirs(os.path.join(root, "img", "stats"), exist_ok=True)
-        shutil.copy(p[0], os.path.join(root, "img", "stats", f"icon_stat_{n}.png")); stats += 1
-print(f"{stats} icônes de stats sur {len(STATS)}")
-open(os.path.join(root, "data", "icons.js"), "w").write("window.TWW3_ICONS=" + json.dumps(sorted(units)) + ";\nwindow.TWW3_FLAGS=" + json.dumps(sorted(flags)) + ";\n")
+        shutil.copy(p[0], os.path.join(root, "img", "stats", f"{n}.png")); stats += 1
+print(f"{stats} icônes de stats et modificateurs sur {len(STATS)}")
+
+def in_dir(name, part):                             # chemin d'une image de ce nom située dans un dossier donné
+    return next((p for p in pngs.get(name.lower(), []) if part in p.lower().replace("\\", "/")), None)
+def put(src, sub, name):
+    os.makedirs(os.path.join(root, "img", sub), exist_ok=True)
+    dst = os.path.join(root, "img", sub, name + ".png")
+    if not os.path.exists(dst) or os.path.getsize(dst) != os.path.getsize(src): shutil.copy(src, dst)
+cats, infos, mounts, races = {}, {}, {}, []
+if dump:
+    # Icône de catégorie (celle des cartes d'unité du jeu) : main_units.ui_unit_group_land -> ui_unit_groupings.icon -> ui/common ui/unit_category_icons/<icon>.png
+    group_icon = {r["key"]: r.get("icon") for r in read_table("ui_unit_groupings_tables")}
+    for r in read_table("main_units_tables"):
+        k, ic = r.get("unit"), group_icon.get(r.get("ui_unit_group_land") or "")
+        p = ic and in_dir(ic, "common ui/unit_category_icons/")
+        if k in ids and p: put(p, "cats", ic.lower()); cats[k] = ic.lower()
+    # Grande illustration de l'unité (panneau d'information du jeu) : ui/units/infopics/<carte>.png, même nom que la carte d'unité
+    for k in ids:
+        for n in [k.lower()] + [c for _, c in sorted(cards.get(k, []))] + ([mounted_base[k].lower()] if k in mounted_base else []):
+            p = in_dir(n, "units/infopics/")
+            if p: put(p, "info", n); infos[k] = n; break
+    # Monture (variantes montées des seigneurs et héros) : units_custom_battle_mounts.icon_name -> ui/campaign ui/mounts/<icône>.png
+    for r in read_table("units_custom_battle_mounts_tables"):
+        k, ic = r.get("mounted_unit"), os.path.splitext(os.path.basename((r.get("icon_name") or "").replace("\\", "/")))[0].lower()
+        p = ic and in_dir(ic, "campaign ui/mounts/")
+        if k in ids and p: put(p, "mounts", ic); mounts[k] = ic
+# Bandeau de race (écran de choix de race du jeu) : ui/frontend ui/race_select_images/large/<culture>.png
+for c in data.get("cultures", {}):
+    p = in_dir(c, "race_select_images/large/")
+    if p: put(p, "races", c.lower()); races.append(c)
+print(f"{len(cats)} icônes de catégorie, {len(infos)} illustrations d'unités, {len(mounts)} montures, {len(races)} bandeaux de race sur {len(data.get('cultures', {}))}")
+open(os.path.join(root, "data", "icons.js"), "w").write("window.TWW3_ICONS=" + json.dumps(sorted(units)) + ";\nwindow.TWW3_FLAGS=" + json.dumps(sorted(flags)) + ";\n"
+    + "window.TWW3_CATS=" + json.dumps(cats, sort_keys=True) + ";\nwindow.TWW3_INFO=" + json.dumps(infos, sort_keys=True) + ";\n"
+    + "window.TWW3_MOUNTS=" + json.dumps(mounts, sort_keys=True) + ";\nwindow.TWW3_RACES=" + json.dumps(sorted(races)) + ";\n")
 print(f"{len(units)} portraits d'unités sur {len(ids)} ; {len(flags)} drapeaux sur {len(data.get('flags', {}))} factions.")

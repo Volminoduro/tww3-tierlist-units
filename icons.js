@@ -49,6 +49,28 @@ function portrait(u, cls = "") {
   return `<span class="pt ${cls}${u.ror ? " ror" : ""}"${ic ? ` style="--pi:url('img/units/${ic}.png')"` : ""}>${svg}${img}</span>`;
 }
 
+/* Images du jeu associées aux unités et aux races par tools/copy_icons.py (data/icons.js). Chaque image est retirée si elle manque. */
+const CATS = window.TWW3_CATS || {}, INFO = window.TWW3_INFO || {}, MOUNTS = window.TWW3_MOUNTS || {}, RACE_SET = new Set(window.TWW3_RACES || []);
+/* Icône de catégorie des cartes d'unité du jeu (lanciers, cavalerie de choc, monstre…) */
+function catIc(u) { const c = u && CATS[u.id]; return c ? `<img class="cati" src="img/cats/${c}.png" alt="" onerror="this.remove()">` : ""; }
+/* Icône de la monture (variantes montées des seigneurs et héros) */
+function mountIc(u) { const m = u && MOUNTS[u.id]; return m ? `<img class="mnti" src="img/mounts/${m}.png" alt="" title="Monture" onerror="this.remove()">` : ""; }
+/* Attributs d'attaque, avec les icônes de modificateurs du jeu : magique, enflammé, perforant (dégâts perforants ≥ dégâts de base), bonus contre l'infanterie / les grandes cibles */
+function attrs(u) {
+  if (!u) return "";
+  const m = u.melee || {}, r = u.ranged || {}, a = [];
+  const add = (ic, t) => a.push(`<i class="attr" title="${t}"><img src="img/stats/modifier_icon_${ic}.png" alt="" onerror="this.remove()">${t}</i>`);
+  if (m.mg || r.mg) add("magical", "Attaques magiques");
+  if (m.fl || r.fl) add("flaming", "Attaques enflammées");
+  if (m.dmg > 0 && m.ap >= m.dmg) add("armour_piercing", "Perforant (mêlée)");
+  if (r.dmg > 0 && r.ap >= r.dmg) add("armour_piercing_ranged", "Perforant (tir)");
+  if (m.bvi > 0) add("bonus_vs_infantry", `Bonus contre l'infanterie (+${Math.round(m.bvi)})`);
+  if (m.bvl > 0) add("bonus_vs_large", `Bonus contre les grandes cibles (+${Math.round(m.bvl)})`);
+  return a.length ? `<div class="attrs">${a.join("")}</div>` : "";
+}
+/* Fiche d'unité : grande illustration du panneau d'information du jeu (ui/units/infopics) si elle existe, sinon le portrait entier */
+function fullPic(u) { const i = u && INFO[u.id]; return i ? `<span class="pt full info"><img src="img/info/${i}.png" alt="" loading="lazy" onerror="this.remove()"></span>` : portrait(u, "full"); }
+
 /* Emblème de faction : drapeau extrait du jeu (img/factions/<clé>.png) ou écusson avec initiales. */
 function crest(key, cls = "", labelOverride = "") {
   const name = (labelOverride || D.factions[key] || key).replace(/^(the|les?|la) /i, ""), ini = key === ALL ? "✦" : name.split(/[\s'’-]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
@@ -60,5 +82,6 @@ function factionBanner(key, n) {
   const c = cultOf(key), race = isRace(key), icon = race ? crest(mainFacOf(c), "", D.cultures[c]) : crest(key);
   const nm = race ? D.cultures[c] + " — toute la race" : D.factions[key] || key;
   const sub = key === ALL ? "Toutes les races" : race ? `${factionsOfRace(c).length} factions` : D.cultures[c];
-  return `<div class="fb">${icon}<div><div class="fbn">${nm}</div><small>${sub} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
+  const rb = key !== ALL && RACE_SET.has(c) ? ` hasrb" style="--rb:url('img/races/${c}.png')` : "";   // bandeau de race du jeu (écran de choix de race)
+  return `<div class="fb${rb}">${icon}<div><div class="fbn">${nm}</div><small>${sub} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
 }
