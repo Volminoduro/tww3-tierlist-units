@@ -126,8 +126,8 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
 }
 /* Pastilles de catégories : « Nom (nombre d'unités disponibles) », grisées s'il n'y en a aucune. cnt(r) = effectif pour la catégorie r (null = toutes). */
 function roleChips(list,sel,cnt){
- return `<button data-r="" class="${sel.size?"":"on"}">Toutes (${cnt(null)})</button>`+list.map(r=>{const n=cnt(r),on=sel.has(r);
-  return `<button data-r="${r}" class="${on?"on":""}" ${!n&&!on?"disabled":""}>${ROLES[r]||r} (${n})</button>`;}).join("");
+ return `<button data-r="" class="${sel.size?"":"on"}">${roleIc("")}<span>Toutes</span> <small>(${cnt(null)})</small></button>`+list.map(r=>{const n=cnt(r),on=sel.has(r);
+  return `<button data-r="${r}" class="${on?"on":""}" ${!n&&!on?"disabled":""}>${roleIc(r)}<span>${ROLES[r]||r}</span> <small>(${n})</small></button>`;}).join("");
 }
 function render(){
  // Seigneurs et héros : exclus de « Toutes » sauf si la case est cochée, mais toujours accessibles (et comptés) via leurs pastilles « Seigneurs » / « Héros »

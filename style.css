@@ -275,3 +275,6 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 .card.ror b{color:color-mix(in srgb,var(--tc,#c3c8cf) 35%,#fff);text-shadow:none}
 /* Titres : même couleur partout (tuiles normales, bataillons de renom, fiche d'unité) pour garder la continuité à l'intérieur d'un même tier */
 .card b,.card.ror b,#detail h3{color:var(--gold2);text-shadow:none}
+
+/* icônes de catégories (Seigneurs, Héros, Infanterie…) dans les puces de filtre */
+#roles button,#brole button{display:inline-flex;align-items:center;gap:6px}.ri{width:18px;height:18px;flex:none}#roles button small,#brole button small{opacity:.8}
