@@ -67,6 +67,14 @@ CULTURE_FR = {"wh_main_grn_greenskins": "Peaux-Vertes", "wh_dlc08_nor_norsca": "
     "wh2_dlc09_tmb_tomb_kings": "Rois des Tombes", "wh2_dlc11_cst_vampire_coast": "Côte Vampire", "wh3_main_kho_khorne": "Khorne",
     "wh3_main_tze_tzeentch": "Tzeentch", "wh3_main_ksl_kislev": "Kislev", "wh3_main_nur_nurgle": "Nurgle", "wh3_main_sla_slaanesh": "Slaanesh",
     "wh3_dlc23_chd_chaos_dwarfs": "Nains du Chaos", "wh3_main_dae_daemons": "Démons du Chaos", "wh3_dlc29_nag_undead_legions": "Légions des morts"}
+CULTURE_EN = {"wh_main_grn_greenskins": "Greenskins", "wh_dlc08_nor_norsca": "Norsca", "wh2_main_skv_skaven": "Skaven",
+    "wh_main_chs_chaos": "Warriors of Chaos", "wh3_main_ogr_ogre_kingdoms": "Ogre Kingdoms", "wh_main_emp_empire": "Empire",
+    "wh_dlc05_wef_wood_elves": "Wood Elves", "wh2_main_def_dark_elves": "Dark Elves", "wh2_main_lzd_lizardmen": "Lizardmen",
+    "wh_main_dwf_dwarfs": "Dwarfs", "wh2_main_hef_high_elves": "High Elves", "wh_main_brt_bretonnia": "Bretonnia",
+    "wh_main_vmp_vampire_counts": "Vampire Counts", "wh_dlc03_bst_beastmen": "Beastmen", "wh3_main_cth_cathay": "Grand Cathay",
+    "wh2_dlc09_tmb_tomb_kings": "Tomb Kings", "wh2_dlc11_cst_vampire_coast": "Vampire Coast", "wh3_main_kho_khorne": "Khorne",
+    "wh3_main_tze_tzeentch": "Tzeentch", "wh3_main_ksl_kislev": "Kislev", "wh3_main_nur_nurgle": "Nurgle", "wh3_main_sla_slaanesh": "Slaanesh",
+    "wh3_dlc23_chd_chaos_dwarfs": "Chaos Dwarfs", "wh3_main_dae_daemons": "Daemons of Chaos", "wh3_dlc29_nag_undead_legions": "Undead Legions"}
 SPEED_UI = 10  # vitesse de la carte d'unité du jeu = vitesse de course brute × 10 (ex. 3.0 -> 30)
 
 def norm_table(path):
@@ -141,6 +149,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("src"); ap.add_argument("--inspect", action="store_true")
     ap.add_argument("--no-heroes", action="store_true", help="exclut seigneurs et héros")
+    ap.add_argument("--loc-fr", help="dossier contenant la localisation FRANÇAISE du jeu exportée avec RPFM (land_units__.loc.tsv, factions__.loc.tsv) : génère data/names_fr.js")
     ap.add_argument("--out", default=os.path.join(os.path.dirname(__file__), "..", "data"))
     a = ap.parse_args()
     T = load_tables(a.src, only_needed=not a.inspect)
@@ -282,6 +291,7 @@ def main():
                 names[f] = f"{n} ({suffix})"
     cult_keys = sorted({i["culture"] for i in facinfo.values()}, key=lambda c: min(i["cs"] for i in facinfo.values() if i["culture"] == c))
     cultures = {c: CULTURE_FR.get(c) or humanise(c) for c in cult_keys}
+    cultures_en = {c: CULTURE_EN.get(c) or humanise(c) for c in cult_keys}
     # seigneurs/héros sans permission de bataille personnalisée : rattachés à leur race par le préfixe de leur clé (ex. wh2_dlc14_def_cha_... -> « def » -> Elfes Noirs)
     code2cul = {c.split("_")[2]: c for c in cult_keys if len(c.split("_")) > 2}
     fixed = 0
@@ -292,10 +302,30 @@ def main():
     print(f"  {fixed} seigneurs/héros sans race rattachés par leur préfixe de clé")
     flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
     meta = provenance(a.src, units)
-    out = {"demo": False, "meta": meta, "cultures": cultures, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
+    out = {"demo": False, "meta": meta, "cultures": cultures, "culturesEn": cultures_en, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
     factions = names
     from effects_extract import build_effects  # effets par défaut des seigneurs et de leur trait
     effects = build_effects(T, units, loc, facinfo)
+    if a.loc_fr:  # noms français officiels, lus dans la localisation française exportée
+        def read_loc(prefix):
+            d = {}
+            for dp, _, fs in os.walk(a.loc_fr):
+                for fn in fs:
+                    if fn.startswith(prefix) and fn.endswith(".tsv"):
+                        for r in read_tsv(os.path.join(dp, fn)):
+                            if r.get("key"): d[r["key"]] = r.get("text", "")
+            return d
+        fr_units, fr_fac = read_loc("land_units__"), read_loc("factions__")
+        res = lambda v: fr_units.get(v[5:-2]) if v and v.startswith("{{tr:") else v
+        names_fr = {"units": {}, "factions": {}}
+        for mu in T["main_units"]:
+            nm = res(fr_units.get(f"land_units_onscreen_name_{mu.get('land_unit')}"))
+            if nm and mu.get("unit") in {u["id"] for u in units}: names_fr["units"][mu["unit"]] = nm
+        for f_ in facinfo:
+            nm = fr_fac.get(f"factions_screen_name_{f_}")
+            if nm: names_fr["factions"][f_] = nm
+        with open(os.path.join(a.out, "names_fr.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_NAMES_FR=" + json.dumps(names_fr, ensure_ascii=False) + ";")
+        print(f"noms français : {len(names_fr['units'])} unités, {len(names_fr['factions'])} factions")
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, "effects.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_EFFECTS=" + json.dumps(effects, ensure_ascii=False) + ";")
     print(f"effets par défaut : {len(effects['lords'])} seigneurs, {sum(len(v) for v in effects['leaders'].values())} associations faction -> seigneur de départ")

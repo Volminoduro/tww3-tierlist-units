@@ -9,7 +9,9 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6};
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6,
+  // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
+  FRONT_K:4, FRONT_ASPECT:3, FRONT_LARGE:10};
 const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.role);
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
 const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front
@@ -38,7 +40,7 @@ function simulate(ARMY, BON, opts) {
   for (; t < SIM.TMAX; t++) {
     if (t % 5 === 0) timeline.push([t, surv("A"), surv("B")]);
     if (!active("A") || !active("B")) break;
-    const dmgIn = {A: new Map(), B: new Map()};
+    const dmgIn = {A: new Map(), B: new Map()}, meleeIn = {A: new Map(), B: new Map()}, engIn = {A: new Map(), B: new Map()};
     for (const me of ["A","B"]) {
       const foe = me === "A" ? "B" : "A", tg = S[foe].filter(x => !x.out);
       const W = tg.reduce((a,x) => a + x.pool/x.hp, 0);
@@ -60,16 +62,26 @@ function simulate(ARMY, BON, opts) {
             const cm = charging ? 1 + a.charge/SIM.CHARGE_DMG : 1;
             dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval);
             dps += dpsM;
+            const wm = frontAlive ? wt(d) / Wm : w;                                                          // part de la mêlée dirigée vers d
+            engIn[foe].set(d, (engIn[foe].get(d) || 0) + eng * wm);                                          // attaquants qui cherchent à engager d
           }
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
             const inRange = opts.dist - closing*t <= a.range, f = t >= T0 ? SIM.RANGED_IN_MELEE : 1;
             if (inRange || t >= T0) dps += n * (r.share ?? 1) * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / Math.max(1, r.reload);
           }
-          if (dps) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (frontAlive ? (dps - dpsM) * w + dpsM * (wt(d) / Wm) : dps * w));
+          if (dps - dpsM) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (dps - dpsM) * w);                      // tir : pas limité par le front
+          if (dpsM) meleeIn[foe].set(d, (meleeIn[foe].get(d) || 0) + dpsM * (frontAlive ? wt(d) / Wm : w)); // mêlée : limitée par le front, voir plus bas
         }
         if (u.ranged && a.ammo > 0 && (opts.dist - closing*t <= a.range || t >= T0)) a.ammo -= 1/Math.max(1, u.ranged.reload);
       }
+    }
+    // Front de combat : la mêlée subie par une unité est réduite si plus d'attaquants cherchent à l'engager que la surface de contact ne le permet
+    // (unités à effectif ≥ 7 : FRONT_K × √(FRONT_ASPECT × modèles × unités), soit K fois la largeur d'un front rectangulaire ; grands modèles : FRONT_LARGE attaquants chacun)
+    for (const s of ["A","B"]) for (const [d, v] of meleeIn[s]) {
+      const Nd = d.pool / d.hp, E = engIn[s].get(d) || 0;
+      const cap = d.u.men <= 6 ? SIM.FRONT_LARGE * Nd : SIM.FRONT_K * Math.sqrt(SIM.FRONT_ASPECT * Nd * Math.max(1, d.cnt));
+      dmgIn[s].set(d, (dmgIn[s].get(d) || 0) + v * (E > cap && E > 0 ? cap / E : 1));
     }
     for (const s of ["A","B"]) for (const [d, v] of dmgIn[s]) d.pool = Math.max(0, d.pool - v);
     for (const x of [...S.A, ...S.B]) {

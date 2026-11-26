@@ -159,7 +159,6 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 .mcard p b{display:inline;font:700 14px var(--sans);letter-spacing:0;color:var(--gold2);margin:0}
 /* Sélecteur : bouton « Tout » d'une race et ligne « Toute la race » */
 .tp-pick{padding:1px 9px;font:700 11px var(--sans);letter-spacing:.04em;margin-right:4px}
-.tp-whole{padding-left:14px;font-weight:700;color:var(--gold2);background:#ffffff08;border-bottom:1px solid #2d2418}.tp-whole .tp-wi{width:24px;text-align:center;color:var(--gold)}
 /* Lisibilité : le contenu ne peut plus élargir la page ; matrice et tableaux compacts, sans défilement horizontal autant que possible */
 main{grid-template-columns:310px minmax(0,1fr)}#content{min-width:0}
 #matrix table{table-layout:fixed;width:100%}
@@ -186,3 +185,6 @@ aside{grid-template-columns:minmax(0,1fr)}aside section,.tp{min-width:0}.tp-btn{
 .dpool{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--m);margin:6px 0 2px}.dpool select{margin:0;padding:3px 6px;font-size:12px;width:auto;flex:1}
 /* Barre plafonnée (≥ 95ᵉ centile) */
 #detail .bar{position:relative;overflow:visible}#detail .bar .cap{position:absolute;right:-4px;top:-5px;color:var(--gold2);font-size:13px;line-height:1}
+/* Sélecteur de langue */
+#langsw{position:absolute;top:10px;right:14px;display:flex;gap:2px}header{position:relative}
+#langsw button{padding:2px 9px;font:700 11px var(--serif);letter-spacing:.08em}

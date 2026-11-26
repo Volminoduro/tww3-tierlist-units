@@ -1,5 +1,16 @@
 "use strict";
 const D = window.TWW3_DATA;
+/* Langue : noms de races dans la langue choisie ; noms d'unités et de factions en français si un fichier de noms français (data/names_fr.js) est fourni, sinon les noms officiels anglais du dump. */
+D.culturesFr = D.cultures;
+if (window.LANG === "en") {
+  D.cultures = D.culturesEn || D.cultures;
+  const toEn = Object.fromEntries(Object.keys(D.culturesFr).map(c => [D.culturesFr[c], D.cultures[c]]));
+  for (const k of Object.keys(D.factions)) D.factions[k] = D.factions[k].replace(/\(([^)]+)\)$/, (m, x) => toEn[x] ? `(${toEn[x]})` : m);   // « Tong (Norsca) » : suffixe de race
+} else {
+  const NF = window.TWW3_NAMES_FR || {};
+  for (const u of D.units) if (NF.units && NF.units[u.id]) { u.nameEn = u.name; u.name = NF.units[u.id]; }
+  for (const k of Object.keys(NF.factions || {})) if (D.factions[k]) D.factions[k] = NF.factions[k];
+}
 const ALL = "__all__";  // entrée « Toutes les factions » des sélecteurs
 const RACE = "race:";   // entrée « race entière » : "race:<clé de culture>"
 D.factions[ALL] = "Toutes les factions";
@@ -65,7 +76,7 @@ function initPicker(facEl, defaultKey) {
       if (!fs.length) return "";
       const isOpen = !!t || open.has(c);
       return `<div class="tp-race${facEl.value === RACE + c ? " sel" : ""}" data-c="${c}" title="Cliquer pour déplier / replier">${crest(mainFacOf(c), "s", D.cultures[c])}<span>${D.cultures[c]}</span><small>${byCul[c].length}</small><button type="button" class="tp-pick" title="Choisir toute la race">Tout</button><i>${isOpen ? "▾" : "▸"}</i></div>` +
-        (isOpen ? `<div class="tp-it tp-whole${facEl.value === RACE + c ? " sel" : ""}" data-f="${RACE + c}"><span class="tp-wi">✦</span><span>Toute la race — ${D.cultures[c]} (${byCul[c].length} factions)</span></div>` + fs.map(f => `<div class="tp-it${f === facEl.value ? " sel" : ""}" data-f="${f}">${crest(f, "s")}<span>${D.factions[f]}</span></div>`).join("") : "");
+        (isOpen ? fs.map(f => `<div class="tp-it${f === facEl.value ? " sel" : ""}" data-f="${f}">${crest(f, "s")}<span>${D.factions[f]}</span></div>`).join("") : "");
     }).join("") || (allRow ? "" : '<div class="tp-none">Aucun résultat</div>');
   };
   const close = () => { pop.hidden = true; };

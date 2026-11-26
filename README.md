@@ -64,3 +64,13 @@ Corrections apportées grâce à cette méthode : arme à distance des machines 
 ### Coût de recrutement comme base de comparaison
 Duels, rendement et équilibrage des armées se calculent sur le **coût de recrutement** pour toutes les unités (certaines factions n'ont pas d'entretien dans les tables). Dans le tier list, le coût effectif de campagne = recrutement + tours d'attente ; l'entretien n'y entre que si tu règles « Entretien pris en compte (tours) » au-dessus de 0.
 La **fiche d'unité** donne pour chaque stat son rang (« Top X % » / « Bottom X % ») et une barre remplie à valeur ÷ maximum du groupe de comparaison (même catégorie du jeu par défaut ; réglable).
+
+## Langue (FR / EN)
+Bouton **FR | EN** en haut à droite ; le choix est mémorisé et peut être forcé par `?lang=en` / `?lang=fr` (changer de langue recharge la page). Le français est la langue source ; `i18n.js` traduit l'affichage en anglais d'après le dictionnaire `i18n_en.js` (clés = texte français, `#` = nombre, `{}` = texte quelconque, par exemple un nom d'unité, qui reste tel quel). Les noms de races existent dans les deux langues (`culturesEn`).
+**Noms d'unités et de factions** : le dump ne contient que les textes **anglais** du jeu. Les noms français officiels viennent de la localisation française du jeu, à exporter avec RPFM :
+1. ouvrir `local_fr.pack` (dossier `data` du jeu, installation en français) ;
+2. extraire `text/db/land_units__.loc.tsv` et `text/db/factions__.loc.tsv` en TSV dans un dossier ;
+3. `python tools/convert_rpfm.py wh3-dump --loc-fr DOSSIER_FR` génère `data/names_fr.js` (à commiter). Sans ce fichier, le site affiche les noms officiels anglais dans les deux langues.
+
+## Front de combat
+Le simulateur limite le nombre d'attaquants qui peuvent engager une unité en même temps (`FRONT_K`, `FRONT_ASPECT`, `FRONT_LARGE` dans `sim.js`) : une horde nombreuse et bon marché n'attaque plus avec 60 % de ses hommes à la fois. Les combats équilibrés ne changent pas ; les écrasements par le nombre disparaissent (Peasant Mob : taux de victoire 1,00 → 0,48).
