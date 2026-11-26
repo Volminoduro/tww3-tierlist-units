@@ -83,7 +83,8 @@ tr:hover td{background:#ffffff08}
 .res td:nth-child(2),.res th:nth-child(2),.res td:nth-child(5),.res th:nth-child(5){text-align:left}
 /* Unités par faction */
 #tab-browse{padding:16px;display:grid;gap:12px}
-#bctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}#bctl select,#bctl input{width:auto;margin:0}
+#bctl{display:flex;flex-direction:column;gap:8px}.brow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.brow select,.brow input[type=text],#bq{width:auto;margin:0}#bq{flex:1;min-width:220px}.brow .tp{min-width:300px;flex:none}.brow .chk{margin:0;white-space:nowrap}.brow .chk input{width:auto;margin:0 6px 0 0}
+#bopt{margin:8px 0;border:1px solid var(--gold3);border-radius:3px;background:#0b090766}#bopt>summary{padding:8px 12px;cursor:pointer;font:700 12px var(--serif);letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}#bopt>.brow{padding:8px 12px;border-top:1px solid var(--gold3)}
 #brole,#bgrp{display:flex;gap:6px;flex-wrap:wrap}#bgrp label{font-size:12px;color:var(--m);display:flex;gap:3px;align-items:center}
 .btab{overflow:auto;max-height:78vh}.btab table{width:auto;min-width:100%}.btab th,.btab td{text-align:right;padding:4px 8px;vertical-align:top}
 .btab td:first-child,.btab th:first-child{position:sticky;left:0;background:#17130f;text-align:left;z-index:1;min-width:190px;border-right:1px solid var(--b)}

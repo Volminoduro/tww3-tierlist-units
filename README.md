@@ -97,3 +97,7 @@ En tête de la section **Mode** de la barre latérale, un sélecteur à deux gra
 
 ## Cache et publication
 `python tools/cache_bust.py` ajoute `?v=<empreinte>` aux scripts et styles de `index.html` : sans cela, un navigateur peut garder un ancien `app.js` avec un `index.html` neuf (ou l'inverse) et la page plante. À lancer avant chaque commit qui touche un `.js`, un `.css` ou `data/*.js`.
+
+## Filtres communs et noms de variantes
+- **Filtres partagés** : « Tier list » et « Unités par faction » utilisent les mêmes filtres (faction/race, recherche, catégories, usages, case « seigneurs & héros dans Toutes ») : un filtre posé dans un onglet se retrouve dans l'autre. Les colonnes et le groupe de comparaison sont repliés sous « Colonnes et groupe de comparaison ».
+- **Doublons** : `tools/convert_rpfm.py` fusionne les unités strictement identiques (par exemple les copies `_mp` de la bataille multijoueur : 75 unités) et renomme les variantes réellement différentes d'une même faction avec la monture ou la variante, par exemple « Neferata (Hellsteed) », « Neferata (Coven Throne) », « Arkhan the Black (Dread Abyssal) » ; le suffixe « (#N) » n'est utilisé qu'en dernier recours.

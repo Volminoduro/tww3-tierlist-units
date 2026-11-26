@@ -38,12 +38,19 @@
   const f = v => v >= 1000 ? Math.round(v).toLocaleString("fr-FR") : (Math.round(v*10)/10).toString();
 
   const fs = $b("#bfac"); initPicker(fs, ALL); // sélection de départ : toutes les factions
-  let role = new Set(), sortK = "cost", sortD = 1; // catégories : sélection multiple (vide = toutes)
+  let sortK = "cost", sortD = 1; // catégories, usages, faction, recherche et seigneurs/héros : état PARTAGÉ avec le tier list (variables globales de app.js)
   $b("#bgrp").innerHTML = GROUPS.map(g => `<label><input type="checkbox" data-g="${g}" checked>${g}</label>`).join("");
   $b("#bgrp").onchange = e => { e.target.checked ? shown.add(e.target.dataset.g) : shown.delete(e.target.dataset.g); render(); };
-  ["bfac","bpool","bq","bcols"].forEach(i => $b("#"+i).addEventListener("input", render));
+  ["bpool","bq","bcols","bheroes"].forEach(i => $b("#"+i).addEventListener("input", render));
+  /* Filtres communs aux deux onglets : faction, recherche et case « seigneurs & héros » sont recopiés dans les deux sens ; catégories et usages sont les mêmes ensembles (role, TYPO) */
+  const fsel2 = document.querySelector("#faction"), q1 = document.querySelector("#q"), h1 = document.querySelector("#heroes"), h2 = $b("#bheroes");
+  const copyFac = (from, to) => { if (to.value !== from.value) { to.value = from.value; to.dispatchEvent(new Event("change")); } };
+  fs.addEventListener("change", () => { copyFac(fs, fsel2); render(); }); fsel2.addEventListener("change", () => copyFac(fsel2, fs));
+  $b("#bq").addEventListener("input", () => { q1.value = $b("#bq").value; }); q1.addEventListener("input", () => { $b("#bq").value = q1.value; });
+  h2.addEventListener("input", () => { h1.checked = h2.checked; }); h1.addEventListener("input", () => { h2.checked = h1.checked; });
+  h2.checked = h1.checked; $b("#bq").value = q1.value; copyFac(fsel2, fs);
   $b("#brole").onclick = e => { const b = e.target.closest("button[data-r]"); if (!b) return; const r = b.dataset.r; if (!r) role.clear(); else role.has(r) ? role.delete(r) : role.add(r); render(); };
-  const BTYPO = new Set();
+  const BTYPO = TYPO; // même sélection d'usages que le tier list
   $b("#btypo").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return; const k = b.dataset.k; k === "" ? BTYPO.clear() : BTYPO.has(k) ? BTYPO.delete(k) : BTYPO.add(k); render(); };
   $b("#btab").onclick = e => { const th = e.target.closest("th[data-k]"); if (th) { sortD = sortK === th.dataset.k ? -sortD : 1; sortK = th.dataset.k; render(); } };
   $b("#bnote").textContent = "Chaque stat est suivie de son rang parmi le groupe de comparaison choisi : « Top 8 % » = dans les 8 % meilleurs, « Bottom 20 % » = dans les 20 % moins bons. Pour le coût, l'entretien, l'intervalle d'attaque et le rechargement, « mieux » = plus bas. Les stats non applicables (ex. tir pour une unité de mêlée) sont ignorées. Survole un badge pour voir le détail. Clique un en-tête pour trier.";
@@ -52,11 +59,12 @@
     const fac = fs.value, mode = $b("#bpool").value, q = $b("#bq").value.toLowerCase();
     const inFac = uniq(D.units.filter(u => inScope(u, fac)));
     const byName = inFac.filter(u => u.name.toLowerCase().includes(q));
-    const cnt = r => byName.filter(u => (!r || u.role === r) && [...BTYPO].every(k => canDo(u, k))).length; // périmètre, recherche et usages actifs
+    const incl = h2.checked, LH = u => u.role === "lord" || u.role === "hero";   // « Toutes » exclut seigneurs et héros sauf case cochée (comme le tier list)
+    const cnt = r => byName.filter(u => (r ? u.role === r : (incl || !LH(u))) && [...BTYPO].every(k => canDo(u, k))).length; // périmètre, recherche et usages actifs
     $b("#bfban").innerHTML = factionBanner(fac, inFac.length);
     [...role].forEach(r => { if (!cnt(r)) role.delete(r); }); // une catégorie devenue vide est retirée de la sélection
     $b("#brole").innerHTML = roleChips(roles, role, cnt);
-    const rows = typoApply(byName.filter(u => !role.size || role.has(u.role)), u => u, BTYPO, $b("#btypo"));
+    const rows = typoApply(byName.filter(u => role.size ? role.has(u.role) : (incl || !LH(u))), u => u, BTYPO, $b("#btypo"));
     const poolOf = u => mode === "all" ? D.units : mode === "fac" ? inFac : mode === "role_fac" ? inFac.filter(x => x.role === u.role) : D.units.filter(x => x.role === u.role);
     const keyOf = u => `${mode}|${mode.endsWith("fac") ? fac : ""}|${mode.startsWith("role") ? u.role : ""}`;
     const pools = {}; rows.forEach(u => { const k = keyOf(u); if (!pools[k]) { const p = uniq(poolOf(u)); pools[k] = {n: p.length, st: stats(p, k)}; } });
@@ -72,7 +80,7 @@
           const p = pct(s, u, P.st[s.k]); const rank = P.st[s.k].length - upper(P.st[s.k], s.d * s.v(u)) + 1;
           return `<td>${f(s.v(u))}<br>${badge(p, `${s.l} : ${rank}ᵉ sur ${P.st[s.k].length}${s.d<0?" (moins = mieux)":""}`)}</td>`; }).join("") + "</tr>"; }).join("") + "</table>";
   }
-  document.querySelector('[data-tab=browse]').addEventListener("click", render);
+  document.querySelector('[data-tab=browse]').addEventListener("click", () => { copyFac(fsel2, fs); h2.checked = h1.checked; $b("#bq").value = q1.value; render(); });
   window.TWW3Stats = {ST, applies, stats, pct, upper}; // partagé avec la fiche d'unité (rang Top / Bottom % de chaque stat)
   render();
 })();

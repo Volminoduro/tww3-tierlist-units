@@ -295,6 +295,7 @@ def main():
             "mpCost": num(col(mu, "mp_cost")),
             "recruitTurns": num(col(mu, "recruit_turns"), 1),
             "tier": num(col(mu, "tier")),
+            "mount": col(lu, "mount") or "",
             "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5), "res": {"ph": num(lu.get("damage_mod_physical")), "mi": num(lu.get("damage_mod_missile")), "ma": num(lu.get("damage_mod_magic")),
                     "fl": num(lu.get("damage_mod_flame")) + flame_of_land.get(col(mu, "land_unit"), 0), "all": num(lu.get("damage_mod_all"))},
             "groups": ugroups, "facs": sorted(perm_of.get(key, ())) if caste not in ("lord", "hero") else [],
@@ -347,12 +348,69 @@ def main():
         if u["role"] in ("lord", "hero") and not u["cultures"] and len(parts) > 2 and parts[2] in code2cul:
             u["cultures"] = [code2cul[parts[2]]]; fixed += 1
     print(f"  {fixed} seigneurs/héros sans race rattachés par leur préfixe de clé")
+    # --- Doublons : même nom dans une même faction/race ---
+    # 1) fusion des unités strictement identiques (mêmes stats : ex. les copies « _mp » de la bataille multijoueur) ; on garde la clé sans « _mp » et on réunit leurs factions
+    # 2) les variantes réellement différentes (monture, version 0/1/2…) reçoivent un suffixe tiré de leur clé : « Neferata (Barded Nightmare) », « Arkhan the Black (#2) »
+    SIGF = ("hp", "men", "armour", "ma", "md", "charge", "ld", "speed", "melee", "ranged", "cost", "mpCost", "role", "regen", "res", "upkeep", "recruitTurns", "rw", "per")
+    sig = lambda u: json.dumps([u.get(k) for k in SIGF], sort_keys=True)
+    by_name = defaultdict(list)
+    for u in units: by_name[u["name"]].append(u)
+    removed = {}
+    for n, lst in by_name.items():
+        seen = {}
+        for u in sorted(lst, key=lambda x: (x["id"].endswith("_mp"), x["id"])):
+            k = sig(u)
+            if k in seen:
+                keep = seen[k]
+                for f in ("groups", "facs", "cultures"): keep[f] = sorted(set(keep[f]) | set(u[f]))
+                removed[u["id"]] = keep["id"]
+            else: seen[k] = u
+    units = [u for u in units if u["id"] not in removed]
+    by_name = defaultdict(list)
+    for u in units: by_name[u["name"]].append(u)
+    labelled = 0
+    for n, lst in by_name.items():
+        if len(lst) < 2: continue
+        ctx = lambda u: set(u["groups"]) | set(u["facs"]) | set(u["cultures"])
+        conf = [u for u in lst if any(v is not u and ctx(u) & ctx(v) for v in lst)]   # seules les unités qui se retrouvent dans une même faction/race sont renommées
+        if len(conf) < 2: continue
+        def core(k):                                     # retire le préfixe d'extension (wh2_dlc09_, wh3_main_, wh3_dlc29_…) pour comparer les clés
+            t = k.split("_")
+            if t and re.fullmatch(r"wh\d*", t[0]): t = t[1:]
+            if t and re.fullmatch(r"main|dlc\d+|pro\d+|twa\d+|survival|cp\d+", t[0]): t = t[1:]
+            return t
+        toks = [core(u["id"]) for u in conf]
+        pre = 0
+        while all(len(t) > pre for t in toks) and len({t[pre] for t in toks}) == 1: pre += 1
+        for u, t in zip(conf, toks):
+            rest = [x for x in t[pre:] if x != "mp"]
+            if not rest: continue                                     # version de base : garde le nom simple
+            if all(x.isdigit() for x in rest):                # variantes numérotées (_0 … _5) : en pratique des montures différentes ; sinon #N
+                mt = core(u.get("mount") or "")
+                mt = [x for x in mt if x not in ("mnt", "mount")]
+                lab = " ".join(mt[1:] if len(mt) > 1 and len(mt[0]) == 3 else mt).title() if mt else ""
+                if not lab and int("".join(rest)) > 0: lab = "#" + str(int("".join(rest)) + 1)
+            else: lab = " ".join(x for x in rest if not x.isdigit()).title()
+            if lab: u["name"] = f"{n} ({lab})"; labelled += 1
+    # les rares noms encore identiques dans une même faction reçoivent #2, #3…
+    by_name = defaultdict(list)
+    for u in units: by_name[u["name"]].append(u)
+    for n, lst in by_name.items():
+        if len(lst) < 2: continue
+        for i, u in enumerate(sorted(lst, key=lambda x: x["id"])):
+            if i and any(v is not u and (set(u["groups"]) | set(u["facs"]) | set(u["cultures"])) & (set(v["groups"]) | set(v["facs"]) | set(v["cultures"])) for v in lst): u["name"] = f"{n} (#{i + 1})"; labelled += 1
+    print(f"  doublons : {len(removed)} unités identiques fusionnées, {labelled} variantes renommées")
     flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
     meta = provenance(a.src, units)
     out = {"demo": False, "meta": meta, "cultures": cultures, "culturesEn": cultures_en, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
     factions = names
     from effects_extract import build_effects  # effets par défaut des seigneurs et de leur trait
     effects = build_effects(T, units, loc, facinfo)
+    def remap(o):                                   # les unités fusionnées (doublons identiques) renvoient à celle conservée
+        if isinstance(o, dict): return {k: (removed.get(v, v) if k == "unit" and isinstance(v, str) else remap(v)) for k, v in o.items()}
+        if isinstance(o, list): return [remap(x) for x in o]
+        return o
+    effects = remap(effects)
     if a.loc_fr:  # noms français officiels, lus dans la localisation française exportée
         def read_loc(prefix):
             d = {}

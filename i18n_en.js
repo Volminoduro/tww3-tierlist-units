@@ -234,6 +234,10 @@ Object.assign(I18N.dict, {
   "Creative Assembly / SEGA / Games Workshop": "Creative Assembly / SEGA / Games Workshop", ": le jeu": ": the game",
   "et son univers, dont ce projet de fan n'est pas affilié.": "and its universe, which this fan project is not affiliated with.",
   "Limites connues": "Known limitations",
+  "Seigneurs & héros dans « Toutes »": "Lords & heroes in \"All\"",
+  "Comme dans le tier list : les seigneurs et héros sont masqués de « Toutes » sauf si cette case est cochée ou si leur catégorie est choisie": "As in the tier list: lords and heroes are hidden from \"All\" unless this box is checked or their category is chosen",
+  "Colonnes et groupe de comparaison": "Columns and comparison group",
+
   "Classement": "Ranking",
   "Coût": "Cost",
   "Usage": "Use",
