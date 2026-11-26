@@ -25,6 +25,8 @@ for dp, dn, fs in os.walk(src):
         k, ext = os.path.splitext(fn)
         # « placeholder » : image vide du jeu, donnée comme unit_card à beaucoup de seigneurs/héros -> on cherche leur vrai portrait
         if ext.lower() == ".png" and not re.search(r"_mask\d*$|^placeholder", k.lower()): pngs.setdefault(k.lower(), []).append(os.path.join(dp, fn))
+for k in pngs:                                      # même nom à plusieurs endroits : vraies cartes d'abord, puis vignettes basse qualité (minspec),
+    pngs[k].sort(key=lambda p: ("minspec" in p.lower()) + 2 * ("portholes" in p.lower()))   # puis médaillons de campagne (portholes)
 cards = {}                                          # clé d'unité -> noms de carte (unit_card), variantes sans faction d'abord
 if dump:
     for dp, _, fs in os.walk(os.path.join(dump, "db", "unit_variants_tables")):
@@ -75,24 +77,97 @@ def portrait_names(k):
             for u in unis.get(a, []):
                 r = uniforms.get(u, {})
                 for v in (r.get("campaign_porthole_filename"), r.get("filename"), r.get("battle_filename")):
-                    if v: yield strip(v) + "_0"; yield strip(v)
+                    if not v: continue
+                    for n in dict.fromkeys((strip(v), strip(v).replace("_ch_", "_cha_"))):   # les fichiers écrivent parfois _cha_ là où la table dit _ch_
+                        yield n + "_0"; yield n
     if k in setpiece: yield setpiece[k]
 
-via_card = via_portrait = via_sibling = 0
-found_by_base = {}
-for k in ids:
-    hit = next((n for n in [k.lower()] + [c for _, c in sorted(cards.get(k, []))] if n in pngs), None)
+# Rapprochement tolérant (dernier recours) : la table dit « vmp_cha_lahmian_vampire_campaign_01 » mais le fichier s'appelle
+# « vmp_lahmian_vampire_hero_campaign_01_0 », ou « neu_cha_ulrika » pour « neu_ulrika_0 ». On prend le portrait de personnage
+# dont le nom contient tous les mots de la variante (hors cha/ch), avec le moins de mots en plus (2 au plus).
+# Sources de secours, utilisées seulement en tout dernier : vignettes basse qualité (ui/units/minspec_portholes, nommées
+# comme les unités) et médaillons de campagne (ui/portraits/portholes). Un nom qui n'existe que là n'est pas « bon ».
+low = lambda p: "minspec" in p.lower() or "portholes" in p.lower()
+good = {n for n, ps in pngs.items() if not low(ps[0])}
+sing = lambda w: w[:-1] if len(w) > 4 and w.endswith("s") else w      # shadows / shadow, beastlords / beastlord
+def tokens(pool): return [(n, {sing(w) for w in n.split("_")} - {"0"}) for n in pool if any("portraits" in p.lower() for p in pngs[n])]
+def fuzzy(k, toks_pool):
+    best = None
+    for v in dict.fromkeys(portrait_names(k)):
+        want = {sing(w) for w in v.split("_")} - {"cha", "ch", "0"}
+        if len(want) < 2: continue
+        for n, toks in toks_pool:
+            extra = len(toks - want - {"cha", "ch"})
+            if want <= toks and extra <= 2 and (best is None or extra < best[0]): best = (extra, n)
+        if best: return best[1]
+    return None
+
+via_card = via_portrait = via_sibling = via_fuzzy = via_low = 0
+fuzzy_log = []
+found_by_base, found = {}, {}
+def find(k, pool, toks_pool):
+    global via_card, via_portrait, via_fuzzy
+    hit = next((n for n in [k.lower()] + [c for _, c in sorted(cards.get(k, []))] if n in pool), None)
     if hit: via_card += hit != k.lower()
     elif dump:
-        hit = next((n for n in portrait_names(k) if n in pngs), None)
+        hit = next((n for n in portrait_names(k) if n in pool), None)
         via_portrait += bool(hit)
-    if hit:
-        shutil.copy(pngs[hit][0], os.path.join(root, "img", "units", k + ".png")); units.append(k)
-        found_by_base.setdefault(base(k), hit)
-for k in ids:                                       # variantes (monture…) sans image propre : celle d'une variante sœur
-    if k not in units and base(k) in found_by_base:
-        shutil.copy(pngs[found_by_base[base(k)]][0], os.path.join(root, "img", "units", k + ".png")); units.append(k); via_sibling += 1
-if dump: print(f"  dont {via_card} via unit_card, {via_portrait} via portraits de personnages, {via_sibling} via une variante sœur")
+        if not hit and "_cha_" in k:
+            hit = fuzzy(k, toks_pool); via_fuzzy += bool(hit)
+            if hit: fuzzy_log.append(f"{k} -> {hit}")
+    return hit
+def take(k, hit):
+    shutil.copy(pngs[hit][0], os.path.join(root, "img", "units", k + ".png")); units.append(k)
+    found_by_base.setdefault(base(k), hit); found[k] = hit
+good_tokens = tokens(good)
+for k in ids:
+    hit = find(k, good, good_tokens)
+    if hit: take(k, hit)
+core = lambda k: strip(base(k))                    # clé sans préfixe d'extension ni numéro : wh2_dlc15_hef_cha_princess_6 -> hef_cha_princess
+found_by_core = {}
+for b, hit in found_by_base.items(): found_by_core.setdefault(strip(b), hit)
+mounted_base = {}                                   # unité montée -> unité de base (…_chaos_lord_mkho_juggernaut -> …_chaos_lord_mkho)
+if dump:
+    for r in read_table("units_custom_battle_mounts_tables"):
+        if r.get("mounted_unit") and r.get("base_unit"): mounted_base.setdefault(r["mounted_unit"], r["base_unit"])
+def sibling(k):
+    hit = found_by_base.get(base(k)) or found_by_core.get(core(k))
+    b = mounted_base.get(k)
+    if not hit and b: hit = found.get(b) or found_by_base.get(base(b)) or found_by_core.get(core(b))
+    return hit
+def siblings_pass():
+    global via_sibling
+    for k in ids:                                   # variantes (monture…) sans image propre : celle d'une variante sœur, de l'unité à pied, ou d'une autre extension
+        if k in units: continue
+        hit = sibling(k)
+        if hit:
+            shutil.copy(pngs[hit][0], os.path.join(root, "img", "units", k + ".png")); units.append(k); via_sibling += 1; found[k] = hit
+siblings_pass()
+all_tokens = tokens(pngs)                           # dernier recours : vignettes basse qualité et médaillons de campagne
+for k in ids:
+    if k in units: continue
+    hit = find(k, pngs, all_tokens)
+    if hit: take(k, hit); via_low += 1
+for b, hit in found_by_base.items(): found_by_core.setdefault(strip(b), hit)
+siblings_pass()
+# Variantes de domaine de magie ou de monture ajoutées plus tard (…master_necromancer_undeath, …sorcerer_lord_shadows_msla) :
+# même portrait que le personnage dont la clé est un préfixe (on retire les derniers mots, en gardant au moins 3 mots).
+via_prefix = 0
+cores = sorted(found_by_core)
+for k in ids:
+    if k in units or "_cha_" not in k: continue
+    t = core(k).split("_")
+    for n in range(len(t) - 1, 2, -1):
+        p = "_".join(t[:n])
+        hit = found_by_core.get(p) or found_by_core.get(p + "_0")   # préfixe exact seulement : « wizard » seul mènerait à un autre sorcier
+        if hit:
+            shutil.copy(pngs[hit][0], os.path.join(root, "img", "units", k + ".png")); units.append(k); found[k] = hit; via_prefix += 1
+            fuzzy_log.append(f"[préfixe] {k} -> {hit}")
+            break
+siblings_pass()
+if dump: print(f"  {via_prefix} variantes rattachées au personnage de base par préfixe de clé")
+if dump: print(f"  dont {via_card} via unit_card, {via_portrait} via portraits de personnages, {via_fuzzy} par rapprochement de nom, {via_sibling} via une variante sœur ; {via_low} images de secours (minspec / médaillon de campagne)")
+if "-v" in sys.argv: print("\n".join(fuzzy_log))
 for fk, path in data.get("flags", {}).items():
     cands = dirs.get(os.path.basename(path).lower(), []) if path else []
     for d in cands:

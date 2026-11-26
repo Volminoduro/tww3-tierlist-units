@@ -476,10 +476,11 @@ def main():
                 if not (v and v.startswith("{{tr:") and v.endswith("}}")): break
                 v = fr_units.get(v[5:-2])
             return v
+        clean = lambda s: re.sub(r"\s+", " ", re.sub(r"\\+n|\n", " ", s)).strip()   # retours à la ligne du jeu (« \n » écrit en toutes lettres) -> espace
         mount_fr = {}                                # unité montée -> nom français de la monture (« Destrier Infernal »…)
         for r in T.get("units_custom_battle_mounts", []):
             nm = res(fr_units.get(f"units_custom_battle_mounts_mount_name_{r.get('base_unit')}{r.get('mounted_unit')}"))
-            if nm and r.get("mounted_unit"): mount_fr.setdefault(r["mounted_unit"], nm.strip())
+            if nm and r.get("mounted_unit"): mount_fr.setdefault(r["mounted_unit"], clean(nm))
         mount_of = {u["id"]: u.get("mount") or "" for u in units}
         by_mount = {}                                # clé de monture -> nom français vu sur une autre unité montée
         for r in T.get("units_custom_battle_mounts", []):
@@ -502,7 +503,7 @@ def main():
             nm = res(fr_units.get(f"land_units_onscreen_name_{mu.get('land_unit')}"))
             if nm and mu.get("unit") in unit_ids:
                 k = mu["unit"]   # variantes : nom français de la monture si connu, sinon même suffixe qu'en anglais
-                names_fr["units"][k] = nm + (f" ({mount_fr.get(k) or vlabels[k]})" if k in vlabels else "")
+                names_fr["units"][k] = clean(nm) + (f" ({mount_fr.get(k) or vlabels[k]})" if k in vlabels else "")
         print(f"  montures traduites : {sum(1 for k in vlabels if k in mount_fr and k in names_fr['units'])} sur {sum(1 for k in vlabels if k in names_fr['units'])} variantes")
         for f_ in facinfo:
             nm = fr_fac.get(f"factions_screen_name_{f_}")
