@@ -101,7 +101,9 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
  // Mobilité : vitesse pure, jamais divisée par le coût (une unité lente et bon marché ne devient pas « mobile »)
  us.forEach(x=>x.score= ar==="global" ? x[key] : key==="value"&&ar!=="speed" ? x.arche[ar]/Math.max(1,x.cost) : x.arche[ar]);
  us.forEach(x=>{x.pct={};});
- ARCHK.forEach(k=>{const v=x=>key==="value"&&k!=="speed"?x.arche[k]/Math.max(1,x.cost):x.arche[k];const s=us.slice().sort((a,b)=>v(a)-v(b));s.forEach((x,i)=>x.pct[k]=us.length>1?Math.round(i/(us.length-1)*100):100);});
+ ARCHK.forEach(k=>{const v=x=>key==="value"&&k!=="speed"?x.arche[k]/Math.max(1,x.cost):x.arche[k];const s=us.slice().sort((a,b)=>v(a)-v(b));
+   // égalités = même percentile (moyenne des rangs) ; une unité qui ne sait pas faire l'usage (valeur 0) est à 0, pas étalée sur l'échelle
+   for(let i=0;i<s.length;){let j=i;while(j+1<s.length&&v(s[j+1])===v(s[i]))j++;const pc=v(s[i])<=0?0:us.length>1?Math.round((i+j)/2/(us.length-1)*100):100;for(let t=i;t<=j;t++)s[t].pct[k]=pc;i=j+1;}});
  if(ar!=="global") us=us.filter(x=>x.arche[ar]>0);
  const groups={}; us.forEach(x=>(groups[$("#scope").value==="role"?x.u.role:"all"]??=[]).push(x));
  for(const g of Object.values(groups)){ g.sort((a,b)=>a.score-b.score);
@@ -207,7 +209,7 @@ function statRows(u){
 }
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
- dt.innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small>${gtier(u)}</div></div>
+ dt.innerHTML=`<div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small>${gtier(u)}</div><button class="x" id="close">✕</button></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label>
  ${statRows(u)}
  <h4>Profil d'usage (percentile)</h4>${ARCHK.map(k=>srow("target",ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées")).join("")}

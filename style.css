@@ -107,7 +107,7 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 .gt{display:inline-block;font:600 10px var(--sans);font-style:normal;letter-spacing:.03em;color:var(--m);border:1px solid var(--b);border-radius:8px;padding:0 6px;margin:1px 0;white-space:nowrap}.card .ct .gt{display:block;width:max-content}
 .card{display:flex;gap:8px;align-items:center;width:216px}.card .ct{min-width:0}
 .nm{display:flex;align-items:center;gap:8px;white-space:normal}.btab .nm{white-space:nowrap}
-#detail .dh{display:flex;gap:10px;align-items:center;margin-bottom:4px}
+#detail .dh{display:flex;gap:10px;align-items:center;margin:-14px -14px 4px;padding:14px 14px 8px;position:sticky;top:-14px;z-index:6;background:#1b1611;border-bottom:1px solid var(--gold3)}#detail .dh>div{flex:1;min-width:0}#detail .dh .x{float:none;align-self:flex-start;flex:none}
 
 /* Emblèmes de faction */
 .crest{position:relative;flex:none;width:52px;height:60px;display:inline-block;color:var(--gold)}
