@@ -2,13 +2,15 @@
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tier List TW:Warhammer 3</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&family=Cinzel:wght@500;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><script src="i18n.js"></script></head>
 <body>
-<header><div class="orn">◆ ◆ ◆</div><h1>Total War : Warhammer III</h1><p class="sub">Tier list &amp; comparateur d'unités</p><nav id="nav"><button data-tab="tier" class="on">Tier list</button><button data-tab="browse">Unités par faction</button><button data-tab="battle">Combat d'armées</button><button data-tab="method">Méthode</button></nav><label id="costsw" title="Activé : les tiers et usages sont rapportés au coût (efficacité par or). Désactivé : on classe la puissance brute, sans tenir compte du prix (armée limitée à 20 unités : l'argent n'est pas le seul facteur limitant)."><input type="checkbox" id="coston" checked><span class="sw"></span><b>Tenir compte du coût</b><small>(tier list)</small></label>
+<header><div class="orn">◆ ◆ ◆</div><h1>Total War : Warhammer III</h1><p class="sub">Tier list &amp; comparateur d'unités</p><nav id="nav"><button data-tab="tier" class="on">Tier list</button><button data-tab="browse">Unités par faction</button><button data-tab="battle">Combat d'armées</button><button data-tab="method">Méthode</button></nav>
 <div id="demo" hidden>⚠ Données de démonstration (valeurs approximatives, non officielles). Importe tes tables avec <code>tools/convert_rpfm.py</code>.</div></header>
 <main id="tab-tier">
 <aside>
  <section><h2>Race &amp; faction</h2><select id="faction"></select>
   <label class="chk"><input type="checkbox" id="heroes"> Seigneurs &amp; héros inclus dans « Toutes »</label></section>
  <section><h2>Mode</h2>
+  <div id="costsw" role="group" aria-label="Tenir compte du coût" title="Avec coût : tiers et usages rapportés au prix (efficacité par or). Sans coût : puissance brute, la meilleure unité de chaque usage même plus chère (armée limitée à 20 unités : l'argent n'est pas le seul facteur limitant).">
+   <button type="button" data-on="1" class="on"><b>Avec coût</b><small>efficacité par or</small></button><button type="button" data-on="0"><b>Sans coût</b><small>puissance brute</small></button></div>
   <select id="mode"><option value="camp">Campagne (coût de recrutement + attente, entretien en option)</option><option value="mp">Bataille personnalisée / multi (coût MP)</option></select>
   <select id="metric"><option value="value">Tier par efficacité (puissance ÷ coût)</option><option value="power">Tier par puissance brute</option><option value="duels">Tier par résultats de duels (taux de victoire)</option></select>
   <select id="arch"></select>

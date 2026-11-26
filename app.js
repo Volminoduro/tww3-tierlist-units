@@ -50,9 +50,10 @@ $("#typo").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)retu
 ["faction","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
 /* Interrupteur « Tenir compte du coût » (en-tête) : activé = métrique « efficacité » (puissance ou usage ÷ coût), désactivé = « puissance brute » (la meilleure unité par usage, quel que soit son prix).
    Il pilote le menu « Tier par… » et reste synchronisé avec lui. « Résultats de duels » est déjà à coût égal : l'interrupteur est alors sans effet (grisé). */
-const costSw=$("#coston");
-const syncCost=()=>{const m=$("#metric").value; costSw.disabled=m==="duels"; costSw.closest("label").classList.toggle("off",!costSw.checked&&m!=="duels"); if(m!=="duels")costSw.checked=m==="value";};
-costSw.addEventListener("change",()=>{try{localStorage.setItem("costOn",costSw.checked?"1":"0")}catch(e){} $("#metric").value=costSw.checked?"value":"power"; render()});
+const costSw=$("#costsw"), costBtns=[...costSw.querySelectorAll("button")];
+const syncCost=()=>{const m=$("#metric").value, on=m==="value"; costSw.classList.toggle("dis",m==="duels"); costBtns.forEach(b=>{b.disabled=m==="duels"; b.classList.toggle("on",m!=="duels"&&(b.dataset.on==="1")===on);});};
+const setCost=on=>{try{localStorage.setItem("costOn",on?"1":"0")}catch(e){} $("#metric").value=on?"value":"power"; syncCost(); render();};
+costSw.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;setCost(b.dataset.on==="1");});
 $("#metric").addEventListener("input",()=>{if($("#metric").value!=="duels"){try{localStorage.setItem("costOn",$("#metric").value==="value"?"1":"0")}catch(e){}} syncCost()});
 try{if(localStorage.getItem("costOn")==="0"&&$("#metric").value==="value")$("#metric").value="power"}catch(e){}
 syncCost();
@@ -217,8 +218,8 @@ function statRows(u){
 }
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
- dt.innerHTML=`<div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small>${gtier(u)}</div><button class="x" id="close">✕</button></div>
- <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label>
+ dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small>${gtier(u)}</div><button class="x" id="close">✕</button></div>
+ <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label></div>
  ${statRows(u)}
  <h4>Profil d'usage (percentile)</h4>${ARCHK.map(k=>srow("target",ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées")).join("")}
  <dl><dt>${si("bolt")}Puissance</dt><dd>${Math.round(x.power)}</dd><dt>${si("coin")}Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>${si("bolt")}Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl>${duelPanel(u)}`;
