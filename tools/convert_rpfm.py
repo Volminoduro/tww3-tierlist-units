@@ -96,6 +96,8 @@ def read_tsv(path):
 NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missile_weapons", "projectiles",
           "unit_armour_types", "armour_types", "mounts", "factions", "units_custom_battle_permissions", "cultures_subcultures",
           "custom_battle_factions", "units_to_groupings_military_permissions",
+          # montures des seigneurs/héros (unité de base -> unité montée) : nom localisé de la monture pour les noms français
+          "units_custom_battle_mounts",
           # effets par défaut des seigneurs (tools/effects_extract.py)
           "agent_subtypes", "faction_starting_general_effects", "effect_bundles_to_effects_junctions", "character_skill_nodes",
           "character_skill_node_sets", "character_skill_node_set_items", "character_skill_level_to_effects_junctions",
@@ -469,11 +471,39 @@ def main():
                 print(f"  localisation française : {len(_fr)} entrées lues")
             return _fr
         fr_units, fr_fac = read_loc("land_units__"), read_loc("factions__")
-        res = lambda v: fr_units.get(v[5:-2]) if v and v.startswith("{{tr:") else v
+        def res(v):                                  # suit les renvois {{tr:clé}} (éventuellement en chaîne)
+            for _ in range(5):
+                if not (v and v.startswith("{{tr:") and v.endswith("}}")): break
+                v = fr_units.get(v[5:-2])
+            return v
+        mount_fr = {}                                # unité montée -> nom français de la monture (« Destrier Infernal »…)
+        for r in T.get("units_custom_battle_mounts", []):
+            nm = res(fr_units.get(f"units_custom_battle_mounts_mount_name_{r.get('base_unit')}{r.get('mounted_unit')}"))
+            if nm and r.get("mounted_unit"): mount_fr.setdefault(r["mounted_unit"], nm.strip())
+        mount_of = {u["id"]: u.get("mount") or "" for u in units}
+        by_mount = {}                                # clé de monture -> nom français vu sur une autre unité montée
+        for r in T.get("units_custom_battle_mounts", []):
+            mk = mount_of.get(r.get("mounted_unit"))
+            if mk and r.get("mounted_unit") in mount_fr: by_mount.setdefault(mk, mount_fr[r["mounted_unit"]])
+        def mount_label(mk):                         # même calcul que le suffixe anglais tiré de la monture (cf. plus haut)
+            t = mk.split("_")
+            if t and re.fullmatch(r"wh\d*", t[0]): t = t[1:]
+            if t and re.fullmatch(r"main|dlc\d+|pro\d+|twa\d+|survival|cp\d+", t[0]): t = t[1:]
+            t = [x for x in t if x not in ("mnt", "mount")]
+            return " ".join(t[1:] if len(t) > 1 and len(t[0]) == 3 else t).title() if t else ""
+        for k, lab in vlabels.items():               # suffixe anglais venu de la monture, sans nom propre à l'unité : nom de la même monture ailleurs
+            mk = mount_of.get(k)
+            if k not in mount_fr and mk in by_mount and lab == mount_label(mk): mount_fr[k] = by_mount[mk]
+            elif k not in mount_fr and mk and lab == mount_label(mk) and re.fullmatch(r"Warhorse( 360| Deprecated)?", lab):
+                mount_fr[k] = "Cheval de guerre"     # anciens chevaux sans entrée de bataille personnalisée (terme officiel du jeu)
         names_fr = {"units": {}, "factions": {}}
+        unit_ids = {u["id"] for u in units}
         for mu in T["main_units"]:
             nm = res(fr_units.get(f"land_units_onscreen_name_{mu.get('land_unit')}"))
-            if nm and mu.get("unit") in {u["id"] for u in units}: names_fr["units"][mu["unit"]] = nm + (f" ({vlabels[mu['unit']]})" if mu.get("unit") in vlabels else "")   # variantes (monture…) : même suffixe qu'en anglais
+            if nm and mu.get("unit") in unit_ids:
+                k = mu["unit"]   # variantes : nom français de la monture si connu, sinon même suffixe qu'en anglais
+                names_fr["units"][k] = nm + (f" ({mount_fr.get(k) or vlabels[k]})" if k in vlabels else "")
+        print(f"  montures traduites : {sum(1 for k in vlabels if k in mount_fr and k in names_fr['units'])} sur {sum(1 for k in vlabels if k in names_fr['units'])} variantes")
         for f_ in facinfo:
             nm = fr_fac.get(f"factions_screen_name_{f_}")
             if nm: names_fr["factions"][f_] = nm
