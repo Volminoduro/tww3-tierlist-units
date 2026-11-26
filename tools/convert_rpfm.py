@@ -117,7 +117,7 @@ def load_tables(root, only_needed=False):
                 p = os.path.join(dp, fn)
                 if only_needed:
                     name = norm_table(p) if "_tables" in p.lower() else fn.lower()
-                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__") or name.startswith("effects__") or name.startswith("ownership_products__")): continue
+                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__") or name.startswith("effects__") or name.startswith("ownership_products__") or name.startswith("units_custom_battle_mounts__")): continue
                 tables[norm_table(p) if "_tables" in p.lower() else re.sub(r"\.tsv$","",fn.lower())].extend(read_tsv(p))
     return tables
 
@@ -389,6 +389,19 @@ def main():
     by_name = defaultdict(list)
     for u in units: by_name[u["name"]].append(u)
     labelled = 0; vlabels = {}                      # suffixe de variante ajouté au nom (réutilisé pour les noms français)
+    vrace = {}                                      # suffixe = race d'origine (clé de culture), traduit pour les noms français
+    # Nom anglais officiel de la monture (text/db/units_custom_battle_mounts__.loc.tsv) : « Barded Nightmare », « Chaos Steed »…
+    # plutôt que la clé technique (« Barded Nightmare Hero », « Chaos Steed Lords »).
+    _mloc = {r.get("key"): r.get("text") or "" for r in T.get("units_custom_battle_mounts__.loc", [])}
+    def _mres(v):
+        for _ in range(5):
+            if not (v and v.startswith("{{tr:") and v.endswith("}}")): break
+            v = _mloc.get(v[5:-2])
+        return re.sub(r"\s+", " ", re.sub(r"\\+n|\n", " ", v or "")).strip()
+    en_mount = {}
+    for r in T.get("units_custom_battle_mounts", []):
+        nm = _mres(_mloc.get(f"units_custom_battle_mounts_mount_name_{r.get('base_unit')}{r.get('mounted_unit')}"))
+        if nm and r.get("mounted_unit"): en_mount.setdefault(r["mounted_unit"], nm)
     for n, lst in by_name.items():
         if len(lst) < 2: continue
         ctx = lambda u: set(u["groups"]) | set(u["facs"]) | set(u["cultures"])
@@ -402,13 +415,24 @@ def main():
         toks = [core(u["id"]) for u in conf]
         pre = 0
         while all(len(t) > pre for t in toks) and len({t[pre] for t in toks}) == 1: pre += 1
+        races = {t[0] for t in toks if t}
         for u, t in zip(conf, toks):
+            # Même nom, races d'origine différentes (ex. Squelettes des Rois des Tombes « tmb » et des Comtes Vampires « vmp »,
+            # recrutables ensemble par l'Ost de Nagash) : le suffixe est le nom de la race, pas la clé technique.
+            # Plusieurs variantes de la même race : on ajoute la monture (« Guerriers du Chaos, Manticore »).
+            if pre == 0 and len(races) > 1 and t and t[0] in code2cul:
+                c = code2cul[t[0]]
+                mt = [x for x in core(u.get("mount") or "") if x not in ("mnt", "mount")]
+                mt = en_mount.get(u["id"]) or (" ".join(mt[1:] if len(mt) > 1 and len(mt[0]) == 3 else mt).title() if mt else "")
+                lab = cultures_en[c] + (f", {mt}" if mt else "")
+                u["name"] = f"{n} ({lab})"; vlabels[u["id"]] = lab; vrace[u["id"]] = (c, mt); labelled += 1
+                continue
             rest = [x for x in t[pre:] if x != "mp"]
             if not rest: continue                                     # version de base : garde le nom simple
             if all(x.isdigit() for x in rest):                # variantes numérotées (_0 … _5) : en pratique des montures différentes ; sinon #N
                 mt = core(u.get("mount") or "")
                 mt = [x for x in mt if x not in ("mnt", "mount")]
-                lab = " ".join(mt[1:] if len(mt) > 1 and len(mt[0]) == 3 else mt).title() if mt else ""
+                lab = en_mount.get(u["id"]) or (" ".join(mt[1:] if len(mt) > 1 and len(mt[0]) == 3 else mt).title() if mt else "")
                 if not lab and int("".join(rest)) > 0: lab = "#" + str(int("".join(rest)) + 1)
             else: lab = " ".join(x for x in rest if not x.isdigit()).title()
             if lab: u["name"] = f"{n} ({lab})"; vlabels[u["id"]] = lab; labelled += 1
@@ -494,8 +518,11 @@ def main():
             return " ".join(t[1:] if len(t) > 1 and len(t[0]) == 3 else t).title() if t else ""
         for k, lab in vlabels.items():               # suffixe anglais venu de la monture, sans nom propre à l'unité : nom de la même monture ailleurs
             mk = mount_of.get(k)
-            if k not in mount_fr and mk in by_mount and lab == mount_label(mk): mount_fr[k] = by_mount[mk]
-            elif k not in mount_fr and mk and lab == mount_label(mk) and re.fullmatch(r"Warhorse( 360| Deprecated)?", lab):
+            if k in mount_fr or not mk: continue
+            from_mount = lab == mount_label(mk) or k in vrace and vrace[k][1] == mount_label(mk)
+            if not from_mount: continue
+            if mk in by_mount: mount_fr[k] = by_mount[mk]
+            elif re.fullmatch(r"Warhorse( 360| Deprecated)?", mount_label(mk)):
                 mount_fr[k] = "Cheval de guerre"     # anciens chevaux sans entrée de bataille personnalisée (terme officiel du jeu)
         names_fr = {"units": {}, "factions": {}}
         unit_ids = {u["id"] for u in units}
@@ -503,7 +530,12 @@ def main():
             nm = res(fr_units.get(f"land_units_onscreen_name_{mu.get('land_unit')}"))
             if nm and mu.get("unit") in unit_ids:
                 k = mu["unit"]   # variantes : nom français de la monture si connu, sinon même suffixe qu'en anglais
-                names_fr["units"][k] = clean(nm) + (f" ({mount_fr.get(k) or vlabels[k]})" if k in vlabels else "")
+                if k in vrace:                       # race d'origine (+ monture) : « Lanciers Squelettes (Comtes Vampires) », « … (Guerriers du Chaos, Manticore) »
+                    c, mt = vrace[k]; suf = cultures.get(c) or vlabels[k]
+                    if mt: suf += ", " + (mount_fr.get(k) or mt)
+                    names_fr["units"][k] = clean(nm) + f" ({suf})"
+                else:
+                    names_fr["units"][k] = clean(nm) + (f" ({mount_fr.get(k) or vlabels[k]})" if k in vlabels else "")
         print(f"  montures traduites : {sum(1 for k in vlabels if k in mount_fr and k in names_fr['units'])} sur {sum(1 for k in vlabels if k in names_fr['units'])} variantes")
         for f_ in facinfo:
             nm = fr_fac.get(f"factions_screen_name_{f_}")
