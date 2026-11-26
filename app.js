@@ -181,14 +181,14 @@ const STAT_ICON={
  men:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6M15 20c0-2.5 2-4 4-4s3 1.5 3 4"/>',
 };
 const si=k=>`<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${STAT_ICON[k]||""}</svg>`;
-/* Fiche d'unité : chaque stat avec son rang (« Top 8 % » / « Bottom 20 % ») et une barre remplie à valeur ÷ maximum du groupe de comparaison. */
+/* Fiche d'unité : chaque stat avec son rang (« Top 8 % » / « Bottom 20 % ») et une barre remplie à valeur ÷ 95ᵉ centile du groupe de comparaison (pleine au-delà). */
 let DPOOL="role_all"; // groupe de comparaison : même catégorie (tout le jeu), toutes les unités, ou périmètre affiché
 const STAT_IC={cost:"coin",upkeep:"upkeep",rt:"calendar",mp:"coin",men:"men",hp:"hp",thp:"hp",arm:"armour",md:"armour",ld:"morale",ma:"attack",ch:"charge",dmg:"weapon",ap:"weapon",str:"weapon",int:"clock",dps:"bolt",bvl:"target",bvi:"target",rdmg:"bow",rap:"bow",rng:"clock",rel:"clock",amm:"ammo",spd:"speed",dwc:"attack"};
 const fmtv=v=>v>=1000?Math.round(v).toLocaleString("fr-FR"):(Math.round(v*10)/10).toString();
 const rankTxt=p=>p==null?"":p>=50?`Top ${Math.max(1,Math.round(100-p))} %`:`Bottom ${Math.max(1,Math.round(p))} %`;
-function srow(ic,label,val,fill,p,tip){
+function srow(ic,label,val,fill,p,tip,clip){
  const col=p==null?"var(--gold3)":`hsl(${p*1.2},55%,50%)`;
- return `<div class="sr" title="${tip||""}"><div class="sh"><span>${si(ic)}${label}</span><b>${val}</b></div><div class="sb"><div class="bar"><i style="width:${fill}%;background:${col}"></i></div>${p==null?"":`<span class="pb" style="background:hsl(${p*1.2},55%,62%)">${rankTxt(p)}</span>`}</div></div>`;
+ return `<div class="sr" title="${tip||""}"><div class="sh"><span>${si(ic)}${label}</span><b>${val}</b></div><div class="sb"><div class="bar"><i style="width:${fill}%;background:${col}"></i>${clip?'<span class="cap" title="Au-delà du 95ᵉ centile du groupe : barre pleine">▸</span>':""}</div>${p==null?"":`<span class="pb" style="background:hsl(${p*1.2},55%,62%)">${rankTxt(p)}</span>`}</div></div>`;
 }
 function statRows(u){
  const TS=window.TWW3Stats; if(!TS) return "";
@@ -196,10 +196,11 @@ function statRows(u){
  const arr=TS.stats(pool,`detail|${DPOOL}|${DPOOL==="scope"?fsel.value:""}|${DPOOL==="role_all"?u.role:""}`);
  let h="",g="";
  for(const s of TS.ST){ if(!TS.applies(s,u)) continue;
-  const a=arr[s.k], v=s.v(u), p=TS.pct(s,u,a), mx=s.d>0?a[a.length-1]:-a[0];       // max du groupe (valeurs triées par « qualité » : plus bas = mieux pour le coût, l'intervalle, le rechargement)
-  const fill=mx>0?Math.min(100,Math.max(2,v/mx*100)):0, rank=a.length-TS.upper(a,s.d*v)+1;
+  const a=arr[s.k], v=s.v(u), p=TS.pct(s,u,a), raw=a.map(x=>s.d*x).sort((x,y)=>x-y), mx=raw[raw.length-1];  // valeurs brutes du groupe (a est trié par « qualité » : plus bas = mieux pour le coût, l'intervalle, le rechargement)
+  const p95=raw[Math.floor(0.95*(raw.length-1))], ref=p95>0?p95:mx;                                     // barre = valeur ÷ 95ᵉ centile du groupe (au-delà : barre pleine ▸), pour que quelques valeurs extrêmes n'écrasent pas les autres barres
+  const clip=ref>0&&v>ref, fill=ref>0?Math.min(100,Math.max(2,v/ref*100)):0, rank=a.length-TS.upper(a,s.d*v)+1;
   if(s.g!==g){g=s.g;h+=`<h4>${g}</h4>`}
-  h+=srow(STAT_IC[s.k]||"target",s.l,`${fmtv(v)}<small> / ${fmtv(mx)}</small>`,fill,p,`${s.l} : ${rank}ᵉ sur ${a.length}${s.d<0?" (moins = mieux)":""} — maximum du groupe : ${fmtv(mx)}`);
+  h+=srow(STAT_IC[s.k]||"target",s.l,`${fmtv(v)}<small> · P95 ${fmtv(ref)}</small>`,fill,p,`${s.l} : ${rank}ᵉ sur ${a.length}${s.d<0?" (moins = mieux)":""} — 95ᵉ centile du groupe : ${fmtv(ref)} ; maximum : ${fmtv(mx)}`,clip);
  }
  return h;
 }
