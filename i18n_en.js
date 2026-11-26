@@ -59,7 +59,7 @@ Object.assign(I18N.dict, {
   "{} (#)": "{} (#)", "{} (# unités)": "{} (# units)",
 
   // ---------- Catégories d'unités ----------
-  "Infanterie CàC": "Melee infantry", "Tireurs": "Shooters", "Cavalerie CàC": "Melee cavalry", "Cavalerie à distance": "Ranged cavalry",
+  "Infanterie": "Infantry", "Tireurs": "Shooters", "Cavalerie": "Cavalry", "Cavalerie à distance": "Ranged cavalry",
   "Monstres": "Monsters", "Chars": "Chariots", "Artillerie": "Artillery", "Bêtes de guerre": "War beasts", "Seigneurs": "Lords", "Héros": "Heroes",
   "{} · # or": "{} · # gold", "# or": "# gold", "# / # or": "# / # gold", "{} — # or": "{} — # gold",
   "{} · vs # unités": "{} · vs # units",
@@ -308,6 +308,7 @@ Object.assign(I18N.dict, {
   "Avec coût : tiers et usages rapportés au prix (efficacité par or). Sans coût : puissance brute, la meilleure unité de chaque usage même plus chère (armée limitée à 20 unités : l'argent n'est pas le seul facteur limitant).": "With cost: tiers and uses relative to price (efficiency per gold). Without cost: raw power, the best unit for each use even if pricier (armies are limited to 20 units: money is not the only limiting factor).",
   "Activé : les tiers et usages sont rapportés au coût (efficacité par or). Désactivé : on classe la puissance brute, sans tenir compte du prix (armée limitée à 20 unités : l'argent n'est pas le seul facteur limitant).": "On: tiers and uses are relative to cost (efficiency per gold). Off: raw power is ranked, ignoring price (armies are limited to 20 units: money is not the only limiting factor).",
   "Tier jeu #": "Game tier #",
+  "Tier jeu # : tier de l'unité dans le jeu (indicatif) ; distinct du tier S–F du site": "Game tier #: the unit's tier in the game (indicative); not the site's S–F tier",
   "Tier de l'unité dans le jeu (indicatif, table main_units) ; à ne pas confondre avec le tier S–F du site": "In-game unit tier (indicative, main_units table); not to be confused with the site's S–F tier",
   "Pas de sorts, capacités actives, compétences à choisir, technologies, bâtiments, objets ni effets de faction hors seigneur de départ. Seule la": "No spells, active abilities, skills to choose, technologies, buildings, items or faction effects other than the starting lord. Only passive",
   "régénération": "regeneration",

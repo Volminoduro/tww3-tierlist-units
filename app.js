@@ -1,6 +1,6 @@
 "use strict";
 const $ = s => document.querySelector(s);
-const ROLES = {inf_melee:"Infanterie CàC",inf_ranged:"Tireurs",cav_melee:"Cavalerie CàC",cav_ranged:"Cavalerie à distance",monster:"Monstres",chariot:"Chars",artillery:"Artillerie",beast:"Bêtes de guerre",lord:"Seigneurs",hero:"Héros"};
+const ROLES = {inf_melee:"Infanterie",inf_ranged:"Tireurs",cav_melee:"Cavalerie",cav_ranged:"Cavalerie à distance",monster:"Monstres",chariot:"Chars",artillery:"Artillerie",beast:"Bêtes de guerre",lord:"Seigneurs",hero:"Héros"};
 const TIERS = [["S",.10],["A",.30],["B",.55],["C",.80],["D",.93],["F",1]];
 const W = [ // [id,label,min,max,default,step,group]
  ["wMelee","Poids mêlée",0,2,1,.1,"w1"],["wRanged","Poids distance",0,2,1,.1,"w1"],["wDef","Poids survie (PV+armure)",0,2,1,.1,"w1"],
