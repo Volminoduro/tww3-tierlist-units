@@ -1,8 +1,12 @@
 name: Régénérer les données et les duels
 
-# Déclenchement manuel (onglet Actions > « Régénérer les données et les duels » > Run workflow).
-# Pour une mise à jour automatique, ajouter par exemple :  schedule: [{cron: "0 6 * * 1"}]
+# Déclenchement automatique chaque lundi à 6 h UTC (7 h ou 8 h à Paris), sur le dernier commit du dump ;
+# ne fait aucun commit si le dump n'a pas changé. Déclenchement manuel possible aussi
+# (onglet Actions > « Régénérer les données et les duels » > Run workflow).
+# GitHub suspend les tâches planifiées d'un dépôt sans activité depuis 60 jours : les réactiver dans l'onglet Actions.
 on:
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
     inputs:
       dump_commit:
