@@ -103,7 +103,7 @@ NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missi
           # véhicules / artillerie (machines) et dégâts d'explosion des projectiles
           "battlefield_engines", "projectiles_explosions",
           # capacités passives de soin (régénération) : unité -> capacité -> phase -> soin
-          "land_units_to_unit_abilites_junctions", "unit_special_abilities", "special_ability_to_special_ability_phase_junctions", "special_ability_phases"}
+          "land_units_to_unit_abilites_junctions", "unit_special_abilities", "special_ability_to_special_ability_phase_junctions", "special_ability_phases", "special_ability_phase_stat_effects"}
 
 def load_tables(root, only_needed=False):
     tables = defaultdict(list)
@@ -206,6 +206,20 @@ def main():
         ph = phases_t.get(j.get("phase"), {})
         freq, heal = num(ph.get("hp_change_frequency"), 1) or 1, num(ph.get("heal_amount"))
         if heal > 0 and num(ph.get("duration"), -1) < 0: regen_of_ability[ab_k] = regen_of_ability.get(ab_k, 0) + heal / freq
+    # Résistance au feu : effets de stat des phases des capacités passives sans durée (stat_resistance_flame > 0 : moins de dégâts de feu ; stat_weakness_flame < 0 : plus de dégâts,
+    # ex. la régénération donne −20 : « une bénédiction freinée par le feu »). On les additionne pour l'unité ; les attaques enflammées (ignition_amount > 0) en tiennent compte.
+    flame_of_phase = defaultdict(float)
+    for r in T.get("special_ability_phase_stat_effects", []):
+        if r.get("stat") in ("stat_resistance_flame", "stat_weakness_flame") and (r.get("how") or "add") == "add": flame_of_phase[r.get("phase")] += num(r.get("value"))
+    passive_ab = {r.get("key") for r in T.get("unit_special_abilities", []) if (r.get("passive") or "").lower() == "true"}
+    flame_of_ability = defaultdict(float)
+    for j in T.get("special_ability_to_special_ability_phase_junctions", []):
+        ph = phases_t.get(j.get("phase"), {})
+        if j.get("special_ability") in passive_ab and num(ph.get("duration"), -1) < 0 and flame_of_phase.get(j.get("phase")):
+            flame_of_ability[j["special_ability"]] += flame_of_phase[j["phase"]]
+    flame_of_land = defaultdict(float)
+    for r in T.get("land_units_to_unit_abilites_junctions", []):
+        if r.get("ability") in flame_of_ability: flame_of_land[r.get("land_unit")] += flame_of_ability[r["ability"]]
     regen_of_land = defaultdict(float)
     for r in T.get("land_units_to_unit_abilites_junctions", []):
         if r.get("ability") in regen_of_ability: regen_of_land[r.get("land_unit")] = max(regen_of_land[r.get("land_unit")], regen_of_ability[r["ability"]])
@@ -275,13 +289,13 @@ def main():
             "acc": num(col(lu, "acc")), "rd": num(lu.get("rank_depth")), "rw": body(sp_ent)[0], "per": body(sp_ent)[1], "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
-                      "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl"))},
+                      "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl")), "fl": 1 if num(mw.get("ignition_amount")) > 0 else 0},
             "ranged": None,
             "cost": num(col(mu, "cost")), "upkeep": num(col(mu, "upkeep")),
             "mpCost": num(col(mu, "mp_cost")),
             "recruitTurns": num(col(mu, "recruit_turns"), 1),
             "tier": num(col(mu, "tier")),
-            "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5),
+            "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5), "fres": round(flame_of_land.get(col(mu, "land_unit"), 0), 1),
             "groups": ugroups, "facs": sorted(perm_of.get(key, ())) if caste not in ("lord", "hero") else [],
             "cultures": sorted({facinfo[f]["culture"] for f in perm_of.get(key, ())}) if caste in ("lord", "hero") else [],
         }
@@ -295,7 +309,8 @@ def main():
                 u["ranged"] = {"dmg": num(col(pj, "w_dmg")) + num(ex.get("detonation_damage")), "ap": num(col(pj, "w_ap")) + num(ex.get("detonation_damage_ap")),
                                "range": num(col(pj, "p_range")), "shots": volley, "reload": reload_,
                                "ammo": round(num(col(lu, "ammo")) / spv, 2),
-                               "share": round(n_eng / men, 4) if eng and n_eng > 0 and men else 1}   # part des modèles qui tirent (pièces d'artillerie)
+                               "share": round(n_eng / men, 4) if eng and n_eng > 0 and men else 1,
+                               "fl": 1 if max(num(pj.get("ignition_amount")), num(ex.get("ignition_amount"))) > 0 else 0}   # part des modèles qui tirent (pièces d'artillerie)
             else: warn["tir_sans_rechargement"] += 1
         ROLE = {"melee_infantry": "inf_melee", "missile_infantry": "inf_ranged", "monstrous_infantry": "monster",
                 "monster": "monster", "monstrous_cavalry": "monster", "melee_cavalry": "cav_melee",
