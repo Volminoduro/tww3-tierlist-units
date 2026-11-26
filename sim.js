@@ -11,7 +11,9 @@
 })(typeof self !== "undefined" ? self : this, function () {
 const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
-  // FRONT_K : attaquants par modèle du front ; FRONT_LARGE : attaquants par grand modèle (≤ 6 modèles) ; RANK_DEFAULT : nombre de rangs si la donnée manque
+  // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
+  // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
+  // FRONT_LARGE : valeur de repli si les tailles de corps manquent dans les données
   FRONT_K:4, FRONT_LARGE:10, RANK_DEFAULT:5};
 const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.role);
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
@@ -28,7 +30,7 @@ function simulate(ARMY, BON, opts) {
             mdm: (1 + b.dmg/100) * (1 + (m.ws||0)/100), rdm: (1 + b.dmg/100) * (1 + (m.ms||0)/100),
             ma: u.ma + (m.ma||0), md: u.md + (m.md||0), charge: u.charge + (m.charge||0), spd: u.speed * (1 + (m.spd||0)/100),
             range: u.ranged ? u.ranged.range * (1 + (m.range||0)/100) : 0,
-            ld: u.ld * (1 + b.mor/100) + (m.ld||0), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false};
+            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false};
   });
   const S = {A: mk("A"), B: mk("B")};
   const spd = s => { let w=0, t=0; S[s].forEach(x => { w += x.cnt*x.u.men; t += x.cnt*x.u.men*x.spd; }); return w ? t/w*SIM.SPEED_SCALE : 0; };
@@ -41,7 +43,7 @@ function simulate(ARMY, BON, opts) {
   for (; t < SIM.TMAX; t++) {
     if (t % 5 === 0) timeline.push([t, surv("A"), surv("B")]);
     if (!active("A") || !active("B")) break;
-    const dmgIn = {A: new Map(), B: new Map()}, meleeIn = {A: new Map(), B: new Map()}, engIn = {A: new Map(), B: new Map()};
+    const dmgIn = {A: new Map(), B: new Map()}, meleeIn = {A: new Map(), B: new Map()}, engIn = {A: new Map(), B: new Map()}, radIn = {A: new Map(), B: new Map()};
     for (const me of ["A","B"]) {
       const foe = me === "A" ? "B" : "A", tg = S[foe].filter(x => !x.out);
       const W = tg.reduce((a,x) => a + x.pool/x.hp, 0);
@@ -65,6 +67,7 @@ function simulate(ARMY, BON, opts) {
             dps += dpsM;
             const wm = frontAlive ? wt(d) / Wm : w;                                                          // part de la mêlée dirigée vers d
             engIn[foe].set(d, (engIn[foe].get(d) || 0) + eng * wm);                                          // attaquants qui cherchent à engager d
+            radIn[foe].set(d, (radIn[foe].get(d) || 0) + eng * wm * (u.rw || 0));                            // … et leur demi-largeur cumulée (pour la taille moyenne des attaquants)
           }
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
@@ -83,11 +86,22 @@ function simulate(ARMY, BON, opts) {
     for (const s of ["A","B"]) for (const [d, v] of meleeIn[s]) {
       const Nd = d.pool / d.hp, E = engIn[s].get(d) || 0;
       let cap;
-      if (d.u.men <= 6) cap = SIM.FRONT_LARGE * Nd;
+      if (d.u.men <= 6) { // grand modèle : attaquants qui tiennent autour de son corps (périmètre ÷ largeur d'un attaquant + π), selon la taille moyenne des attaquants
+        const rbar = E > 0 ? (radIn[s].get(d) || 0) / E : 0;
+        cap = (d.u.per > 0 && rbar > 0 ? d.u.per / (2 * rbar) + Math.PI : SIM.FRONT_LARGE) * Nd;
+      }
       else { const units = Math.max(1, d.cnt), w0 = d.u.men / (d.u.rd > 0 ? d.u.rd : SIM.RANK_DEFAULT); cap = SIM.FRONT_K * units * Math.min(w0, Nd / units); }
       dmgIn[s].set(d, (dmgIn[s].get(d) || 0) + v * (E > cap && E > 0 ? cap / E : 1));
     }
     for (const s of ["A","B"]) for (const [d, v] of dmgIn[s]) d.pool = Math.max(0, d.pool - v);
+    // Régénération (capacité passive, u.regen = fraction des PV max par seconde, par modèle vivant). Le soin ne ressuscite personne : les modèles morts
+    // (PV perdus ÷ PV d'un modèle, au pire moment) sont définitivement perdus, donc le total ne dépasse jamais (modèles vivants × PV d'un modèle).
+    for (const x of [...S.A, ...S.B]) {
+      if (!x.u.regen || x.out) continue;
+      x.dead = Math.max(x.dead, Math.floor((x.pool0 - x.pool) / x.hp + 1e-9));
+      const maxPool = x.pool0 - x.dead * x.hp;
+      if (x.pool > 0 && x.pool < maxPool) x.pool = Math.min(maxPool, x.pool + x.u.regen * maxPool);
+    }
     for (const x of [...S.A, ...S.B]) {
       if (x.out) continue;
       const c = 1 - x.pool/x.pool0;

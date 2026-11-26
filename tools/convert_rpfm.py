@@ -9,7 +9,7 @@ Le script a été écrit SANS accès aux fichiers du jeu : les noms de colonnes
 candidats sont listés dans CANDIDATES. Si une stat sort vide/0, lance --inspect,
 repère le vrai nom de colonne et ajoute-le à la liste correspondante.
 """
-import argparse, csv, json, os, re, subprocess, sys
+import argparse, csv, json, math, os, re, subprocess, sys
 csv.field_size_limit(10**9)
 from collections import defaultdict
 
@@ -101,7 +101,9 @@ NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missi
           "character_skill_node_sets", "character_skill_node_set_items", "character_skill_level_to_effects_junctions",
           "effect_bonus_value_ids_unit_sets", "unit_set_to_unit_junctions", "frontend_faction_leaders",
           # véhicules / artillerie (machines) et dégâts d'explosion des projectiles
-          "battlefield_engines", "projectiles_explosions"}
+          "battlefield_engines", "projectiles_explosions",
+          # capacités passives de soin (régénération) : unité -> capacité -> phase -> soin
+          "land_units_to_unit_abilites_junctions", "unit_special_abilities", "special_ability_to_special_ability_phase_junctions", "special_ability_phases"}
 
 def load_tables(root, only_needed=False):
     tables = defaultdict(list)
@@ -193,6 +195,33 @@ def main():
         pu, pf = col(r, "perm_unit"), col(r, "perm_faction")
         if pu and pf in facinfo: perm_of[pu].add(pf)
 
+    # Régénération : capacités passives sans durée (wh_main_unit_passive_regeneration, …) -> fraction des PV max rendue par seconde (heal_amount ÷ hp_change_frequency)
+    # Les autres soins passifs (la Faim des vampires, bonus de seigneur, objets…) sont conditionnels ou temporaires : ils ne sont pas pris en compte.
+    REGEN_ABILITIES = {"wh_main_unit_passive_regeneration", "wh2_dlc15_unit_passive_regeneration_map", "wh2_dlc17_unit_passive_horrible_regeneration"}
+    phases_t = index(T.get("special_ability_phases", []), "id")
+    regen_of_ability = {}
+    for j in T.get("special_ability_to_special_ability_phase_junctions", []):
+        ab_k = j.get("special_ability")
+        if ab_k not in REGEN_ABILITIES: continue
+        ph = phases_t.get(j.get("phase"), {})
+        freq, heal = num(ph.get("hp_change_frequency"), 1) or 1, num(ph.get("heal_amount"))
+        if heal > 0 and num(ph.get("duration"), -1) < 0: regen_of_ability[ab_k] = regen_of_ability.get(ab_k, 0) + heal / freq
+    regen_of_land = defaultdict(float)
+    for r in T.get("land_units_to_unit_abilites_junctions", []):
+        if r.get("ability") in regen_of_ability: regen_of_land[r.get("land_unit")] = max(regen_of_land[r.get("land_unit")], regen_of_ability[r["ability"]])
+
+    def body(e):
+        """Taille du corps du modèle principal (battle_entities) : demi-largeur rw et périmètre per, pour la surface de contact en mêlée.
+        cercle : rayon = radius ; ellipse / capsule : radius = demi-longueur, radii_ratio × radius = demi-largeur."""
+        R = num(e.get("radius"))
+        if R <= 0: return 0.0, 0.0
+        shape = (e.get("shape") or "circle").lower(); k = num(e.get("radii_ratio"), 1) or 1
+        if shape == "circle" or k >= 1 and shape == "ellipse": return round(R, 3), round(2 * math.pi * R, 3)
+        w = min(R, R * k)
+        if shape == "capsule": return round(w, 3), round(4 * (R - w) + 2 * math.pi * w, 3)
+        a, b = R, w; h = ((a - b) / (a + b)) ** 2     # ellipse : approximation de Ramanujan
+        return round(b, 3), round(math.pi * (a + b) * (1 + 3 * h / (10 + math.sqrt(4 - 3 * h))), 3)
+
     units, warn = [], defaultdict(int)
     for mu in T["main_units"]:
         key = mu.get("unit")
@@ -243,7 +272,7 @@ def main():
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
             "charge": num(col(lu, "charge")), "ld": num(col(lu, "morale")),
             "speed": speed_card,
-            "acc": num(col(lu, "acc")), "rd": num(lu.get("rank_depth")), "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
+            "acc": num(col(lu, "acc")), "rd": num(lu.get("rank_depth")), "rw": body(sp_ent)[0], "per": body(sp_ent)[1], "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
                       "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl"))},
@@ -252,6 +281,7 @@ def main():
             "mpCost": num(col(mu, "mp_cost")),
             "recruitTurns": num(col(mu, "recruit_turns"), 1),
             "tier": num(col(mu, "tier")),
+            "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5),
             "groups": ugroups, "facs": sorted(perm_of.get(key, ())) if caste not in ("lord", "hero") else [],
             "cultures": sorted({facinfo[f]["culture"] for f in perm_of.get(key, ())}) if caste in ("lord", "hero") else [],
         }
