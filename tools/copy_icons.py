@@ -23,7 +23,8 @@ for dp, dn, fs in os.walk(src):
     for d in dn: dirs.setdefault(d.lower(), []).append(os.path.join(dp, d))
     for fn in fs:
         k, ext = os.path.splitext(fn)
-        if ext.lower() == ".png" and not re.search(r"_mask\d*$", k.lower()): pngs.setdefault(k.lower(), []).append(os.path.join(dp, fn))
+        # « placeholder » : image vide du jeu, donnée comme unit_card à beaucoup de seigneurs/héros -> on cherche leur vrai portrait
+        if ext.lower() == ".png" and not re.search(r"_mask\d*$|^placeholder", k.lower()): pngs.setdefault(k.lower(), []).append(os.path.join(dp, fn))
 cards = {}                                          # clé d'unité -> noms de carte (unit_card), variantes sans faction d'abord
 if dump:
     for dp, _, fs in os.walk(os.path.join(dump, "db", "unit_variants_tables")):
