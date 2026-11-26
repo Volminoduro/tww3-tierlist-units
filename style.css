@@ -278,3 +278,6 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 
 /* icônes de catégories (Seigneurs, Héros, Infanterie…) dans les puces de filtre */
 #roles button,#brole button{display:inline-flex;align-items:center;gap:6px}.ri{width:18px;height:18px;flex:none}#roles button small,#brole button small{opacity:.8}
+/* icônes de factions plus grandes dans le menu race / faction (liste et bouton) */
+.tp-pop .crest.s{width:34px;height:38px}.tp-race.tp-race{grid-template-columns:38px minmax(0,1fr) 26px 50px 14px}.tp-it{padding-top:4px;padding-bottom:4px;gap:10px}.tp-all .crest.s{width:34px;height:38px}
+.tp-btn .crest.s{width:32px;height:36px}
