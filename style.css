@@ -250,3 +250,18 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 .card .cs .si,.card .cu .si{width:13px;height:13px;margin-right:3px}.card .cu{display:flex;gap:6px;margin:2px 0}
 .card .cu1{display:inline-flex;align-items:center;font-size:11px;font-weight:700;color:var(--gold2);background:#0b0907aa;border:1px solid var(--gold3);border-radius:9px;padding:0 7px 0 4px}
 #detail .dbrief{display:flex;gap:10px;margin:10px 0 4px}#detail .dbrief .brief{grid-template-columns:repeat(2,1fr);flex:1;margin:0}
+
+/* Portrait au format natif (60×130) : pas de zoom ni de recadrage ; centré verticalement dans la tuile */
+.pt.tall{width:60px;height:130px;min-height:0;align-self:center;aspect-ratio:60/130}
+.pt.tall img{object-fit:contain;object-position:center;background:linear-gradient(#1a1510,#0e0b08)}
+.card{min-height:146px;padding-top:8px;padding-bottom:8px}
+.pt.full{width:78px;height:169px;min-height:0;align-self:flex-start;aspect-ratio:60/130}.pt.full img{object-fit:contain;background:linear-gradient(#1a1510,#0e0b08)}
+
+/* Fond de portrait : l'image elle-même, floue et assombrie, remplit ce que l'image au format carré (164×164, monstres) laisse libre dans la boîte haute 60×130 */
+.pt.tall::before,.pt.full::before{content:"";position:absolute;inset:-10px;background:var(--pi) center/cover no-repeat;filter:blur(9px) brightness(.5) saturate(1.1)}
+.pt.tall img,.pt.full img{z-index:1;background:none}
+
+/* image carrée dans la boîte haute : ses bords haut et bas se fondent dans le fond flou */
+.pt img.sq{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%)}
+.pt.s img.sq,.pt.big img.sq{-webkit-mask-image:none;mask-image:none}
+.pt.tall img.sq,.pt.full img.sq{inset:auto 0;top:50%;height:auto;aspect-ratio:1;transform:translateY(-50%);object-fit:fill}

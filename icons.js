@@ -42,8 +42,8 @@ function iconId(u) {
 let _ICON_BY_NAME = null;
 function portrait(u, cls = "") {
   const svg = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ROLE_ICON[u.role] || ROLE_ICON._}</svg>`;
-  const ic = iconId(u), img = ic ? `<img src="img/units/${ic}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
-  return `<span class="pt ${cls}${u.ror ? " ror" : ""}">${svg}${img}</span>`;
+  const ic = iconId(u), img = ic ? `<img src="img/units/${ic}.png" alt="" loading="lazy" onload="if(this.naturalWidth/this.naturalHeight>.8)this.classList.add('sq')" onerror="this.remove()">` : "";
+  return `<span class="pt ${cls}${u.ror ? " ror" : ""}"${ic ? ` style="--pi:url('img/units/${ic}.png')"` : ""}>${svg}${img}</span>`;
 }
 
 /* Emblème de faction : drapeau extrait du jeu (img/factions/<clé>.png) ou écusson avec initiales. */
