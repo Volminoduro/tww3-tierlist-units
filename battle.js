@@ -11,8 +11,8 @@ function capArmy(side) { // ramène l'armée à 20 unités max (réduit d'abord 
   while (n > MAX_ARMY) { const e = ARMY[side].reduce((m,x) => x.count > m.count ? x : m); if (e.count <= 1) break; e.count--; n--; }
 }
 const frontBack = side => { let f = 0, b = 0; ARMY[side].forEach(e => isBack(e.u) ? b += e.count : f += e.count); return {f, b}; };
-const BONLAB = {arm:"Armure +%",dmg:"Dégâts +%",hp:"PV +%",mor:"Moral +%",up:"Entretien −%"};
-const upk = (side, e) => e.u.upkeep * (1 - BON[side].up/100);
+const BONLAB = {arm:"Armure +%",dmg:"Dégâts +%",hp:"PV +%",mor:"Moral +%",up:"Coût de recrutement −%"};
+const upk = (side, e) => e.u.cost * (1 - BON[side].up/100); // coût de recrutement (après réduction éventuelle)
 const fmt = n => Math.round(n).toLocaleString("fr-FR");
 
 const simulate = (_, opts) => { applyMods(); return TWW3Sim.simulate(ARMY, BON, opts); };
@@ -74,7 +74,7 @@ $("#bhow").innerHTML = "<b>Repris du jeu :</b> chance de toucher = 35 + attaque 
 document.querySelectorAll(".army").forEach(el => {
   const side = el.dataset.side, fs = $$(".fac", el), us = $$(".usel", el);
   initPicker(fs, side === "A" ? "wh_main_emp_empire" : "wh_main_chs_chaos");
-  const fill = () => { us.innerHTML = ""; unitsOf(fs.value).forEach(u => us.add(new Option(`${u.name} — entretien ${Math.round(u.upkeep)}`, u.id))); };
+  const fill = () => { us.innerHTML = ""; unitsOf(fs.value).forEach(u => us.add(new Option(`${u.name} — ${Math.round(u.cost)} or`, u.id))); };
   fs.onchange = fill; fill();
   $$(".addbtn", el).onclick = () => { const u = UNIT[us.value]; if (!u || countOf(side) >= MAX_ARMY) return;
     const e = ARMY[side].find(x => x.u.id === u.id); e ? e.count++ : ARMY[side].push({u, count: 1}); draw(side); };
@@ -96,9 +96,9 @@ document.querySelectorAll(".army").forEach(el => {
 function draw(side) {
   const el = $$(`.army[data-side=${side}]`), a = ARMY[side];
   $$(".list", el).innerHTML = a.map((e,i) => `<div class="it"><span class="nm">${portrait(e.u,"s")}<span>${e.u.name}<br><small>${ROLES[e.u.role]||e.u.role}</small></span></span>
-    <input type="number" min="1" max="${MAX_ARMY - (countOf(side) - e.count)}" value="${e.count}" data-i="${i}"><span class="up" title="Entretien par unité">⚙ ${Math.round(upk(side,e))}<br><small>= ${fmt(upk(side,e)*e.count)}</small></span><button class="x" data-i="${i}">✕</button></div>`).join("") || "<small>Ajoute des unités ci-dessus.</small>";
-  const nU = a.reduce((s,e) => s+e.count, 0), up = a.reduce((s,e) => s+upk(side,e)*e.count, 0), c = a.reduce((s,e) => s+e.u.cost*e.count, 0);
-  $$(".tot", el).innerHTML = `<b>${nU}</b> unité(s)/${MAX_ARMY}${nU>=MAX_ARMY?' <span style="color:#ff9272">limite atteinte</span>':""} · entretien total <b class="up">⚙ ${fmt(up)}</b> · recrutement <b>${fmt(c)}</b>`;
+    <input type="number" min="1" max="${MAX_ARMY - (countOf(side) - e.count)}" value="${e.count}" data-i="${i}"><span class="up" title="Coût de recrutement par unité">${Math.round(upk(side,e))} or<br><small>= ${fmt(upk(side,e)*e.count)}</small></span><button class="x" data-i="${i}">✕</button></div>`).join("") || "<small>Ajoute des unités ci-dessus.</small>";
+  const nU = a.reduce((s,e) => s+e.count, 0), up = a.reduce((s,e) => s+upk(side,e)*e.count, 0), c = a.reduce((s,e) => s+e.u.upkeep*e.count, 0);
+  $$(".tot", el).innerHTML = `<b>${nU}</b> unité(s)/${MAX_ARMY}${nU>=MAX_ARMY?' <span style="color:#ff9272">limite atteinte</span>':""} · coût de recrutement <b class="up">${fmt(up)} or</b> · entretien (info) <b>${fmt(c)}</b>`;
   $$(".list", el).querySelectorAll("input").forEach(i => i.onchange = () => { const e = ARMY[side][+i.dataset.i]; e.count = clamp(Math.floor(+i.value) || 1, 1, MAX_ARMY - (countOf(side) - e.count)); draw(side); });
   renderLordList(side);
   const {f, b} = frontBack(side), h = $(`#pr${side}h`); if (h) h.textContent = `Écran : ${f} unité(s) de ligne pour ${b} de tir/artillerie`;
@@ -109,7 +109,7 @@ $("#sim").onclick = () => {
   const opts = {dist: +$("#dist").value || 0, acc: clamp(+$("#acc").value, 5, 100)/100, staticB: $("#static").checked};
   const r = simulate(null, opts), eq = equalK(opts);
   const win = r.sA > r.sB ? "A" : r.sB > r.sA ? "B" : null;
-  const kill = (s, o) => r.tot[o] - (s === "A" ? r.sB : r.sA); // entretien adverse détruit
+  const kill = (s, o) => r.tot[o] - (s === "A" ? r.sB : r.sA); // coût adverse détruit
   const rdA = kill("A","B")/r.tot.A, rdB = kill("B","A")/r.tot.B, eff = r.tot.B/(eq.k*r.tot.A);
   const effTxt = eq.edge === "high" ? "&lt; 1/40" : eq.edge === "low" ? "&gt; 40" : (eff >= 1 ? `A ×${eff.toFixed(2)}` : `B ×${(1/eff).toFixed(2)}`);
   const pct = (v, t) => t ? Math.round(v/t*100) : 0;
@@ -118,12 +118,12 @@ $("#sim").onclick = () => {
     return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${line(1,"#6aa9ff")}${line(2,"#ff8a6a")}</svg>`; })();
   const rows = ["A","B"].flatMap(s => r.S[s].map(x => `<tr><td>${s}</td><td>${x.u.name}</td><td>${fmt(x.cnt*x.u.men*(x.pool/x.pool0))} / ${fmt(x.cnt*x.u.men)}</td><td>${pct(x.pool,x.pool0)} %</td><td>${x.routed ? "en déroute" : x.out ? "détruite" : "debout"}</td><td>${fmt(x.up)}</td></tr>`)).join("");
   $("#result").innerHTML = `<div class="res"><div class="verdict ${win||""}">${win ? `Victoire de l'armée ${win}` : "Match nul"} <small style="font-weight:400;color:var(--m)">— après ${r.time} s (contact à ${Math.round(r.T0)} s)</small></div>
-   <div class="kpis"><div class="kpi"><small>Entretien survivant A</small><b>⚙ ${fmt(r.sA)} / ${fmt(r.tot.A)}</b></div><div class="kpi"><small>Entretien survivant B</small><b>⚙ ${fmt(r.sB)} / ${fmt(r.tot.B)}</b></div>
-   <div class="kpi"><small>Rendement : entretien adverse détruit ÷ entretien propre</small><b>A ${rdA.toFixed(2)} · B ${rdB.toFixed(2)}</b></div>
-   <div class="kpi"><small>Armée la plus efficace par point d’entretien</small><b>${effTxt}</b></div></div>
-   <small style="color:var(--m)">Efficacité : l'armée A devrait être multipliée par ×${eq.k.toFixed(2)} (entretien ⚙ ${fmt(eq.k*r.tot.A)}) pour faire jeu égal avec B (⚙ ${fmt(r.tot.B)}).</small>
+   <div class="kpis"><div class="kpi"><small>Coût survivant A</small><b>${fmt(r.sA)} / ${fmt(r.tot.A)} or</b></div><div class="kpi"><small>Coût survivant B</small><b>${fmt(r.sB)} / ${fmt(r.tot.B)} or</b></div>
+   <div class="kpi"><small>Rendement : coût adverse détruit ÷ coût propre</small><b>A ${rdA.toFixed(2)} · B ${rdB.toFixed(2)}</b></div>
+   <div class="kpi"><small>Armée la plus efficace par or dépensé</small><b>${effTxt}</b></div></div>
+   <small style="color:var(--m)">Efficacité : l'armée A devrait être multipliée par ×${eq.k.toFixed(2)} (coût ${fmt(eq.k*r.tot.A)} or) pour faire jeu égal avec B (${fmt(r.tot.B)} or).</small>
    ${BON.A.prot || BON.B.prot ? `<small style="color:var(--m)">Protection de l'arrière : A ${BON.A.prot} % · B ${BON.B.prot} %.</small>` : ""}
    ${["A","B"].some(s => effectsOf(s).eff.some(e => !e.cond)) ? `<small style="color:var(--m)">Effets par défaut du seigneur appliqués : ${["A","B"].map(s => { const {st, eff} = effectsOf(s), n = eff.filter(e => !e.cond).length; return `${s} ${st && n ? lordLabel(st) + " (" + n + " effet" + (n > 1 ? "s" : "") + ")" : "aucun"}`; }).join(" · ")}.</small>` : ""}
-   ${svg}<small style="color:var(--m)">Entretien restant au combat : A en bleu, B en orange (0 → ${r.time} s).</small>
-   <table><tr><th>Camp</th><th>Unité</th><th>Hommes</th><th>PV restants</th><th>État</th><th>Entretien</th></tr>${rows}</table></div>`;
+   ${svg}<small style="color:var(--m)">Coût restant au combat : A en bleu, B en orange (0 → ${r.time} s).</small>
+   <table><tr><th>Camp</th><th>Unité</th><th>Hommes</th><th>PV restants</th><th>État</th><th>Coût</th></tr>${rows}</table></div>`;
 };

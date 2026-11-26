@@ -3,7 +3,7 @@
    Utilise EXACTEMENT le même simulateur que le site (sim.js, chargé via require ici et via <script> dans le navigateur).
 
    Duels : pour chaque paire d'unités (A, B), autant d'exemplaires de chaque unité que nécessaire pour que les deux armées aient le même
-   budget, soit en ENTRETIEN soit en COÛT DE RECRUTEMENT, avec au moins 1 et au plus 20 exemplaires par camp (limite d'une armée). Les paires
+   budget de COÛT DE RECRUTEMENT (les unités sans entretien, comme les Rois des Tombes ou les Hommes-Bêtes, sont ainsi traitées comme les autres), avec au moins 1 et au plus 20 exemplaires par camp (limite d'une armée). Les paires
    dont les coûts sont trop éloignés pour respecter ces bornes (rapport > 20) sont ignorées. Les effectifs peuvent être fractionnaires.
    Résultat d'un duel = (part des forces de A encore debout) − (part des forces de B encore debout), dans [-1, 1] ; > 0 : A l'emporte.
 
@@ -21,7 +21,7 @@ const D = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "units.j
 
 const BUDGET = 2000, MAX_ARMY = 20, OPTS = {dist: 400, acc: 0.4, staticB: false}; // mêmes réglages par défaut que l'onglet Combat
 const NO_BONUS = {A: {arm: 0, dmg: 0, hp: 0, mor: 0, up: 0}, B: {arm: 0, dmg: 0, hp: 0, mor: 0, up: 0}};
-let units = D.units.filter(u => u.upkeep > 0 && u.cost > 0 && u.men > 0 && u.hp > 0); // seigneurs et héros INCLUS (voir NOTES)
+let units = D.units.filter(u => u.cost > 0 && u.men > 0 && u.hp > 0); // seigneurs et héros INCLUS (voir NOTES)
 if (LIMIT) units = units.slice(0, LIMIT);
 const n = units.length, ROLES = [...new Set(units.map(u => u.role))].sort();
 const r3 = v => Math.round(v * 1000) / 1000;
@@ -29,7 +29,7 @@ const r3 = v => Math.round(v * 1000) / 1000;
 const NOTES = [
   "Résultats issus du simulateur du site (sim.js), un modèle approximatif : pas de ciblage ni de flanquement, moral simplifié, précision des tirs fixe.",
   "Les seigneurs et héros sont inclus volontairement, mais leurs sorts, capacités, objets, compétences et montures volantes ne sont pas modélisés : leurs résultats sont indicatifs et probablement sous-estimés.",
-  "Duels 1 type d'unité contre 1 autre à budget équivalent (entretien ou recrutement), de 1 à 20 exemplaires par camp, sans bonus, distance de départ 400 m.",
+  "Duels 1 type d'unité contre 1 autre à coût de recrutement équivalent, de 1 à 20 exemplaires par camp, sans bonus, distance de départ 400 m.",
   "Typologie « anti » : unités de mêlée = taux de victoire en duel contre la catégorie ; unités à distance = efficacité de DPS contre un défenseur moyen de la catégorie (un duel contre de la mêlée n'étant pas représentatif).",
 ];
 
@@ -107,7 +107,7 @@ function runMode(key) {
 const t0 = Date.now();
 const result = {version: 2, budget: BUDGET, maxArmy: MAX_ARMY, opts: OPTS, units: n, notes: NOTES, roles: ROLES,
   caveat: units.filter(u => u.role === "lord" || u.role === "hero").map(u => u.id), modes: {}};
-for (const key of ["upkeep", "cost"]) {
+for (const key of ["cost"]) {
   const r = runMode(key); result.modes[key] = r.units;
   console.log(`mode ${key} : ${(n * (n - 1) / 2 - r.skipped)} duels joués, ${r.skipped} paires ignorées (rapport de coût > ${MAX_ARMY}), ${((Date.now() - t0) / 1000).toFixed(1)} s`);
 }

@@ -6,6 +6,7 @@
   // [clé, libellé, groupe, valeur, sens (1 = plus = mieux, -1 = moins = mieux), applicable, zéro significatif]
   const ST = [
     ["cost","Coût","Général",u=>u.cost,-1],["upkeep","Entretien","Général",u=>u.upkeep,-1],["rt","Recrut. (tours)","Général",u=>u.recruitTurns,-1,0,1],
+    ["mp","Coût MP","Général",u=>u.mpCost,-1],
     ["men","Hommes","Défense",u=>u.men,1],["hp","PV / modèle","Défense",u=>u.hp,1],["thp","PV totaux","Défense",u=>u.men*u.hp,1],
     ["arm","Armure","Défense",u=>u.armour,1,0,1],["md","Défense CàC","Défense",u=>u.md,1,0,1],["ld","Moral","Défense",u=>u.ld,1,0,1],
     ["ma","Attaque CàC","Attaque",u=>u.ma,1,0,1],["ch","Charge","Attaque",u=>u.charge,1,0,1],["dmg","Dégâts de base","Attaque",u=>N(u,"dmg"),1,hasM],
@@ -15,11 +16,10 @@
     ["rdmg","Tir : dégâts","Tir",u=>R(u,"dmg"),1,hasR],["rap","Tir : perforants","Tir",u=>R(u,"ap"),1,hasR],["rng","Portée","Tir",u=>R(u,"range"),1,hasR],
     ["rel","Rechargement (s)","Tir",u=>R(u,"reload"),-1,hasR],["amm","Munitions","Tir",u=>R(u,"ammo"),1,u=>hasR(u)&&R(u,"ammo")>0],
     ["spd","Vitesse","Mobilité",u=>u.speed,1],
-    ["dwr","Victoires en duel, à entretien égal (%)","Duels",u=>{const d=duelOf(u,"upkeep");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
-    ["dwc","Victoires en duel, à recrutement égal (%)","Duels",u=>{const d=duelOf(u,"cost");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
+    ["dwc","Victoires en duel, à coût de recrutement égal (%)","Duels",u=>{const d=duelOf(u,"cost");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
   ].map(([k,l,g,v,d,ok,z]) => ({k,l,g,v,d,ok:typeof ok==="function"?ok:()=>true,z:!!z}));
   // colonnes affichées par défaut (de quoi tenir dans la largeur) ; « Toutes les colonnes » affiche les 26
-  const ESS = new Set(["cost","upkeep","rt","thp","arm","md","ld","ma","ch","str","dps","rdmg","rng","spd","dwr","dwc"]);
+  const ESS = new Set(["cost","upkeep","rt","thp","arm","md","ld","ma","ch","str","dps","rdmg","rng","spd","dwc"]);
   const GROUPS = [...new Set(ST.map(s => s.g))], shown = new Set(GROUPS), $b = s => document.querySelector(s);
   const applies = (s, u) => { const v = s.v(u); return s.ok(u) && Number.isFinite(v) && (s.z || v > 0); };
   const lower = (a, x) => { let lo = 0, hi = a.length; while (lo < hi) { const m = (lo+hi)>>1; a[m] < x ? lo = m+1 : hi = m; } return lo; };
@@ -73,5 +73,6 @@
           return `<td>${f(s.v(u))}<br>${badge(p, `${s.l} : ${rank}ᵉ sur ${P.st[s.k].length}${s.d<0?" (moins = mieux)":""}`)}</td>`; }).join("") + "</tr>"; }).join("") + "</table>";
   }
   document.querySelector('[data-tab=browse]').addEventListener("click", render);
+  window.TWW3Stats = {ST, applies, stats, pct, upper}; // partagé avec la fiche d'unité (rang Top / Bottom % de chaque stat)
   render();
 })();

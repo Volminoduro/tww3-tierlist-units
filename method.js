@@ -44,7 +44,7 @@
   <h2>Ce que le site ajoute (calculs propres, pas des nombres du jeu)</h2>
   <ul>
     <li><b>Puissance, tiers et typologies d'usage</b> : formules simplifiées (voir « Comment c'est calculé ? » dans l'onglet Tier list), réglables.</li>
-    <li><b>Simulateur de combat et duels précalculés</b> : un même fichier (<code>sim.js</code>) pour le site et pour les calculs de duels. Modèle approximatif : pas de ciblage ni de flanquement, moral simplifié, précision des tirs fixe.</li>
+    <li><b>Simulateur de combat et duels précalculés</b> (à coût de recrutement équivalent) : un même fichier (<code>sim.js</code>) pour le site et pour les calculs de duels. Modèle approximatif : pas de ciblage ni de flanquement, moral simplifié, précision des tirs fixe.</li>
     <li><b>Effets par défaut du seigneur</b> : seuls les effets de stats d'unités, non conditionnels, de l'effet de départ et des compétences innées.</li>
   </ul>
 
@@ -61,7 +61,7 @@
   <ul>
     <li>Pas de sorts, capacités, compétences à choisir, technologies, bâtiments, objets ni effets de faction hors seigneur de départ.</li>
     <li>Monstres portant un équipage : l'équipage n'est pas compté séparément. Rangs et expérience : ignorés.</li>
-    <li>Les Rois des Tombes ont un entretien de 0 dans les tables : leurs duels « à entretien égal » ne sont pas calculés.</li>
+    <li>Toutes les comparaisons de coût (duels, rendement et équilibrage des armées du Combat) se font sur le <b>coût de recrutement</b>, pour traiter toutes les unités de la même façon : certaines factions (Rois des Tombes, Hommes-Bêtes…) n'ont pas d'entretien dans les tables. L'entretien reste affiché à titre d'information.</li>
     <li>Ce site est généré par une IA : une erreur est possible, merci de recouper avec le jeu.</li>
   </ul>`;
   const f = $("#foot-meta");

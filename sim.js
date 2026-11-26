@@ -14,7 +14,7 @@ const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.r
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
 const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front
 const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
-const upk = (BON, side, e) => e.u.upkeep * (1 - BON[side].up/100);
+const upk = (BON, side, e) => e.u.cost * (1 - BON[side].up/100); // base de comparaison = COÛT DE RECRUTEMENT (le champ « up » du camp = réduction de ce coût, en %)
 
 function simulate(ARMY, BON, opts) {
   const mk = side => ARMY[side].map(e => {
@@ -82,7 +82,7 @@ function simulate(ARMY, BON, opts) {
   timeline.push([t, surv("A"), surv("B")]);
   return {S, tot, timeline, time: t, sA: surv("A"), sB: surv("B"), T0, vA, vB};
 }
-function equalK(ARMY, BON, opts) { // multiplicateur de l'armée A pour obtenir un match nul (survie en entretien absolu)
+function equalK(ARMY, BON, opts) { // multiplicateur de l'armée A pour obtenir un match nul (survie en coût de recrutement absolu)
   const f = k => { const r = simulate(ARMY, BON, {...opts, k:{A:k,B:1}}); return r.sA - r.sB; };
   let lo = Math.log(1/40), hi = Math.log(40);
   if (f(Math.exp(lo)) > 0) return {k: Math.exp(lo), edge:"low"}; if (f(Math.exp(hi)) < 0) return {k: Math.exp(hi), edge:"high"};

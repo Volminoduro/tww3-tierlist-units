@@ -60,3 +60,7 @@ Corrections apportées grâce à cette méthode : arme à distance des machines 
 - **Seigneurs et héros** : les pastilles « Seigneurs » / « Héros » donnent toujours accès à ces unités (avec leur effectif réel) ; la case ne sert qu'à les inclure dans « Toutes ». 39 seigneurs/héros sans permission de faction sont rattachés à leur race par le préfixe de leur clé.
 - **Matrice typologique et tableaux** : libellés courts, colonnes à largeur fixe, aucune barre de défilement horizontale à 1400 px ; l'onglet « Unités par faction » affiche par défaut les colonnes essentielles (choix « Toutes les colonnes » possible) et masque les colonnes sans aucune valeur.
 - **Fiche d'unité** : icônes par type de stat ; le texte de la fiche peut être sélectionné et copié.
+
+### Coût de recrutement comme base de comparaison
+Duels, rendement et équilibrage des armées se calculent sur le **coût de recrutement** pour toutes les unités (certaines factions n'ont pas d'entretien dans les tables). Dans le tier list, le coût effectif de campagne = recrutement + tours d'attente ; l'entretien n'y entre que si tu règles « Entretien pris en compte (tours) » au-dessus de 0.
+La **fiche d'unité** donne pour chaque stat son rang (« Top X % » / « Bottom X % ») et une barre remplie à valeur ÷ maximum du groupe de comparaison (même catégorie du jeu par défaut ; réglable).
