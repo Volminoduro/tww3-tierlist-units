@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -18,8 +18,11 @@ const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6,
 const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.role);
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
 const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front
-// Dégâts de feu : résistance au feu de l'unité (u.fres, en % : > 0 résiste, < 0 vulnérable, ex. −20 pour la régénération) appliquée aux attaques enflammées (ignition_amount > 0)
-const fireMul = d => Math.max(0, 1 - (d.u.fres || 0) / 100);
+// Résistances (u.res, en % : > 0 résiste, < 0 vulnérable) : tout (parade magique) toujours ; magie si l'attaque est magique, sinon physique ; feu si elle est enflammée ;
+// missile si c'est un tir. Elles s'additionnent (pas de produit), après l'armure, avec un plafond de 90 % (plafond non vérifié pour WH3).
+const resMul = (d, atk, ranged) => { const r = d.u.res; if (!r) return 1;
+  const t = (r.all || 0) + (atk.mg ? r.ma || 0 : r.ph || 0) + (atk.fl ? r.fl || 0 : 0) + (ranged ? r.mi || 0 : 0);
+  return 1 - clamp(t, -100, SIM.RES_CAP) / 100; };
 const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
 const upk = (BON, side, e) => e.u.cost * (1 - BON[side].up/100); // base de comparaison = COÛT DE RECRUTEMENT (le champ « up » du camp = réduction de ce coût, en %)
 
@@ -65,7 +68,7 @@ function simulate(ARMY, BON, opts) {
             let dm = m.dmg, ap = m.ap, bonus = isLarge(d.u) ? m.bvl : isInf(d.u) ? m.bvi : 0;
             if (bonus && dm + ap > 0) { const s = dm + ap; dm += bonus*dm/s; ap += bonus*ap/s; }
             const cm = charging ? 1 + a.charge/SIM.CHARGE_DMG : 1;
-            dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval) * (m.fl ? fireMul(d) : 1);
+            dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval) * resMul(d, m, false);
             dps += dpsM;
             const wm = frontAlive ? wt(d) / Wm : w;                                                          // part de la mêlée dirigée vers d
             engIn[foe].set(d, (engIn[foe].get(d) || 0) + eng * wm);                                          // attaquants qui cherchent à engager d
@@ -74,7 +77,7 @@ function simulate(ARMY, BON, opts) {
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
             const inRange = opts.dist - closing*t <= a.range, f = t >= T0 ? SIM.RANGED_IN_MELEE : 1;
-            if (inRange || t >= T0) dps += n * (r.share ?? 1) * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / Math.max(1, r.reload) * (r.fl ? fireMul(d) : 1);
+            if (inRange || t >= T0) dps += n * (r.share ?? 1) * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / Math.max(1, r.reload) * resMul(d, r, true);
           }
           if (dps - dpsM) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (dps - dpsM) * w);                      // tir : pas limité par le front
           if (dpsM) meleeIn[foe].set(d, (meleeIn[foe].get(d) || 0) + dpsM * (frontAlive ? wt(d) / Wm : w)); // mêlée : limitée par le front, voir plus bas

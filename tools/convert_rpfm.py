@@ -289,13 +289,14 @@ def main():
             "acc": num(col(lu, "acc")), "rd": num(lu.get("rank_depth")), "rw": body(sp_ent)[0], "per": body(sp_ent)[1], "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
-                      "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl")), "fl": 1 if num(mw.get("ignition_amount")) > 0 else 0},
+                      "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl")), "fl": 1 if num(mw.get("ignition_amount")) > 0 else 0, "mg": 1 if (mw.get("is_magical") or "").lower() == "true" else 0},
             "ranged": None,
             "cost": num(col(mu, "cost")), "upkeep": num(col(mu, "upkeep")),
             "mpCost": num(col(mu, "mp_cost")),
             "recruitTurns": num(col(mu, "recruit_turns"), 1),
             "tier": num(col(mu, "tier")),
-            "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5), "fres": round(flame_of_land.get(col(mu, "land_unit"), 0), 1),
+            "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5), "res": {"ph": num(lu.get("damage_mod_physical")), "mi": num(lu.get("damage_mod_missile")), "ma": num(lu.get("damage_mod_magic")),
+                    "fl": num(lu.get("damage_mod_flame")) + flame_of_land.get(col(mu, "land_unit"), 0), "all": num(lu.get("damage_mod_all"))},
             "groups": ugroups, "facs": sorted(perm_of.get(key, ())) if caste not in ("lord", "hero") else [],
             "cultures": sorted({facinfo[f]["culture"] for f in perm_of.get(key, ())}) if caste in ("lord", "hero") else [],
         }
@@ -310,7 +311,8 @@ def main():
                                "range": num(col(pj, "p_range")), "shots": volley, "reload": reload_,
                                "ammo": round(num(col(lu, "ammo")) / spv, 2),
                                "share": round(n_eng / men, 4) if eng and n_eng > 0 and men else 1,
-                               "fl": 1 if max(num(pj.get("ignition_amount")), num(ex.get("ignition_amount"))) > 0 else 0}   # part des modèles qui tirent (pièces d'artillerie)
+                               "fl": 1 if max(num(pj.get("ignition_amount")), num(ex.get("ignition_amount"))) > 0 else 0,
+                               "mg": 1 if "true" in ((pj.get("is_magical") or "").lower(), (ex.get("is_magical") or "").lower()) else 0}   # part des modèles qui tirent (pièces d'artillerie)
             else: warn["tir_sans_rechargement"] += 1
         ROLE = {"melee_infantry": "inf_melee", "missile_infantry": "inf_ranged", "monstrous_infantry": "monster",
                 "monster": "monster", "monstrous_cavalry": "monster", "melee_cavalry": "cav_melee",
