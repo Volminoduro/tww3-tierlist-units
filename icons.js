@@ -14,7 +14,12 @@ const ROLE_ICON = {
   _: '<path d="M24 6 42 24 24 42 6 24z"/><path d="M24 14 34 24 24 34 14 24z"/>',
 };
 /* Petite icône de catégorie (puces de filtre) : même tracé que l'emblème de rôle */
-const roleIc = r => `<svg class="ri" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${r ? (ROLE_ICON[r] || ROLE_ICON._) : '<rect x="8" y="8" width="13" height="13" rx="2"/><rect x="27" y="8" width="13" height="13" rx="2"/><rect x="8" y="27" width="13" height="13" rx="2"/><rect x="27" y="27" width="13" height="13" rx="2"/>'}</svg>`;
+/* Icônes des grandes catégories du jeu (onglets de recrutement, table ui_unit_group_parents ; img/cats/, copiées par tools/copy_icons.py),
+   utilisées à la place du tracé pour les puces de catégorie ; le tracé reste en secours (et pour « Toutes »). */
+const ROLE_GAME = {lord: "commander", hero: "hero", inf_melee: "infantry_sword", inf_ranged: "missile_infantry_bow", cav_melee: "cavalry",
+  cav_ranged: "missile_cavalry_bow", chariot: "chariot", artillery: "artillery_field_gun", monster: "monstrous_infantry", beast: "war_beast"};
+const roleIc = r => ROLE_GAME[r] ? `<img class="ri rig" src="img/cats/${ROLE_GAME[r]}.png" alt="" onerror="this.replaceWith(document.createRange().createContextualFragment(roleSvg('${r}')))">` : roleSvg(r);
+const roleSvg = r => `<svg class="ri" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${r ? (ROLE_ICON[r] || ROLE_ICON._) : '<rect x="8" y="8" width="13" height="13" rx="2"/><rect x="27" y="8" width="13" height="13" rx="2"/><rect x="8" y="27" width="13" height="13" rx="2"/><rect x="27" y="27" width="13" height="13" rx="2"/>'}</svg>`;
 const ICON_SET = new Set(window.TWW3_ICONS || []), FLAG_SET = new Set(window.TWW3_FLAGS || []);
 /* Tier de l'unité DANS LE JEU (colonne « tier » de main_units, 1 à 5) : indicatif, distinct du tier S→F calculé par le site. 0 = non applicable (seigneurs, héros, unités sans tier) : rien n'est affiché. */
 /* Icône du jeu (img/tiers/unit_tier_N.png, ui/skins/default de ui2.pack) devant le texte ; retirée si l'image manque. */

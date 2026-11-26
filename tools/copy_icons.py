@@ -209,6 +209,10 @@ def put(src, sub, name):
     dst = os.path.join(root, "img", sub, name + ".png")
     if not os.path.exists(dst) or os.path.getsize(dst) != os.path.getsize(src): shutil.copy(src, dst)
 cats, infos, mounts, races = {}, {}, {}, []
+# Icônes des grandes catégories du jeu (onglets de recrutement, ui_unit_group_parents) pour les catégories du site (icons.js, ROLE_GAME)
+for ic in ("commander", "hero", "infantry_sword", "missile_infantry_bow", "cavalry", "missile_cavalry_bow", "chariot", "artillery_field_gun", "monstrous_infantry", "war_beast"):
+    p = in_dir(ic, "common ui/unit_category_icons/")
+    if p: put(p, "cats", ic)
 if dump:
     # Icône de catégorie (celle des cartes d'unité du jeu) : main_units.ui_unit_group_land -> ui_unit_groupings.icon -> ui/common ui/unit_category_icons/<icon>.png
     group_icon = {r["key"]: r.get("icon") for r in read_table("ui_unit_groupings_tables")}
