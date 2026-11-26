@@ -94,3 +94,6 @@ Chaque unité affiche un badge **« Tier jeu N »** (1 à 5), lu dans la colonne
 
 ## Interrupteur « Tenir compte du coût » (en-tête)
 En tête de la section **Mode** de la barre latérale, un sélecteur à deux grands boutons (« Avec coût » / « Sans coût ») choisit si le **tier list** (tiers, matrice et usages) est rapporté au coût. **Avec coût** (défaut) = efficacité par or ; **Sans coût** = puissance brute, pour prendre la meilleure unité de chaque usage même plus chère et moins rentable (une armée est limitée à 20 unités : l'argent n'est pas le seul facteur limitant). Il pilote le menu « Tier par… » (efficacité ↔ puissance brute) et reste synchronisé avec lui ; le choix est mémorisé. Il est grisé pour « Tier par résultats de duels », déjà calculé à coût égal. Il ne change ni l'onglet Combat ni les duels précalculés, qui restent à coût égal.
+
+## Cache et publication
+`python tools/cache_bust.py` ajoute `?v=<empreinte>` aux scripts et styles de `index.html` : sans cela, un navigateur peut garder un ancien `app.js` avec un `index.html` neuf (ou l'inverse) et la page plante. À lancer avant chaque commit qui touche un `.js`, un `.css` ou `data/*.js`.

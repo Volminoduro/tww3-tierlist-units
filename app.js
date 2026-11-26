@@ -50,7 +50,7 @@ $("#typo").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)retu
 ["faction","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
 /* Interrupteur « Tenir compte du coût » (en-tête) : activé = métrique « efficacité » (puissance ou usage ÷ coût), désactivé = « puissance brute » (la meilleure unité par usage, quel que soit son prix).
    Il pilote le menu « Tier par… » et reste synchronisé avec lui. « Résultats de duels » est déjà à coût égal : l'interrupteur est alors sans effet (grisé). */
-const costSw=$("#costsw"), costBtns=[...costSw.querySelectorAll("button")];
+const costSw=$("#costsw")||document.createElement("div"), costBtns=[...costSw.querySelectorAll("button")]; // garde-fou : un index.html plus ancien sans ce bloc ne casse pas la page
 const syncCost=()=>{const m=$("#metric").value, on=m==="value"; costSw.classList.toggle("dis",m==="duels"); costBtns.forEach(b=>{b.disabled=m==="duels"; b.classList.toggle("on",m!=="duels"&&(b.dataset.on==="1")===on);});};
 const setCost=on=>{try{localStorage.setItem("costOn",on?"1":"0")}catch(e){} $("#metric").value=on?"value":"power"; syncCost(); render();};
 costSw.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;setCost(b.dataset.on==="1");});
@@ -80,14 +80,15 @@ function duelPanel(u){
  if(!DU) return "";
  const d=duelOf(u), rl=r=>ROLES[r]||r, nm=id=>(UNIT_BY_ID[id]||{name:id}).name;
  if(!d) return `<h4>Résultats de duels</h4><small>Pas de duels précalculés pour cette unité (coût de recrutement nul).</small>`;
- const ranged=d.basis==="dps", lbl="à coût de recrutement équivalent";
- const rows=Object.keys(d.vs).filter(r=>ranged?d.dps[r]>0:d.vs[r]!=null).map(r=>`<dt style="padding-left:8px">${ranged?"DPS /100 vs ":"Victoires vs "}${rl(r)}</dt><dd>${ranged?d.dps[r]:Math.round(d.vs[r]*100)+" %"}</dd>`).join("");
+ const ranged=d.basis==="dps", lbl="à coût de recrutement équivalent", wr=Math.round(d.wr*100);
+ const rows=Object.keys(d.vs).filter(r=>ranged?d.dps[r]>0:d.vs[r]!=null).map(r=>`<div class="kv"><span>${ranged?"DPS /100 vs ":"Victoires vs "}${rl(r)}</span><b>${ranged?d.dps[r]:Math.round(d.vs[r]*100)+" %"}</b></div>`).join("");
  const top=l=>l.slice(0,3).map(([id,m])=>`${nm(id)} (${m>0?"+":""}${Math.round(m*100)})`).join(", ");
- return `<h4>Résultats de duels (${lbl})</h4><dl><dt>${si("attack")}Taux de victoire global</dt><dd>${Math.round(d.wr*100)} %</dd>
-  <dt>${si("target")}Typologie « anti » (${ranged?"efficacité de DPS":"duels"})</dt><dd>${d.anti.length?d.anti.map(([r,p])=>`${rl(r)} (top ${Math.max(1,100-p)} %)`).join(", "):"aucune dominante"}</dd>${rows}</dl>
-  <small>Bat le mieux : ${top(d.best)}<br>Battue par : ${top(d.worst)}</small>
+ return `<h4>Résultats de duels</h4><div class="duelhead"><div class="big" style="color:hsl(${wr*1.2},55%,62%)">${wr} %<small>de victoires ${lbl}</small></div>
+  <div class="anti">${si("target")}<span>${d.anti.length?"Domine : "+d.anti.map(([r,p])=>`${rl(r)} (top ${Math.max(1,100-p)} %)`).join(", "):"Aucune typologie dominante"}</span></div></div>
+  <details class="more"><summary>Détail par catégorie et adversaires</summary>${rows}
+  <small class="kv2">Bat le mieux : ${top(d.best)}<br>Battue par : ${top(d.worst)}</small></details>
   ${DU.caveat.includes(u.id)?`<p class="dn">Seigneur / héros : sorts, capacités et objets non modélisés, résultats indicatifs.</p>`:""}
-  ${ranged?`<p class="dn">Unité à distance : la typologie vient du DPS contre un défenseur moyen de chaque catégorie, pas de duels contre de la mêlée.</p>`:""}`;
+  ${ranged?`<p class="dn">Unité à distance : la typologie vient du DPS contre un défenseur moyen de chaque catégorie (${ranged?"efficacité de DPS":"duels"}), pas de duels contre de la mêlée.</p>`:""}`;
 }
 function score(u){
  const mp=$("#mode").value==="mp", k=1;
@@ -202,27 +203,51 @@ function srow(ic,label,val,fill,p,tip,clip){
  const col=p==null?"var(--gold3)":`hsl(${p*1.2},55%,50%)`;
  return `<div class="sr" title="${tip||""}"><div class="sh"><span>${si(ic)}${label}</span><b>${val}</b></div><div class="sb"><div class="bar"><i style="width:${fill}%;background:${col}"></i>${clip?'<span class="cap" title="Au-delà du 95ᵉ centile du groupe : barre pleine">▸</span>':""}</div>${p==null?"":`<span class="pb" style="background:hsl(${p*1.2},55%,62%)">${rankTxt(p)}</span>`}</div></div>`;
 }
-function statRows(u){
- const TS=window.TWW3Stats; if(!TS) return "";
+/* Valeurs de la fiche : une entrée par stat applicable (valeur, rang, remplissage de barre). Sert au résumé « En bref » et à la liste complète. */
+function statList(u){
+ const TS=window.TWW3Stats; if(!TS) return [];
  const pool=DPOOL==="all"?D.units:DPOOL==="scope"?D.units.filter(v=>inScope(v,fsel.value)):D.units.filter(v=>v.role===u.role);
  const arr=TS.stats(pool,`detail|${DPOOL}|${DPOOL==="scope"?fsel.value:""}|${DPOOL==="role_all"?u.role:""}`);
- let h="",g="";
+ const out=[];
  for(const s of TS.ST){ if(!TS.applies(s,u)) continue;
   const a=arr[s.k], v=s.v(u), p=TS.pct(s,u,a), raw=a.map(x=>s.d*x).sort((x,y)=>x-y), mx=raw[raw.length-1];  // valeurs brutes du groupe (a est trié par « qualité » : plus bas = mieux pour le coût, l'intervalle, le rechargement)
   const p95=raw[Math.floor(0.95*(raw.length-1))], ref=p95>0?p95:mx;                                     // barre = valeur ÷ 95ᵉ centile du groupe (au-delà : barre pleine ▸), pour que quelques valeurs extrêmes n'écrasent pas les autres barres
   const clip=ref>0&&v>ref, fill=ref>0?Math.min(100,Math.max(2,v/ref*100)):0, rank=a.length-TS.upper(a,s.d*v)+1;
-  if(s.g!==g){g=s.g;h+=`<h4>${g}</h4>`}
-  h+=srow(STAT_IC[s.k]||"target",s.l,`${fmtv(v)}<small> · P95 ${fmtv(ref)}</small>`,fill,p,`${s.l} : ${rank}ᵉ sur ${a.length}${s.d<0?" (moins = mieux)":""} — 95ᵉ centile du groupe : ${fmtv(ref)} ; maximum : ${fmtv(mx)}`,clip);
+  out.push({s,v,p,ref,mx,clip,fill,rank,n:a.length});
  }
+ return out;
+}
+const statTip=o=>`${o.s.l} : ${o.rank}ᵉ sur ${o.n}${o.s.d<0?" (moins = mieux)":""} — 95ᵉ centile du groupe : ${fmtv(o.ref)} ; maximum : ${fmtv(o.mx)}`;
+function statRows(list){ // liste complète, par groupe
+ let h="",g="";
+ for(const o of list){ if(o.s.g!==g){g=o.s.g;h+=`<h4>${g}</h4>`}
+  h+=srow(STAT_IC[o.s.k]||"target",o.s.l,`${fmtv(o.v)}<small> · P95 ${fmtv(o.ref)}</small>`,o.fill,o.p,statTip(o),o.clip); }
  return h;
 }
+/* « En bref » : les 6 chiffres qui décident d'un recrutement, en tuiles (valeur + rang) */
+const BRIEF=[["cost","Coût"],["thp","PV totaux"],["arm","Armure"],["dps","DPS / modèle"],["rdmg","Tir : dégâts"],["spd","Vitesse"]];
+function briefTiles(list){
+ const by=Object.fromEntries(list.map(o=>[o.s.k,o])), keys=["cost","thp","arm"].concat(by.dps?["dps"]:[],by.rdmg?["rdmg"]:[],["spd"]).slice(0,6);
+ return `<div class="brief">${keys.filter(k=>by[k]).map(k=>{const o=by[k],lab=(BRIEF.find(b=>b[0]===k)||[k,o.s.l])[1];
+  return `<div class="bt" title="${statTip(o)}"><small>${si(STAT_IC[k]||"target")}${lab}</small><b>${fmtv(o.v)}</b>${o.p==null?"":`<span class="pb" style="background:hsl(${o.p*1.2},55%,62%)">${rankTxt(o.p)}</span>`}</div>`}).join("")}</div>`;
+}
+/* « Pour quoi l'utiliser » : les 3 meilleurs usages en évidence, les autres repliés */
+function usageBlock(x){
+ const ks=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]), top=ks.slice(0,3), rest=ks.slice(3);
+ const row=k=>srow("target",ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées");
+ return `<h4>Pour quoi l'utiliser</h4>${top.map(row).join("")}<details class="more"><summary>Autres usages</summary>${rest.map(row).join("")}</details>`;
+}
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
- const dt=$("#detail"), st=dt.scrollTop; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
+ const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
+ const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false;
  dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small>${gtier(u)}</div><button class="x" id="close">✕</button></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label></div>
- ${statRows(u)}
- <h4>Profil d'usage (percentile)</h4>${ARCHK.map(k=>srow("target",ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées")).join("")}
- <dl><dt>${si("bolt")}Puissance</dt><dd>${Math.round(x.power)}</dd><dt>${si("coin")}Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>${si("bolt")}Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl>${duelPanel(u)}`;
+ ${briefTiles(list)}
+ ${usageBlock(x)}
+ ${duelPanel(u)}
+ <details class="more all"><summary>Toutes les statistiques (${list.length})</summary>${statRows(list)}
+  <dl><dt>${si("bolt")}Puissance</dt><dd>${Math.round(x.power)}</dd><dt>${si("coin")}Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>${si("bolt")}Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl></details>`;
+ if(wasOpen)dt.querySelector("details.all").open=true;
  $("#dpool").value=DPOOL; dt.scrollTop=st;
 }
 $("#detail").addEventListener("change",e=>{ if(e.target.id==="dpool"){ DPOOL=e.target.value; syncDetail(window._us||[]); } }); // changer de groupe de comparaison redessine la fiche
