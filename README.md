@@ -24,7 +24,7 @@ Les **359 factions** de bataille/campagne (DLC et seigneurs légendaires compris
 Par défaut, chaque unité affiche un **emblème de rôle** dessiné en SVG (infanterie, tireurs, cavalerie, monstres, chars, artillerie, bêtes). Pour afficher les **portraits du jeu** en local :
 1. Dans RPFM, extrais `ui/units/icons` depuis les packs du jeu.
 2. `python tools/copy_icons.py DOSSIER_EXTRAIT/ui/units/icons`
-Les portraits sont copiés dans `img/units/` (ignoré par git : ce sont des visuels sous copyright) et remplacent automatiquement les emblèmes.
+Les portraits sont copiés dans `img/units/` et remplacent automatiquement les emblèmes. Ils sont **versionnés** avec le dépôt (projet de fan non commercial ; les visuels restent la propriété de Creative Assembly / SEGA, et le choix de les publier est celui du propriétaire du dépôt) : après `copy_icons.py`, `git add img data/icons.js`, commit et push.
 
 ## Seigneurs, héros et emblèmes de factions
 `convert_rpfm.py` inclut maintenant les **seigneurs et héros** (`--no-heroes` pour les exclure ; masqués par défaut dans le tier list, case « Inclure seigneurs & héros »). Leurs capacités et sorts ne sont pas modélisés.

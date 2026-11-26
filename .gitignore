@@ -1,8 +1,4 @@
-# Illustrations extraites du jeu (visuels sous copyright) : ne pas publier sans autorisation
-img/units/*
-img/factions/*
-!img/units/.gitkeep
-!img/factions/.gitkeep
+# Les illustrations du jeu (img/units, img/factions) sont versionnées : projet de fan non commercial, publication décidée par le propriétaire du dépôt.
 data/duels.json
 __pycache__/
 *.pyc

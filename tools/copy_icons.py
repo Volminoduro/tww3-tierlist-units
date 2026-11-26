@@ -7,7 +7,7 @@ ui/flags  (et, pour les seigneurs, tout dossier ui/* dont les images portent la 
   python tools/copy_icons.py DOSSIER_EXTRAIT          # cherche partout dedans
 Unités/seigneurs/héros : fichiers <clé_unité>.png (ex. wh_main_emp_inf_halberdiers.png), trouvés récursivement.
 Factions : dossier ui/flags/<nom_du_flag>/ (nom lu dans la table factions) ; on prend mon_64.png, sinon le plus grand png.
-Ces visuels sont sous copyright : img/units et img/factions sont ignorés par git (usage local).
+Ces visuels appartiennent à Creative Assembly / SEGA : ils sont versionnés avec le dépôt (projet de fan non commercial, choix du propriétaire du dépôt) ; `git add img data/icons.js` après l'extraction.
 """
 import json, os, shutil, sys
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
