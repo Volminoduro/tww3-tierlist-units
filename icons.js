@@ -20,9 +20,29 @@ function gtier(u) { return u && u.tier > 0 ? `<i class="gt" title="Tier de l'uni
 const ROR_SVG = '<svg class="rori" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5V8.5"/><path d="M12 5l1.3 2.6 2.9.4-2.1 2 .5 2.9L12 11.5 9.4 12.9l.5-2.9-2.1-2 2.9-.4z" fill="currentColor" stroke="none"/><path d="M8.5 20c-3.5-1-5.5-4-5.5-8M15.5 20c3.5-1 5.5-4 5.5-8"/><path d="M5 15.5l-2-1.2M5.8 11.5L3.7 10.5M7.6 8L5.8 6.6M19 15.5l2-1.2M18.2 11.5l2.1-1M16.4 8l1.8-1.4"/></svg>';
 function rortag(u) { return u && u.ror ? `<i class="rortag" title="Bataillon de renom : unité à part, recrutée sous condition (campagne)">${ROR_SVG}Bataillon de renom</i>` : ""; }
 function roricon(u) { return u && u.ror ? `<span class="rormark" title="Bataillon de renom">${ROR_SVG}</span>` : ""; }
+/* Portrait à utiliser pour une unité : le sien s'il existe, sinon celui du même personnage sans la monture ou la variante (ex. wh3_dlc29_vmp_cha_neferata_zombie_dragon -> …_neferata), sinon celui d'une unité de même nom de base. */
+const _ICON_MEMO = {};
+function iconId(u) {
+  if (!u) return null;
+  if (ICON_SET.has(u.id)) return u.id;
+  if (u.id in _ICON_MEMO) return _ICON_MEMO[u.id];
+  let found = null; const t = u.id.split("_");
+  for (let n = t.length - 1; n >= 4 && !found; n--) {                      // on retire des mots de la fin de la clé : …_neferata_zombie_dragon -> …_neferata_zombie -> …_neferata
+    const pre = t.slice(0, n).join("_");
+    found = [pre, pre + "_0", pre + "_1"].find(k => ICON_SET.has(k)) || null;
+  }
+  if (!found) {                                                            // même nom de base (avant la parenthèse de variante) et même race : une autre version du personnage
+    const nb = u.name.replace(/ \(.*$/, ""), key = x => (x.cultures || []).concat(x.groups || []).join("|");
+    if (!_ICON_BY_NAME) { _ICON_BY_NAME = {}; for (const x of D.units) if (ICON_SET.has(x.id)) (_ICON_BY_NAME[x.name.replace(/ \(.*$/, "")] ??= []).push(x); }
+    const c = (_ICON_BY_NAME[nb] || []).filter(x => key(x) === key(u) || x.role === u.role)[0];
+    found = c ? c.id : null;
+  }
+  return _ICON_MEMO[u.id] = found;
+}
+let _ICON_BY_NAME = null;
 function portrait(u, cls = "") {
   const svg = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ROLE_ICON[u.role] || ROLE_ICON._}</svg>`;
-  const img = ICON_SET.has(u.id) ? `<img src="img/units/${u.id}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
+  const ic = iconId(u), img = ic ? `<img src="img/units/${ic}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
   return `<span class="pt ${cls}${u.ror ? " ror" : ""}">${svg}${img}</span>`;
 }
 
