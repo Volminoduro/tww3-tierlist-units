@@ -89,3 +89,5 @@ Chaque attaque est **physique** ou **magique** (`is_magical` de l'arme de mêlé
 
 ## Tier du jeu (indicatif)
 Chaque unité affiche un badge **« Tier jeu N »** (1 à 5), lu dans la colonne `tier` de `main_units`, à côté de son nom : cartes du tier list, fiche d'unité, tableau « Unités par faction » et armées du Combat (« T3 » dans la liste). Il est **indicatif et distinct du tier S→F calculé par le site**. Les seigneurs, héros et unités sans tier (valeur 0) n'affichent rien.
+
+**Mobilité = vitesse seule** : dans le mode « efficacité », les autres usages sont divisés par le coût, mais pas la mobilité (diviser une vitesse par un prix classait en tête des unités lentes et bon marché comme les zombies). La fiche d'unité a un contour de la couleur de son tier S→F.

@@ -105,8 +105,8 @@ Object.assign(I18N.dict, {
   "Colonnes essentielles": "Essential columns", "Toutes les colonnes": "All columns",
   "Chaque stat est suivie de son rang parmi le groupe de comparaison choisi : « Top # % » = dans les # % meilleurs, « Bottom # % » = dans les # % moins bons. Pour le coût, l'entretien, l'intervalle d'attaque et le rechargement, « mieux » = plus bas. Les stats non applicables (ex. tir pour une unité de mêlée) sont ignorées. Survole un badge pour voir le détail. Clique un en-tête pour trier.":
     "Each stat is followed by its rank within the chosen comparison group: \"Top # %\" = among the best # %, \"Bottom # %\" = among the worst # %. For cost, upkeep, attack interval and reload, \"better\" = lower. Stats that do not apply (e.g. shooting for a melee unit) are ignored. Hover a badge for details. Click a header to sort.",
-  "Chaque case = percentile (#-#) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. # = la meilleure pour ça. Cliquer un en-tête trie.":
-    "Each cell = the unit's percentile (#-#) (relative to cost if the \"efficiency\" mode is chosen) among the displayed units of the faction for that use. # = the best at it. Click a header to sort.",
+  "Chaque case = percentile (#-#) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. # = la meilleure pour ça. La mobilité est la vitesse seule, jamais rapportée au coût. Cliquer un en-tête trie.":
+    "Each cell = the unit's percentile (#-#) (relative to cost if the \"efficiency\" mode is chosen) among the displayed units of the faction for that use. # = the best at it. Mobility is speed alone, never relative to cost. Click a header to sort.",
   "Meilleur usage": "Best use", "Score": "Score", "Puissance": "Power", "PV eff.": "Eff. HP", "Coût eff.": "Eff. cost", "Mêlée/s": "Melee/s", "Dist./s": "Rng./s", "Rôle": "Role",
   "Tier": "Tier",
   "Unité": "Unit", "Unité (#)": "Unit (#)",
