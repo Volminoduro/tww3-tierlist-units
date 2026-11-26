@@ -73,4 +73,8 @@ Bouton **FR | EN** en haut à droite ; le choix est mémorisé et peut être for
 3. `python tools/convert_rpfm.py wh3-dump --loc-fr DOSSIER_FR` génère `data/names_fr.js` (à commiter). Sans ce fichier, le site affiche les noms officiels anglais dans les deux langues.
 
 ## Front de combat
-Le simulateur limite le nombre d'attaquants qui peuvent engager une unité en même temps (`FRONT_K`, `FRONT_ASPECT`, `FRONT_LARGE` dans `sim.js`) : une horde nombreuse et bon marché n'attaque plus avec 60 % de ses hommes à la fois. Les combats équilibrés ne changent pas ; les écrasements par le nombre disparaissent (Peasant Mob : taux de victoire 1,00 → 0,48).
+Le simulateur plafonne le nombre d'attaquants qui peuvent engager une unité en même temps (`sim.js`) :
+- **Largeur du front** d'une unité = hommes ÷ nombre de rangs (`rank_depth` de la table `land_units`), par exemple 120 hommes sur 6 rangs = 20 de large. Cette largeur est **conservée tant qu'il reste assez de survivants** (les rangs arrière comblent les trous : la profondeur baisse, pas la largeur), puis égale au nombre de survivants. Même principe que le modèle de front de [Chalkdust](https://chalkdustmagazine.com/blog/modelling-warfare/) (front = troupes ÷ profondeur).
+- **Capacité de contact** = `FRONT_K` (4 attaquants par modèle du front) × largeur ; grands modèles (6 ou moins) : `FRONT_LARGE` = 10 attaquants chacun.
+- Les attaquants qui cherchent à engager l'unité (`ENGAGE` = 60 % des hommes de chaque unité attaquante) sont comparés à cette capacité : la mêlée subie est multipliée par capacité ÷ attaquants si elle est dépassée. Le tir n'est pas limité.
+`FRONT_K` et `ENGAGE` sont des choix non calibrés sur le jeu (aucune source trouvée) ; les combats équilibrés ne changent pas, les écrasements par le nombre disparaissent.

@@ -243,7 +243,7 @@ def main():
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
             "charge": num(col(lu, "charge")), "ld": num(col(lu, "morale")),
             "speed": speed_card,
-            "acc": num(col(lu, "acc")), "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
+            "acc": num(col(lu, "acc")), "rd": num(lu.get("rank_depth")), "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
                       "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl"))},

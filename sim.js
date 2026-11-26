@@ -11,7 +11,8 @@
 })(typeof self !== "undefined" ? self : this, function () {
 const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
-  FRONT_K:4, FRONT_ASPECT:3, FRONT_LARGE:10};
+  // FRONT_K : attaquants par modèle du front ; FRONT_LARGE : attaquants par grand modèle (≤ 6 modèles) ; RANK_DEFAULT : nombre de rangs si la donnée manque
+  FRONT_K:4, FRONT_LARGE:10, RANK_DEFAULT:5};
 const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.role);
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
 const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front
@@ -77,10 +78,13 @@ function simulate(ARMY, BON, opts) {
       }
     }
     // Front de combat : la mêlée subie par une unité est réduite si plus d'attaquants cherchent à l'engager que la surface de contact ne le permet
-    // (unités à effectif ≥ 7 : FRONT_K × √(FRONT_ASPECT × modèles × unités), soit K fois la largeur d'un front rectangulaire ; grands modèles : FRONT_LARGE attaquants chacun)
+    // Unités à effectif ≥ 7 : capacité = FRONT_K × largeur du front. Largeur d'une unité = hommes ÷ rangs (rank_depth du jeu), conservée tant qu'il reste assez de survivants (les rangs arrière comblent
+    // les trous : la profondeur baisse, pas la largeur), puis égale au nombre de survivants. Grands modèles (≤ 6) : FRONT_LARGE attaquants chacun.
     for (const s of ["A","B"]) for (const [d, v] of meleeIn[s]) {
       const Nd = d.pool / d.hp, E = engIn[s].get(d) || 0;
-      const cap = d.u.men <= 6 ? SIM.FRONT_LARGE * Nd : SIM.FRONT_K * Math.sqrt(SIM.FRONT_ASPECT * Nd * Math.max(1, d.cnt));
+      let cap;
+      if (d.u.men <= 6) cap = SIM.FRONT_LARGE * Nd;
+      else { const units = Math.max(1, d.cnt), w0 = d.u.men / (d.u.rd > 0 ? d.u.rd : SIM.RANK_DEFAULT); cap = SIM.FRONT_K * units * Math.min(w0, Nd / units); }
       dmgIn[s].set(d, (dmgIn[s].get(d) || 0) + v * (E > cap && E > 0 ? cap / E : 1));
     }
     for (const s of ["A","B"]) for (const [d, v] of dmgIn[s]) d.pool = Math.max(0, d.pool - v);
