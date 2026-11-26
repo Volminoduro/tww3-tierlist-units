@@ -83,7 +83,7 @@ function initPicker(facEl, defaultKey) {
   const choose = v => { chosen = true; facEl.value = v; label(); close(); ["input", "change"].forEach(t => facEl.dispatchEvent(new Event(t, {bubbles: true}))); };
   const openPop = () => {
     const r = btn.getBoundingClientRect();
-    Object.assign(pop.style, {left: r.left + "px", top: r.bottom + 4 + "px", width: Math.max(r.width, 320) + "px", maxHeight: Math.max(220, Math.min(innerHeight - r.bottom - 16, 560)) + "px"});
+    Object.assign(pop.style, {left: r.left + "px", top: r.bottom + 4 + "px", width: r.width + "px", boxSizing: "border-box", maxHeight: Math.max(220, Math.min(innerHeight - r.bottom - 16, 560)) + "px"});
     q.value = ""; if (chosen && cultOf(facEl.value)) open.add(cultOf(facEl.value)); render(); pop.hidden = false; q.focus();
     const sel = list.querySelector(".tp-it.sel,.tp-race.sel,.tp-all.sel"); if (sel) sel.scrollIntoView({block: "nearest"});
   };
