@@ -18,6 +18,8 @@
     ["dwr","Victoires en duel, à entretien égal (%)","Duels",u=>{const d=duelOf(u,"upkeep");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
     ["dwc","Victoires en duel, à recrutement égal (%)","Duels",u=>{const d=duelOf(u,"cost");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
   ].map(([k,l,g,v,d,ok,z]) => ({k,l,g,v,d,ok:typeof ok==="function"?ok:()=>true,z:!!z}));
+  // colonnes affichées par défaut (de quoi tenir dans la largeur) ; « Toutes les colonnes » affiche les 26
+  const ESS = new Set(["cost","upkeep","rt","thp","arm","md","ld","ma","ch","str","dps","rdmg","rng","spd","dwr","dwc"]);
   const GROUPS = [...new Set(ST.map(s => s.g))], shown = new Set(GROUPS), $b = s => document.querySelector(s);
   const applies = (s, u) => { const v = s.v(u); return s.ok(u) && Number.isFinite(v) && (s.z || v > 0); };
   const lower = (a, x) => { let lo = 0, hi = a.length; while (lo < hi) { const m = (lo+hi)>>1; a[m] < x ? lo = m+1 : hi = m; } return lo; };
@@ -39,7 +41,7 @@
   let role = new Set(), sortK = "cost", sortD = 1; // catégories : sélection multiple (vide = toutes)
   $b("#bgrp").innerHTML = GROUPS.map(g => `<label><input type="checkbox" data-g="${g}" checked>${g}</label>`).join("");
   $b("#bgrp").onchange = e => { e.target.checked ? shown.add(e.target.dataset.g) : shown.delete(e.target.dataset.g); render(); };
-  ["bfac","bpool","bq"].forEach(i => $b("#"+i).addEventListener("input", render));
+  ["bfac","bpool","bq","bcols"].forEach(i => $b("#"+i).addEventListener("input", render));
   $b("#brole").onclick = e => { const b = e.target.closest("button[data-r]"); if (!b) return; const r = b.dataset.r; if (!r) role.clear(); else role.has(r) ? role.delete(r) : role.add(r); render(); };
   const BTYPO = new Set();
   $b("#btypo").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return; const k = b.dataset.k; k === "" ? BTYPO.clear() : BTYPO.has(k) ? BTYPO.delete(k) : BTYPO.add(k); render(); };
@@ -58,13 +60,14 @@
     const poolOf = u => mode === "all" ? D.units : mode === "fac" ? inFac : mode === "role_fac" ? inFac.filter(x => x.role === u.role) : D.units.filter(x => x.role === u.role);
     const keyOf = u => `${mode}|${mode.endsWith("fac") ? fac : ""}|${mode.startsWith("role") ? u.role : ""}`;
     const pools = {}; rows.forEach(u => { const k = keyOf(u); if (!pools[k]) { const p = uniq(poolOf(u)); pools[k] = {n: p.length, st: stats(p, k)}; } });
-    const cols = ST.filter(s => shown.has(s.g));
+    const full = $b("#bcols").value === "all";
+    const cols = ST.filter(s => shown.has(s.g) && (full || ESS.has(s.k)) && rows.some(u => applies(s, u))); // les colonnes sans aucune valeur (ex. tir pour de la mêlée) sont masquées : moins de défilement horizontal
     const sk = ST.find(s => s.k === sortK) || ST[0];
     const val = u => applies(sk, u) ? sk.v(u) : (sortD > 0 ? Infinity : -Infinity);
     rows.sort((a,b) => (val(a) - val(b)) * sortD || a.name.localeCompare(b.name));
-    $b("#btab").innerHTML = `<table><tr><th>Unité (${rows.length})</th><th>Catégorie</th>${cols.map(s => `<th data-k="${s.k}" title="${s.g}">${s.l}${s.k===sortK?(sortD>0?" ▲":" ▼"):""}</th>`).join("")}</tr>` +
+    $b("#btab").innerHTML = `<table><tr><th>Unité (${rows.length})</th>${cols.map(s => `<th data-k="${s.k}" title="${s.g}">${s.l}${s.k===sortK?(sortD>0?" ▲":" ▼"):""}</th>`).join("")}</tr>` +
       rows.map(u => { const P = pools[keyOf(u)];
-        return `<tr><td><div class="nm">${portrait(u,"s")}<span>${u.name}</span></div></td><td style="text-align:left">${ROLES[u.role]||u.role}<small>vs ${P.n} unités</small></td>` + cols.map(s => {
+        return `<tr><td><div class="nm">${portrait(u,"s")}<span>${u.name}<small>${ROLES[u.role]||u.role} · vs ${P.n} unités</small></span></div></td>` + cols.map(s => {
           if (!applies(s,u)) return `<td class="na">—</td>`;
           const p = pct(s, u, P.st[s.k]); const rank = P.st[s.k].length - upper(P.st[s.k], s.d * s.v(u)) + 1;
           return `<td>${f(s.v(u))}<br>${badge(p, `${s.l} : ${rank}ᵉ sur ${P.st[s.k].length}${s.d<0?" (moins = mieux)":""}`)}</td>`; }).join("") + "</tr>"; }).join("") + "</table>";

@@ -278,6 +278,14 @@ def main():
                 names[f] = f"{n} ({suffix})"
     cult_keys = sorted({i["culture"] for i in facinfo.values()}, key=lambda c: min(i["cs"] for i in facinfo.values() if i["culture"] == c))
     cultures = {c: CULTURE_FR.get(c) or humanise(c) for c in cult_keys}
+    # seigneurs/héros sans permission de bataille personnalisée : rattachés à leur race par le préfixe de leur clé (ex. wh2_dlc14_def_cha_... -> « def » -> Elfes Noirs)
+    code2cul = {c.split("_")[2]: c for c in cult_keys if len(c.split("_")) > 2}
+    fixed = 0
+    for u in units:
+        parts = u["id"].split("_")
+        if u["role"] in ("lord", "hero") and not u["cultures"] and len(parts) > 2 and parts[2] in code2cul:
+            u["cultures"] = [code2cul[parts[2]]]; fixed += 1
+    print(f"  {fixed} seigneurs/héros sans race rattachés par leur préfixe de clé")
     flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
     meta = provenance(a.src, units)
     out = {"demo": False, "meta": meta, "cultures": cultures, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}

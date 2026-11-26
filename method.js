@@ -15,7 +15,7 @@
     Jeu : <b>${m.patch || "inconnu"}</b>${m.build ? `, build ${m.build}` : ""}${m.buildDate ? ` (${m.buildDate})` : ""}<br>
     Dump : commit ${commit}${d ? `, du ${d}` : ""}${m.commitSubject ? ` — « ${m.commitSubject} »` : ""}<br>
     ${m.units || D.units.length} unités importées. <small>Le workflow de génération (<code>.github/workflows/build-data.yml</code>) part d'un seul commit du dump et l'enregistre ici : une page ne mélange jamais deux versions.</small><br>
-    <small>Attention : ce dump peut ne pas contenir les derniers correctifs (hotfixes) du jeu. En cas de doute, la clé de l'unité (affichée dans sa fiche) permet de retrouver la ligne dans les tables ci-dessous.</small></p></div>
+    <small>Attention : ce dump peut ne pas contenir les derniers correctifs (hotfixes) du jeu. En cas de doute, les tables ci-dessous permettent de retrouver chaque ligne (la clé technique d'une unité s'affiche en infobulle sur le titre de sa fiche).</small></p></div>
 
   <h2>Valeurs de référence</h2>
   <p>Les valeurs sont celles de la fiche d'unité du jeu à la <b>taille d'unité « Ultra »</b> (nombre d'hommes de la table), <b>rang 0, sans compétence, objet, technologie ni bonus</b>.

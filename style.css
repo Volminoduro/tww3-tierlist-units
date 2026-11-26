@@ -160,3 +160,20 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 /* Sélecteur : bouton « Tout » d'une race et ligne « Toute la race » */
 .tp-pick{padding:1px 9px;font:700 11px var(--sans);letter-spacing:.04em;margin-right:4px}
 .tp-whole{padding-left:14px;font-weight:700;color:var(--gold2);background:#ffffff08;border-bottom:1px solid #2d2418}.tp-whole .tp-wi{width:24px;text-align:center;color:var(--gold)}
+/* Lisibilité : le contenu ne peut plus élargir la page ; matrice et tableaux compacts, sans défilement horizontal autant que possible */
+main{grid-template-columns:310px minmax(0,1fr)}#content{min-width:0}
+#matrix table{table-layout:fixed;width:100%}
+#matrix th,#matrix td{white-space:normal;padding:4px 5px;font-size:13px}#matrix th{font-size:10px;line-height:1.2}
+#matrix .c-n{width:24%}#matrix .c-r{width:12%}#matrix .c-a{width:7.5%}#matrix .c-b{width:11%}
+#table th,#table td{white-space:normal}
+.btab th{white-space:normal;max-width:92px;font-size:10px;line-height:1.15;padding:4px 5px}.btab td{padding:3px 5px;font-size:13px}
+.btab td:first-child,.btab th:first-child{min-width:170px;max-width:240px}.btab td:first-child .nm{white-space:normal}.pb{font-size:9px;padding:0 4px}
+#table th,#table td{padding:4px 5px;font-size:13px}#table th{font-size:10px}
+#bcols{width:auto;margin:0}
+.btab td:first-child,.btab th:first-child{min-width:150px;max-width:210px}.btab th,.btab td{padding-left:4px;padding-right:4px}
+/* Colonne de gauche : un nom long (ex. « Comtes Vampires — toute la race ») ne doit pas l'élargir */
+aside{grid-template-columns:minmax(0,1fr)}aside section,.tp{min-width:0}.tp-btn{min-width:0;overflow:hidden}
+/* Icônes de stats dans la fiche d'unité */
+.si{width:15px;height:15px;vertical-align:-3px;margin-right:6px;color:var(--gold);flex:none}
+#detail dt{display:flex;align-items:center}
+#detail dt[style]{padding-left:8px}

@@ -74,8 +74,8 @@ function duelPanel(u){
  const ranged=d.basis==="dps", lbl=duelMode()==="cost"?"à coût de recrutement équivalent":"à entretien équivalent";
  const rows=Object.keys(d.vs).filter(r=>ranged?d.dps[r]>0:d.vs[r]!=null).map(r=>`<dt style="padding-left:8px">${ranged?"DPS /100 vs ":"Victoires vs "}${rl(r)}</dt><dd>${ranged?d.dps[r]:Math.round(d.vs[r]*100)+" %"}</dd>`).join("");
  const top=l=>l.slice(0,3).map(([id,m])=>`${nm(id)} (${m>0?"+":""}${Math.round(m*100)})`).join(", ");
- return `<h4>Résultats de duels (${lbl})</h4><dl><dt>Taux de victoire global</dt><dd>${Math.round(d.wr*100)} %</dd>
-  <dt>Typologie « anti » (${ranged?"efficacité de DPS":"duels"})</dt><dd>${d.anti.length?d.anti.map(([r,p])=>`${rl(r)} (top ${Math.max(1,100-p)} %)`).join(", "):"aucune dominante"}</dd>${rows}</dl>
+ return `<h4>Résultats de duels (${lbl})</h4><dl><dt>${si("attack")}Taux de victoire global</dt><dd>${Math.round(d.wr*100)} %</dd>
+  <dt>${si("target")}Typologie « anti » (${ranged?"efficacité de DPS":"duels"})</dt><dd>${d.anti.length?d.anti.map(([r,p])=>`${rl(r)} (top ${Math.max(1,100-p)} %)`).join(", "):"aucune dominante"}</dd>${rows}</dl>
   <small>Bat le mieux : ${top(d.best)}<br>Battue par : ${top(d.worst)}</small>
   ${DU.caveat.includes(u.id)?`<p class="dn">Seigneur / héros : sorts, capacités et objets non modélisés, résultats indicatifs.</p>`:""}
   ${ranged?`<p class="dn">Unité à distance : la typologie vient du DPS contre un défenseur moyen de chaque catégorie, pas de duels contre de la mêlée.</p>`:""}`;
@@ -93,9 +93,9 @@ function score(u){
  const cost=mp? u.mpCost : u.cost*(1-S.tCost/100)+u.upkeep*(1-S.tUp/100)*S.turns+rt*S.turnVal;
  return {power, cost, value: power/Math.max(1,cost), ehp, mel, rng, rt, arche: archeScores(u), duels: (duelOf(u)||{}).wr ?? 0};
 }
-function compute(){
+function compute(withLH){ // withLH : inclure seigneurs et héros dans le périmètre (et donc dans le classement)
  const f=fsel.value, seen=new Set();
- let us=D.units.filter(u=>inScope(u,f)&&($("#heroes").checked||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
+ let us=D.units.filter(u=>inScope(u,f)&&(withLH||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
  us=us.filter(x=>!seen.has(x.u.id)&&seen.add(x.u.id));
  const key=$("#metric").value, ar=$("#arch").value;
  us.forEach(x=>x.score= ar==="global" ? x[key] : key==="value" ? x.arche[ar]/Math.max(1,x.cost) : x.arche[ar]);
@@ -113,12 +113,16 @@ function roleChips(list,sel,cnt){
   return `<button data-r="${r}" class="${on?"on":""}" ${!n&&!on?"disabled":""}>${ROLES[r]||r} (${n})</button>`;}).join("");
 }
 function render(){
- let us=compute(); const q=$("#q").value.toLowerCase();
- const byName=us.filter(x=>x.u.name.toLowerCase().includes(q));
- const cnt=r=>byName.filter(x=>(!r||x.u.role===r)&&[...TYPO].every(k=>canDo(x.u,k))).length; // périmètre, héros, recherche et usages actifs
+ // Seigneurs et héros : exclus de « Toutes » sauf si la case est cochée, mais toujours accessibles (et comptés) via leurs pastilles « Seigneurs » / « Héros »
+ const incl=$("#heroes").checked, LH=x=>x.u.role==="lord"||x.u.role==="hero", shown=x=>role.size?role.has(x.u.role):(incl||!LH(x));
+ const wantLH=incl||role.has("lord")||role.has("hero"), q=$("#q").value.toLowerCase();
+ let us=compute(wantLH);                       // classement : seigneurs/héros seulement s'ils sont affichés
+ const pool=wantLH?us:compute(true);           // effectifs des pastilles : tous les seigneurs/héros comptés, même masqués
+ const byName=pool.filter(x=>x.u.name.toLowerCase().includes(q));
+ const cnt=r=>byName.filter(x=>(r?x.u.role===r:(incl||!LH(x)))&&[...TYPO].every(k=>canDo(x.u,k))).length; // périmètre, recherche et usages actifs
  [...role].forEach(r=>{if(!cnt(r))role.delete(r);}); // une catégorie devenue vide est retirée de la sélection
  $("#roles").innerHTML=roleChips(roles,role,cnt);
- us=byName.filter(x=>!role.size||role.has(x.u.role));
+ us=us.filter(x=>x.u.name.toLowerCase().includes(q)&&shown(x));
  us=typoApply(us,x=>x.u,TYPO,$("#typo"));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
@@ -133,8 +137,9 @@ function render(){
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
   const best=x=>ARCHK.reduce((p,k)=>x.pct[k]>x.pct[p]?k:p,ARCHK[0]);
   const cell=(x,k)=>{const p=x.pct[k];return `<td style="background:hsl(${p*1.2},55%,62%);color:#111;text-align:center" title="Valeur brute : ${Math.round(x.arche[k])}">${p}</td>`};
-  $("#matrix").innerHTML=`<table><tr><th data-k="score">Unité</th><th>Rôle</th>${ARCHK.map(k=>`<th data-k="m:${k}" style="text-align:center">${ARCH[k]}</th>`).join("")}<th>Meilleur usage</th></tr>`+
-   us.map(x=>`<tr data-id="${x.u.id}"><td>${x.u.name}</td><td>${ROLES[x.u.role]||x.u.role}</td>${ARCHK.map(k=>cell(x,k)).join("")}<td>${ARCH[best(x)]}</td></tr>`).join("")+
+  const SH={inf:"Anti-infanterie",large:"Anti-gros",armour:"Anti-armure",tank:"Encaisser",ranged:"Distance",charge:"Charge",speed:"Mobilité"}; // libellés courts : la matrice tient dans la largeur
+  $("#matrix").innerHTML=`<table><colgroup><col class="c-n"><col class="c-r">${ARCHK.map(()=>'<col class="c-a">').join("")}<col class="c-b"></colgroup><tr><th data-k="score">Unité</th><th>Rôle</th>${ARCHK.map(k=>`<th data-k="m:${k}" title="${ARCH[k]}" style="text-align:center">${SH[k]||ARCH[k]}</th>`).join("")}<th>Meilleur usage</th></tr>`+
+   us.map(x=>`<tr data-id="${x.u.id}"><td>${x.u.name}</td><td>${ROLES[x.u.role]||x.u.role}</td>${ARCHK.map(k=>cell(x,k)).join("")}<td>${SH[best(x)]||ARCH[best(x)]}</td></tr>`).join("")+
    `</table><p style="padding:8px;color:var(--m);font-size:12px">Chaque case = percentile (0-100) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. 100 = la meilleure pour ça. Cliquer un en-tête trie.</p>`;
  } else {
   const cols=[["Unité",x=>x.u.name],["Tier",x=>x.tier],["Rôle",x=>ROLES[x.u.role]],["Score",x=>x.score],["Puissance",x=>x.power],["Coût eff.",x=>x.cost],["PV eff.",x=>x.ehp],["Mêlée/s",x=>x.mel],["Dist./s",x=>x.rng],["Recrut.",x=>x.rt],["Entretien",x=>x.u.upkeep]];
@@ -146,8 +151,8 @@ function render(){
 }
 /* La fiche d'unité suit la liste : elle se met à jour si l'unité reste affichée, et se ferme si un filtre la fait disparaître. */
 function syncDetail(us){
- const dt=$("#detail"); if(dt.hidden||!dt.dataset.id) return;
- const x=us.find(y=>y.u.id===dt.dataset.id);
+ const dt=$("#detail"); if(dt.hidden||!dt.dataset.unit) return;
+ const x=us.find(y=>y.u.id===dt.dataset.unit);
  if(!x){dt.hidden=true;return;}
  const st=dt.scrollTop; detail(x); dt.scrollTop=st;
 }
@@ -156,11 +161,30 @@ document.addEventListener("click",e=>{
  const c=e.target.closest("[data-id]"); if(c){const x=window._us.find(y=>y.u.id===c.dataset.id); if(x) detail(x);}
  if(e.target.id==="close")$("#detail").hidden=true;
 });
+/* Icônes de types de stats (fiche d'unité) : tracés simples, couleur de l'accent */
+const STAT_ICON={
+ hp:'<path d="M12 20.5S4 16 4 9.5a4.2 4.2 0 0 1 8-1.8 4.2 4.2 0 0 1 8 1.8C20 16 12 20.5 12 20.5z"/>',
+ armour:'<path d="M12 3l7.5 2.8v5.7c0 4.8-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.7-7.5-9.5V5.8z"/>',
+ attack:'<path d="M5 5l14 14M19 5L5 19M3.5 8.5l5-5M15.5 20.5l5-5"/>',
+ charge:'<path d="M3 12h13M12 6l6 6-6 6"/>',
+ morale:'<path d="M6 21V3M6 4.5h12l-3.5 4 3.5 4H6"/>',
+ speed:'<path d="M5 6l6 6-6 6M12 6l6 6-6 6"/>',
+ weapon:'<path d="M12 2.5l3 9-3 3-3-3z M12 14.5v6.5M8 17.5h8"/>',
+ target:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/><path d="M12 12h.01"/>',
+ bow:'<path d="M7 3.5c11 4.5 11 12.5 0 17M7 3.5v17M3 12h17M20 12l-4-3v6z"/>',
+ clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/>',
+ ammo:'<path d="M8 20V8l2-3 2 3v12M14 20V10l2-3 2 3v10"/>',
+ coin:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7v10M9.5 9.5c0-1.6 5-1.6 5 0s-5 1.4-5 3 5 1.6 5 0"/>',
+ upkeep:'<path d="M7 3h10M7 21h10M8 3c0 6 8 6 8 9s-8 3-8 9M16 3c0 6-8 6-8 9"/>',
+ calendar:'<path d="M4 6h16v14H4zM4 10.5h16M8 3.5v4M16 3.5v4"/>',
+ bolt:'<path d="M13 2.5L5.5 13.5H11l-1 8 7.5-11H12z"/>',
+};
+const si=k=>`<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${STAT_ICON[k]||""}</svg>`;
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
- $("#detail").hidden=false; $("#detail").dataset.id=u.id; $("#detail").innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3>${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small></div></div>
- <dl><dt>Hommes × PV</dt><dd>${u.men} × ${u.hp}</dd><dt>Armure</dt><dd>${u.armour}</dd><dt>Attaque / Défense</dt><dd>${u.ma} / ${u.md}</dd><dt>Charge</dt><dd>${u.charge}</dd><dt>Moral</dt><dd>${u.ld}</dd><dt>Vitesse</dt><dd>${u.speed}</dd>
- <dt>Arme (dégâts / perf. / intervalle)</dt><dd>${m.dmg} / ${m.ap} / ${m.interval}s</dd><dt>Bonus vs grands / infanterie</dt><dd>${m.bvl} / ${m.bvi}</dd>
- ${r?`<dt>Distance (dég./perf.)</dt><dd>${r.dmg} / ${r.ap}</dd><dt>Portée / recharg.</dt><dd>${r.range} / ${r.reload}s</dd><dt>Projectiles par volée / munitions (volées)</dt><dd>${r.shots} / ${r.ammo}</dd><dt>Dégâts de tir par 10 s, par tireur (calculé)</dt><dd>${Math.round((r.dmg+r.ap)*r.shots*10/r.reload)}</dd>`:""}
- <dt>Coût / entretien</dt><dd>${u.cost} / ${u.upkeep}</dd><dt>Coût MP</dt><dd>${u.mpCost}</dd><dt>Clé de l'unité (pour vérifier dans les tables)</dt><dd><code>${u.id}</code></dd><dt>Recrutement</dt><dd>${u.recruitTurns} tour(s)</dd>
- <dt>Profil d'usage (percentile)</dt><dd></dd>${ARCHK.map(k=>`<dt style="padding-left:8px">${ARCH[k]}</dt><dd>${x.pct[k]}</dd>`).join("")}<dt>Puissance</dt><dd>${Math.round(x.power)}</dd><dt>Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl>${duelPanel(u)}`;}
+ $("#detail").hidden=false; $("#detail").dataset.unit=u.id; $("#detail").innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small></div></div>
+ <dl><dt>${si("hp")}Hommes × PV</dt><dd>${u.men} × ${u.hp}</dd><dt>${si("armour")}Armure</dt><dd>${u.armour}</dd><dt>${si("attack")}Attaque / Défense</dt><dd>${u.ma} / ${u.md}</dd><dt>${si("charge")}Charge</dt><dd>${u.charge}</dd><dt>${si("morale")}Moral</dt><dd>${u.ld}</dd><dt>${si("speed")}Vitesse</dt><dd>${u.speed}</dd>
+ <dt>${si("weapon")}Arme (dégâts / perf. / intervalle)</dt><dd>${m.dmg} / ${m.ap} / ${m.interval}s</dd><dt>${si("target")}Bonus vs grands / infanterie</dt><dd>${m.bvl} / ${m.bvi}</dd>
+ ${r?`<dt>${si("bow")}Distance (dég./perf.)</dt><dd>${r.dmg} / ${r.ap}</dd><dt>${si("clock")}Portée / recharg.</dt><dd>${r.range} / ${r.reload}s</dd><dt>${si("ammo")}Projectiles par volée / munitions (volées)</dt><dd>${r.shots} / ${r.ammo}</dd><dt>${si("bow")}Dégâts de tir par 10 s, par tireur (calculé)</dt><dd>${Math.round((r.dmg+r.ap)*r.shots*10/r.reload)}</dd>`:""}
+ <dt>${si("coin")}Coût / entretien</dt><dd>${u.cost} / ${u.upkeep}</dd><dt>${si("coin")}Coût MP</dt><dd>${u.mpCost}</dd><dt>${si("calendar")}Recrutement</dt><dd>${u.recruitTurns} tour(s)</dd>
+ <dt>${si("target")}Profil d'usage (percentile)</dt><dd></dd>${ARCHK.map(k=>`<dt style="padding-left:8px">${ARCH[k]}</dt><dd>${x.pct[k]}</dd>`).join("")}<dt>${si("bolt")}Puissance</dt><dd>${Math.round(x.power)}</dd><dt>${si("coin")}Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>${si("bolt")}Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl>${duelPanel(u)}`;}
 render();

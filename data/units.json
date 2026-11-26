@@ -17199,7 +17199,9 @@
     "wh3_main_def_morathi"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh2_main_def_dark_elves"
+   ]
   },
   {
    "id": "wh2_dlc14_def_cha_malus_darkblade_0_mp",
@@ -17272,7 +17274,9 @@
     "wh3_main_def_morathi"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh2_main_def_dark_elves"
+   ]
   },
   {
    "id": "wh2_dlc14_def_cha_malus_darkblade_1_mp",
@@ -40735,7 +40739,9 @@
     "wh3_dlc23_group_chaos_dwarfs"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_dlc23_chd_chaos_dwarfs"
+   ]
   },
   {
    "id": "wh3_dlc23_chd_cha_daemonsmith_sorcerer_death",
@@ -44474,7 +44480,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_dlc24_cth_cha_celestial_general_yang",
@@ -44589,7 +44597,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_dlc24_cth_cha_celestial_general_yang_longma",
@@ -44673,7 +44683,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_dlc24_cth_cha_gate_master_warhorse",
@@ -44718,7 +44730,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_dlc24_cth_cha_saytang_the_watcher",
@@ -44763,7 +44777,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_dlc24_cth_cha_yuan_bo_dragon",
@@ -44800,7 +44816,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_dlc24_cth_cha_yuan_bo_human",
@@ -62529,7 +62547,9 @@
     "wh_main_group_vampire_counts"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_vmp_vampire_counts"
+   ]
   },
   {
    "id": "wh3_dlc29_vmp_cha_walach_harkon",
@@ -63739,7 +63759,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_main_cth_cha_lord_caravan_master",
@@ -63776,7 +63798,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_main_cth_cha_lord_magistrate_0",
@@ -63977,7 +64001,9 @@
     "wh3_main_cth"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_cth_cathay"
+   ]
   },
   {
    "id": "wh3_main_cth_inf_crane_gunners_0",
@@ -73366,7 +73392,9 @@
     "wh3_main_tze"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh3_main_tze_tzeentch"
+   ]
   },
   {
    "id": "wh3_main_tze_cha_kairos_fateweaver_custom_battle_0",
@@ -75458,7 +75486,9 @@
     "wh_main_group_chaos"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_chs_chaos"
+   ]
   },
   {
    "id": "wh_dlc01_chs_cha_chaos_sorcerer_lord_death_0",
@@ -76465,7 +76495,9 @@
     "wh_main_group_chaos"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_chs_chaos"
+   ]
   },
   {
    "id": "wh_dlc01_chs_inf_chaos_warriors_2",
@@ -76758,7 +76790,9 @@
     "wh_main_group_norsca_steppe"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_dlc08_nor_norsca"
+   ]
   },
   {
    "id": "wh_dlc01_nor_cha_chaos_sorcerer_lord_1",
@@ -76795,7 +76829,9 @@
     "wh_main_group_norsca_steppe"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_dlc08_nor_norsca"
+   ]
   },
   {
    "id": "wh_dlc01_nor_cha_chaos_sorcerer_lord_2",
@@ -76832,7 +76868,9 @@
     "wh_main_group_norsca_steppe"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_dlc08_nor_norsca"
+   ]
   },
   {
    "id": "wh_dlc02_vmp_cav_blood_knights_0",
@@ -80296,7 +80334,9 @@
     "wh_main_group_bretonnia"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_dlc05_emp_cha_wizard_life_2",
@@ -85006,7 +85046,9 @@
     "wh_main_group_bretonnia"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_brt_bretonnia"
+   ]
   },
   {
    "id": "wh_dlc07_brt_cha_damsel_beasts_2",
@@ -85154,7 +85196,9 @@
     "wh_main_group_bretonnia"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_brt_bretonnia"
+   ]
   },
   {
    "id": "wh_dlc07_brt_cha_damsel_life_2",
@@ -85416,7 +85460,9 @@
     "wh_main_group_bretonnia"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_brt_bretonnia"
+   ]
   },
   {
    "id": "wh_dlc07_brt_cha_prophetess_2",
@@ -85566,7 +85612,9 @@
     "wh_main_group_bretonnia"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_brt_bretonnia"
+   ]
   },
   {
    "id": "wh_dlc07_brt_cha_prophetess_beasts_2",
@@ -85716,7 +85764,9 @@
     "wh_main_group_bretonnia"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_brt_bretonnia"
+   ]
   },
   {
    "id": "wh_dlc07_brt_cha_prophetess_heavens_2",
@@ -88244,7 +88294,9 @@
     "wh_main_group_bretonnia"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_brt_bretonnia"
+   ]
   },
   {
    "id": "wh_main_brt_cha_damsel_2",
@@ -89400,7 +89452,9 @@
     "wh_main_group_chaos"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_chs_chaos"
+   ]
   },
   {
    "id": "wh_main_chs_cha_chaos_lord_8",
@@ -89946,7 +90000,9 @@
     "wh_main_group_chaos"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_chs_chaos"
+   ]
   },
   {
    "id": "wh_main_chs_cha_exalted_hero_7",
@@ -92681,7 +92737,9 @@
     "wh_main_group_empire_reikland"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_main_emp_cha_captain_2",
@@ -92966,7 +93024,9 @@
     "wh_main_group_empire_reikland"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_main_emp_cha_karl_franz_0",
@@ -93128,7 +93188,9 @@
     "wh_main_group_empire_reikland"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_main_emp_cha_karl_franz_4",
@@ -93249,7 +93311,9 @@
     "wh_main_group_empire_reikland"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_main_emp_cha_warrior_priest_2",
@@ -93419,7 +93483,9 @@
     "wh_main_group_empire_reikland"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_main_emp_cha_wizard_fire_2",
@@ -93581,7 +93647,9 @@
     "wh_main_group_empire_reikland"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_main_emp_cha_wizard_heavens_2",
@@ -93743,7 +93811,9 @@
     "wh_main_group_empire_reikland"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_emp_empire"
+   ]
   },
   {
    "id": "wh_main_emp_cha_wizard_light_2",
@@ -96172,7 +96242,9 @@
     "wh_main_group_norsca_steppe"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_dlc08_nor_norsca"
+   ]
   },
   {
    "id": "wh_main_nor_cha_chaos_sorcerer_1",
@@ -96209,7 +96281,9 @@
     "wh_main_group_norsca_steppe"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_dlc08_nor_norsca"
+   ]
   },
   {
    "id": "wh_main_nor_cha_chaos_sorcerer_2",
@@ -96246,7 +96320,9 @@
     "wh_main_group_norsca_steppe"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_dlc08_nor_norsca"
+   ]
   },
   {
    "id": "wh_main_nor_cha_marauder_chieftan_0",
@@ -97811,7 +97887,9 @@
     "wh_main_group_vampire_counts"
    ],
    "facs": [],
-   "cultures": []
+   "cultures": [
+    "wh_main_vmp_vampire_counts"
+   ]
   },
   {
    "id": "wh_main_vmp_cha_wight_king_2",
