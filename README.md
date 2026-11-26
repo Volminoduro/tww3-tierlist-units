@@ -70,7 +70,7 @@ Bouton **FR | EN** en haut à droite ; le choix est mémorisé et peut être for
 **Noms d'unités et de factions** : le dump ne contient que les textes **anglais** du jeu. Les noms français officiels viennent de la localisation française du jeu, à exporter avec RPFM :
 1. ouvrir `local_fr.pack` (dossier `data` du jeu, installation en français) ;
 2. extraire `text/db/land_units__.loc.tsv` et `text/db/factions__.loc.tsv` en TSV dans un dossier ;
-3. `python tools/convert_rpfm.py wh3-dump --loc-fr DOSSIER_FR` génère `data/names_fr.js` (à commiter). Sans ce fichier, le site affiche les noms officiels anglais dans les deux langues.
+3. `python tools/convert_rpfm.py wh3-dump --loc-fr DOSSIER_FR` génère `data/names_fr.js` (à commiter). Le dossier peut contenir soit les exports TSV de RPFM, soit directement les fichiers **`.loc` binaires** extraits du pack (`land_units__.loc`, `factions__.loc`) : `read_loc_binary` les lit sans conversion (format écrit de mémoire : relu sur un fichier de test fabriqué, pas encore sur un vrai fichier du jeu). Sans ce fichier, le site affiche les noms officiels anglais dans les deux langues.
 
 ## Front de combat
 Le simulateur plafonne le nombre d'attaquants qui peuvent engager une unité en même temps (`sim.js`) :

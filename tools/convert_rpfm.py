@@ -145,6 +145,20 @@ def provenance(src, units):
     except OSError: pass
     return meta
 
+def read_loc_binary(path):
+    """Lit un fichier .loc binaire de Total War (extrait d'un pack sans conversion) : [BOM FF FE] « LOC\\0 », version u32, nombre d'entrées u32,
+    puis pour chaque entrée : clé (u16 = nombre de caractères, UTF-16LE), texte (idem), indicateur d'info-bulle (1 octet)."""
+    import struct
+    b = open(path, "rb").read(); i = b.find(b"LOC\x00")
+    if i < 0 or i > 8: raise ValueError(f"{path} : en-tête LOC introuvable")
+    ver, n = struct.unpack_from("<II", b, i + 4); pos = i + 12; out = []
+    for _ in range(n):
+        k_len = struct.unpack_from("<H", b, pos)[0]; pos += 2; key = b[pos:pos + 2 * k_len].decode("utf-16-le"); pos += 2 * k_len
+        t_len = struct.unpack_from("<H", b, pos)[0]; pos += 2; txt = b[pos:pos + 2 * t_len].decode("utf-16-le"); pos += 2 * t_len
+        pos += 1                                                          # info-bulle
+        out.append((key, txt))
+    return out
+
 def humanise(k):
     k = re.sub(r"^wh\d?_(main|dlc\d+|pro\d+)_[a-z]{3}_", "", k)
     return k.replace("_", " ").title()
@@ -443,9 +457,11 @@ def main():
             d = {}
             for dp, _, fs in os.walk(a.loc_fr):
                 for fn in fs:
-                    if fn.startswith(prefix) and fn.endswith(".tsv"):
+                    if fn.startswith(prefix) and fn.endswith(".tsv"):                 # export TSV de RPFM
                         for r in read_tsv(os.path.join(dp, fn)):
                             if r.get("key"): d[r["key"]] = r.get("text", "")
+                    elif fn.startswith(prefix) and fn.endswith(".loc"):               # fichier .loc binaire extrait tel quel du pack
+                        for k, t in read_loc_binary(os.path.join(dp, fn)): d[k] = t
             return d
         fr_units, fr_fac = read_loc("land_units__"), read_loc("factions__")
         res = lambda v: fr_units.get(v[5:-2]) if v and v.startswith("{{tr:") else v
