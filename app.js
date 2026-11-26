@@ -8,6 +8,7 @@ const W = [ // [id,label,min,max,default,step,group]
  ["turns","Entretien pris en compte (tours) — 0 = recrutement seul",0,60,0,1,"w2"],["turnVal","Valeur d'un tour d'attente (or)",0,500,100,10,"w2"],
  ["tArm","Bonus armure (%)",0,50,0,1,"w3"],["tDmg","Bonus dégâts (%)",0,50,0,1,"w3"],["tHp","Bonus PV (%)",0,50,0,1,"w3"],
  ["tCost","Réduction coût recrutement (%)",0,50,0,1,"w3"],["tUp","Réduction entretien (%)",0,50,0,1,"w3"],["tRt","Tours de recrutement en moins",0,2,0,1,"w3"]];
+const USE_SH={inf:"Anti-infanterie",large:"Anti-gros",armour:"Anti-armure",tank:"Encaisser",ranged:"Distance",charge:"Charge",speed:"Mobilité"}; // libellés courts (puces, matrice)
 const ARCH = {global:"Typologie : globale (tout usage)",inf:"Anti-infanterie",large:"Anti-large (monstres, cavalerie)",armour:"Anti-armure",tank:"Encaisser la ligne de front",ranged:"Dégâts à distance",charge:"Charge / briseur de flanc",speed:"Mobilité"};
 const ARCHK = Object.keys(ARCH).filter(k=>k!=="global");
 Object.entries(ARCH).forEach(([k,l])=>$("#arch").add(new Option(l,k)));
@@ -42,7 +43,7 @@ function typoApply(items,get,state,el){
  const ok=(x,skip)=>[...state].every(o=>o===skip||canDo(get(x),o));
  for(let g=0;g<ARCHK.length;g++){let pr=false;for(const k of [...state])if(!items.some(x=>canDo(get(x),k)&&ok(x,k))){state.delete(k);pr=true;} if(!pr)break;}
  el.innerHTML=`<span class="lbl">Usage</span>`+ARCHK.map(k=>{const n=items.filter(x=>canDo(get(x),k)&&ok(x,k)).length,on=state.has(k),dis=!n&&!on;
-  return `<button data-k="${k}" class="${on?"on":""}" ${dis?"disabled":""} title="${ARCH_RULE[k]}${dis?" — aucune unité de la sélection actuelle":""}">${ARCH[k]} <small>(${n})</small></button>`;}).join("")+(state.size?`<button data-k="" class="clr">Effacer</button>`:"");
+  return `<button data-k="${k}" class="${on?"on":""}" ${dis?"disabled":""} title="${ARCH_RULE[k]}${dis?" — aucune unité de la sélection actuelle":""}">${uic(k)}<span>${USE_SH[k]||ARCH[k]}</span> <small>(${n})</small></button>`;}).join("")+(state.size?`<button data-k="" class="clr">Effacer</button>`:"");
  return items.filter(x=>ok(x,null));
 }
 const TYPO=new Set();
@@ -151,9 +152,9 @@ function render(){
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
   const best=x=>ARCHK.reduce((p,k)=>x.pct[k]>x.pct[p]?k:p,ARCHK[0]);
   const cell=(x,k)=>{const p=x.pct[k];return `<td style="background:hsl(${p*1.2},55%,62%);color:#111;text-align:center" title="Valeur brute : ${Math.round(x.arche[k])}">${p}</td>`};
-  const SH={inf:"Anti-infanterie",large:"Anti-gros",armour:"Anti-armure",tank:"Encaisser",ranged:"Distance",charge:"Charge",speed:"Mobilité"}; // libellés courts : la matrice tient dans la largeur
-  $("#matrix").innerHTML=`<table><colgroup><col class="c-n"><col class="c-r">${ARCHK.map(()=>'<col class="c-a">').join("")}<col class="c-b"></colgroup><tr><th data-k="score">Unité</th><th>Rôle</th>${ARCHK.map(k=>`<th data-k="m:${k}" title="${ARCH[k]}" style="text-align:center">${SH[k]||ARCH[k]}</th>`).join("")}<th>Meilleur usage</th></tr>`+
-   us.map(x=>`<tr data-id="${x.u.id}"><td>${x.u.name}</td><td>${ROLES[x.u.role]||x.u.role}</td>${ARCHK.map(k=>cell(x,k)).join("")}<td>${SH[best(x)]||ARCH[best(x)]}</td></tr>`).join("")+
+  const SH=USE_SH;
+  $("#matrix").innerHTML=`<table><colgroup><col class="c-n"><col class="c-r">${ARCHK.map(()=>'<col class="c-a">').join("")}<col class="c-b"></colgroup><tr><th data-k="score">Unité</th><th>Rôle</th>${ARCHK.map(k=>`<th data-k="m:${k}" title="${ARCH[k]}" style="text-align:center" aria-label="${ARCH[k]}">${uic(k)}</th>`).join("")}<th>Meilleur usage</th></tr>`+
+   us.map(x=>`<tr data-id="${x.u.id}"><td>${x.u.name}</td><td>${ROLES[x.u.role]||x.u.role}</td>${ARCHK.map(k=>cell(x,k)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`).join("")+
    `</table><p style="padding:8px;color:var(--m);font-size:12px">Chaque case = percentile (0-100) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. 100 = la meilleure pour ça. La mobilité est la vitesse seule, jamais rapportée au coût. Cliquer un en-tête trie.</p>`;
  } else {
   const cols=[["Unité",x=>x.u.name],["Tier",x=>x.tier],["Rôle",x=>ROLES[x.u.role]],["Score",x=>x.score],["Puissance",x=>x.power],["Coût eff.",x=>x.cost],["PV eff.",x=>x.ehp],["Mêlée/s",x=>x.mel],["Dist./s",x=>x.rng],["Recrut.",x=>x.rt],["Entretien",x=>x.u.upkeep]];
@@ -192,8 +193,17 @@ const STAT_ICON={
  upkeep:'<path d="M7 3h10M7 21h10M8 3c0 6 8 6 8 9s-8 3-8 9M16 3c0 6-8 6-8 9"/>',
  calendar:'<path d="M4 6h16v14H4zM4 10.5h16M8 3.5v4M16 3.5v4"/>',
  bolt:'<path d="M13 2.5L5.5 13.5H11l-1 8 7.5-11H12z"/>',
+ u_inf:'<circle cx="9" cy="6.5" r="2.7"/><path d="M4 20v-4.5c0-2.5 2-4.5 5-4.5s5 2 5 4.5V20"/><path d="M15 4l5 5M13.5 8.5l6.5-6.5"/>',
+ u_large:'<path d="M3 21c0-6 3.5-10 8-10s8 4 8 10"/><path d="M4 7l9 4M4 7l1.2 4.6M4 7l4.2-1.7"/><circle cx="16" cy="6" r="1.2"/>',
+ u_armour:'<path d="M12 3l7.5 2.8v5.7c0 4.8-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.7-7.5-9.5V5.8z"/><path d="M12 7.5v8M8.8 12.8l3.2 3.2 3.2-3.2"/>',
+ u_tank:'<path d="M12 3l7.5 2.8v5.7c0 4.8-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.7-7.5-9.5V5.8z"/><path d="M12 8v7M8.5 11.5h7"/>',
+ u_ranged:'<path d="M7 3.5c11 4.5 11 12.5 0 17M7 3.5v17M3 12h17M20 12l-4-3v6z"/>',
+ u_charge:'<path d="M3 8h5M3 12h9M3 16h5M14 6.5l7 5.5-7 5.5z"/>',
+ u_speed:'<path d="M9 3h5.5v8l5.5 3.5V20H8.5c-1 0-1.5-.7-1.5-1.6V3.5z"/><path d="M2.5 8h3M2.5 12h3M2.5 16h3"/>',
+ u_global:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/><path d="M12 12h.01"/>',
  men:'<circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6M15 20c0-2.5 2-4 4-4s3 1.5 3 4"/>',
 };
+const uic=k=>si("u_"+k);
 const si=k=>`<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${STAT_ICON[k]||""}</svg>`;
 /* Fiche d'unité : chaque stat avec son rang (« Top 8 % » / « Bottom 20 % ») et une barre remplie à valeur ÷ 95ᵉ centile du groupe de comparaison (pleine au-delà). */
 let DPOOL="role_all"; // groupe de comparaison : même catégorie (tout le jeu), toutes les unités, ou périmètre affiché
@@ -235,7 +245,7 @@ function briefTiles(list){
 /* « Pour quoi l'utiliser » : les 3 meilleurs usages en évidence, les autres repliés */
 function usageBlock(x){
  const ks=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]), top=ks.slice(0,3), rest=ks.slice(3);
- const row=k=>srow("target",ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées");
+ const row=k=>srow("u_"+k,ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées");
  return `<h4>Pour quoi l'utiliser</h4>${top.map(row).join("")}<details class="more"><summary>Autres usages</summary>${rest.map(row).join("")}</details>`;
 }
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;

@@ -202,3 +202,7 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #langsw button{padding:2px 9px;font:700 11px var(--serif);letter-spacing:.08em}
 #detail .duelhead{display:flex;flex-direction:column;gap:6px;margin:6px 0}#detail .duelhead .big{font:700 26px var(--serif);line-height:1}#detail .duelhead .big small{display:block;font:400 11px var(--sans);color:var(--m);margin-top:3px}
 #detail .anti{display:flex;gap:6px;align-items:flex-start;font-size:12px;color:var(--t)}#detail .kv{display:flex;justify-content:space-between;gap:10px;padding:2px 0;font-size:12px;color:var(--m)}#detail .kv b{color:var(--t)}#detail .kv2{display:block;margin-top:6px;line-height:1.4}
+
+/* icônes d'usage (anti-infanterie, anti-large…) */
+.typo button{display:inline-flex;align-items:center;gap:6px}.typo button .si{width:17px;height:17px;flex:none}
+#matrix th .si{width:22px;height:22px}#matrix td.best{white-space:nowrap}#matrix td.best .si{width:16px;height:16px;vertical-align:-3px;margin-right:6px;color:var(--gold2)}

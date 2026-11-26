@@ -101,3 +101,6 @@ En tête de la section **Mode** de la barre latérale, un sélecteur à deux gra
 ## Filtres communs et noms de variantes
 - **Filtres partagés** : « Tier list » et « Unités par faction » utilisent les mêmes filtres (faction/race, recherche, catégories, usages, case « seigneurs & héros dans Toutes ») : un filtre posé dans un onglet se retrouve dans l'autre. Les colonnes et le groupe de comparaison sont repliés sous « Colonnes et groupe de comparaison ».
 - **Doublons** : `tools/convert_rpfm.py` fusionne les unités strictement identiques (par exemple les copies `_mp` de la bataille multijoueur : 75 unités) et renomme les variantes réellement différentes d'une même faction avec la monture ou la variante, par exemple « Neferata (Hellsteed) », « Neferata (Coven Throne) », « Arkhan the Black (Dread Abyssal) » ; le suffixe « (#N) » n'est utilisé qu'en dernier recours.
+
+## Icônes d'usage
+Les usages (anti-infanterie, anti-gros, anti-armure, encaisser, distance, charge, mobilité) ont chacun une icône (`u_*` dans `STAT_ICON`, `app.js`) : puces de filtre (icône + libellé court + effectif), en-têtes de la matrice typologique (icône seule, libellé en infobulle), colonne « Meilleur usage » et « Pour quoi l'utiliser » de la fiche d'unité.
