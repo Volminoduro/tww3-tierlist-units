@@ -148,7 +148,7 @@ function render(){
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
   $("#tiers").innerHTML=TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
-   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b>${rortag(x.u)}${gtier(x.u)}<small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
+   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u,"tall")}<div class="ct"><b>${x.u.name}</b><div class="tags">${rortag(x.u)}${gtier(x.u)}</div><small>${cardInfo(x)}</small>${cardStats(x)}${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
@@ -210,6 +210,14 @@ const si=k=>`<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColo
 /* Fiche d'unité : chaque stat avec son rang (« Top 8 % » / « Bottom 20 % ») et une barre remplie à valeur ÷ 95ᵉ centile du groupe de comparaison (pleine au-delà). */
 let DPOOL="role_all"; // groupe de comparaison : même catégorie (tout le jeu), toutes les unités, ou périmètre affiché
 const STAT_IC={cost:"coin",upkeep:"upkeep",rt:"calendar",mp:"coin",men:"men",hp:"hp",thp:"hp",arm:"armour",md:"armour",ld:"morale",ma:"attack",ch:"charge",dmg:"weapon",ap:"weapon",str:"weapon",int:"clock",dps:"bolt",bvl:"target",bvi:"target",rdmg:"bow",rap:"bow",rng:"clock",rel:"clock",amm:"ammo",spd:"speed",dwc:"attack"};
+/* Tuile : chiffres clés (PV totaux, armure, dégâts/s estimés, vitesse) et les deux meilleurs usages (icône + percentile), pour remplir la tuile avec de l'information utile */
+const kfmt=v=>v>=10000?Math.round(v/1000)+"k":v>=1000?(v/1000).toFixed(1).replace(".",",")+"k":String(Math.round(v));
+function cardStats(x){
+ const u=x.u, dps=x.mel+x.rng, top=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]).slice(0,2);
+ const c=(ic,v,t)=>`<span class="cs1" title="${t}">${si(ic)}${v}</span>`;
+ return `<div class="cs">${c("hp",kfmt(u.men*u.hp),"PV totaux")}${c("armour",Math.round(u.armour),"Armure")}${c("bolt",kfmt(dps),"Dégâts par seconde estimés (mêlée + tir)")}${c("speed",Math.round(u.speed),"Vitesse")}</div>
+  <div class="cu">${top.map(k=>`<span class="cu1" title="${ARCH[k]} : percentile ${x.pct[k]}">${uic(k)}${x.pct[k]}</span>`).join("")}</div>`;
+}
 const fmtv=v=>v>=1000?Math.round(v).toLocaleString("fr-FR"):(Math.round(v*10)/10).toString();
 const rankTxt=p=>p==null?"":p>=50?`Top ${Math.max(1,Math.round(100-p))} %`:`Bottom ${Math.max(1,Math.round(p))} %`;
 function srow(ic,label,val,fill,p,tip,clip){
@@ -255,7 +263,7 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false;
  dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${ROLES[u.role]||u.role}</small>${rortag(u)}${gtier(u)}</div><button class="x" id="close">✕</button></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label></div>
- ${briefTiles(list)}
+ <div class="dbrief">${portrait(u,"full")}${briefTiles(list)}</div>
  ${usageBlock(x)}
  ${duelPanel(u)}
  <details class="more all"><summary>Toutes les statistiques (${list.length})</summary>${statRows(list)}
