@@ -102,6 +102,8 @@ NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missi
           "effect_bonus_value_ids_unit_sets", "unit_set_to_unit_junctions", "frontend_faction_leaders",
           # véhicules / artillerie (machines) et dégâts d'explosion des projectiles
           "battlefield_engines", "projectiles_explosions",
+          # DLC : unité -> paquets de contenu -> ensembles d'exigences -> produits (jeux et DLC)
+          "main_unit_ownership_content_pack_junctions", "ownership_content_pack_requirements", "ownership_content_pack_required_products", "ownership_products",
           # capacités passives de soin (régénération) : unité -> capacité -> phase -> soin
           "land_units_to_unit_abilites_junctions", "unit_special_abilities", "special_ability_to_special_ability_phase_junctions", "special_ability_phases", "special_ability_phase_stat_effects"}
 
@@ -113,7 +115,7 @@ def load_tables(root, only_needed=False):
                 p = os.path.join(dp, fn)
                 if only_needed:
                     name = norm_table(p) if "_tables" in p.lower() else fn.lower()
-                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__") or name.startswith("effects__")): continue
+                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__") or name.startswith("effects__") or name.startswith("ownership_products__")): continue
                 tables[norm_table(p) if "_tables" in p.lower() else re.sub(r"\.tsv$","",fn.lower())].extend(read_tsv(p))
     return tables
 
@@ -402,9 +404,32 @@ def main():
         for i, u in enumerate(sorted(lst, key=lambda x: x["id"])):
             if i and any(v is not u and (set(u["groups"]) | set(u["facs"]) | set(u["cultures"])) & (set(v["groups"]) | set(v["facs"]) | set(v["cultures"])) for v in lst): u["name"] = f"{n} (#{i + 1})"; labelled += 1
     print(f"  doublons : {len(removed)} unités identiques fusionnées, {labelled} variantes renommées")
+    # --- DLC : un paquet de contenu est disponible si TOUS les produits d'au moins un de ses ensembles d'exigences sont possédés ; une unité est disponible si AU MOINS un de ses paquets l'est
+    #     (une même unité peut venir de plusieurs DLC) ; une unité sans paquet (base, gratuite, invoquée) est toujours disponible.
+    prods = {}
+    for r in T.get("ownership_products", []):
+        k = r.get("key")
+        if k: prods[k] = {"n": loc.get("ownership_products_description_" + k) or humanise(k), "o": int(num(r.get("release_order"))), "free": 1 if (r.get("is_flc") or "").lower() == "true" else 0, "twa": 1 if (r.get("is_twa") or "").lower() == "true" else 0}
+    req_prod = defaultdict(list)
+    for r in T.get("ownership_content_pack_required_products", []): req_prod[r.get("requirement_set")].append(r.get("product"))
+    pack_sets = defaultdict(list)
+    for r in T.get("ownership_content_pack_requirements", []):
+        ps = sorted(set(req_prod.get(r.get("key"), [])))
+        if ps and ps not in pack_sets[r.get("content_pack")]: pack_sets[r.get("content_pack")].append(ps)
+    unit_packs = defaultdict(set)
+    for r in T.get("main_unit_ownership_content_pack_junctions", []): unit_packs[r.get("main_unit")].add(r.get("ownership_content_pack"))
+    used_packs = sorted({p for u in units for p in unit_packs.get(u["id"], ()) if pack_sets.get(p)})
+    pidx = {p: i for i, p in enumerate(used_packs)}
+    removed_to = removed
+    for u in units:
+        ids_ = {u["id"]} | {k for k, v in removed_to.items() if v == u["id"]}      # une unité fusionnée garde les paquets de ses copies
+        pk = sorted({pidx[p] for i_ in ids_ for p in unit_packs.get(i_, ()) if p in pidx})
+        if pk: u["pk"] = pk
+    dlc = {"products": prods, "packs": [pack_sets[p] for p in used_packs]}
+    print(f"  DLC : {len(prods)} produits, {len(used_packs)} paquets, {sum(1 for u in units if u.get('pk'))} unités liées")
     flags = {f: (fac_rows.get(f, {}).get("flags_path") or "").replace("\\", "/") for f in facinfo}
     meta = provenance(a.src, units)
-    out = {"demo": False, "meta": meta, "cultures": cultures, "culturesEn": cultures_en, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "units": units}
+    out = {"demo": False, "meta": meta, "cultures": cultures, "culturesEn": cultures_en, "cultureOrder": cult_keys, "factions": names, "facInfo": facinfo, "flags": flags, "dlc": dlc, "units": units}
     factions = names
     from effects_extract import build_effects  # effets par défaut des seigneurs et de leur trait
     effects = build_effects(T, units, loc, facinfo)

@@ -21,14 +21,14 @@ const factionsOfRace = c => Object.keys(D.facInfo).filter(f => D.facInfo[f].cult
 const mainFacOf = c => factionsOfRace(c).sort((a, b) => D.facInfo[a].sort - D.facInfo[b].sort)[0]; // faction « principale » d'une race (icône)
 /* Une unité fait partie du périmètre choisi (toutes les factions, une race entière ou une faction) ? */
 /* Bataillons de renom : option « exclure » partagée par tous les onglets (mémorisée). setRor(v) recopie les deux cases à cocher et prévient les onglets (événement « rorchange »). */
-const RORX = {off: false};
+const RORX = {off: false}, DLCX = {on: false, ok: () => true};   // DLCX : état « Mes DLC » (dlc.js)
 try { RORX.off = localStorage.getItem("noRor") === "1"; } catch (e) {}
 function setRor(v) {
   RORX.off = !!v; try { localStorage.setItem("noRor", v ? "1" : "0"); } catch (e) {}
   document.querySelectorAll("#noror,#bnoror").forEach(c => { c.checked = RORX.off; });
   document.dispatchEvent(new Event("rorchange"));
 }
-const inScope = (u, key) => !(RORX.off && u.ror) && (key === ALL || (isRace(key) ? u.races.has(key.slice(RACE.length)) : u.factions.includes(key)));
+const inScope = (u, key) => !(RORX.off && u.ror) && DLCX.ok(u) && (key === ALL || (isRace(key) ? u.races.has(key.slice(RACE.length)) : u.factions.includes(key)));
 
 /* Prépare la hiérarchie race -> faction : calcule u.factions (clés des factions où l'unité est disponible) et u.races.
    Unités : groupe militaire de la faction (recrutement) ou permission explicite ; seigneurs/héros : par race. */
