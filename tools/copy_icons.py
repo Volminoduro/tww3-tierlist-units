@@ -192,6 +192,16 @@ for n in STATS:
         shutil.copy(p[0], os.path.join(root, "img", "stats", f"{n}.png")); stats += 1
 print(f"{stats} icônes de stats et modificateurs sur {len(STATS)}")
 
+SKIN = ["panel_back_tile_stone", "panel_back_border", "panel_bar_top", "metal_line_h",   # textures d'interface (ui/skins/default) pour theme.css
+        "button_square_medium_text_active", "button_square_medium_text_selected"]
+skin = 0
+for n in SKIN:
+    p = next((q for q in pngs.get(n, []) if "skins/default/" in q.lower().replace("\\", "/")), None)
+    if p:
+        os.makedirs(os.path.join(root, "img", "skin"), exist_ok=True)
+        shutil.copy(p, os.path.join(root, "img", "skin", n + ".png")); skin += 1
+print(f"{skin} textures d'interface sur {len(SKIN)}")
+
 def in_dir(name, part):                             # chemin d'une image de ce nom située dans un dossier donné
     return next((p for p in pngs.get(name.lower(), []) if part in p.lower().replace("\\", "/")), None)
 def put(src, sub, name):

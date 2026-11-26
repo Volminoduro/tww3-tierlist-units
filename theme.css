@@ -1,0 +1,27 @@
+/* Thème « textures du jeu » : complète style.css avec les vraies textures de l'interface de Total War: Warhammer III
+   (img/skin/, ui/skins/default de ui2.pack, copiées par tools/copy_icons.py). Purement additif : retirer le <link> de
+   theme.css dans index.html suffit pour revenir au thème dessiné en CSS. Les cadres sont dessinés par border-image
+   (largeur indépendante de la bordure, en débordement) : la mise en page ne bouge pas. */
+
+/* Fond de page : pierre du jeu sous le halo existant */
+body{background:radial-gradient(ellipse 120% 60% at 50% 0,#33281acc 0%,#16110ce0 45%,#0b0907f2 100%) fixed,
+ url(img/skin/panel_back_tile_stone.png) 0 0/256px repeat fixed,#0b0907}
+
+/* Panneaux : pierre voilée + cadre de bronze riveté (9 tranches) */
+aside,.army,.res,#bparams,.row,#detail,.btab,#table,#matrix,.fb{
+ background-image:linear-gradient(#1b1611d9,#120f0be6),url(img/skin/panel_back_tile_stone.png);background-size:auto,256px;
+ border-image:url(img/skin/panel_back_border.png) 16 / 8px / 4px stretch}
+.fb.hasrb{background:linear-gradient(90deg,#2a2013 0,#14100c 38%,#14100c00 70%),var(--rb) right center/auto 100% no-repeat,
+ linear-gradient(#1b1611d9,#120f0be6),url(img/skin/panel_back_tile_stone.png) 0 0/256px}
+#detail .dtop{background:linear-gradient(#1b1611f2,#1b1611f2),url(img/skin/panel_back_tile_stone.png) 0 0/256px}
+
+/* Titres de section et onglet actif : filet de bronze du jeu */
+h2::after{height:4px;background:url(img/skin/metal_line_h.png) left center/100% 4px no-repeat;opacity:.9}
+nav button.on{border-bottom-color:transparent;background:linear-gradient(#0000,#c9a45a1f),url(img/skin/metal_line_h.png) center bottom/100% 4px no-repeat}
+
+/* Boutons : textures rouges du jeu, en 9 tranches peintes sur la bordure et le fond (sans changer la taille du bouton) */
+button{border-image:url(img/skin/button_square_medium_text_active.png) 10 16 fill / 5px 8px stretch;text-shadow:0 1px 2px #000}
+button:hover{filter:brightness(1.18)}
+button.on{border-image:url(img/skin/button_square_medium_text_selected.png) 10 16 fill / 5px 8px stretch;color:#fbeccb;text-shadow:0 1px 2px #000}
+nav button,nav button.on,#langsw button:not(.on),.x{border-image:none}
+button:disabled{filter:grayscale(.6) brightness(.8)}

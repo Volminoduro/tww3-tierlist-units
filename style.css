@@ -163,7 +163,7 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 /* Sélecteur : bouton « Tout » d'une race et ligne « Toute la race » */
 .tp-pick{padding:1px 9px;font:700 11px var(--sans);letter-spacing:.04em;margin-right:4px}
 /* Lisibilité : le contenu ne peut plus élargir la page ; matrice et tableaux compacts, sans défilement horizontal autant que possible */
-main{grid-template-columns:310px minmax(0,1fr)}#content{min-width:0}
+@media(min-width:801px){main{grid-template-columns:310px minmax(0,1fr)}}#content{min-width:0}
 #matrix table{table-layout:fixed;width:100%}
 #matrix th,#matrix td{white-space:normal;padding:4px 5px;font-size:13px}#matrix th{font-size:10px;line-height:1.2}
 #matrix .c-n{width:24%}#matrix .c-r{width:12%}#matrix .c-a{width:7.5%}#matrix .c-b{width:11%}
