@@ -148,7 +148,7 @@ function render(){
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
   $("#tiers").innerHTML=TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
-   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b>${rortag(x.u)}${gtier(x.u)}<small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
+   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b>${rortag(x.u)}${gtier(x.u)}<small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);

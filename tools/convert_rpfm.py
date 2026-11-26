@@ -409,7 +409,7 @@ def main():
     prods = {}
     for r in T.get("ownership_products", []):
         k = r.get("key")
-        if k: prods[k] = {"n": loc.get("ownership_products_description_" + k) or humanise(k), "o": int(num(r.get("release_order"))), "free": 1 if (r.get("is_flc") or "").lower() == "true" else 0, "twa": 1 if (r.get("is_twa") or "").lower() == "true" else 0}
+        if k: prods[k] = {"n": loc.get("ownership_products_description_" + k) or humanise(k), "o": int(num(r.get("release_order"))), "free": 1 if (r.get("is_flc") or "").lower() == "true" else 0, "twa": 1 if (r.get("is_twa") or "").lower() == "true" else 0, "sid": (r.get("steam_store_id") or r.get("steam_app_id") or "").strip()}
     req_prod = defaultdict(list)
     for r in T.get("ownership_content_pack_required_products", []): req_prod[r.get("requirement_set")].append(r.get("product"))
     pack_sets = defaultdict(list)

@@ -234,6 +234,13 @@ Object.assign(I18N.dict, {
   "Creative Assembly / SEGA / Games Workshop": "Creative Assembly / SEGA / Games Workshop", ": le jeu": ": the game",
   "et son univers, dont ce projet de fan n'est pas affilié.": "and its universe, which this fan project is not affiliated with.",
   "Limites connues": "Known limitations",
+  "Retrouver mes DLC depuis Steam": "Find my DLC from Steam",
+  "Colle ici le texte de la page des licences Steam…": "Paste the text of the Steam licenses page here…",
+  "Analyser": "Analyse",
+  "Sélectionne toute la page (Ctrl+A) et copie (Ctrl+C).": "Select the whole page (Ctrl+A) and copy (Ctrl+C).",
+  "Colle ici et clique sur « Analyser » : les produits reconnus sont cochés.": "Paste here and click \"Analyse\": recognised products are checked.",
+  "Voir sur Steam": "View on Steam",
+
   "Partager ou importer une liste de DLC": "Share or import a DLC list",
   "Il n'existe pas de moyen simple et fiable de lire les DLC de quelqu'un depuis un site (Steam ne les expose pas sans connexion de la personne). À la place : chacun copie son code ou son lien ici et l'envoie ; on le colle chez l'autre pour retrouver sa liste.": "There is no simple, reliable way for a website to read someone's DLC (Steam does not expose them without that person logging in). Instead: everyone copies their code or link here and sends it; paste it on the other side to get their list.",
   "Copier mon code": "Copy my code", "Copier le lien": "Copy link", "Importer": "Import", "Coller un code…": "Paste a code…",

@@ -2976,409 +2976,477 @@
     "n": "Total War: WARHAMMER I",
     "o": 10,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "364360"
    },
    "TW_WH1_BEASTMEN": {
     "n": "Call of the Beastmen",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "404012"
    },
    "TW_WH1_BRETONNIA_FREE": {
     "n": "Bretonnia",
     "o": 20,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "534330"
    },
    "TW_WH1_CHAOS": {
     "n": "Chaos Warriors",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "404010"
    },
    "TW_WH1_GREY_WIZARD_FREE": {
     "n": "Grey Wizard",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "551821"
    },
    "TW_WH1_GROMBRINDAL": {
     "n": "Grombrindal",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "506190"
    },
    "TW_WH1_ISABELLA_FREE": {
     "n": "Isabella von Carstein",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "455041"
    },
    "TW_WH1_JADE_WIZARD_FREE": {
     "n": "Jade Wizard",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "551820"
    },
    "TW_WH1_KRELL_FREE": {
     "n": "Krell",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "455042"
    },
    "TW_WH1_LORDS_AND_UNITS_1": {
     "n": "The Grim & The Grave",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "404013"
    },
    "TW_WH1_LORDS_AND_UNITS_2": {
     "n": "The King & The Warlord",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "404014"
    },
    "TW_WH1_LORDS_AND_UNITS_2_FREE": {
     "n": "Wurrzag",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "404015"
    },
    "TW_WH1_NORSCA": {
     "n": "Norsca",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "455040"
    },
    "TW_WH1_REGIMENTS_OF_RENOWN_FREE": {
     "n": "Regiments of Renown",
     "o": 1,
     "free": 1,
-    "twa": 1
+    "twa": 1,
+    "sid": "635350"
    },
    "TW_WH1_WOOD_ELVES": {
     "n": "Realm of the Wood Elves",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "534331"
    },
    "TW_WH2_AMETHYST_WIZARD_FREE": {
     "n": "Amethyst Wizard",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1036390"
    },
    "TW_WH2_BASE_GAME": {
     "n": "Total War: WARHAMMER II",
     "o": 10,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "594570"
    },
    "TW_WH2_BLACK_ORC_BIG_BOSS_FREE": {
     "n": "Black Orc Big Boss",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1244670"
    },
    "TW_WH2_BONE_GIANT_FREE": {
     "n": "Bone Giant",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "794111"
    },
    "TW_WH2_DLC10_ALITH_ANAR_FREE": {
     "n": "Alith Anar",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "794110"
    },
    "TW_WH2_DLC10_QUEEN_CRONE": {
     "n": "The Queen & The Crone",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "779880"
    },
    "TW_WH2_DLC11_LOKHIR_FREE": {
     "n": "Lokhir Fellheart",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "835671"
    },
    "TW_WH2_DLC11_VAMPIRE_COAST": {
     "n": "Vampire Coast",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "835670"
    },
    "TW_WH2_DLC12_PROPHET": {
     "n": "The Prophet & The Warlock",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "965220"
    },
    "TW_WH2_DLC12_TIKTAQTO_FREE": {
     "n": "Tiktaq'to",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1003160"
    },
    "TW_WH2_DLC13_GOR_ROK_FREE": {
     "n": "Gor-Rok",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1074321"
    },
    "TW_WH2_DLC13_HUNTER": {
     "n": "The Hunter & The Beast",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1074320"
    },
    "TW_WH2_DLC14_REPANSE_FREE": {
     "n": "Repanse",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1158181"
    },
    "TW_WH2_DLC14_SHADOW": {
     "n": "The Shadow & The Blade",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1158180"
    },
    "TW_WH2_DLC15_IMRIK_FREE": {
     "n": "Imrik",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1209121"
    },
    "TW_WH2_DLC15_WARDEN": {
     "n": "The Warden & The Paunch",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1209120"
    },
    "TW_WH2_DLC16_CHIEFTAIN_FREE": {
     "n": "Skaven Chieftain",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1315751"
    },
    "TW_WH2_DLC16_TWILIGHT": {
     "n": "The Twisted & The Twilight",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1315750"
    },
    "TW_WH2_DLC17_SILENCE": {
     "n": "The Silence & The Fury",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1556110"
    },
    "TW_WH2_DLC17_THOREK_FREE": {
     "n": "Thorek Ironbrow",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1576390"
    },
    "TW_WH2_GOTREK_FELIX": {
     "n": "Gotrek & Felix",
     "o": 1,
     "free": 1,
-    "twa": 1
+    "twa": 1,
+    "sid": "1083060"
    },
    "TW_WH2_MWNL_18_FREE": {
     "n": "Steps of Isha",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "781190"
    },
    "TW_WH2_TOMB_KINGS": {
     "n": "Tomb Kings",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "617870"
    },
    "TW_WH2_TRETCH_FREE": {
     "n": "Tretch Craventail",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "735420"
    },
    "TW_WH2_TWA_01_SPIDER_SHRINE": {
     "n": "Catchweb Spidershrine",
     "o": 1,
     "free": 1,
-    "twa": 1
+    "twa": 1,
+    "sid": "1264270"
    },
    "TW_WH2_TWA_02_GLADE_CAPTAIN": {
     "n": "Glade Captain",
     "o": 1,
     "free": 1,
-    "twa": 1
+    "twa": 1,
+    "sid": "1423860"
    },
    "TW_WH2_TWA_03_RAKARTH": {
     "n": "Rakarth",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1517260"
    },
    "TW_WH2_TWA_04_GREAT_BRAY_SHAMAN": {
     "n": "Great Bray-Shaman",
     "o": 1,
     "free": 1,
-    "twa": 1
+    "twa": 1,
+    "sid": "1576450"
    },
    "TW_WH3_BASE_GAME": {
     "n": "Total War: WARHAMMER III",
     "o": 10,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1142710"
    },
    "TW_WH3_BLOODPACK": {
     "n": "Blood for the Blood God",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1374300"
    },
    "TW_WH3_CHAOS_DWARFS": {
     "n": "Forge of the Chaos Dwarfs",
     "o": 49,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "2059190"
    },
    "TW_WH3_CHAOS_WARRIORS_FREE": {
     "n": "Marked Chaos Warriors",
     "o": 1,
     "free": 1,
-    "twa": 0
+    "twa": 0,
+    "sid": "1962500"
    },
    "TW_WH3_CP1_BHASHIVA": {
     "n": "Character Pack - Bhashiva",
     "o": 63,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "4399460"
    },
    "TW_WH3_DLC20_CHAMPIONS": {
     "n": "Champions of Chaos",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1824060"
    },
    "TW_WH3_LOET_BORIS": {
     "n": "Lords of the End Times - Empire",
     "o": 66,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3589670"
    },
    "TW_WH3_LOET_GLOTTKIN": {
     "n": "Lords of the End Times - Warriors of Chaos",
     "o": 67,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3589680"
    },
    "TW_WH3_LOET_NAGASH": {
     "n": "Lords of the End Times - Undead Legion",
     "o": 64,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3589650"
    },
    "TW_WH3_LOET_THANQUOL": {
     "n": "Lords of the End Times - Skaven",
     "o": 65,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3589660"
    },
    "TW_WH3_OGRE_KINGDOMS": {
     "n": "Ogre Kingdoms",
     "o": 20,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "1670540"
    },
    "TW_WH3_OMENS_OF_DESTRUCTION_GRN": {
     "n": "Omens of Destruction – Greenskins",
     "o": 57,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "2574900"
    },
    "TW_WH3_OMENS_OF_DESTRUCTION_KHO": {
     "n": "Omens of Destruction – Khorne",
     "o": 58,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3130750"
    },
    "TW_WH3_OMENS_OF_DESTRUCTION_OGR": {
     "n": "Omens of Destruction – Ogre Kingdoms",
     "o": 59,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3130740"
    },
    "TW_WH3_ROC_UPDATE": {
     "n": "Total War: WARHAMMER III - Upgrade Pack",
     "o": 15,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3858050"
    },
    "TW_WH3_SHADOWS_OF_CHANGE": {
     "n": "Shadows of Change",
     "o": 50,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "2325830"
    },
    "TW_WH3_SHADOWS_OF_CHANGE_CTH": {
     "n": "Shadows of Change - Cathay",
     "o": 53,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3301120"
    },
    "TW_WH3_SHADOWS_OF_CHANGE_KSL": {
     "n": "Shadows of Change - Kislev",
     "o": 51,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3301130"
    },
    "TW_WH3_SHADOWS_OF_CHANGE_TZE": {
     "n": "Shadows of Change - Tzeentch",
     "o": 52,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3301110"
    },
    "TW_WH3_THRONES_OF_DECAY_DWF": {
     "n": "Thrones of Decay – Dwarfs",
     "o": 54,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "2891710"
    },
    "TW_WH3_THRONES_OF_DECAY_EMP": {
     "n": "Thrones of Decay – Empire",
     "o": 55,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "2325832"
    },
    "TW_WH3_THRONES_OF_DECAY_NUR": {
     "n": "Thrones of Decay – Nurgle",
     "o": 56,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "2891700"
    },
    "TW_WH3_TIDES_OF_TORMENT_HEF": {
     "n": "Tides of Torment – High Elves",
     "o": 62,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3450960"
    },
    "TW_WH3_TIDES_OF_TORMENT_NOR": {
     "n": "Tides of Torment – Norsca",
     "o": 60,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3450970"
    },
    "TW_WH3_TIDES_OF_TORMENT_SLA": {
     "n": "Tides of Torment – Slaanesh",
     "o": 61,
     "free": 0,
-    "twa": 0
+    "twa": 0,
+    "sid": "3450980"
    }
   },
   "packs": [
