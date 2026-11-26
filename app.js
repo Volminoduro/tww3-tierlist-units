@@ -48,6 +48,14 @@ function typoApply(items,get,state,el){
 const TYPO=new Set();
 $("#typo").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)return;const k=b.dataset.k;k===""?TYPO.clear():TYPO.has(k)?TYPO.delete(k):TYPO.add(k);render();};
 ["faction","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
+/* Interrupteur « Tenir compte du coût » (en-tête) : activé = métrique « efficacité » (puissance ou usage ÷ coût), désactivé = « puissance brute » (la meilleure unité par usage, quel que soit son prix).
+   Il pilote le menu « Tier par… » et reste synchronisé avec lui. « Résultats de duels » est déjà à coût égal : l'interrupteur est alors sans effet (grisé). */
+const costSw=$("#coston");
+const syncCost=()=>{const m=$("#metric").value; costSw.disabled=m==="duels"; costSw.closest("label").classList.toggle("off",!costSw.checked&&m!=="duels"); if(m!=="duels")costSw.checked=m==="value";};
+costSw.addEventListener("change",()=>{try{localStorage.setItem("costOn",costSw.checked?"1":"0")}catch(e){} $("#metric").value=costSw.checked?"value":"power"; render()});
+$("#metric").addEventListener("input",()=>{if($("#metric").value!=="duels"){try{localStorage.setItem("costOn",$("#metric").value==="value"?"1":"0")}catch(e){}} syncCost()});
+try{if(localStorage.getItem("costOn")==="0"&&$("#metric").value==="value")$("#metric").value="power"}catch(e){}
+syncCost();
 $("#viewsel").onchange=()=>{view=$("#viewsel").value;render()};
 $("#reset").onclick=()=>{for(const w of W){S[w[0]]=w[4];$("#"+w[0]).value=w[4];$("#v_"+w[0]).textContent=w[4]}render()};
 
