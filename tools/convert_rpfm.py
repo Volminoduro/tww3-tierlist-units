@@ -386,7 +386,7 @@ def main():
     units = [u for u in units if u["id"] not in removed]
     by_name = defaultdict(list)
     for u in units: by_name[u["name"]].append(u)
-    labelled = 0
+    labelled = 0; vlabels = {}                      # suffixe de variante ajouté au nom (réutilisé pour les noms français)
     for n, lst in by_name.items():
         if len(lst) < 2: continue
         ctx = lambda u: set(u["groups"]) | set(u["facs"]) | set(u["cultures"])
@@ -409,14 +409,14 @@ def main():
                 lab = " ".join(mt[1:] if len(mt) > 1 and len(mt[0]) == 3 else mt).title() if mt else ""
                 if not lab and int("".join(rest)) > 0: lab = "#" + str(int("".join(rest)) + 1)
             else: lab = " ".join(x for x in rest if not x.isdigit()).title()
-            if lab: u["name"] = f"{n} ({lab})"; labelled += 1
+            if lab: u["name"] = f"{n} ({lab})"; vlabels[u["id"]] = lab; labelled += 1
     # les rares noms encore identiques dans une même faction reçoivent #2, #3…
     by_name = defaultdict(list)
     for u in units: by_name[u["name"]].append(u)
     for n, lst in by_name.items():
         if len(lst) < 2: continue
         for i, u in enumerate(sorted(lst, key=lambda x: x["id"])):
-            if i and any(v is not u and (set(u["groups"]) | set(u["facs"]) | set(u["cultures"])) & (set(v["groups"]) | set(v["facs"]) | set(v["cultures"])) for v in lst): u["name"] = f"{n} (#{i + 1})"; labelled += 1
+            if i and any(v is not u and (set(u["groups"]) | set(u["facs"]) | set(u["cultures"])) & (set(v["groups"]) | set(v["facs"]) | set(v["cultures"])) for v in lst): u["name"] = f"{n} (#{i + 1})"; vlabels[u["id"]] = f"#{i + 1}"; labelled += 1
     print(f"  doublons : {len(removed)} unités identiques fusionnées, {labelled} variantes renommées")
     # --- DLC : un paquet de contenu est disponible si TOUS les produits d'au moins un de ses ensembles d'exigences sont possédés ; une unité est disponible si AU MOINS un de ses paquets l'est
     #     (une même unité peut venir de plusieurs DLC) ; une unité sans paquet (base, gratuite, invoquée) est toujours disponible.
@@ -453,22 +453,27 @@ def main():
         return o
     effects = remap(effects)
     if a.loc_fr:  # noms français officiels, lus dans la localisation française exportée
+        _fr = {}
         def read_loc(prefix):
-            d = {}
-            for dp, _, fs in os.walk(a.loc_fr):
-                for fn in fs:
-                    if fn.startswith(prefix) and fn.endswith(".tsv"):                 # export TSV de RPFM
-                        for r in read_tsv(os.path.join(dp, fn)):
-                            if r.get("key"): d[r["key"]] = r.get("text", "")
-                    elif fn.startswith(prefix) and fn.endswith(".loc"):               # fichier .loc binaire extrait tel quel du pack
-                        for k, t in read_loc_binary(os.path.join(dp, fn)): d[k] = t
-            return d
+            # Toutes les entrées de localisation du dossier (la clé suffit à les distinguer) : soit un seul gros fichier « localisation__.loc » (cas de local_fr.pack : text/localisation__.loc),
+            # soit les exports par table (land_units__.loc.tsv, factions__.loc.tsv…) ; formats lus : TSV de RPFM et .loc binaire.
+            if not _fr:
+                for dp, _, fs in os.walk(a.loc_fr):
+                    for fn in fs:
+                        path = os.path.join(dp, fn)
+                        if fn.endswith(".tsv"):
+                            for r in read_tsv(path):
+                                if r.get("key"): _fr[r["key"]] = r.get("text", "")
+                        elif fn.endswith(".loc"):
+                            for k, t in read_loc_binary(path): _fr[k] = t
+                print(f"  localisation française : {len(_fr)} entrées lues")
+            return _fr
         fr_units, fr_fac = read_loc("land_units__"), read_loc("factions__")
         res = lambda v: fr_units.get(v[5:-2]) if v and v.startswith("{{tr:") else v
         names_fr = {"units": {}, "factions": {}}
         for mu in T["main_units"]:
             nm = res(fr_units.get(f"land_units_onscreen_name_{mu.get('land_unit')}"))
-            if nm and mu.get("unit") in {u["id"] for u in units}: names_fr["units"][mu["unit"]] = nm
+            if nm and mu.get("unit") in {u["id"] for u in units}: names_fr["units"][mu["unit"]] = nm + (f" ({vlabels[mu['unit']]})" if mu.get("unit") in vlabels else "")   # variantes (monture…) : même suffixe qu'en anglais
         for f_ in facinfo:
             nm = fr_fac.get(f"factions_screen_name_{f_}")
             if nm: names_fr["factions"][f_] = nm
