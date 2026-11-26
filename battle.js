@@ -23,6 +23,9 @@ const equalK = opts => { applyMods(); return TWW3Sim.equalK(ARMY, BON, opts); };
    non conditionnels sont appliqués ; les effets de campagne (entretien, mouvement…) n'ont pas d'effet en bataille et sont ignorés. */
 const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}};
 const LORD = {A: {sel: "auto"}, B: {sel: "auto"}};
+/* Composition des armées, factions et seigneurs mémorisés (PREF « army ») ; on ne sauvegarde qu'une fois la restauration faite, pour ne pas écraser l'état enregistré avec des armées vides. */
+const SAVED_ARMY = PREF.get("army", null); let armyReady = false;
+const saveArmy = () => { if (!armyReady) return; const o = {}; for (const s of ["A","B"]) { const el = document.querySelector(`.army[data-side=${s}]`); o[s] = {f: el.querySelector(".fac").value, lord: LORD[s].sel, u: ARMY[s].map(e => [e.u.id, e.count])}; } PREF.set("army", o); };
 const STAT_LABEL = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée"};
 const scopeOf = side => document.querySelector(`.army[data-side=${side}] .fac`).value;
 const lordLabel = st => { const l = FX.lords[st], u = l && UNIT[l.unit]; return u ? u.name : st.replace(/^wh\d*_[a-z0-9]+_[a-z]{3}_/, "").replace(/_/g, " "); };
@@ -67,6 +70,7 @@ function renderLordList(side) {
 const $$ = (s, r=document) => r.querySelector(s);
 const unitsOf = f => D.units.filter(u => inScope(u, f)).sort((a,b) => a.name.localeCompare(b.name));
 document.querySelectorAll("#nav button").forEach(b => b.onclick = () => {
+  PREF.set("tab", b.dataset.tab);
   document.querySelectorAll("#nav button").forEach(x => x.classList.toggle("on", x === b));
   document.querySelectorAll("[id^=tab-]").forEach(e => e.hidden = e.id !== "tab-" + b.dataset.tab);
   $("#detail").hidden = true; }); // la fiche d'unité appartient à l'onglet Tier list
@@ -75,14 +79,14 @@ document.querySelectorAll(".army").forEach(el => {
   const side = el.dataset.side, fs = $$(".fac", el), us = $$(".usel", el);
   initPicker(fs, side === "A" ? "wh_main_emp_empire" : "wh_main_chs_chaos");
   const fill = () => { us.innerHTML = ""; unitsOf(fs.value).forEach(u => us.add(new Option(`${u.ror ? "★ " : ""}${u.name}${u.tier > 0 ? ` (T${u.tier})` : ""} — ${Math.round(u.cost)} or`, u.id))); };
-  fs.onchange = fill; fill(); document.addEventListener("rorchange", fill);
+  fs.onchange = () => { fill(); saveArmy(); }; fill(); document.addEventListener("rorchange", fill);
   $$(".addbtn", el).onclick = () => { const u = UNIT[us.value]; if (!u || countOf(side) >= MAX_ARMY) return;
     const e = ARMY[side].find(x => x.u.id === u.id); e ? e.count++ : ARMY[side].push({u, count: 1}); draw(side); };
   // Protection de l'arrière (tireurs, artillerie) : réglage manuel ou automatique selon la composition
   $$("details", el).insertAdjacentHTML("beforebegin", `<div class="prot"><label class="sl"><span title="Part des coups de mêlée adverses détournés de vos tireurs/artillerie vers votre ligne de front, tant qu'elle tient">Protection de l'arrière (%)</span><b id="pr${side}v">0</b><input type="range" id="pr${side}" min="0" max="100" value="0"></label>
     <div class="ph"><small id="pr${side}h"></small><button class="auto" type="button">Auto</button></div></div>`);
   $$(".prot", el).insertAdjacentHTML("beforebegin", `<div class="lordbox"><label class="lab"><span>Seigneur (effets par défaut)</span><select class="lsel"></select></label><ul class="lfxl"></ul></div>`);
-  $$(".lsel", el).onchange = e => { LORD[side].sel = e.target.value; renderLordList(side); };
+  $$(".lsel", el).onchange = e => { LORD[side].sel = e.target.value; renderLordList(side); saveArmy(); };
   fs.addEventListener("change", () => renderLordOptions(side)); renderLordOptions(side);
   $$(`#pr${side}`, el).oninput = e => { BON[side].prot = +e.target.value; $(`#pr${side}v`).textContent = e.target.value; };
   $$(".auto", el).onclick = () => { const {f, b} = frontBack(side), v = b ? Math.round(80 * Math.min(1, f / b)) : 0;
@@ -103,7 +107,17 @@ function draw(side) {
   renderLordList(side);
   const {f, b} = frontBack(side), h = $(`#pr${side}h`); if (h) h.textContent = `Écran : ${f} unité(s) de ligne pour ${b} de tir/artillerie`;
   $$(".list", el).querySelectorAll(".x").forEach(b => b.onclick = () => { ARMY[side].splice(+b.dataset.i, 1); draw(side); });
+  saveArmy();
 }
+(() => { // restauration des armées, factions et seigneurs
+  if (SAVED_ARMY) for (const side of ["A","B"]) { const x = SAVED_ARMY[side]; if (!x) continue;
+    const el = document.querySelector(`.army[data-side=${side}]`), fs = el.querySelector(".fac");
+    if (x.f && (x.f === ALL || D.factions[x.f])) { fs.value = x.f; fs.dispatchEvent(new Event("change")); }
+    ARMY[side] = (x.u || []).map(([id, c]) => UNIT[id] ? {u: UNIT[id], count: Math.max(1, +c || 1)} : null).filter(Boolean); capArmy(side);
+    LORD[side].sel = x.lord || "auto"; draw(side); }
+  armyReady = true; saveArmy();
+  const tab = PREF.get("tab", "tier"), tb = document.querySelector(`#nav [data-tab=${tab}]`); if (tab !== "tier" && tb) tb.click();   // onglet actif mémorisé
+})();
 $("#sim").onclick = () => {
   if (!ARMY.A.length || !ARMY.B.length) { $("#result").innerHTML = '<div class="res">Ajoute au moins une unité de chaque côté.</div>'; return; }
   const opts = {dist: +$("#dist").value || 0, acc: clamp(+$("#acc").value, 5, 100)/100, staticB: $("#static").checked};

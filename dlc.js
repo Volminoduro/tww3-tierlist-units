@@ -24,20 +24,44 @@
     const miss = keys.filter(k => !owned(k)).length; document.querySelectorAll("[data-dlcbtn]").forEach(b => { b.textContent = miss ? `Choisir mes DLC… (${keys.length - miss}/${keys.length})` : "Choisir mes DLC…"; }); };
   const changed = () => { recalc(); save(); sync(); document.dispatchEvent(new Event("rorchange")); };     // même événement que les bataillons de renom : les onglets se redessinent
 
+  /* Code de partage : bits « possédé » des produits triés par clé (BigInt en base 36) précédés d'une empreinte de la liste des produits (refuse un code d'une autre version des données).
+     Permet de connaître / transmettre la liste de DLC de quelqu'un sans compte : il copie son code ou son lien (?dlc=…), on le colle ici. */
+  const sk = keys.slice().sort();
+  const sig = (() => { let h = 2166136261; for (const c of sk.join("|")) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; } return h.toString(36).padStart(4, "0").slice(0, 4); })();
+  const toCode = () => { let n = 0n; sk.forEach((k, i) => { if (owned(k)) n |= 1n << BigInt(i); }); return sig + "-" + n.toString(36); };
+  const fromCode = c => {                                // renvoie null si importé, sinon la raison du refus
+    const m = /^([0-9a-z]{4})-([0-9a-z]+)$/i.exec((c || "").trim()); if (!m) return "Code illisible.";
+    if (m[1].toLowerCase() !== sig) return "Ce code vient d'une autre version des données : demande-lui d'en copier un nouveau.";
+    let n = 0n; for (const ch of m[2].toLowerCase()) n = n * 36n + BigInt(parseInt(ch, 36));
+    own = new Set(sk.filter((k, i) => ((n >> BigInt(i)) & 1n) === 1n)); return null;
+  };
+  const linkOf = () => { const u = new URL(location.href); u.searchParams.set("dlc", toCode()); return u.toString(); };
+  { const q = new URLSearchParams(location.search).get("dlc"); if (q && fromCode(q) === null) { DLCX.on = true; recalc(); save(); } }   // lien partagé : ouvre avec la liste de l'autre personne
+
   const dlg = document.createElement("dialog"); dlg.id = "dlcdlg";
   document.body.appendChild(dlg);
   const draw = () => {
+    const shareOpen = !!(dlg.querySelector(".dlcshare") || {}).open;            // le volet « Partager » garde son état quand la liste est redessinée
     const by = {3: [], 2: [], 1: [], 0: []}; keys.forEach(k => by[jeu(k)].push(k));
     dlg.innerHTML = `<div class="dlch"><h2>Mes DLC</h2><button class="x" type="button" data-close>✕</button></div>
       <p class="dlcp">Coche ce que tu possèdes. Quand le filtre est activé, les unités qui n'existent que grâce à un jeu ou DLC non coché sont masquées partout (tier list, unités par faction, combat). Les contenus gratuits sont toujours comptés comme possédés. Une unité offerte par plusieurs DLC reste visible si l'un d'eux est coché.</p>
       <label class="chk dlcmain"><input type="checkbox" data-on ${DLCX.on ? "checked" : ""}> Masquer les unités des DLC que je n'ai pas</label>
       <div class="dlcbar"><button type="button" data-a="all">Tout cocher</button><button type="button" data-a="none">Tout décocher</button><button type="button" data-a="free">Gratuits seulement</button></div>
+      <details class="dlcshare" ${shareOpen ? "open" : ""}><summary>Partager ou importer une liste de DLC</summary>
+        <p class="dlcp">Il n'existe pas de moyen simple et fiable de lire les DLC de quelqu'un depuis un site (Steam ne les expose pas sans connexion de la personne). À la place : chacun copie son code ou son lien ici et l'envoie ; on le colle chez l'autre pour retrouver sa liste.</p>
+        <div class="dlcbar"><button type="button" data-copy="code">Copier mon code</button><button type="button" data-copy="link">Copier le lien</button></div>
+        <div class="dlcbar"><input type="text" data-code placeholder="Coller un code…" spellcheck="false"><button type="button" data-import>Importer</button></div><small class="dlcmsg" data-msg></small></details>
       <div class="dlclist">${[3, 2, 1, 0].filter(g => by[g].length).map(g => `<h3>${GROUPS[g]}</h3>` + by[g].sort((a, b) => DLC.products[a].o - DLC.products[b].o || DLC.products[a].n.localeCompare(DLC.products[b].n)).map(k => { const p = DLC.products[k];
         return `<label class="dlcit${p.free ? " free" : ""}"><input type="checkbox" data-k="${k}" ${owned(k) ? "checked" : ""} ${p.free ? "disabled" : ""}><span>${p.n}</span><small>${p.free ? "gratuit · " : ""}${nUnits[k] || 0} unités</small></label>`; }).join("")).join("")}</div>`;
   };
   const open = () => { draw(); dlg.showModal(); };
   document.addEventListener("click", e => { if (e.target.closest("[data-dlcbtn]")) open(); });
-  dlg.addEventListener("click", e => { if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
+  dlg.addEventListener("click", async e => { if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
+    const msg = t => { const m = dlg.querySelector("[data-msg]"); if (m) m.textContent = t; };
+    const cp = e.target.closest("[data-copy]"); if (cp) { const txt = cp.dataset.copy === "link" ? linkOf() : toCode();
+      try { await navigator.clipboard.writeText(txt); msg("Copié : " + txt); } catch (err) { const i = dlg.querySelector("[data-code]"); i.value = txt; i.select(); msg("Copie impossible ici : sélectionne et copie le texte du champ."); } }
+    if (e.target.closest("[data-import]")) { const raw = dlg.querySelector("[data-code]").value.trim(), m = /[?&]dlc=([^&#\s]+)/.exec(raw), r = fromCode(m ? decodeURIComponent(m[1]) : raw);
+      if (r === null) { DLCX.on = true; changed(); const open = dlg.querySelector(".dlcshare").open; draw(); dlg.querySelector(".dlcshare").open = open; msg(`Liste importée : ${keys.filter(owned).length}/${keys.length} produits, filtre activé.`); } else msg(r); }
     const a = e.target.closest("[data-a]"); if (a) { own = new Set(a.dataset.a === "all" ? keys : a.dataset.a === "none" ? [] : keys.filter(k => DLC.products[k].free)); changed(); draw(); } });
   dlg.addEventListener("change", e => { const c = e.target;
     if (c.dataset.k) { c.checked ? own.add(c.dataset.k) : own.delete(c.dataset.k); changed(); }

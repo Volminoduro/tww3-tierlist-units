@@ -234,6 +234,11 @@ Object.assign(I18N.dict, {
   "Creative Assembly / SEGA / Games Workshop": "Creative Assembly / SEGA / Games Workshop", ": le jeu": ": the game",
   "et son univers, dont ce projet de fan n'est pas affilié.": "and its universe, which this fan project is not affiliated with.",
   "Limites connues": "Known limitations",
+  "Partager ou importer une liste de DLC": "Share or import a DLC list",
+  "Il n'existe pas de moyen simple et fiable de lire les DLC de quelqu'un depuis un site (Steam ne les expose pas sans connexion de la personne). À la place : chacun copie son code ou son lien ici et l'envoie ; on le colle chez l'autre pour retrouver sa liste.": "There is no simple, reliable way for a website to read someone's DLC (Steam does not expose them without that person logging in). Instead: everyone copies their code or link here and sends it; paste it on the other side to get their list.",
+  "Copier mon code": "Copy my code", "Copier le lien": "Copy link", "Importer": "Import", "Coller un code…": "Paste a code…",
+  "Aucune unité disponible avec tes filtres (bataillons de renom, DLC)": "No unit available with your filters (Regiments of Renown, DLC)",
+
   "Mes DLC": "My DLC",
   "Masquer les DLC que je n'ai pas": "Hide DLC I don't own",
   "Masquer les unités des DLC que je n'ai pas": "Hide units from DLC I don't own",

@@ -38,9 +38,17 @@
   const f = v => v >= 1000 ? Math.round(v).toLocaleString("fr-FR") : (Math.round(v*10)/10).toString();
 
   const fs = $b("#bfac"); initPicker(fs, ALL); // sélection de départ : toutes les factions
+  const BTYPO = TYPO; // même sélection d'usages que le tier list (déclaré tôt : un premier rendu peut avoir lieu pendant la synchronisation des filtres)
   let sortK = "cost", sortD = 1; // catégories, usages, faction, recherche et seigneurs/héros : état PARTAGÉ avec le tier list (variables globales de app.js)
   $b("#bgrp").innerHTML = GROUPS.map(g => `<label><input type="checkbox" data-g="${g}" checked>${g}</label>`).join("");
   $b("#bgrp").onchange = e => { e.target.checked ? shown.add(e.target.dataset.g) : shown.delete(e.target.dataset.g); render(); };
+  /* Options propres à cet onglet mémorisées (PREF « browse ») : colonnes, groupe de comparaison, familles de stats affichées, tri. Restaurées AVANT toute synchronisation (qui déclenche un rendu et une sauvegarde). */
+  function saveBrowse() { PREF.set("browse", {cols: $b("#bcols").value, pool: $b("#bpool").value, grp: [...shown], sortK, sortD}); if (typeof saveUI === "function") saveUI(); }
+  { const s = PREF.get("browse", null); if (s) {
+    if (["ess", "all"].includes(s.cols)) $b("#bcols").value = s.cols;
+    if ([...$b("#bpool").options].some(o => o.value === s.pool)) $b("#bpool").value = s.pool;
+    if (Array.isArray(s.grp)) { shown.clear(); s.grp.filter(g => GROUPS.includes(g)).forEach(g => shown.add(g)); $b("#bgrp").querySelectorAll("input").forEach(i => { i.checked = shown.has(i.dataset.g); }); }
+    if (ST.some(x => x.k === s.sortK)) { sortK = s.sortK; sortD = s.sortD === -1 ? -1 : 1; } } }
   $b("#bnoror").checked = RORX.off; $b("#bnoror").addEventListener("input", e => setRor(e.target.checked)); document.addEventListener("rorchange", () => render());
   ["bpool","bq","bcols","bheroes"].forEach(i => $b("#"+i).addEventListener("input", render));
   /* Filtres communs aux deux onglets : faction, recherche et case « seigneurs & héros » sont recopiés dans les deux sens ; catégories et usages sont les mêmes ensembles (role, TYPO) */
@@ -51,12 +59,12 @@
   h2.addEventListener("input", () => { h1.checked = h2.checked; }); h1.addEventListener("input", () => { h2.checked = h1.checked; });
   h2.checked = h1.checked; $b("#bq").value = q1.value; copyFac(fsel2, fs);
   $b("#brole").onclick = e => { const b = e.target.closest("button[data-r]"); if (!b) return; const r = b.dataset.r; if (!r) role.clear(); else role.has(r) ? role.delete(r) : role.add(r); render(); };
-  const BTYPO = TYPO; // même sélection d'usages que le tier list
   $b("#btypo").onclick = e => { const b = e.target.closest("button"); if (!b || b.disabled) return; const k = b.dataset.k; k === "" ? BTYPO.clear() : BTYPO.has(k) ? BTYPO.delete(k) : BTYPO.add(k); render(); };
   $b("#btab").onclick = e => { const th = e.target.closest("th[data-k]"); if (th) { sortD = sortK === th.dataset.k ? -sortD : 1; sortK = th.dataset.k; render(); } };
   $b("#bnote").textContent = "Chaque stat est suivie de son rang parmi le groupe de comparaison choisi : « Top 8 % » = dans les 8 % meilleurs, « Bottom 20 % » = dans les 20 % moins bons. Pour le coût, l'entretien, l'intervalle d'attaque et le rechargement, « mieux » = plus bas. Les stats non applicables (ex. tir pour une unité de mêlée) sont ignorées. Survole un badge pour voir le détail. Clique un en-tête pour trier.";
 
   function render() {
+    saveBrowse();
     const fac = fs.value, mode = $b("#bpool").value, q = $b("#bq").value.toLowerCase();
     const inFac = uniq(D.units.filter(u => inScope(u, fac)));
     const byName = inFac.filter(u => u.name.toLowerCase().includes(q));

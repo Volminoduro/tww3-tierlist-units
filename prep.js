@@ -21,6 +21,11 @@ const factionsOfRace = c => Object.keys(D.facInfo).filter(f => D.facInfo[f].cult
 const mainFacOf = c => factionsOfRace(c).sort((a, b) => D.facInfo[a].sort - D.facInfo[b].sort)[0]; // faction « principale » d'une race (icône)
 /* Une unité fait partie du périmètre choisi (toutes les factions, une race entière ou une faction) ? */
 /* Bataillons de renom : option « exclure » partagée par tous les onglets (mémorisée). setRor(v) recopie les deux cases à cocher et prévient les onglets (événement « rorchange »). */
+/* Préférences mémorisées dans le navigateur (localStorage, préfixe « tww3. ») : filtres, réglages, DLC, langue (clé « lang », i18n.js)… Toujours sous try/catch : navigation privée, stockage bloqué. */
+const PREF = {
+  get(k, d) { try { const v = localStorage.getItem("tww3." + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("tww3." + k, JSON.stringify(v)); } catch (e) {} },
+};
 const RORX = {off: false}, DLCX = {on: false, ok: () => true};   // DLCX : état « Mes DLC » (dlc.js)
 try { RORX.off = localStorage.getItem("noRor") === "1"; } catch (e) {}
 function setRor(v) {
@@ -74,6 +79,10 @@ function initPicker(facEl, defaultKey) {
     const sub = f === ALL ? "Toutes les races" : isRace(f) ? `${byCul[c].length} factions` : D.cultures[c];
     btn.innerHTML = `${icon}<span class="tp-t"><b>${name}</b><small>${sub}</small></span><span class="tp-c">▾</span>`;
   };
+  /* Factions / races sans aucune unité disponible avec les filtres actuels (bataillons de renom exclus, DLC non possédés) : grisées et non sélectionnables. */
+  let avail = {}; document.addEventListener("rorchange", () => { avail = {}; });
+  const has = f => avail[f] ??= D.units.some(u => inScope(u, f));
+  const NA = "Aucune unité disponible avec tes filtres (bataillons de renom, DLC)";
   const render = () => {
     const t = q.value.trim().toLowerCase();
     const allRow = !t || D.factions[ALL].toLowerCase().includes(t)
@@ -83,8 +92,8 @@ function initPicker(facEl, defaultKey) {
       const fs = !t || raceHit ? byCul[c] : byCul[c].filter(f => D.factions[f].toLowerCase().includes(t));
       if (!fs.length) return "";
       const isOpen = !!t || open.has(c);
-      return `<div class="tp-race${facEl.value === RACE + c ? " sel" : ""}" data-c="${c}" title="Cliquer pour déplier / replier">${crest(mainFacOf(c), "s", D.cultures[c])}<span>${D.cultures[c]}</span><small>${byCul[c].length}</small><button type="button" class="tp-pick" title="Choisir toute la race">Tout</button><i>${isOpen ? "▾" : "▸"}</i></div>` +
-        (isOpen ? fs.map(f => `<div class="tp-it${f === facEl.value ? " sel" : ""}" data-f="${f}">${crest(f, "s")}<span>${D.factions[f]}</span></div>`).join("") : "");
+      return `<div class="tp-race${facEl.value === RACE + c ? " sel" : ""}${has(RACE + c) ? "" : " na"}" data-c="${c}" title="${has(RACE + c) ? "Cliquer pour déplier / replier" : NA}">${crest(mainFacOf(c), "s", D.cultures[c])}<span>${D.cultures[c]}</span><small>${byCul[c].length}</small><button type="button" class="tp-pick" title="Choisir toute la race">Tout</button><i>${isOpen ? "▾" : "▸"}</i></div>` +
+        (isOpen ? fs.map(f => `<div class="tp-it${f === facEl.value ? " sel" : ""}${has(f) ? "" : " na"}" data-f="${f}"${has(f) ? "" : ` title="${NA}"`}>${crest(f, "s")}<span>${D.factions[f]}</span></div>`).join("") : "");
     }).join("") || (allRow ? "" : '<div class="tp-none">Aucun résultat</div>');
   };
   const close = () => { pop.hidden = true; };
@@ -100,6 +109,7 @@ function initPicker(facEl, defaultKey) {
   list.onclick = e => {
     // un clic sur une race la déplie ; « Tout » (ou la ligne « Toute la race ») la choisit en entier ; un clic sur une faction la choisit
     const pk = e.target.closest(".tp-pick"), it = e.target.closest(".tp-it,.tp-all"), rc = e.target.closest(".tp-race");
+    if ((pk || it) && (pk || it).closest(".na") && (pk ? pk.closest(".tp-race") : it).dataset.f !== facEl.value) return;   // grisé : non sélectionnable
     if (pk) choose(RACE + pk.closest(".tp-race").dataset.c);
     else if (it) choose(it.dataset.f);
     else if (rc) { const c = rc.dataset.c; open.has(c) ? open.delete(c) : open.add(c); render(); }

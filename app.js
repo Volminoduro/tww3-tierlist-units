@@ -164,7 +164,7 @@ function render(){
   const f=v=>typeof v==="number"?(v>=100?Math.round(v):v.toFixed(2)):v;
   $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}">${c[0]}</th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map(c=>`<td>${f(c[1](x))}</td>`).join("")}</tr>`).join("")}</table>`;
  }
- window._us=us; syncDetail(us);
+ window._us=us; syncDetail(us); saveUI();
 }
 /* La fiche d'unité suit la liste : elle se met à jour si l'unité reste affichée, et se ferme si un filtre la fait disparaître. */
 function syncDetail(us){
@@ -263,5 +263,21 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  if(wasOpen)dt.querySelector("details.all").open=true;
  $("#dpool").value=DPOOL; dt.scrollTop=st;
 }
-$("#detail").addEventListener("change",e=>{ if(e.target.id==="dpool"){ DPOOL=e.target.value; syncDetail(window._us||[]); } }); // changer de groupe de comparaison redessine la fiche
+$("#detail").addEventListener("change",e=>{ if(e.target.id==="dpool"){ DPOOL=e.target.value; saveUI(); syncDetail(window._us||[]); } }); // changer de groupe de comparaison redessine la fiche
+/* Mémorisation des filtres et réglages (PREF « ui », localStorage) : faction, catégories, usages, recherche, seigneurs & héros, mode, métrique, rang, typologie, vue, curseurs, groupe de comparaison.
+   Les DLC, les bataillons de renom, la langue, l'onglet, les armées du combat et les options de « Unités par faction » ont leur propre entrée. */
+function saveUI(){ if(!uiReady) return; PREF.set("ui",{fac:fsel.value,roles:[...role],typo:[...TYPO],q:$("#q").value,heroes:$("#heroes").checked,mode:$("#mode").value,metric:$("#metric").value,scope:$("#scope").value,arch:$("#arch").value,view,S,dpool:DPOOL}); }
+let uiReady=false;
+(()=>{ const s=PREF.get("ui",null); if(s){
+  const okFac=f=>f===ALL||(typeof f==="string"&&(f.startsWith(RACE)?D.cultures[f.slice(RACE.length)]:D.facInfo[f]));
+  if(okFac(s.fac)){ fsel.value=s.fac; fsel.dispatchEvent(new Event("change")); }
+  (s.roles||[]).filter(r=>roles.includes(r)).forEach(r=>role.add(r)); (s.typo||[]).filter(k=>ARCHK.includes(k)).forEach(k=>TYPO.add(k));
+  if(typeof s.q==="string") $("#q").value=s.q; $("#heroes").checked=!!s.heroes;
+  for(const [id,v] of [["mode",s.mode],["metric",s.metric],["scope",s.scope],["arch",s.arch]]) if(v&&[...$("#"+id).options].some(o=>o.value===v)) $("#"+id).value=v;
+  if(["tiers","table","matrix"].includes(s.view)){ view=s.view; $("#viewsel").value=view; }
+  if(["role_all","all","scope"].includes(s.dpool)) DPOOL=s.dpool;
+  for(const w of W){ const v=s.S&&s.S[w[0]]; if(typeof v==="number"&&v>=w[2]&&v<=w[3]){ S[w[0]]=v; $("#"+w[0]).value=v; $("#v_"+w[0]).textContent=v; } }
+  syncCost();
+ }
+ uiReady=true; })();
 render();
