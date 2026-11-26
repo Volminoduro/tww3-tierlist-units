@@ -46,7 +46,8 @@ function initPicker(facEl, defaultKey) {
   root.innerHTML = `<button type="button" class="tp-btn"></button><div class="tp-pop" hidden><input class="tp-q" placeholder="Filtrer races et factions…"><div class="tp-list"></div></div>`;
   facEl.after(root);
   const btn = root.querySelector(".tp-btn"), pop = root.querySelector(".tp-pop"), q = root.querySelector(".tp-q"), list = root.querySelector(".tp-list");
-  const open = new Set([cultOf(facEl.value)]);
+  const open = new Set();   // races dépliées : aucune au départ ; la race d'un choix de l'utilisateur est dépliée aux ouvertures suivantes
+  let chosen = false;
   const label = () => {
     const f = facEl.value, c = cultOf(f);
     const icon = isRace(f) ? crest(mainFacOf(c), "s", D.cultures[c]) : crest(f, "s");
@@ -68,11 +69,11 @@ function initPicker(facEl, defaultKey) {
     }).join("") || (allRow ? "" : '<div class="tp-none">Aucun résultat</div>');
   };
   const close = () => { pop.hidden = true; };
-  const choose = v => { facEl.value = v; label(); close(); ["input", "change"].forEach(t => facEl.dispatchEvent(new Event(t, {bubbles: true}))); };
+  const choose = v => { chosen = true; facEl.value = v; label(); close(); ["input", "change"].forEach(t => facEl.dispatchEvent(new Event(t, {bubbles: true}))); };
   const openPop = () => {
     const r = btn.getBoundingClientRect();
     Object.assign(pop.style, {left: r.left + "px", top: r.bottom + 4 + "px", width: Math.max(r.width, 320) + "px", maxHeight: Math.max(220, Math.min(innerHeight - r.bottom - 16, 560)) + "px"});
-    q.value = ""; if (cultOf(facEl.value)) open.add(cultOf(facEl.value)); render(); pop.hidden = false; q.focus();
+    q.value = ""; if (chosen && cultOf(facEl.value)) open.add(cultOf(facEl.value)); render(); pop.hidden = false; q.focus();
     const sel = list.querySelector(".tp-it.sel,.tp-race.sel,.tp-all.sel"); if (sel) sel.scrollIntoView({block: "nearest"});
   };
   btn.onclick = () => pop.hidden ? openPop() : close();
