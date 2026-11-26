@@ -44,10 +44,20 @@
   const scanLicenses = text => {
     let h = " " + norm(text) + " "; const found = new Set();
     const names = keys.flatMap(k => { const n = norm(DLC.products[k].n); return [[k, n]].concat(/warhammer i$/.test(n) ? [[k, n.replace(/ i$/, "")]] : []); }).sort((a, b) => b[1].length - a[1].length);
-    for (const [k, n] of names) { const pat = " " + n + " "; if (n && h.includes(pat)) { found.add(k); h = h.split(pat).join(" "); } }
+    for (const [k, n] of names) { if (!n) continue; const re = new RegExp("(?<= )" + n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?= )", "g");   // bornes = espaces non consommés : deux noms collés l'un à l'autre sont tous les deux retirés
+      if (re.test(h)) { found.add(k); h = h.replace(re, "#"); } }
     return found;
   };
+  let licBuf = "", licPages = 0;                                   // texte collé (toutes les pages) et nombre de collages
+  const applyScan = prefix => {
+    const found = scanLicenses(licBuf), real = [...found].filter(k => !DLC.products[k].free), st = dlg.scrollTop;
+    if (!real.length) { draw(); dlg.querySelector("[data-msg2]").textContent = "Aucun produit reconnu : vérifie que tu as collé le texte de la page des licences (noms de jeux et de DLC en anglais)."; return; }
+    own = new Set(found); DLCX.on = true; changed(); draw(); dlg.scrollTop = st;
+    dlg.querySelector("[data-msg2]").textContent = `${prefix} · ${real.length} produit(s) reconnu(s) sur ${keys.filter(k => !DLC.products[k].free).length} (hors gratuits) : ${real.slice(0, 8).map(k => DLC.products[k].n).join(", ")}${real.length > 8 ? "…" : ""}. Filtre activé ; vérifie la liste ci-dessous.`;
+  };
   const dlg = document.createElement("dialog"); dlg.id = "dlcdlg";
+  dlg.addEventListener("paste", e => { if (!e.target.closest("[data-lic]")) return; e.preventDefault();     // chaque collage s'ajoute au précédent (la liste Steam compte plusieurs pages)
+    licBuf += (licBuf ? "\n" : "") + ((e.clipboardData || window.clipboardData).getData("text") || ""); licPages++; applyScan(`Page ${licPages} ajoutée`); });
   document.body.appendChild(dlg);
   const draw = () => {
     const shareOpen = !!(dlg.querySelector(".dlcshare:not(.dlcsteam)") || {}).open;            // les volets « Partager » et « Steam » gardent leur état quand la liste est redessinée
@@ -58,9 +68,9 @@
       <label class="chk dlcmain"><input type="checkbox" data-on ${DLCX.on ? "checked" : ""}> Masquer les unités des DLC que je n'ai pas</label>
       <div class="dlcbar"><button type="button" data-a="all">Tout cocher</button><button type="button" data-a="none">Tout décocher</button><button type="button" data-a="free">Gratuits seulement</button></div>
       <details class="dlcshare dlcsteam" ${steamOpen ? "open" : ""}><summary>Retrouver mes DLC depuis Steam</summary>
-        <ol class="dlcp"><li>Connecté à ton compte, ouvre <a href="https://store.steampowered.com/account/licenses/" target="_blank" rel="noopener">store.steampowered.com/account/licenses</a> (liste de tout ce que tu possèdes, DLC compris).</li><li>Sélectionne toute la page (Ctrl+A) et copie (Ctrl+C).</li><li>Colle ici et clique sur « Analyser » : les produits reconnus sont cochés.</li></ol>
-        <textarea data-lic rows="4" placeholder="Colle ici le texte de la page des licences Steam…" spellcheck="false"></textarea>
-        <div class="dlcbar"><button type="button" data-scan>Analyser</button></div><small class="dlcmsg" data-msg2></small>
+        <ol class="dlcp"><li>Connecté à ton compte, ouvre <a href="https://store.steampowered.com/account/licenses/" target="_blank" rel="noopener">store.steampowered.com/account/licenses</a> (liste de tout ce que tu possèdes, DLC compris).</li><li>Sélectionne toute la page (Ctrl+A) et copie (Ctrl+C), puis colle-la dans le champ ci-dessous (Ctrl+V) : elle est analysée tout de suite et les produits reconnus sont cochés.</li><li>La liste de Steam est coupée en <b>plusieurs pages</b> (une douzaine ou plus) : passe à la page suivante, copie, et colle-la dans le même champ. Les pages s'ajoutent les unes aux autres ; « Vider » recommence à zéro.</li></ol>
+        <textarea data-lic rows="4" placeholder="Colle ici chaque page des licences Steam (Ctrl+V), l'une après l'autre…" spellcheck="false">${licBuf.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</textarea>
+        <div class="dlcbar"><button type="button" data-scan>Analyser</button><button type="button" data-lic-clear>Vider</button><small>${licPages ? licPages + " page(s) collée(s)" : ""}</small></div><small class="dlcmsg" data-msg2></small>
         <p class="dlcp">Le site ne lit rien de ton compte : le texte collé est analysé dans ton navigateur et n'est ni envoyé ni conservé. Vérifie ensuite la liste : un nom de DLC différent sur Steam peut ne pas être reconnu (tu peux alors cocher à la main ; chaque ligne a un lien « Steam » vers sa page).</p></details>
       <details class="dlcshare" ${shareOpen ? "open" : ""}><summary>Partager ou importer une liste de DLC</summary>
         <p class="dlcp">Il n'existe pas de moyen simple et fiable de lire les DLC de quelqu'un depuis un site (Steam ne les expose pas sans connexion de la personne). À la place : chacun copie son code ou son lien ici et l'envoie ; on le colle chez l'autre pour retrouver sa liste.</p>
@@ -77,10 +87,8 @@
       try { await navigator.clipboard.writeText(txt); msg("Copié : " + txt); } catch (err) { const i = dlg.querySelector("[data-code]"); i.value = txt; i.select(); msg("Copie impossible ici : sélectionne et copie le texte du champ."); } }
     if (e.target.closest("[data-import]")) { const raw = dlg.querySelector("[data-code]").value.trim(), m = /[?&]dlc=([^&#\s]+)/.exec(raw), r = fromCode(m ? decodeURIComponent(m[1]) : raw);
       if (r === null) { DLCX.on = true; changed(); const open = dlg.querySelector(".dlcshare").open; draw(); dlg.querySelector(".dlcshare").open = open; msg(`Liste importée : ${keys.filter(owned).length}/${keys.length} produits, filtre activé.`); } else msg(r); }
-    if (e.target.closest("[data-scan]")) { const t = dlg.querySelector("[data-lic]").value, m2 = dlg.querySelector("[data-msg2]");
-      const found = scanLicenses(t), real = [...found].filter(k => !DLC.products[k].free);
-      if (!real.length) m2.textContent = "Aucun produit reconnu : vérifie que tu as collé le texte de la page des licences (noms de jeux et de DLC en anglais).";
-      else { own = new Set(found); DLCX.on = true; changed(); draw(); const m3 = dlg.querySelector("[data-msg2]"); m3.textContent = `${real.length} produit(s) reconnu(s) sur ${keys.filter(k => !DLC.products[k].free).length} (hors gratuits) : ${real.slice(0, 8).map(k => DLC.products[k].n).join(", ")}${real.length > 8 ? "…" : ""}. Filtre activé ; vérifie la liste ci-dessous.`; } }
+    if (e.target.closest("[data-scan]")) { licBuf = dlg.querySelector("[data-lic]").value; licPages = Math.max(licPages, licBuf.trim() ? 1 : 0); applyScan("Analyse faite"); }
+    if (e.target.closest("[data-lic-clear]")) { licBuf = ""; licPages = 0; draw(); dlg.querySelector("[data-msg2]").textContent = "Champ vidé. Les DLC cochés ne changent pas."; }
     const a = e.target.closest("[data-a]"); if (a) { own = new Set(a.dataset.a === "all" ? keys : a.dataset.a === "none" ? [] : keys.filter(k => DLC.products[k].free)); changed(); draw(); } });
   dlg.addEventListener("change", e => { const c = e.target;
     if (c.dataset.k) { c.checked ? own.add(c.dataset.k) : own.delete(c.dataset.k); changed(); }

@@ -235,10 +235,10 @@ Object.assign(I18N.dict, {
   "et son univers, dont ce projet de fan n'est pas affilié.": "and its universe, which this fan project is not affiliated with.",
   "Limites connues": "Known limitations",
   "Retrouver mes DLC depuis Steam": "Find my DLC from Steam",
-  "Colle ici le texte de la page des licences Steam…": "Paste the text of the Steam licenses page here…",
+  "Colle ici chaque page des licences Steam (Ctrl+V), l'une après l'autre…": "Paste each page of the Steam licenses here (Ctrl+V), one after the other…",
+  "Sélectionne toute la page (Ctrl+A) et copie (Ctrl+C), puis colle-la dans le champ ci-dessous (Ctrl+V) : elle est analysée tout de suite et les produits reconnus sont cochés.": "Select the whole page (Ctrl+A) and copy (Ctrl+C), then paste it into the field below (Ctrl+V): it is analysed immediately and recognised products are checked.",
+  "Vider": "Clear",
   "Analyser": "Analyse",
-  "Sélectionne toute la page (Ctrl+A) et copie (Ctrl+C).": "Select the whole page (Ctrl+A) and copy (Ctrl+C).",
-  "Colle ici et clique sur « Analyser » : les produits reconnus sont cochés.": "Paste here and click \"Analyse\": recognised products are checked.",
   "Voir sur Steam": "View on Steam",
 
   "Partager ou importer une liste de DLC": "Share or import a DLC list",
