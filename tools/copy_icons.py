@@ -182,5 +182,13 @@ for n in range(1, 6):
         os.makedirs(os.path.join(root, "img", "tiers"), exist_ok=True)
         shutil.copy(p[0], os.path.join(root, "img", "tiers", f"unit_tier_{n}.png")); tiers += 1
 print(f"{tiers} icônes de tier sur 5")
+STATS = ["health", "armour", "defence", "attack", "charge_bonus", "morale", "speed", "damage", "ranged_damage", "range", "reload_time", "ammo"]
+stats = 0                                           # icônes de stats du jeu (ui2.pack : ui/skins/default/icon_stat_*.png), utilisées par app.js (GAME_STAT)
+for n in STATS:
+    p = pngs.get(f"icon_stat_{n}")
+    if p:
+        os.makedirs(os.path.join(root, "img", "stats"), exist_ok=True)
+        shutil.copy(p[0], os.path.join(root, "img", "stats", f"icon_stat_{n}.png")); stats += 1
+print(f"{stats} icônes de stats sur {len(STATS)}")
 open(os.path.join(root, "data", "icons.js"), "w").write("window.TWW3_ICONS=" + json.dumps(sorted(units)) + ";\nwindow.TWW3_FLAGS=" + json.dumps(sorted(flags)) + ";\n")
 print(f"{len(units)} portraits d'unités sur {len(ids)} ; {len(flags)} drapeaux sur {len(data.get('flags', {}))} factions.")
