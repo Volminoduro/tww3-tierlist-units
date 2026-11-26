@@ -43,10 +43,26 @@
   const norm = s => s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "").replace(/&/g, " and ").replace(/[^a-z0-9]+/g, " ").trim();
   const scanLicenses = text => {
     let h = " " + norm(text) + " "; const found = new Set();
-    const names = keys.flatMap(k => { const n = norm(DLC.products[k].n); return [[k, n]].concat(/warhammer i$/.test(n) ? [[k, n.replace(/ i$/, "")]] : []); }).sort((a, b) => b[1].length - a[1].length);
+    // variantes de nom : le premier jeu s'appelle aussi « Total War: WARHAMMER » ; « Total War: WARHAMMER III - Upgrade Pack » est reconnu aussi sous « Upgrade Pack » (Steam peut omettre ou changer le préfixe)
+    const names = keys.flatMap(k => { const n = norm(DLC.products[k].n), m = /^total war warhammer (?:i|ii|iii) (.{8,})$/.exec(n);
+      return [[k, n]].concat(/warhammer i$/.test(n) ? [[k, n.replace(/ i$/, "")]] : [], m ? [[k, m[1]]] : []); }).sort((a, b) => b[1].length - a[1].length);
     for (const [k, n] of names) { if (!n) continue; const re = new RegExp("(?<= )" + n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "(?= )", "g");   // bornes = espaces non consommés : deux noms collés l'un à l'autre sont tous les deux retirés
       if (re.test(h)) { found.add(k); h = h.replace(re, "#"); } }
     return found;
+  };
+  /* Lignes collées qui parlent de Total War / Warhammer mais où aucun produit n'a été reconnu : affichées pour repérer un DLC nommé autrement par Steam. */
+  const unmatchedLines = (text, found) => {
+    const alias = k => { const n = norm(DLC.products[k].n), m = /^total war warhammer (?:i|ii|iii) (.{8,})$/.exec(n); return [n].concat(m ? [m[1]] : [], /warhammer i$/.test(n) ? [n.replace(/ i$/, "")] : []); };
+    const pats = [...found].flatMap(alias), out = [];
+    const base = new Set(keys.filter(k => /^total war warhammer (?:i|ii|iii)?$/.test(norm(DLC.products[k].n))).flatMap(alias));    // noms des jeux de base : un reste après eux (colonnes de date, type d'achat…) n'est pas un DLC inconnu
+    for (const raw of text.split(/\n+/)) { const l = " " + norm(raw) + " "; if (!/total war|warhammer/.test(l) || l.length > 160) continue;
+      const m = /total war warhammer(?: iii| ii| i)? (.+?) $/.exec(l); if (!m) continue;                              // reste après « Total War: WARHAMMER (I/II/III) »
+      const FILL = /^(achat|steam|purchase|purchased|retail|gift|cadeau|free|gratuit|activation|key|cle|store|complimentary|package|on|sur|via|de|du|the|cd|promo|promotion|bundle|licence|license)$/;
+      if (m[1].split(" ").every(w => FILL.test(w) || /^\d+$/.test(w))) continue;                                          // reste = colonne « type d'acquisition » (Achat sur Steam…) ou date
+      const rest = " " + m[1] + " ";
+      if (pats.some(n => !base.has(n) && rest.includes(" " + n + " ")) || m[1].split(" ").length < 2) continue;      // un produit reconnu figure dans le reste, ou rien d'autre qu'un mot
+      if (!out.includes(raw.trim())) out.push(raw.trim()); }
+    return out;
   };
   let licBuf = "", licPages = 0;                                   // texte collé (toutes les pages) et nombre de collages
   const applyScan = prefix => {
@@ -54,6 +70,8 @@
     if (!real.length) { draw(); dlg.querySelector("[data-msg2]").textContent = "Aucun produit reconnu : vérifie que tu as collé le texte de la page des licences (noms de jeux et de DLC en anglais)."; return; }
     own = new Set(found); DLCX.on = true; changed(); draw(); dlg.scrollTop = st;
     dlg.querySelector("[data-msg2]").textContent = `${prefix} · ${real.length} produit(s) reconnu(s) sur ${keys.filter(k => !DLC.products[k].free).length} (hors gratuits) : ${real.slice(0, 8).map(k => DLC.products[k].n).join(", ")}${real.length > 8 ? "…" : ""}. Filtre activé ; vérifie la liste ci-dessous.`;
+    const miss = unmatchedLines(licBuf, found);
+    if (miss.length) dlg.querySelector("[data-msg2]").textContent += ` Lignes « Total War » non reconnues (${miss.length}) : ${miss.slice(0, 6).map(l => "« " + l.slice(0, 80) + " »").join(" ; ")}${miss.length > 6 ? "…" : ""} — si l'une d'elles est un DLC que tu possèdes, coche-le à la main.`;
   };
   const dlg = document.createElement("dialog"); dlg.id = "dlcdlg";
   dlg.addEventListener("paste", e => { if (!e.target.closest("[data-lic]")) return; e.preventDefault();     // chaque collage s'ajoute au précédent (la liste Steam compte plusieurs pages)
