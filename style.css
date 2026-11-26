@@ -265,3 +265,11 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 .pt img.sq{-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 18%,#000 82%,transparent 100%)}
 .pt.s img.sq,.pt.big img.sq{-webkit-mask-image:none;mask-image:none}
 .pt.tall img.sq,.pt.full img.sq{inset:auto 0;top:50%;height:auto;aspect-ratio:1;transform:translateY(-50%);object-fit:fill}
+
+/* Bataillons de renom : mêmes repères (double cadre, laurier, bandeau) mais dans la COULEUR DU TIER, plus en or (l'or se confondait avec le tier S) ; sans tier (listes) : gris acier neutre */
+.rortag{--rc:var(--tc,#9ca3ad);color:#fff;text-shadow:0 1px 1px #000b;background:linear-gradient(color-mix(in srgb,var(--rc) 72%,#fff),var(--rc) 55%,color-mix(in srgb,var(--rc) 62%,#000));border-color:color-mix(in srgb,var(--rc) 55%,#fff)}
+.rormark{color:var(--tc,#c3c8cf)}
+.pt.ror{border:2px solid var(--tc,#9ca3ad);box-shadow:0 0 0 1px #000,0 0 8px color-mix(in srgb,var(--tc,#9ca3ad) 55%,transparent);color:var(--tc,#c3c8cf)}
+.card.ror[data-t]{border:2px solid color-mix(in srgb,var(--tc) 80%,#fff);border-left:6px solid var(--tc);background:linear-gradient(135deg,color-mix(in srgb,var(--tc) 40%,#1b1610),color-mix(in srgb,var(--tc) 12%,#14100b) 65%,color-mix(in srgb,var(--tc) 24%,#17120c));box-shadow:inset 0 0 0 1px #000,inset 0 0 16px color-mix(in srgb,var(--tc) 38%,transparent),0 0 10px color-mix(in srgb,var(--tc) 40%,transparent)}
+.card.ror[data-t]:hover{border-color:#fff;box-shadow:inset 0 0 0 1px #000,inset 0 0 18px color-mix(in srgb,var(--tc) 50%,transparent),0 0 16px color-mix(in srgb,var(--tc) 70%,transparent)}
+.card.ror b{color:color-mix(in srgb,var(--tc,#c3c8cf) 35%,#fff);text-shadow:none}
