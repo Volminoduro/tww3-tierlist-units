@@ -19,9 +19,12 @@ aside,.army,.res,#bparams,.row,#detail,.btab,#table,#matrix,.fb{
 h2::after{height:4px;background:url(img/skin/metal_line_h.png) left center/100% 4px no-repeat;opacity:.9}
 nav button.on{border-bottom-color:transparent;background:linear-gradient(#0000,#c9a45a1f),url(img/skin/metal_line_h.png) center bottom/100% 4px no-repeat}
 
-/* Boutons : textures rouges du jeu, en 9 tranches peintes sur la bordure et le fond (sans changer la taille du bouton) */
-button{border-image:url(img/skin/button_square_medium_text_active.png) 10 16 fill / 5px 8px stretch;text-shadow:0 1px 2px #000}
+/* Boutons : textures rouges du jeu, en 9 tranches peintes sur la bordure et le fond (sans changer la taille du bouton).
+   La texture (310×46) n'est dessinée que sur les lignes 3 à 30 : 14 lignes transparentes en bas (ombre) contre 3 en haut.
+   Tranches haut 9 / bas 19 (bord + ombre) / côtés 16, et débordement vers le bas et les côtés pour que la partie
+   transparente sorte du bouton : le cadre visible épouse exactement la boîte du bouton et le texte reste centré. */
+button{--bi:url(img/skin/button_square_medium_text_active.png);border-image:var(--bi) 9 16 19 16 fill / 4px 8px 8.5px 8px / 0 2px 4.5px 2px stretch;text-shadow:0 1px 2px #000}
 button:hover{filter:brightness(1.18)}
-button.on{border-image:url(img/skin/button_square_medium_text_selected.png) 10 16 fill / 5px 8px stretch;color:#fbeccb;text-shadow:0 1px 2px #000}
+button.on{--bi:url(img/skin/button_square_medium_text_selected.png);color:#fbeccb;text-shadow:0 1px 2px #000}
 nav button,nav button.on,#langsw button:not(.on),.x{border-image:none}
 button:disabled{filter:grayscale(.6) brightness(.8)}
