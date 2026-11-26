@@ -104,3 +104,6 @@ En tête de la section **Mode** de la barre latérale, un sélecteur à deux gra
 
 ## Icônes d'usage
 Les usages (anti-infanterie, anti-gros, anti-armure, encaisser, distance, charge, mobilité) ont chacun une icône (`u_*` dans `STAT_ICON`, `app.js`) : puces de filtre (icône + libellé court + effectif), en-têtes de la matrice typologique (icône seule, libellé en infobulle), colonne « Meilleur usage » et « Pour quoi l'utiliser » de la fiche d'unité.
+
+## Suite prévue
+Les chantiers à venir (niveau et compétences des seigneurs, tier list de compositions, etc.) sont décrits dans [`TODO.md`](TODO.md).
