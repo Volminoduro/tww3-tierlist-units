@@ -268,15 +268,17 @@ function usageBlock(x){
 }
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
- const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false;
+ const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false, wasAbilOpen=dt.querySelector("details.abil")?.open;
  dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><button class="x" id="close">✕</button></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label></div>
  <div class="dbrief">${fullPic(u)}${briefTiles(list)}</div>
  ${usageBlock(x)}
  ${duelPanel(u)}
+ ${abilBlock(u)}
  <details class="more all"><summary>Toutes les statistiques (${list.length})</summary>${statRows(list)}
   <dl><dt>${si("bolt")}Puissance</dt><dd>${Math.round(x.power)}</dd><dt>${si("coin")}Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>${si("bolt")}Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl></details>`;
  if(wasOpen)dt.querySelector("details.all").open=true;
+ if(prevUnit===u.id&&wasAbilOpen)dt.querySelector("details.abil").open=true; fillAbil(dt,u);
  $("#dpool").value=DPOOL; dt.scrollTop=st;
 }
 $("#detail").addEventListener("change",e=>{ if(e.target.id==="dpool"){ DPOOL=e.target.value; saveUI(); syncDetail(window._us||[]); } }); // changer de groupe de comparaison redessine la fiche

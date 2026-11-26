@@ -184,6 +184,13 @@ img.mnti{width:20px;height:20px;vertical-align:-6px;margin-left:6px;border-radiu
 .attrs{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
 .attr{display:inline-flex;align-items:center;gap:3px;font:600 10px var(--sans);font-style:normal;color:var(--m);border:1px solid var(--b);border-radius:8px;padding:0 6px 0 3px;white-space:nowrap}.attr img{width:14px;height:14px}
 .pt.full.info{background:none}.pt.full.info::before{display:none}.pt.full.info img{object-fit:contain;background:none}
+/* Capacités, sorts et attributs (fiche d'unité) */
+details.abil h4{font:700 11px var(--serif);letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin:10px 0 4px}
+.abl{display:flex;flex-direction:column;gap:4px}.abmsg{color:var(--m);font-size:12px;margin:6px 0}
+.ab{display:flex;gap:8px;align-items:flex-start;padding:5px 6px;border:1px solid var(--b);border-radius:3px;background:#0000002a}
+.ab>img{width:32px;height:32px;flex:none;border-radius:3px}.ab>div{min-width:0}.ab b{font:600 13px var(--sans);color:var(--t,inherit)}
+.ab small{display:block;color:var(--m);font-size:11px}.ab p{margin:2px 0 0;font-size:11.5px;line-height:1.35;color:var(--m);white-space:pre-line}
+.ab.sp{border-color:#5b4a8a}.ab.sp b{color:#c9b6ff}.abl.at .ab>img{width:24px;height:24px}
 .fb.hasrb{background:linear-gradient(90deg,#2a2013 0,#14100c 38%,#14100c00 70%),var(--rb) right center/auto 100% no-repeat,#14100c}
 #detail dt{display:flex;align-items:center}
 #detail dt[style]{padding-left:8px}

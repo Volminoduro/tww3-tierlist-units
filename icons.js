@@ -71,6 +71,39 @@ function attrs(u) {
 /* Fiche d'unité : grande illustration du panneau d'information du jeu (ui/units/infopics) si elle existe, sinon le portrait entier */
 function fullPic(u) { const i = u && INFO[u.id]; return i ? `<span class="pt full info"><img src="img/info/${i}.png" alt="" loading="lazy" onerror="this.remove()"></span>` : portrait(u, "full"); }
 
+/* Capacités, sorts et attributs (data/abilities.js, produit par tools/abilities.py) : fichier lourd (~1,7 Mo), chargé seulement à la
+   première ouverture d'une fiche. Son adresse versionnée (?v=) est dans <link id="abilsrc"> de index.html (tenue à jour par cache_bust.py). */
+let _abilP = null;
+function loadAbil() {
+  if (window.TWW3_ABIL) return Promise.resolve();
+  return _abilP ??= new Promise(done => {
+    const l = document.getElementById("abilsrc"), s = document.createElement("script");
+    s.src = l ? l.getAttribute("href") : "data/abilities.js"; s.onload = s.onerror = () => done(); document.head.appendChild(s);
+  });
+}
+const htmlEsc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+function abilItem(a, isAttr) {
+  const en = window.LANG === "en", n = (en ? a.ne : a.n) || a.ne || a.n, d = (en ? a.de : a.d) || a.de || a.d || "";
+  const L = en ? {sp: "Spell", pa: "Passive", ac: "Active", cd: "cooldown", u: "uses"} : {sp: "Sort", pa: "Passif", ac: "Actif", cd: "recharge", u: "util."};   // ligne assemblée : écrite directement dans la langue
+  const meta = isAttr ? [] : [a.sp ? `${L.sp}${a.mana ? ` · ${a.mana} mana` : ""}` : a.pa ? L.pa : L.ac,
+    a.dur > 0 && !a.pa ? `${Math.round(a.dur)} s` : "", a.cd > 0 ? `${L.cd} ${Math.round(a.cd)} s` : "", a.uses > 0 ? `${a.uses} ${L.u}` : ""].filter(Boolean);
+  const ic = a.ic ? `<img src="img/abilities/${a.ic}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
+  return `<div class="ab${a.sp ? " sp" : ""}${a.pa ? " pa" : ""}" title="${htmlEsc(d)}">${ic}<div><b>${htmlEsc(n)}</b>${meta.length ? `<small>${meta.join(" · ")}</small>` : ""}${d ? `<p>${htmlEsc(d)}</p>` : ""}</div></div>`;
+}
+function abilHTML(u) {
+  const A = window.TWW3_ABIL; if (!A) return `<p class="abmsg">Capacités indisponibles.</p>`;
+  const list = (ks, isAttr) => (ks || []).map(k => (isAttr ? A.at : A.ab)[k]).filter(Boolean).map(a => abilItem(a, isAttr)).join("");
+  const base = list(A.u[u.id]), sk = list(A.sk[u.id]), at = list(A.ua[u.id], true);
+  return (base ? `<h4>Capacités</h4><div class="abl">${base}</div>` : "")
+    + (sk ? `<h4>Sorts et capacités par compétences</h4><div class="abl">${sk}</div>` : "")
+    + (at ? `<h4>Attributs</h4><div class="abl at">${at}</div>` : "") || `<p class="abmsg">Aucune capacité.</p>`;
+}
+/* Bloc de la fiche : rendu vide puis rempli une fois les données chargées (si la fiche montre encore la même unité). */
+function abilBlock(u) { return `<details class="more abil" data-u="${u.id}"><summary>Capacités, sorts et attributs</summary><div class="abc">${window.TWW3_ABIL ? abilHTML(u) : `<p class="abmsg">Chargement…</p>`}</div></details>`; }
+function fillAbil(root, u) {
+  loadAbil().then(() => { const el = root.querySelector(`details.abil[data-u="${u.id}"] .abc`); if (el) el.innerHTML = abilHTML(u); });
+}
+
 /* Emblème de faction : drapeau extrait du jeu (img/factions/<clé>.png) ou écusson avec initiales. */
 function crest(key, cls = "", labelOverride = "") {
   const name = (labelOverride || D.factions[key] || key).replace(/^(the|les?|la) /i, ""), ini = key === ALL ? "✦" : name.split(/[\s'’-]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
