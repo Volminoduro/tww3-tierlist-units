@@ -201,6 +201,7 @@ def main():
         eng = engines_t.get(lu.get("engine") or "")            # machine : canon, char, véhicule
         eent = ents.get(eng.get("battle_entity", ""), {}) if eng else {}
         n_eng = num(lu.get("num_engines")) if eng else 0
+        men_fight = men                                         # modèles qui combattent (= men, sauf équipage de monstre)
         soldier_hp, bonus_hp = num(col(ent, "entity_hp")), num(col(lu, "hp_bonus"))
         mount_hp, n_mount = num(col(ment, "entity_hp")), num(col(lu, "mounts"))
         # PV totaux selon les formules de la fiche d'unité (cf. page « Méthode ») puis ramenés à un PV par modèle combattant
@@ -210,9 +211,12 @@ def main():
         elif eng and n_eng > 0:                                 # char / véhicule : (équipage + machines tractées) × PV soldat + machines × (PV machine + bonus) + bêtes de trait
             drawn = n_eng if n_mount > 0 else 0
             total_hp = (men + drawn) * soldier_hp + n_eng * (num(col(eent, "entity_hp")) + bonus_hp) + n_mount * mount_hp
-        else:                                                   # cas général : (PV soldat + PV monture + bonus) × modèles
-            total_hp = men * (soldier_hp + mount_hp + bonus_hp)
-        hp = total_hp / men if men else 0
+        elif n_mount > 0:                                       # montés : montures × (PV monture + bonus) + hommes × PV soldat (= (soldat + monture + bonus) × modèles quand montures = hommes)
+            total_hp = n_mount * (mount_hp + bonus_hp) + men * soldier_hp
+            if n_mount < men: men_fight = n_mount               # monstre portant un équipage : le bonus va au monstre une seule fois ; l'équipage compte dans les PV mais seul le monstre combat
+        else:                                                   # cas général : (PV soldat + bonus) × modèles
+            total_hp = men * (soldier_hp + bonus_hp)
+        hp = total_hp / men_fight if men_fight else 0
         # vitesse de la carte = vitesse de course (ou de vol si plus élevée) de la monture, de la machine ou du soldat, × 10
         sp_ent = ment if ment else (eent if eng else ent)
         speed_card = SPEED_UI * max(num(col(sp_ent, "speed")), num(sp_ent.get("fly_speed")))
@@ -226,7 +230,7 @@ def main():
             # certains noms sont des renvois « {{tr:autre_clé}} » vers une autre entrée de localisation
             "name": (lambda v: loc.get(v[5:-2]) if v and v.startswith("{{tr:") else v)(loc.get(f"land_units_onscreen_name_{col(mu,'land_unit')}")) or humanise(key),
             "role": None, "group": col(mu, "group") or "",
-            "men": men, "hp": hp, "armour": armour,
+            "men": men_fight, "hp": hp, "armour": armour,
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
             "charge": num(col(lu, "charge")), "ld": num(col(lu, "morale")),
             "speed": speed_card,

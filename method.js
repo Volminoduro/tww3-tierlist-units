@@ -60,7 +60,7 @@
   <h2>Limites connues</h2>
   <ul>
     <li>Pas de sorts, capacités, compétences à choisir, technologies, bâtiments, objets ni effets de faction hors seigneur de départ.</li>
-    <li>Monstres portant un équipage : l'équipage n'est pas compté séparément. Rangs et expérience : ignorés.</li>
+    <li>Monstres portant un équipage : le bonus de PV va au monstre une seule fois et l'équipage est ajouté aux PV (formule de la fiche) ; seul le monstre combat dans le simulateur, les armes de l'équipage ne sont pas modélisées. Rangs et expérience : ignorés.</li>
     <li>Toutes les comparaisons de coût (duels, rendement et équilibrage des armées du Combat) se font sur le <b>coût de recrutement</b>, pour traiter toutes les unités de la même façon : certaines factions (Rois des Tombes, Hommes-Bêtes…) n'ont pas d'entretien dans les tables. L'entretien reste affiché à titre d'information.</li>
     <li>Ce site est généré par une IA : une erreur est possible, merci de recouper avec le jeu.</li>
   </ul>`;
