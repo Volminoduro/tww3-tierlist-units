@@ -206,3 +206,13 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 /* icônes d'usage (anti-infanterie, anti-large…) */
 .typo button{display:inline-flex;align-items:center;gap:6px}.typo button .si{width:17px;height:17px;flex:none}
 #matrix th .si{width:22px;height:22px}#matrix td.best{white-space:nowrap}#matrix td.best .si{width:16px;height:16px;vertical-align:-3px;margin-right:6px;color:var(--gold2)}
+
+/* Bataillons de renom : cadre et portrait dorés, laurier, bandeau « Bataillon de renom » */
+.rori{width:13px;height:13px;flex:none}
+.rortag{display:inline-flex;align-items:center;gap:4px;font:700 10px var(--sans);font-style:normal;letter-spacing:.06em;text-transform:uppercase;color:#1a1208;background:linear-gradient(#f0d58a,#b8923f 60%,#8a6a2c);border:1px solid #f6e3a6;border-radius:2px;padding:1px 6px 1px 4px;margin:1px 4px 1px 0;white-space:nowrap}
+.card .ct .rortag{display:flex;width:max-content}
+.rormark{display:inline-flex;vertical-align:-2px;margin-right:5px;color:#f0d58a}.rormark .rori{width:15px;height:15px}
+.card.ror{background:linear-gradient(135deg,#4a3814,#251b09 55%,#38290d);border:1px solid #e0bf6e;border-left:4px solid #f0d58a;box-shadow:inset 0 0 0 1px #000,inset 0 0 14px #e0bf6e30,0 0 8px #e0bf6e26}
+.card.ror b{color:#f6e3a6;text-shadow:0 0 8px #e0bf6e55}.card.ror:hover{box-shadow:inset 0 0 0 1px #000,inset 0 0 16px #e0bf6e44,0 0 14px #e0bf6e66}
+.pt.ror{border:2px solid #e0bf6e;box-shadow:0 0 0 1px #000,0 0 8px #e0bf6e66;color:#f0d58a}
+#detail .rortag{margin-top:4px}

@@ -58,6 +58,8 @@ costSw.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.
 $("#metric").addEventListener("input",()=>{if($("#metric").value!=="duels"){try{localStorage.setItem("costOn",$("#metric").value==="value"?"1":"0")}catch(e){}} syncCost()});
 try{if(localStorage.getItem("costOn")==="0"&&$("#metric").value==="value")$("#metric").value="power"}catch(e){}
 syncCost();
+$("#noror").addEventListener("input",e=>setRor(e.target.checked)); document.addEventListener("rorchange",()=>render());
+$("#noror").checked=RORX.off;
 document.querySelector('[data-tab=tier]').addEventListener("click",()=>render()); // revient sur les filtres modifiés dans l'onglet « Unités par faction »
 $("#viewsel").onchange=()=>{view=$("#viewsel").value;render()};
 $("#reset").onclick=()=>{for(const w of W){S[w[0]]=w[4];$("#"+w[0]).value=w[4];$("#v_"+w[0]).textContent=w[4]}render()};
@@ -146,7 +148,7 @@ function render(){
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
   $("#tiers").innerHTML=TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
-   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b>${gtier(x.u)}<small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
+   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b>${rortag(x.u)}${gtier(x.u)}<small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
@@ -154,7 +156,7 @@ function render(){
   const cell=(x,k)=>{const p=x.pct[k];return `<td style="background:hsl(${p*1.2},55%,62%);color:#111;text-align:center" title="Valeur brute : ${Math.round(x.arche[k])}">${p}</td>`};
   const SH=USE_SH;
   $("#matrix").innerHTML=`<table><colgroup><col class="c-n"><col class="c-r">${ARCHK.map(()=>'<col class="c-a">').join("")}<col class="c-b"></colgroup><tr><th data-k="score">Unité</th><th>Rôle</th>${ARCHK.map(k=>`<th data-k="m:${k}" title="${ARCH[k]}" style="text-align:center" aria-label="${ARCH[k]}">${uic(k)}</th>`).join("")}<th>Meilleur usage</th></tr>`+
-   us.map(x=>`<tr data-id="${x.u.id}"><td>${x.u.name}</td><td>${ROLES[x.u.role]||x.u.role}</td>${ARCHK.map(k=>cell(x,k)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`).join("")+
+   us.map(x=>`<tr data-id="${x.u.id}"><td>${roricon(x.u)}${x.u.name}</td><td>${ROLES[x.u.role]||x.u.role}</td>${ARCHK.map(k=>cell(x,k)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`).join("")+
    `</table><p style="padding:8px;color:var(--m);font-size:12px">Chaque case = percentile (0-100) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. 100 = la meilleure pour ça. La mobilité est la vitesse seule, jamais rapportée au coût. Cliquer un en-tête trie.</p>`;
  } else {
   const cols=[["Unité",x=>x.u.name],["Tier",x=>x.tier],["Rôle",x=>ROLES[x.u.role]],["Score",x=>x.score],["Puissance",x=>x.power],["Coût eff.",x=>x.cost],["PV eff.",x=>x.ehp],["Mêlée/s",x=>x.mel],["Dist./s",x=>x.rng],["Recrut.",x=>x.rt],["Entretien",x=>x.u.upkeep]];
@@ -251,7 +253,7 @@ function usageBlock(x){
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
  const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false;
- dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${ROLES[u.role]||u.role}</small>${gtier(u)}</div><button class="x" id="close">✕</button></div>
+ dt.innerHTML=`<div class="dtop"><div class="dh">${portrait(u,"big")}<div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${ROLES[u.role]||u.role}</small>${rortag(u)}${gtier(u)}</div><button class="x" id="close">✕</button></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label></div>
  ${briefTiles(list)}
  ${usageBlock(x)}

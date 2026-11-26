@@ -41,6 +41,7 @@
   let sortK = "cost", sortD = 1; // catégories, usages, faction, recherche et seigneurs/héros : état PARTAGÉ avec le tier list (variables globales de app.js)
   $b("#bgrp").innerHTML = GROUPS.map(g => `<label><input type="checkbox" data-g="${g}" checked>${g}</label>`).join("");
   $b("#bgrp").onchange = e => { e.target.checked ? shown.add(e.target.dataset.g) : shown.delete(e.target.dataset.g); render(); };
+  $b("#bnoror").checked = RORX.off; $b("#bnoror").addEventListener("input", e => setRor(e.target.checked)); document.addEventListener("rorchange", () => render());
   ["bpool","bq","bcols","bheroes"].forEach(i => $b("#"+i).addEventListener("input", render));
   /* Filtres communs aux deux onglets : faction, recherche et case « seigneurs & héros » sont recopiés dans les deux sens ; catégories et usages sont les mêmes ensembles (role, TYPO) */
   const fsel2 = document.querySelector("#faction"), q1 = document.querySelector("#q"), h1 = document.querySelector("#heroes"), h2 = $b("#bheroes");
@@ -75,7 +76,7 @@
     rows.sort((a,b) => (val(a) - val(b)) * sortD || a.name.localeCompare(b.name));
     $b("#btab").innerHTML = `<table><tr><th>Unité (${rows.length})</th>${cols.map(s => `<th data-k="${s.k}" title="${s.g}">${s.l}${s.k===sortK?(sortD>0?" ▲":" ▼"):""}</th>`).join("")}</tr>` +
       rows.map(u => { const P = pools[keyOf(u)];
-        return `<tr><td><div class="nm">${portrait(u,"s")}<span>${u.name} ${gtier(u)}<small>${ROLES[u.role]||u.role} · vs ${P.n} unités</small></span></div></td>` + cols.map(s => {
+        return `<tr><td><div class="nm">${portrait(u,"s")}<span>${roricon(u)}${u.name} ${gtier(u)}${rortag(u)}<small>${ROLES[u.role]||u.role} · vs ${P.n} unités</small></span></div></td>` + cols.map(s => {
           if (!applies(s,u)) return `<td class="na">—</td>`;
           const p = pct(s, u, P.st[s.k]); const rank = P.st[s.k].length - upper(P.st[s.k], s.d * s.v(u)) + 1;
           return `<td>${f(s.v(u))}<br>${badge(p, `${s.l} : ${rank}ᵉ sur ${P.st[s.k].length}${s.d<0?" (moins = mieux)":""}`)}</td>`; }).join("") + "</tr>"; }).join("") + "</table>";

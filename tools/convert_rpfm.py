@@ -296,6 +296,8 @@ def main():
             "recruitTurns": num(col(mu, "recruit_turns"), 1),
             "tier": num(col(mu, "tier")),
             "mount": col(lu, "mount") or "",
+            # Bataillon de renom : drapeau is_renown de main_units ou clé en « _ror » ; hors seigneurs/héros, unités « boss » et dragons de monture d'Imrik / barge de Grungni (montures de seigneurs)
+            **({"ror": 1} if ((mu.get("is_renown") or "").lower() == "true" or re.search(r"_ror(_|$)", key)) and caste not in ("lord", "hero") and "_boss" not in key and not re.search(r"_imrik|thunderbarge_grungni", key) else {}),
             "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5), "res": {"ph": num(lu.get("damage_mod_physical")), "mi": num(lu.get("damage_mod_missile")), "ma": num(lu.get("damage_mod_magic")),
                     "fl": num(lu.get("damage_mod_flame")) + flame_of_land.get(col(mu, "land_unit"), 0), "all": num(lu.get("damage_mod_all"))},
             "groups": ugroups, "facs": sorted(perm_of.get(key, ())) if caste not in ("lord", "hero") else [],

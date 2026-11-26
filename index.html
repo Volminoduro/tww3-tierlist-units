@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tier List TW:Warhammer 3</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&family=Cinzel:wght@500;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css?v=33080a31"><script src="i18n.js?v=f6d93a4a"></script></head>
+<title>Tier List TW:Warhammer 3</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&family=Cinzel:wght@500;700;900&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css?v=50ea627f"><script src="i18n.js?v=f6d93a4a"></script></head>
 <body>
 <header><div class="orn">◆ ◆ ◆</div><h1>Total War : Warhammer III</h1><p class="sub">Tier list &amp; comparateur d'unités</p><nav id="nav"><button data-tab="tier" class="on">Tier list</button><button data-tab="browse">Unités par faction</button><button data-tab="battle">Combat d'armées</button><button data-tab="method">Méthode</button></nav>
 <div id="demo" hidden>⚠ Données de démonstration (valeurs approximatives, non officielles). Importe tes tables avec <code>tools/convert_rpfm.py</code>.</div></header>
 <main id="tab-tier">
 <aside>
  <section><h2>Race &amp; faction</h2><select id="faction"></select>
-  <label class="chk"><input type="checkbox" id="heroes"> Seigneurs &amp; héros inclus dans « Toutes »</label></section>
+  <label class="chk"><input type="checkbox" id="heroes"> Seigneurs &amp; héros inclus dans « Toutes »</label>
+  <label class="chk"><input type="checkbox" id="noror"> Exclure les bataillons de renom</label></section>
  <section><h2>Classement</h2>
   <div class="lbl2">Coût</div>
   <div id="costsw" role="group" aria-label="Tenir compte du coût" title="Avec coût : tiers et usages rapportés au prix (efficacité par or). Sans coût : puissance brute, la meilleure unité de chaque usage même plus chère (armée limitée à 20 unités : l'argent n'est pas le seul facteur limitant).">
@@ -33,7 +34,7 @@
 </main>
 <section id="tab-browse" hidden>
  <div id="bfban" class="fban"></div>
- <div id="bctl"><div class="brow"><select id="bfac"></select><input id="bq" placeholder="Rechercher une unité…"><label class="chk" title="Comme dans le tier list : les seigneurs et héros sont masqués de « Toutes » sauf si cette case est cochée ou si leur catégorie est choisie"><input type="checkbox" id="bheroes"> Seigneurs &amp; héros dans « Toutes »</label></div>
+ <div id="bctl"><div class="brow"><select id="bfac"></select><input id="bq" placeholder="Rechercher une unité…"><label class="chk" title="Comme dans le tier list : les seigneurs et héros sont masqués de « Toutes » sauf si cette case est cochée ou si leur catégorie est choisie"><input type="checkbox" id="bheroes"> Seigneurs &amp; héros dans « Toutes »</label><label class="chk" title="Les bataillons de renom sont des unités à part, recrutées sous condition : on peut les retirer des listes et des classements"><input type="checkbox" id="bnoror"> Exclure les bataillons de renom</label></div>
   <div id="brole"></div></div>
  <div id="btypo" class="typo"></div>
  <details id="bopt"><summary>Colonnes et groupe de comparaison</summary><div class="brow">
@@ -71,4 +72,4 @@
  <p><b>⚠ Site généré par intelligence artificielle.</b> Le code, les calculs et les textes de ce site ont été entièrement produits par une IA (Claude, d'Anthropic) à partir d'un export public des données du jeu. Des erreurs ou approximations sont possibles : à vérifier en jeu.</p>
  <p id="foot-meta"></p>
  <p>Projet de fan non officiel, non affilié à Creative Assembly, SEGA ni Games Workshop. Total War, Warhammer et leurs univers, noms et données appartiennent à leurs détenteurs respectifs.</p></footer>
-<script src="data/units.js?v=3abd4b2e"></script><script src="data/names_fr.js?v=04fbaca6"></script><script src="data/duels.js?v=99475b12"></script><script src="data/effects.js?v=aa5da052"></script><script src="prep.js?v=63916553"></script><script src="data/icons.js?v=b50310a7"></script><script src="icons.js?v=6b8a6587"></script><script src="app.js?v=8d15cccc"></script><script src="sim.js?v=54420231"></script><script src="battle.js?v=a676a814"></script><script src="browse.js?v=a3c184b0"></script><script src="method.js?v=eea608d3"></script><script src="i18n_en.js?v=56ba82e2"></script><script>I18N.start()</script></body></html>
+<script src="data/units.js?v=5ec8055a"></script><script src="data/names_fr.js?v=04fbaca6"></script><script src="data/duels.js?v=99475b12"></script><script src="data/effects.js?v=aa5da052"></script><script src="prep.js?v=981c8ce1"></script><script src="data/icons.js?v=b50310a7"></script><script src="icons.js?v=205f31f1"></script><script src="app.js?v=ec4e9308"></script><script src="sim.js?v=54420231"></script><script src="battle.js?v=31aaea9a"></script><script src="browse.js?v=7f095d1d"></script><script src="method.js?v=eea608d3"></script><script src="i18n_en.js?v=f60dd7ff"></script><script>I18N.start()</script></body></html>

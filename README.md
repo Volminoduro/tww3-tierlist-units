@@ -107,3 +107,7 @@ Les usages (anti-infanterie, anti-gros, anti-armure, encaisser, distance, charge
 
 ## Suite prévue
 Les chantiers à venir (niveau et compétences des seigneurs, tier list de compositions, etc.) sont décrits dans [`TODO.md`](TODO.md).
+
+## Bataillons de renom
+Les **bataillons de renom** (Regiments of Renown : 262 unités) sont repérés dans `tools/convert_rpfm.py` par le drapeau `is_renown` de `main_units` ou une clé en `_ror` (hors seigneurs, héros, unités « boss » et montures d'Imrik / barge de Grungni), et marqués `ror: 1`. Ils sont mis en valeur : carte au cadre doré, portrait doré, bandeau « Bataillon de renom » avec un laurier, étoile ★ dans les menus de l'onglet Combat. La case **« Exclure les bataillons de renom »** (tier list et unités par faction, mémorisée) les retire des listes, des classements et des choix du Combat ; les duels précalculés les incluent toujours.
+Le style est inspiré de la mise en valeur de ces unités dans le jeu (or et laurier) ; je n'ai pas pu consulter les visuels du jeu pour le reproduire à l'identique.

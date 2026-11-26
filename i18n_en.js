@@ -234,6 +234,11 @@ Object.assign(I18N.dict, {
   "Creative Assembly / SEGA / Games Workshop": "Creative Assembly / SEGA / Games Workshop", ": le jeu": ": the game",
   "et son univers, dont ce projet de fan n'est pas affilié.": "and its universe, which this fan project is not affiliated with.",
   "Limites connues": "Known limitations",
+  "Exclure les bataillons de renom": "Exclude Regiments of Renown",
+  "Bataillon de renom": "Regiment of Renown",
+  "Bataillon de renom : unité à part, recrutée sous condition (campagne)": "Regiment of Renown: a special unit, recruited under conditions (campaign)",
+  "Les bataillons de renom sont des unités à part, recrutées sous condition : on peut les retirer des listes et des classements": "Regiments of Renown are special units recruited under conditions: you can remove them from lists and rankings",
+
   "Seigneurs & héros dans « Toutes »": "Lords & heroes in \"All\"",
   "Comme dans le tier list : les seigneurs et héros sont masqués de « Toutes » sauf si cette case est cochée ou si leur catégorie est choisie": "As in the tier list: lords and heroes are hidden from \"All\" unless this box is checked or their category is chosen",
   "Colonnes et groupe de comparaison": "Columns and comparison group",

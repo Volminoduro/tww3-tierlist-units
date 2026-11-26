@@ -3352,6 +3352,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh2_dlc09_tmb_mnt_necroserpent_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -3460,6 +3461,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh2_dlc09_tmb_mnt_tomb_steed_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -5396,6 +5398,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 55.0,
@@ -5524,6 +5527,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -5634,6 +5638,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -5908,6 +5913,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -6018,6 +6024,7 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -6442,6 +6449,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -6573,6 +6581,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -6815,6 +6824,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -7098,6 +7108,7 @@
    "recruitTurns": 3.0,
    "tier": 4.0,
    "mount": "wh2_dlc10_def_mnt_cold_one_armoured_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -7161,6 +7172,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh2_main_def_mnt_dark_pegasus",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -7214,6 +7226,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh2_main_def_mnt_dark_steed",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 40.0,
@@ -9379,6 +9392,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -9485,6 +9499,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -9548,6 +9563,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -9601,6 +9617,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -9654,6 +9671,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -9870,6 +9888,7 @@
    "recruitTurns": 3.0,
    "tier": 4.0,
    "mount": "wh2_dlc10_hef_mnt_dragon_princes_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -9933,6 +9952,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh2_dlc10_hef_mnt_steed_heralds",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -10750,6 +10770,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -10803,6 +10824,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 30.0,
@@ -11055,6 +11077,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -11108,6 +11131,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -11161,6 +11185,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -11224,6 +11249,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -11527,6 +11553,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -11787,6 +11814,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh2_dlc11_cst_mon_deck_dropper_bat",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -13615,6 +13643,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 55.0,
@@ -13780,6 +13809,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14114,6 +14144,7 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14439,6 +14470,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14720,6 +14752,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14853,6 +14886,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "wh2_dlc11_cst_mnt_necrofex_colossus_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15073,6 +15107,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_ror",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -16420,6 +16455,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh2_dlc12_lzd_mnt_cold_one_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -16574,6 +16610,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh2_dlc12_lzd_mnt_ripperdactyl_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -16634,6 +16671,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh2_dlc12_lzd_mnt_terradon_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -17244,6 +17282,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17346,6 +17385,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17396,6 +17436,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17682,6 +17723,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "wh2_dlc12_lzd_mnt_stegadon_ancient_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17918,6 +17960,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17978,6 +18021,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18038,6 +18082,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18401,6 +18446,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18451,6 +18497,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 15.0,
@@ -18574,6 +18621,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18634,6 +18682,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18687,6 +18736,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18747,6 +18797,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18873,6 +18924,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -18976,6 +19028,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19026,6 +19079,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19079,6 +19133,7 @@
    "recruitTurns": 3.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19129,6 +19184,7 @@
    "recruitTurns": 3.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -19192,6 +19248,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19242,6 +19299,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh2_dlc13_emp_mnt_empire_knights_warhorse_ror_0",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19292,6 +19350,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh2_dlc13_emp_mnt_empire_knights_warhorse_ror_1",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19342,6 +19401,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh2_dlc13_emp_mnt_empire_knights_warhorse_ror_2",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19402,6 +19462,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh2_dlc13_emp_warhorse_bordermen_ror_0",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19462,6 +19523,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh2_dlc13_emp_warhorse_sons_abroad_ror_1",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19956,6 +20018,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20018,6 +20081,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20068,6 +20132,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20118,6 +20183,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20178,6 +20244,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20303,6 +20370,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20355,6 +20423,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20405,6 +20474,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20465,6 +20535,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "emp_hidden_mount_steam_tank",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -20655,6 +20726,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh2_dlc13_emp_warhorse_war_wagon",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -21328,6 +21400,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "wh2_dlc13_lzd_mnt_dread_saurian_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -21512,6 +21585,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -21666,6 +21740,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -22039,6 +22114,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "wh2_dlc14_def_mnt_dark_steed_scourgerunner_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -22623,6 +22699,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -22749,6 +22826,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -23034,6 +23112,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 30.0,
@@ -23137,6 +23216,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 30.0,
@@ -23260,6 +23340,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -23683,6 +23764,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -23795,6 +23877,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -24108,6 +24191,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -27581,6 +27665,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -28088,6 +28173,7 @@
    "recruitTurns": 2.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -28508,6 +28594,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -29073,6 +29160,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -29176,6 +29264,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -29226,6 +29315,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -29487,6 +29577,7 @@
    "recruitTurns": 2.0,
    "tier": 5.0,
    "mount": "wh2_dlc16_wef_mnt_great_stag_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 55.0,
@@ -31233,6 +31324,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -31914,6 +32006,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -32586,6 +32679,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -32691,6 +32785,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -32797,6 +32892,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -33295,6 +33391,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -33399,6 +33496,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -33523,6 +33621,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -47348,6 +47447,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh3_dlc20_chs_mnt_steed_of_slaanesh_chariots_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -51114,6 +51214,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -52551,6 +52652,7 @@
    "recruitTurns": 2.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -52896,6 +52998,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh3_dlc20_chs_mnt_juggernaut_skullcrusher_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -53434,6 +53537,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -53610,6 +53714,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh3_dlc23_chd_mnt_giant_wolf_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -56507,6 +56612,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -56673,6 +56779,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -57182,6 +57289,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -57854,6 +57962,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "chd_hidden_mount_locomotive",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -57916,6 +58025,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "chd_hidden_mount_train",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -59462,6 +59572,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -59568,6 +59679,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -59882,6 +59994,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "wh3_main_cth_mnt_oxen_draught_compass",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -60747,6 +60860,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -60861,6 +60975,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61069,6 +61184,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -61406,6 +61522,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -61704,6 +61821,7 @@
    "recruitTurns": 2.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61757,6 +61875,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -63036,6 +63155,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -63160,6 +63280,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -63282,6 +63403,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -64609,6 +64731,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -64791,6 +64914,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -64982,6 +65106,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "emp_hidden_mount_land_ship",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -65111,6 +65236,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh3_dlc25_nur_mnt_rot_fly_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -65226,6 +65352,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "wh3_dlc25_nur_mnt_rot_beast_ror",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -66950,6 +67077,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -67117,6 +67245,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -67247,6 +67376,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -67829,6 +67959,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -67995,6 +68126,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -68731,6 +68863,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -68913,6 +69046,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "wh3_main_kho_mnt_skullcannon_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -69386,6 +69520,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 15.0,
@@ -69542,6 +69677,7 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -69760,6 +69896,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -69916,6 +70053,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -70020,6 +70158,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -71884,6 +72023,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -71937,6 +72077,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -72043,6 +72184,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -72509,6 +72651,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh3_dlc27_chs_mnt_norscan_warhorse_horsemen_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -73527,6 +73670,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -73772,6 +73916,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -75284,6 +75429,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -75500,6 +75646,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -75659,6 +75806,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh3_dlc27_sla_mnt_steed_of_slaanesh_draught_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -75991,6 +76139,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 10.0,
@@ -76627,6 +76776,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -76861,6 +77011,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 10.0,
@@ -77093,6 +77244,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 10.0,
@@ -77539,6 +77691,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh3_dlc29_emp_mnt_warhorse_knights_of_the_white_wolf_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -78016,6 +78169,7 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -78127,6 +78281,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -78360,6 +78515,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -79016,6 +79172,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -79480,6 +79637,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -80475,6 +80633,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -80530,6 +80689,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -82615,6 +82775,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -97393,6 +97554,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -97446,6 +97608,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -97500,6 +97663,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -97562,6 +97726,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -97627,6 +97792,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -97679,6 +97845,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -97743,6 +97910,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -97797,6 +97965,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh3_twa07_cth_mnt_jade_longma_heavy_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -97850,6 +98019,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh3_twa07_kho_mnt_juggernaut_bloodcrusher_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -97904,6 +98074,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh3_twa07_ksl_mnt_war_bear_light_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -97956,6 +98127,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh3_twa07_nur_mnt_plague_toad_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98012,6 +98184,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "wh3_twa07_ogr_mnt_rhinox_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98064,6 +98237,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh3_twa07_sla_mnt_steed_of_slaanesh_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98118,6 +98292,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98172,6 +98347,7 @@
    "recruitTurns": 2.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98225,6 +98401,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98281,6 +98458,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 25.0,
@@ -98333,6 +98511,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98390,6 +98569,7 @@
    "recruitTurns": 2.0,
    "tier": 5.0,
    "mount": "wh3_twa08_ogr_mnt_stonehorn_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98442,6 +98622,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98498,6 +98679,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98564,6 +98746,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98617,6 +98800,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98672,6 +98856,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98724,6 +98909,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -98790,6 +98976,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98842,6 +99029,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -98905,6 +99093,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -103167,6 +103356,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 25.0,
@@ -103229,6 +103419,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -103336,6 +103527,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh_dlc04_emp_mnt_demigryph_altdorf",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -103388,6 +103580,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "wh_dlc04_emp_mnt_warhorse_reiksguard_zintlers",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -103810,6 +104003,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -103874,6 +104068,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -103936,6 +104131,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -103988,6 +104184,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -104050,6 +104247,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh_emp_warhorse_armoured_luminark",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -104102,6 +104300,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh_main_vmp_mnt_skeletal_steed_hexwraiths_red",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 55.0,
@@ -104157,6 +104356,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "wh_main_vmp_mnt_barded_skeletal_steed_reavers",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -104769,6 +104969,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -104824,6 +105025,7 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -104879,6 +105081,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -104934,6 +105137,7 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -104989,6 +105193,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -105044,6 +105249,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -105099,6 +105305,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -108557,6 +108764,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109029,6 +109237,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -109089,6 +109298,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109149,6 +109359,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109209,6 +109420,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -109259,6 +109471,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109309,6 +109522,7 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109493,6 +109707,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109543,6 +109758,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109603,6 +109819,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109663,6 +109880,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109713,6 +109931,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "wh_dlc06_grn_mnt_warboar_big_uns_mob",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109773,6 +109992,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh_dlc06_grn_mnt_giant_spider_creeper",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -109823,6 +110043,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh_dlc06_grn_mnt_squig",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109883,6 +110104,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh_dlc06_grn_mnt_giant_wolf_marauders",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109933,6 +110155,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh_dlc06_grn_mnt_giant_wolf_howlers",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -110045,6 +110268,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "wh_dlc06_grn_giant_wolf_chariot_teef_robbers",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -110345,6 +110569,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -110405,6 +110630,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -110455,6 +110681,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -110505,6 +110732,7 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -110711,6 +110939,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "wh_dlc06_grn_mnt_venom_queen",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -112973,6 +113202,7 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -114571,6 +114801,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -114991,6 +115222,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129085,6 +129317,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh_main_brt_mnt_warhorse_knights_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129135,6 +129368,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh_main_brt_mnt_warhorse_knights_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129195,6 +129429,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "wh_pro04_brt_mnt_warhorse_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129245,6 +129480,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh_pro04_brt_mnt_warhorse_questing_knights_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129295,6 +129531,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129345,6 +129582,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129395,6 +129633,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129445,6 +129684,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129505,6 +129745,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129555,6 +129796,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129605,6 +129847,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 0.0,
@@ -129655,6 +129898,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129715,6 +129959,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129769,6 +130014,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh3_dlc20_chs_mnt_chaos_steed_knights",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129821,6 +130067,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -129872,6 +130119,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -129925,6 +130173,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -129976,6 +130225,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130028,6 +130278,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130078,6 +130329,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130130,6 +130382,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130180,6 +130433,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130230,6 +130484,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0.001,
    "res": {
     "ph": 20.0,
@@ -130280,6 +130535,7 @@
    "recruitTurns": 1.0,
    "tier": 5.0,
    "mount": "wh_pro04_nor_war_mammoth_howdah_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130330,6 +130586,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "wh_pro04_wef_mnt_steed_of_kurnous_ror",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -130380,6 +130637,7 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130430,6 +130688,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -130490,6 +130749,7 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130540,6 +130800,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -130590,6 +130851,7 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "ror": 1,
    "regen": 0,
    "res": {
     "ph": 20.0,

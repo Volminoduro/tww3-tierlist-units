@@ -16,10 +16,14 @@ const ROLE_ICON = {
 const ICON_SET = new Set(window.TWW3_ICONS || []), FLAG_SET = new Set(window.TWW3_FLAGS || []);
 /* Tier de l'unité DANS LE JEU (colonne « tier » de main_units, 1 à 5) : indicatif, distinct du tier S→F calculé par le site. 0 = non applicable (seigneurs, héros, unités sans tier) : rien n'est affiché. */
 function gtier(u) { return u && u.tier > 0 ? `<i class="gt" title="Tier de l'unité dans le jeu (indicatif, table main_units) ; à ne pas confondre avec le tier S–F du site">Tier jeu ${u.tier}</i>` : ""; }
+/* Bataillon de renom (unité à part dans le jeu, recrutée sur condition) : laurier doré, cadre et bandeau dorés repris du style « Regiment of Renown » du jeu */
+const ROR_SVG = '<svg class="rori" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5V8.5"/><path d="M12 5l1.3 2.6 2.9.4-2.1 2 .5 2.9L12 11.5 9.4 12.9l.5-2.9-2.1-2 2.9-.4z" fill="currentColor" stroke="none"/><path d="M8.5 20c-3.5-1-5.5-4-5.5-8M15.5 20c3.5-1 5.5-4 5.5-8"/><path d="M5 15.5l-2-1.2M5.8 11.5L3.7 10.5M7.6 8L5.8 6.6M19 15.5l2-1.2M18.2 11.5l2.1-1M16.4 8l1.8-1.4"/></svg>';
+function rortag(u) { return u && u.ror ? `<i class="rortag" title="Bataillon de renom : unité à part, recrutée sous condition (campagne)">${ROR_SVG}Bataillon de renom</i>` : ""; }
+function roricon(u) { return u && u.ror ? `<span class="rormark" title="Bataillon de renom">${ROR_SVG}</span>` : ""; }
 function portrait(u, cls = "") {
   const svg = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ROLE_ICON[u.role] || ROLE_ICON._}</svg>`;
   const img = ICON_SET.has(u.id) ? `<img src="img/units/${u.id}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
-  return `<span class="pt ${cls}">${svg}${img}</span>`;
+  return `<span class="pt ${cls}${u.ror ? " ror" : ""}">${svg}${img}</span>`;
 }
 
 /* Emblème de faction : drapeau extrait du jeu (img/factions/<clé>.png) ou écusson avec initiales. */
