@@ -175,5 +175,12 @@ for fk, path in data.get("flags", {}).items():
         if not files: continue
         pick = next((f for f in files if os.path.basename(f).lower() == "mon_64.png"), max(files, key=os.path.getsize))
         shutil.copy(pick, os.path.join(root, "img", "factions", fk + ".png")); flags.append(fk); break
+tiers = 0                                           # icônes de tier d'unité du jeu (ui2.pack : ui/skins/default/unit_tier_1..5.png)
+for n in range(1, 6):
+    p = pngs.get(f"unit_tier_{n}")
+    if p:
+        os.makedirs(os.path.join(root, "img", "tiers"), exist_ok=True)
+        shutil.copy(p[0], os.path.join(root, "img", "tiers", f"unit_tier_{n}.png")); tiers += 1
+print(f"{tiers} icônes de tier sur 5")
 open(os.path.join(root, "data", "icons.js"), "w").write("window.TWW3_ICONS=" + json.dumps(sorted(units)) + ";\nwindow.TWW3_FLAGS=" + json.dumps(sorted(flags)) + ";\n")
 print(f"{len(units)} portraits d'unités sur {len(ids)} ; {len(flags)} drapeaux sur {len(data.get('flags', {}))} factions.")
