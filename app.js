@@ -131,7 +131,7 @@ function render(){
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
   $("#tiers").innerHTML=TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
-   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b><small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
+   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card" data-id="${x.u.id}">${portrait(x.u)}<div class="ct"><b>${x.u.name}</b>${gtier(x.u)}<small>${cardInfo(x)}</small>${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
@@ -206,7 +206,7 @@ function statRows(u){
 }
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop; dt.hidden=false; dt.dataset.unit=u.id;
- dt.innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small></div></div>
+ dt.innerHTML=`<button class="x" id="close">✕</button><div class="dh">${portrait(u,"big")}<div><h3 title="Clé de l'unité dans les tables : ${u.id}">${u.name} — Tier ${x.tier}</h3><small>${ROLES[u.role]||u.role}</small>${gtier(u)}</div></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label>
  ${statRows(u)}
  <h4>Profil d'usage (percentile)</h4>${ARCHK.map(k=>srow("target",ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées")).join("")}

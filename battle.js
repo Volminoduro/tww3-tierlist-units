@@ -74,7 +74,7 @@ $("#bhow").innerHTML = "<b>Repris du jeu :</b> chance de toucher = 35 + attaque 
 document.querySelectorAll(".army").forEach(el => {
   const side = el.dataset.side, fs = $$(".fac", el), us = $$(".usel", el);
   initPicker(fs, side === "A" ? "wh_main_emp_empire" : "wh_main_chs_chaos");
-  const fill = () => { us.innerHTML = ""; unitsOf(fs.value).forEach(u => us.add(new Option(`${u.name} — ${Math.round(u.cost)} or`, u.id))); };
+  const fill = () => { us.innerHTML = ""; unitsOf(fs.value).forEach(u => us.add(new Option(`${u.name}${u.tier > 0 ? ` (T${u.tier})` : ""} — ${Math.round(u.cost)} or`, u.id))); };
   fs.onchange = fill; fill();
   $$(".addbtn", el).onclick = () => { const u = UNIT[us.value]; if (!u || countOf(side) >= MAX_ARMY) return;
     const e = ARMY[side].find(x => x.u.id === u.id); e ? e.count++ : ARMY[side].push({u, count: 1}); draw(side); };
@@ -95,7 +95,7 @@ document.querySelectorAll(".army").forEach(el => {
 });
 function draw(side) {
   const el = $$(`.army[data-side=${side}]`), a = ARMY[side];
-  $$(".list", el).innerHTML = a.map((e,i) => `<div class="it"><span class="nm">${portrait(e.u,"s")}<span>${e.u.name}<br><small>${ROLES[e.u.role]||e.u.role}</small></span></span>
+  $$(".list", el).innerHTML = a.map((e,i) => `<div class="it"><span class="nm">${portrait(e.u,"s")}<span>${e.u.name} ${gtier(e.u)}<br><small>${ROLES[e.u.role]||e.u.role}</small></span></span>
     <input type="number" min="1" max="${MAX_ARMY - (countOf(side) - e.count)}" value="${e.count}" data-i="${i}"><span class="up" title="Coût de recrutement par unité">${Math.round(upk(side,e))} or<br><small>= ${fmt(upk(side,e)*e.count)}</small></span><button class="x" data-i="${i}">✕</button></div>`).join("") || "<small>Ajoute des unités ci-dessus.</small>";
   const nU = a.reduce((s,e) => s+e.count, 0), up = a.reduce((s,e) => s+upk(side,e)*e.count, 0), c = a.reduce((s,e) => s+e.u.upkeep*e.count, 0);
   $$(".tot", el).innerHTML = `<b>${nU}</b> unité(s)/${MAX_ARMY}${nU>=MAX_ARMY?' <span style="color:#ff9272">limite atteinte</span>':""} · coût de recrutement <b class="up">${fmt(up)} or</b> · entretien (info) <b>${fmt(c)}</b>`;

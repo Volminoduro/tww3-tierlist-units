@@ -14,6 +14,8 @@ const ROLE_ICON = {
   _: '<path d="M24 6 42 24 24 42 6 24z"/><path d="M24 14 34 24 24 34 14 24z"/>',
 };
 const ICON_SET = new Set(window.TWW3_ICONS || []), FLAG_SET = new Set(window.TWW3_FLAGS || []);
+/* Tier de l'unité DANS LE JEU (colonne « tier » de main_units, 1 à 5) : indicatif, distinct du tier S→F calculé par le site. 0 = non applicable (seigneurs, héros, unités sans tier) : rien n'est affiché. */
+function gtier(u) { return u && u.tier > 0 ? `<i class="gt" title="Tier de l'unité dans le jeu (indicatif, table main_units) ; à ne pas confondre avec le tier S–F du site">Tier jeu ${u.tier}</i>` : ""; }
 function portrait(u, cls = "") {
   const svg = `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ROLE_ICON[u.role] || ROLE_ICON._}</svg>`;
   const img = ICON_SET.has(u.id) ? `<img src="img/units/${u.id}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
