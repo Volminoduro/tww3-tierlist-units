@@ -209,6 +209,7 @@ STAT_ICON.defence=STAT_ICON.armour; STAT_ICON.range=STAT_ICON.target; STAT_ICON.
 /* Icônes de stats du jeu (img/stats/icon_stat_*.png, ui/skins/default de ui2.pack, copiées par tools/copy_icons.py) : utilisées
    à la place du tracé quand le jeu en a une ; le DPS estimé, le coût, l'entretien et les usages gardent leur tracé. */
 const GAME_STAT={hp:"icon_stat_health",armour:"icon_stat_armour",defence:"icon_stat_defence",attack:"icon_stat_attack",charge:"icon_stat_charge_bonus",morale:"icon_stat_morale",speed:"icon_stat_speed",weapon:"icon_stat_damage",bow:"icon_stat_ranged_damage",range:"icon_stat_range",reload:"icon_stat_reload_time",ammo:"icon_stat_ammo",
+ coin:"icon_treasury",upkeep:"icon_upkeep",calendar:"icon_turns_counter",clock:"icon_cooldown",
  vs_large:"modifier_icon_bonus_vs_large",vs_inf:"modifier_icon_bonus_vs_infantry",ap:"modifier_icon_armour_piercing",rap:"modifier_icon_armour_piercing_ranged",
  // usages du site : icône du jeu la plus proche (anti-X = modificateur « bonus contre X » du jeu)
  u_inf:"modifier_icon_bonus_vs_infantry",u_large:"modifier_icon_bonus_vs_large",u_armour:"modifier_icon_armour_piercing",u_ranged:"icon_stat_ranged_damage",u_tank:"icon_stat_armour",u_charge:"icon_stat_charge_bonus",u_speed:"icon_stat_speed"};

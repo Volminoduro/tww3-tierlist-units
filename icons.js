@@ -26,8 +26,10 @@ const ICON_SET = new Set(window.TWW3_ICONS || []), FLAG_SET = new Set(window.TWW
 function gtier(u) { return u && u.tier > 0 ? `<i class="gt" title="Tier de l'unité dans le jeu (indicatif, table main_units) ; à ne pas confondre avec le tier S–F du site"><img class="gti" src="img/tiers/unit_tier_${u.tier}.png" alt="" onerror="this.remove()">Tier jeu ${u.tier}</i>` : ""; }
 /* Bataillon de renom (unité à part dans le jeu, recrutée sur condition) : laurier doré, cadre et bandeau dorés repris du style « Regiment of Renown » du jeu */
 const ROR_SVG = '<svg class="rori" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5V8.5"/><path d="M12 5l1.3 2.6 2.9.4-2.1 2 .5 2.9L12 11.5 9.4 12.9l.5-2.9-2.1-2 2.9-.4z" fill="currentColor" stroke="none"/><path d="M8.5 20c-3.5-1-5.5-4-5.5-8M15.5 20c3.5-1 5.5-4 5.5-8"/><path d="M5 15.5l-2-1.2M5.8 11.5L3.7 10.5M7.6 8L5.8 6.6M19 15.5l2-1.2M18.2 11.5l2.1-1M16.4 8l1.8-1.4"/></svg>';
-function rortag(u) { return u && u.ror ? `<i class="rortag" title="Bataillon de renom : unité à part, recrutée sous condition (campagne)">${ROR_SVG}Bataillon de renom</i>` : ""; }
-function roricon(u) { return u && u.ror ? `<span class="rormark" title="Bataillon de renom">${ROR_SVG}</span>` : ""; }
+/* Icône d'effet « bataillon de renom » du jeu (img/stats/icon_effect_ror.png) ; le laurier dessiné revient si l'image manque */
+const ROR_IC = `<img class="rori rorg" src="img/stats/icon_effect_ror.png" alt="" onerror="this.outerHTML=ROR_SVG">`;
+function rortag(u) { return u && u.ror ? `<i class="rortag" title="Bataillon de renom : unité à part, recrutée sous condition (campagne)">${ROR_IC}Bataillon de renom</i>` : ""; }
+function roricon(u) { return u && u.ror ? `<span class="rormark" title="Bataillon de renom">${ROR_IC}</span>` : ""; }
 /* Portrait à utiliser pour une unité : le sien s'il existe, sinon celui du même personnage sans la monture ou la variante (ex. wh3_dlc29_vmp_cha_neferata_zombie_dragon -> …_neferata), sinon celui d'une unité de même nom de base. */
 const _ICON_MEMO = {};
 function iconId(u) {

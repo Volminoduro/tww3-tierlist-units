@@ -177,7 +177,8 @@ footer p{max-width:900px;margin:6px auto 0;font-size:13px;color:var(--m)}footer 
 aside{grid-template-columns:minmax(0,1fr)}aside section,.tp{min-width:0}.tp-btn{min-width:0;overflow:hidden}
 /* Icônes de stats dans la fiche d'unité */
 .si{width:15px;height:15px;vertical-align:-3px;margin-right:6px;color:var(--gold);flex:none}
-img.sig{width:18px;height:18px;vertical-align:-5px}
+img.sig{width:18px;height:18px;vertical-align:-5px;object-fit:contain}
+img.rorg{object-fit:contain}.rortag img.rorg{width:16px;height:16px;margin:-2px 0}.rormark img.rorg{width:17px;height:17px}
 /* Images du jeu : catégorie d'unité, monture, attributs d'attaque, bandeau de race */
 img.cati{width:16px;height:16px;vertical-align:-4px;margin-right:4px}
 img.mnti{width:20px;height:20px;vertical-align:-6px;margin-left:6px;border-radius:50%}

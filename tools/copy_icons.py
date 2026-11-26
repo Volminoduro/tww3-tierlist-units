@@ -183,7 +183,8 @@ for n in range(1, 6):
         shutil.copy(p[0], os.path.join(root, "img", "tiers", f"unit_tier_{n}.png")); tiers += 1
 print(f"{tiers} icônes de tier sur 5")
 STATS = ["icon_stat_" + n for n in ("health", "armour", "defence", "attack", "charge_bonus", "morale", "speed", "damage", "ranged_damage", "range", "reload_time", "ammo")] \
-      + ["modifier_icon_" + n for n in ("armour_piercing", "armour_piercing_ranged", "bonus_vs_infantry", "bonus_vs_large", "magical", "flaming", "shield")]
+      + ["modifier_icon_" + n for n in ("armour_piercing", "armour_piercing_ranged", "bonus_vs_infantry", "bonus_vs_large", "magical", "flaming", "shield")] \
+      + ["icon_treasury", "icon_upkeep", "icon_turns_counter", "icon_cooldown", "icon_effect_ror"]   # coût, entretien, tours de recrutement, intervalle, bataillon de renom
 stats = 0                                           # icônes de stats et de modificateurs du jeu (ui2.pack : ui/skins/default), utilisées par app.js (GAME_STAT) et icons.js (attributs)
 for n in STATS:
     p = pngs.get(n)
