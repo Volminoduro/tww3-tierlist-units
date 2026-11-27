@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:4000, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -108,14 +108,15 @@ function simulate(ARMY, BON, opts) {
           const w = (d.pool/d.hp) / W; let dps = 0, dpsM = 0;
           if (t >= T0) { // mêlée
             const m = u.melee, eng = n * (u.men <= 6 ? 1 : SIM.ENGAGE);
-            const f = chargeF(a, d, t), ma = a.ma + f * a.charge, hit = clamp(35 + ma - d.md, 8, 90) / 100;
+            const sh = u.men > 6 ? Math.min(1, (1 + SIM.RANK2) / (Math.max(1, u.rd || SIM.RANK_DEFAULT) * SIM.ENGAGE)) : 1;   // part des modèles engagés qui chargent de plein fouet : seuls le 1er rang et une part du 2e (RANK2) heurtent à pleine vitesse
+            const f = chargeF(a, d, t) * sh, ma = a.ma + f * a.charge, hit = clamp(35 + ma - d.md, 8, 90) / 100;
             let dm = m.dmg, ap = m.ap, bonus = isLarge(d.u) ? m.bvl : isInf(d.u) ? m.bvi : 0;
             if (bonus && dm + ap > 0) { const s = dm + ap; dm += bonus*dm/s; ap += bonus*ap/s; }
             const cm = 1 + f * a.charge / SIM.CHARGE_DMG;
             dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval) * resMul(d, m, false) * (reflected(a, d, t) ? SIM.REFLECT : 1);
             dps += dpsM;
             const wm = frontAlive ? wt(d) / Wm : w;                                                          // part de la mêlée dirigée vers d
-            if (!impDone) { const Ee = Math.min(eng * wm, contactCap(d, eng * wm, u.rw || 0)), im = impactDmg(a, d, Ee); if (im > 0) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + im); }   // impact de la charge (une fois)
+            if (!impDone) { const Ee = Math.min(eng * wm * sh, contactCap(d, eng * wm * sh, u.rw || 0)), im = impactDmg(a, d, Ee); if (im > 0) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + im); }   // impact de la charge (une fois)
             engIn[foe].set(d, (engIn[foe].get(d) || 0) + eng * wm);                                          // attaquants qui cherchent à engager d
             radIn[foe].set(d, (radIn[foe].get(d) || 0) + eng * wm * (u.rw || 0));                            // … et leur demi-largeur cumulée (pour la taille moyenne des attaquants)
           }
