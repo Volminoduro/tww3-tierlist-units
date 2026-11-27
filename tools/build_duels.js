@@ -38,7 +38,7 @@ function duel(a, b, key) {
   const lo = Math.max(a[key], b[key]), hi = MAX_ARMY * Math.min(a[key], b[key]);
   if (lo > hi) return NaN; // budgets impossibles à aligner avec ≤ 20 exemplaires du moins cher
   const budget = Math.max(lo, Math.min(BUDGET, hi));
-  const r = Sim.simulate({A: [{u: a, count: budget / a[key]}], B: [{u: b, count: budget / b[key]}]}, NO_BONUS, OPTS);
+  const r = Sim.resolve({A: [{u: a, count: budget / a[key]}], B: [{u: b, count: budget / b[key]}]}, NO_BONUS, {...OPTS, hold: {A: "auto", B: "auto"}});
   return (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0);
 }
 

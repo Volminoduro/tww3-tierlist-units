@@ -43,7 +43,7 @@ function simulate(ARMY, BON, opts) {
      peut être en bracing. Le bonus décroît linéairement sur CHARGE_DECAY = 13 s (charge_decay_duration). Attributs : charge_defense annule le bonus de tout attaquant face à un défenseur en bracing,
      charge_defense_vs_large celui des grands attaquants ; ogre_charge n'en perd que la moitié (le quart pour ogre_charge_upgraded) ; charge_reflection double les dégâts infligés aux ennemis qui chargent
      (tant que leur bonus restant dépasse REFLECT_MIN). */
-  const hold = {A: !!(opts.hold && opts.hold.A), B: !!(opts.staticB || (opts.hold && opts.hold.B))};
+  const hold = {A: !!(opts.hold && opts.hold.A === true), B: !!(opts.staticB || (opts.hold && opts.hold.B === true))};
   const vA = hold.A ? 0 : spd("A"), vB = hold.B ? 0 : spd("B"), closing = Math.max(0.5, vA + vB);
   const T0 = opts.dist / closing, upTot = s => S[s].reduce((a,x) => a + x.up, 0);
   const rawF = (a, t) => (hold[a.side] || t < T0) ? 0 : Math.max(0, 1 - (t - T0) / SIM.CHARGE_DECAY);
@@ -127,12 +127,34 @@ function simulate(ARMY, BON, opts) {
   timeline.push([t, surv("A"), surv("B")]);
   return {S, tot, timeline, time: t, sA: surv("A"), sB: surv("B"), T0, vA, vB};
 }
+/* Choix automatique « charger ou tenir sa position » : opts.hold.A / .B valent true (tient), false (charge) ou "auto". Un camp en « auto » ne peut avoir intérêt à tenir que s'il compte des unités
+   à défense contre la charge ou à réflexion ; on part de « les deux chargent » puis chaque camp en « auto » bascule s'il améliore sa propre marge (survie en coût rapportée au coût de départ,
+   moins celle de l'adversaire), jusqu'à stabilité (4 tours au plus). Les deux ne peuvent pas tenir en même temps (pas de contact). Renvoie le résultat de simulate() plus hold = choix retenus. */
+const CAN_HOLD = e => !!(e.u.at && e.u.at.some(a => a === "charge_defense" || a === "charge_defense_vs_large" || a === "charge_reflection"));
+function resolve(ARMY, BON, opts) {
+  const want = opts.hold || {}, auto = {A: want.A === "auto", B: want.B === "auto"};
+  let cur = {A: want.A === true, B: opts.staticB || want.B === true};
+  const run = h => { const r = simulate(ARMY, BON, {...opts, hold: h}); return {r, m: (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0)}; };
+  let best = run(cur);
+  const able = {A: auto.A && ARMY.A.some(CAN_HOLD), B: auto.B && ARMY.B.some(CAN_HOLD)};
+  for (let it = 0; it < 4 && (able.A || able.B); it++) {
+    let changed = false;
+    for (const s of ["A", "B"]) {
+      if (!able[s]) continue;
+      const alt = {...cur, [s]: !cur[s]}; if (alt.A && alt.B) continue;
+      const o = run(alt), sign = s === "A" ? 1 : -1;
+      if ((o.m - best.m) * sign > 0.005) { best = o; cur = alt; changed = true; }
+    }
+    if (!changed) break;
+  }
+  return {...best.r, hold: cur, auto};
+}
 function equalK(ARMY, BON, opts) { // multiplicateur de l'armée A pour obtenir un match nul (survie en coût de recrutement absolu)
-  const f = k => { const r = simulate(ARMY, BON, {...opts, k:{A:k,B:1}}); return r.sA - r.sB; };
+  const f = k => { const r = resolve(ARMY, BON, {...opts, k:{A:k,B:1}}); return r.sA - r.sB; };
   let lo = Math.log(1/40), hi = Math.log(40);
   if (f(Math.exp(lo)) > 0) return {k: Math.exp(lo), edge:"low"}; if (f(Math.exp(hi)) < 0) return {k: Math.exp(hi), edge:"high"};
   for (let i = 0; i < 30; i++) { const mid = (lo+hi)/2; f(Math.exp(mid)) > 0 ? hi = mid : lo = mid; }
   return {k: Math.exp((lo+hi)/2)};
 }
-return {SIM, isLarge, isInf, isBack, clamp, simulate, equalK, upk};
+return {SIM, isLarge, isInf, isBack, clamp, simulate, resolve, equalK, upk};
 });
