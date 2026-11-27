@@ -308,3 +308,5 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 .crest.xs{width:16px;height:19px}
 .card .f{display:flex;flex-wrap:wrap;gap:2px 3px;margin-top:3px}.fi{display:inline-flex;cursor:help}
 #detail .dfac{margin:8px 0 4px}#detail .dfac small{color:var(--m);font-size:11px}#detail .fis{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}#detail .fis .crest.xs{width:22px;height:26px}
+.fbcr{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px 8px;min-width:0}
+.fbcr .crest{width:36px;height:42px}.fbmore{font:700 14px var(--serif);color:var(--gold2);padding:0 6px;cursor:help}

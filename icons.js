@@ -125,8 +125,11 @@ function crest(key, cls = "", labelOverride = "") {
 }
 function factionBanner(key, n) {
   if (isMulti(key)) {   // sélection multiple : factions et races combinées
-    const ks = keysOf(key), nm = k => k.startsWith(RACE) ? D.cultures[k.slice(RACE.length)] : D.factions[k] || k;
-    return `<div class="fb">${crest(ALL)}<div><div class="fbn">${ks.length} sélections</div><small>${ks.map(nm).join(", ")} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
+    const ks = keysOf(key), MAX = 12, esc = t => String(t).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+    const nm = k => k.startsWith(RACE) ? D.cultures[k.slice(RACE.length)] : D.factions[k] || k;
+    const ic = k => `<span class="fi" title="${esc(nm(k))}">${k.startsWith(RACE) ? crest(mainFacOf(k.slice(RACE.length)), "", D.cultures[k.slice(RACE.length)]) : crest(k)}</span>`;
+    const more = ks.length > MAX ? `<span class="fbmore" title="${esc(ks.slice(MAX).map(nm).join(", "))}">+${ks.length - MAX}</span>` : "";
+    return `<div class="fb">${crest(ALL)}<div><div class="fbn">${ks.length} sélections</div><small>${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div><div class="fbcr">${ks.slice(0, MAX).map(ic).join("")}${more}</div></div>`;
   }
   const c = cultOf(key), race = isRace(key), icon = race ? crest(mainFacOf(c), "", D.cultures[c]) : crest(key);
   const nm = race ? D.cultures[c] + " — toute la race" : D.factions[key] || key;
