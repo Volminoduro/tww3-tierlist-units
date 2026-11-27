@@ -134,3 +134,17 @@ function factionBanner(key, n) {
   const rb = key !== ALL && RACE_SET.has(c) ? ` hasrb" style="--rb:url('img/races/${c}.png')` : "";   // bandeau de race du jeu (écran de choix de race)
   return `<div class="fb${rb}">${icon}<div><div class="fbn">${nm}</div><small>${sub} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
 }
+
+/* Icônes des factions d'où vient l'unité dans le périmètre choisi (nom en infobulle). Si l'unité est disponible dans TOUTES les factions d'une race,
+   on ne donne que la race (icône de sa faction principale, nom de la race). */
+function facIcons(u, key) {
+  const fl = facsInScope(u, key), set = new Set(fl), out = [], done = new Set();
+  const esc = t => String(t).replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+  const cults = [...new Set(fl.map(f => D.facInfo[f].culture))].sort((a, b) => D.cultures[a].localeCompare(D.cultures[b], "fr"));
+  for (const c of cults) {
+    const all = factionsOfRace(c);
+    if (all.every(f => set.has(f))) out.push(`<span class="fi" title="${esc(D.cultures[c])}">${crest(mainFacOf(c), "xs", D.cultures[c])}</span>`);
+    else fl.filter(f => D.facInfo[f].culture === c).forEach(f => out.push(`<span class="fi" title="${esc(D.factions[f])}">${crest(f, "xs")}</span>`));
+  }
+  return out.join("");
+}
