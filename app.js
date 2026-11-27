@@ -241,6 +241,12 @@ function srow(ic,label,val,fill,p,tip,clip){
  return `<div class="sr" title="${tip||""}"><div class="sh"><span>${si(ic)}${label}</span><b>${val}</b></div><div class="sb"><div class="bar"><i style="width:${fill}%;background:${col}"></i>${clip?'<span class="cap" title="Au-delà du 95ᵉ centile du groupe : barre pleine">▸</span>':""}</div>${p==null?"":`<span class="pb" style="background:hsl(${p*1.2},55%,62%)">${rankTxt(p)}</span>`}</div></div>`;
 }
 /* Valeurs de la fiche : une entrée par stat applicable (valeur, rang, remplissage de barre). Sert au résumé « En bref » et à la liste complète. */
+/* Groupe de comparaison de la fiche : 3 boutons avec l'effectif de chaque groupe (« Ma sélection » seulement si elle diffère de tout le jeu) */
+function dpoolBar(u){
+ const multi=fsel.value!==ALL, cur=DPOOL==="scope"&&!multi?"all":DPOOL, n=p=>(p==="all"?D.units:p==="scope"?D.units.filter(v=>inScope(v,fsel.value)):D.units.filter(v=>v.role===u.role)).length;
+ const opts=[["role_all",`${ROLES[u.role]||u.role}, tout le jeu`,`Comparer aux unités de la même catégorie (${ROLES[u.role]||u.role}) de tout le jeu`],["all","Tout le jeu","Comparer à toutes les unités du jeu"]].concat(multi?[["scope","Ma sélection","Comparer aux unités de la faction / race / sélection affichée"]]:[]);
+ return `<div class="dpool"><small>Comparée à</small><div class="dseg" role="group">${opts.map(([p,l,t])=>`<button type="button" data-p="${p}" title="${t}" class="${p===cur?"on":""}">${l}<i>${fmtv(n(p))}</i></button>`).join("")}</div></div>`;
+}
 function statList(u){
  const TS=window.TWW3Stats; if(!TS) return [];
  const pool=DPOOL==="all"?D.units:DPOOL==="scope"?D.units.filter(v=>inScope(v,fsel.value)):D.units.filter(v=>v.role===u.role);
@@ -285,7 +291,7 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
  const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false, wasAbilOpen=dt.querySelector("details.abil")?.open;
  dt.innerHTML=`<div class="dtop"><div class="dh"><div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><button class="x" id="close">✕</button></div>
- <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label>
+ ${dpoolBar(u)}
  <div class="dbrief">${fullPic(u)}${briefTiles(list)}</div></div>
  ${facBlock(u)}
  ${usageBlock(x)}
@@ -295,9 +301,9 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
   <dl><dt>${si("bolt")}Puissance</dt><dd>${Math.round(x.power)}</dd><dt>${si("coin")}Coût effectif</dt><dd>${Math.round(x.cost)}</dd><dt>${si("bolt")}Efficacité</dt><dd>${(x.value*1000).toFixed(1)}</dd></dl></details>`;
  if(wasOpen)dt.querySelector("details.all").open=true;
  if(prevUnit===u.id&&wasAbilOpen)dt.querySelector("details.abil").open=true; fillAbil(dt,u);
- $("#dpool").value=DPOOL; dt.scrollTop=st;
+ dt.scrollTop=st;
 }
-$("#detail").addEventListener("change",e=>{ if(e.target.id==="dpool"){ DPOOL=e.target.value; saveUI(); syncDetail(window._us||[]); } }); // changer de groupe de comparaison redessine la fiche
+$("#detail").addEventListener("click",e=>{ const b=e.target.closest(".dseg button"); if(b){ DPOOL=b.dataset.p; saveUI(); syncDetail(window._us||[]); } }); // changer de groupe de comparaison redessine la fiche
 /* Mémorisation des filtres et réglages (PREF « ui », localStorage) : faction, catégories, usages, recherche, seigneurs & héros, mode, métrique, rang, typologie, vue, curseurs, groupe de comparaison.
    Les DLC, les bataillons de renom, la langue, l'onglet, les armées du combat et les options de « Unités par faction » ont leur propre entrée. */
 function saveUI(){ if(!uiReady) return; PREF.set("ui",{fac:fsel.value,roles:[...role],typo:[...TYPO],q:$("#q").value,heroes:$("#heroes").checked,mode:$("#mode").value,metric:$("#metric").value,scope:$("#scope").value,view,S,dpool:DPOOL}); }

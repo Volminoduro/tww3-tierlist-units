@@ -202,7 +202,7 @@ details.abil h4{font:700 11px var(--serif);letter-spacing:.12em;text-transform:u
 #detail .sb{display:flex;align-items:center;gap:8px;margin-top:2px}#detail .bar{flex:1;height:7px;background:#0b0907;border:1px solid var(--b);border-radius:1px;overflow:hidden}#detail .bar i{display:block;height:100%}
 #detail .sb .pb{margin:0;min-width:74px;text-align:center}
 #detail h4{margin:12px 0 2px}
-.dpool{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--m);margin:6px 0 2px}.dpool select{margin:0;padding:3px 6px;font-size:12px;width:auto;flex:1}
+.dpool{font-size:12px;color:var(--m);margin:6px 0 2px}.dpool small{display:block;margin-bottom:3px}
 /* Barre plafonnée (≥ 95ᵉ centile) */
 #detail .bar{position:relative;overflow:visible}#detail .bar .cap{position:absolute;right:-4px;top:-5px;color:var(--gold2);font-size:13px;line-height:1}
 /* Sélecteur de langue */
@@ -310,3 +310,5 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #detail .dfac{margin:8px 0 4px}#detail .dfac small{color:var(--m);font-size:11px}#detail .fis{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}#detail .fis .crest.xs{width:22px;height:26px}
 .fbcr{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:6px 8px;min-width:0}
 .fbcr .crest{width:36px;height:42px}.fbmore{font:700 14px var(--serif);color:var(--gold2);padding:0 6px;cursor:help}
+.dseg{display:flex;gap:4px}.dseg button{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:0;padding:4px 4px;font-size:11px;line-height:1.15;letter-spacing:0;text-transform:none}
+.dseg button i{font-style:normal;color:var(--m);font-size:10px}.dseg button.on{background:linear-gradient(#6b1f12,#3a0f08);border-color:var(--gold);color:var(--gold2)}.dseg button.on i{color:var(--gold2)}

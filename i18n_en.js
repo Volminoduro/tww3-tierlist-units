@@ -87,6 +87,8 @@ Object.assign(I18N.dict, {
   "Général": "General", "Défense": "Defence", "Attaque": "Attack", "Tir": "Shooting", "Duels": "Duels",
   "Coût": "Cost", "Entretien": "Upkeep", "Recrut. (tours)": "Recruit. (turns)", "Recrut.": "Recr.", "Coût MP": "MP cost",
   "Hommes": "Men", "PV / modèle": "HP / model", "PV totaux": "Total HP", "Encaissement": "Toughness",
+  "Tout le jeu": "Whole game", "Ma sélection": "My selection", "{}, tout le jeu": "{}, whole game",
+  "Comparer à toutes les unités du jeu": "Compare to every unit in the game", "Comparer aux unités de la faction / race / sélection affichée": "Compare to the units of the displayed faction / race / selection",
   "PV totaux ajustés par l'armure et la défense au corps à corps : ce que l'unité peut encaisser avant de tomber. ": "Total HP adjusted for armour and melee defence: how much damage the unit can absorb before it breaks. ", "Armure": "Armour", "Défense CàC": "Melee defence", "Moral": "Leadership",
   "Attaque CàC": "Melee attack", "Charge": "Charge", "Dégâts de base": "Base damage", "Dégâts perforants": "Armour-piercing damage",
   "Force d'arme": "Weapon strength", "Intervalle (s)": "Interval (s)", "DPS / modèle": "DPS / model", "Bonus vs grands": "Bonus vs large", "Bonus vs infanterie": "Bonus vs infantry",
