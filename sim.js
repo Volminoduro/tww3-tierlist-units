@@ -46,7 +46,8 @@ function simulate(ARMY, BON, opts) {
   const hold = {A: !!(opts.hold && opts.hold.A === true), B: !!(opts.staticB || (opts.hold && opts.hold.B === true))};
   const vA = hold.A ? 0 : spd("A"), vB = hold.B ? 0 : spd("B"), closing = Math.max(0.5, vA + vB);
   const T0 = opts.dist / closing, upTot = s => S[s].reduce((a,x) => a + x.up, 0);
-  const rawF = (a, t) => (hold[a.side] || t < T0) ? 0 : Math.max(0, 1 - (t - T0) / SIM.CHARGE_DECAY);
+  const walk = {A: !!(opts.hold && opts.hold.A === "walk"), B: !!(opts.hold && opts.hold.B === "walk")};   // « marche » : avance sans courir = pas de bonus de charge, mais pas en bracing
+  const rawF = (a, t) => (hold[a.side] || walk[a.side] || t < T0) ? 0 : Math.max(0, 1 - (t - T0) / SIM.CHARGE_DECAY);
   const chargeF = (a, d, t) => { let f = rawF(a, t);
     if (f > 0 && hold[d.side] && (d.at.has("charge_defense") || (d.at.has("charge_defense_vs_large") && isLarge(a.u)))) f *= a.at.has("ogre_charge_upgraded") ? 0.75 : a.at.has("ogre_charge") ? 0.5 : 0;
     return f; };
@@ -55,7 +56,7 @@ function simulate(ARMY, BON, opts) {
   const surv = s => S[s].reduce((a,x) => a + (x.out ? 0 : x.up * x.pool/x.pool0), 0);
   const active = s => S[s].some(x => !x.out);
   let t = 0;
-  for (; t < SIM.TMAX; t++) {
+  for (; t < (opts.tmax ?? SIM.TMAX); t++) {
     if (t % 5 === 0) timeline.push([t, surv("A"), surv("B")]);
     if (!active("A") || !active("B")) break;
     const dmgIn = {A: new Map(), B: new Map()}, meleeIn = {A: new Map(), B: new Map()}, engIn = {A: new Map(), B: new Map()}, radIn = {A: new Map(), B: new Map()};
@@ -127,27 +128,33 @@ function simulate(ARMY, BON, opts) {
   timeline.push([t, surv("A"), surv("B")]);
   return {S, tot, timeline, time: t, sA: surv("A"), sB: surv("B"), T0, vA, vB};
 }
-/* Choix automatique « charger ou tenir sa position » : opts.hold.A / .B valent true (tient), false (charge) ou "auto". Un camp en « auto » ne peut avoir intérêt à tenir que s'il compte des unités
-   à défense contre la charge ou à réflexion ; on part de « les deux chargent » puis chaque camp en « auto » bascule s'il améliore sa propre marge (survie en coût rapportée au coût de départ,
-   moins celle de l'adversaire), jusqu'à stabilité (4 tours au plus). Les deux ne peuvent pas tenir en même temps (pas de contact). Renvoie le résultat de simulate() plus hold = choix retenus. */
+/* Choix automatique de la stratégie de chaque camp : CHARGER, MARCHER (avancer sans charger : évite la réflexion et les défenses, mais sans bonus de charge) ou TENIR SA POSITION (bracing, seulement
+   pour un camp qui compte des unités à défense contre la charge ou à réflexion). opts.hold.A / .B valent false (charge), "walk", true (tient) ou "auto". Chaque camp « auto » joue au mieux pour lui :
+   on simule toutes les combinaisons utiles (au plus 8 batailles), la marge étant la survie en coût rapportée au coût de départ de A moins celle de B (A la maximise, B la minimise), et on retient le point selle
+   (équilibre en stratégies pures : aucune des deux armées ne gagne à changer seule) ; sans point selle, le maximin de A et le minimax de B. Deux camps qui tiennent ne se rencontrent pas : c'est une IMPASSE, comptée comme un match nul (marge 0) ; elle est l'équilibre quand aucun des deux n'a intérêt à attaquer (ex. deux armées de lanciers identiques).
+   « Marcher » n'est utile que face à un camp pouvant tenir (sinon dominé par « charger »). Renvoie le résultat de simulate() plus choice = {A, B} parmi "charge" | "walk" | "hold". */
 const CAN_HOLD = e => !!(e.u.at && e.u.at.some(a => a === "charge_defense" || a === "charge_defense_vs_large" || a === "charge_reflection"));
 function resolve(ARMY, BON, opts) {
-  const want = opts.hold || {}, auto = {A: want.A === "auto", B: want.B === "auto"};
-  let cur = {A: want.A === true, B: opts.staticB || want.B === true};
-  const run = h => { const r = simulate(ARMY, BON, {...opts, hold: h}); return {r, m: (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0)}; };
-  let best = run(cur);
-  const able = {A: auto.A && ARMY.A.some(CAN_HOLD), B: auto.B && ARMY.B.some(CAN_HOLD)};
-  for (let it = 0; it < 4 && (able.A || able.B); it++) {
-    let changed = false;
-    for (const s of ["A", "B"]) {
-      if (!able[s]) continue;
-      const alt = {...cur, [s]: !cur[s]}; if (alt.A && alt.B) continue;
-      const o = run(alt), sign = s === "A" ? 1 : -1;
-      if ((o.m - best.m) * sign > 0.005) { best = o; cur = alt; changed = true; }
+  const w = opts.hold || {};
+  const fixed = s => w[s] === "auto" ? null : ((s === "B" && opts.staticB) || w[s] === true) ? "hold" : w[s] === "walk" ? "walk" : "charge";
+  const canH = {A: ARMY.A.some(CAN_HOLD), B: ARMY.B.some(CAN_HOLD)};
+  const optsOf = s => { const f = fixed(s); if (f) return [f]; const o = ["charge"]; if (canH[s === "A" ? "B" : "A"]) o.push("walk"); if (canH[s]) o.push("hold"); return o; };
+  const oa = optsOf("A"), ob = optsOf("B"), cache = {}, H = x => x === "hold" ? true : x === "walk" ? "walk" : false, bad = () => false;
+  const run = (a, b) => cache[a + "|" + b] ??= (() => { const r = simulate(ARMY, BON, {...opts, hold: {A: H(a), B: H(b)}, tmax: a === "hold" && b === "hold" ? 1 : opts.tmax}); return {r, m: (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0)}; })();
+  let eq = null; const EPS = 0.005;
+  if (oa.length === 1 && ob.length === 1) eq = [oa[0], ob[0]];
+  else {
+    for (const a of oa) { for (const b of ob) { if (bad(a, b)) continue; const m = run(a, b).m;
+      if (oa.every(a2 => bad(a2, b) || run(a2, b).m <= m + EPS) && ob.every(b2 => bad(a, b2) || run(a, b2).m >= m - EPS)) { eq = [a, b]; break; } } if (eq) break; }
+    if (!eq) {
+      let bA = null, vA = -Infinity, bB = null, vB = Infinity;
+      for (const a of oa) { let mn = Infinity; for (const b of ob) if (!bad(a, b)) mn = Math.min(mn, run(a, b).m); if (mn > vA) { vA = mn; bA = a; } }
+      for (const b of ob) { let mx = -Infinity; for (const a of oa) if (!bad(a, b)) mx = Math.max(mx, run(a, b).m); if (mx < vB) { vB = mx; bB = b; } }
+      eq = bad(bA, bB) ? [bA, "charge"] : [bA, bB];
     }
-    if (!changed) break;
   }
-  return {...best.r, hold: cur, auto};
+  const out = run(eq[0], eq[1]);
+  return {...out.r, impasse: eq[0] === "hold" && eq[1] === "hold", hold: {A: eq[0] === "hold", B: eq[1] === "hold"}, choice: {A: eq[0], B: eq[1]}, auto: {A: w.A === "auto", B: w.B === "auto"}};
 }
 function equalK(ARMY, BON, opts) { // multiplicateur de l'armée A pour obtenir un match nul (survie en coût de recrutement absolu)
   const f = k => { const r = resolve(ARMY, BON, {...opts, k:{A:k,B:1}}); return r.sA - r.sB; };

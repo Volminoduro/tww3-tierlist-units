@@ -99,6 +99,7 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 5. Masse : dégâts d'impact (cavalerie, monstres) selon masse × vitesse avec les constantes ci-dessus ; formule à calibrer (non fournie par les tables).
 6. Heure d'arrivée **par unité** (selon sa vitesse) au lieu d'une heure commune pour toute l'armée.
 7. Documenter ces limites dans l'onglet Méthode tant que ce n'est pas fait.
+8. **Charge à travers plusieurs rangs** : une charge de cavalerie ou de monstre ne se limite pas au premier rang (elle renverse et traverse des modèles, les rangs arrière subissent l'impact). Non modélisé : seule la largeur du front limite aujourd'hui le contact ; à lier aux dégâts d'impact (point 5) et aux rangs (`rank_depth`).
 
 ## Autres pistes déjà évoquées
 

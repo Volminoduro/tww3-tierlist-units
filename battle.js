@@ -15,6 +15,8 @@ const BONLAB = {arm:"Armure +%",dmg:"Dégâts +%",hp:"PV +%",mor:"Moral +%",up:"
 const upk = (side, e) => e.u.cost * (1 - BON[side].up/100); // coût de recrutement (après réduction éventuelle)
 const fmt = n => Math.round(n).toLocaleString("fr-FR");
 
+const holdOf = v => v === "auto" ? "auto" : v === "walk" ? "walk" : v === "hold";   // menu -> option du simulateur
+const CHOICE_TXT = {charge: "charge", walk: "avance sans charger", hold: "tient sa position"};
 const simulate = (_, opts) => { applyMods(); return TWW3Sim.resolve(ARMY, BON, opts); };
 const equalK = opts => { applyMods(); return TWW3Sim.equalK(ARMY, BON, opts); };
 
@@ -120,7 +122,7 @@ function draw(side) {
 })();
 $("#sim").onclick = () => {
   if (!ARMY.A.length || !ARMY.B.length) { $("#result").innerHTML = '<div class="res">Ajoute au moins une unité de chaque côté.</div>'; return; }
-  const opts = {dist: +$("#dist").value || 0, acc: clamp(+$("#acc").value, 5, 100)/100, hold: {A: $("#holdA").value === "auto" ? "auto" : $("#holdA").value === "hold", B: $("#holdB").value === "auto" ? "auto" : $("#holdB").value === "hold"}};
+  const opts = {dist: +$("#dist").value || 0, acc: clamp(+$("#acc").value, 5, 100)/100, hold: {A: holdOf($("#holdA").value), B: holdOf($("#holdB").value)}};
   const r = simulate(null, opts), eq = equalK(opts);
   const win = r.sA > r.sB ? "A" : r.sB > r.sA ? "B" : null;
   const kill = (s, o) => r.tot[o] - (s === "A" ? r.sB : r.sA); // coût adverse détruit
@@ -132,7 +134,7 @@ $("#sim").onclick = () => {
     return `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${line(1,"#6aa9ff")}${line(2,"#ff8a6a")}</svg>`; })();
   const rows = ["A","B"].flatMap(s => r.S[s].map(x => `<tr><td>${s}</td><td>${x.u.name}</td><td>${fmt(x.cnt*x.u.men*(x.pool/x.pool0))} / ${fmt(x.cnt*x.u.men)}</td><td>${pct(x.pool,x.pool0)} %</td><td>${x.routed ? "en déroute" : x.out ? "détruite" : "debout"}</td><td>${fmt(x.up)}</td></tr>`)).join("");
   $("#result").innerHTML = `<div class="res"><div class="verdict ${win||""}">${win ? `Victoire de l'armée ${win}` : "Match nul"} <small style="font-weight:400;color:var(--m)">— après ${r.time} s (contact à ${Math.round(r.T0)} s)</small></div>
-   <small style="color:var(--m)">Choix retenus : armée A ${r.hold.A ? "tient sa position" : "charge"}${r.auto.A ? " (auto)" : ""}, armée B ${r.hold.B ? "tient sa position" : "charge"}${r.auto.B ? " (auto)" : ""}.</small>
+   <small style="color:var(--m)">${r.impasse ? "Impasse : aucune des deux armées n'a intérêt à attaquer (les deux tiennent leur position). " : ""}Choix retenus : armée A ${CHOICE_TXT[r.choice.A]}${r.auto.A ? " (auto)" : ""}, armée B ${CHOICE_TXT[r.choice.B]}${r.auto.B ? " (auto)" : ""}.</small>
    <div class="kpis"><div class="kpi"><small>Coût survivant A</small><b>${fmt(r.sA)} / ${fmt(r.tot.A)} or</b></div><div class="kpi"><small>Coût survivant B</small><b>${fmt(r.sB)} / ${fmt(r.tot.B)} or</b></div>
    <div class="kpi"><small>Rendement : coût adverse détruit ÷ coût propre</small><b>A ${rdA.toFixed(2)} · B ${rdB.toFixed(2)}</b></div>
    <div class="kpi"><small>Armée la plus efficace par or dépensé</small><b>${effTxt}</b></div></div>
