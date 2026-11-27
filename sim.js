@@ -69,7 +69,7 @@ function simulate(ARMY, BON, opts) {
     if (!(mA > 0 && dv > 0 && E > 0)) return 0;
     const rd = d.u.rd > 0 ? d.u.rd : 1, brace = hold[d.side] ? 1 + 3 * Math.min(1, rd / 8) * (d.at.has("charge_defense") ? 2 : 1) : 1, mD = Math.max(1, (d.u.mass || 100) * brace);
     const dm = Math.min(SIM.IMPACT_MAX, SIM.IMPACT_MOD / SIM.IMPACT_NORM * 0.5 * mA * dv * dv / SIM.IMPACT_E) * (SIM.IMPACT_AP + (1 - SIM.IMPACT_AP) * (1 - d.arm / 200));
-    const P = clamp(1 + SIM.IMPACT_PEN * Math.log2(Math.max(1, mA / mD)), 1, rd), N = Math.min(d.pool / d.hp, E * P);
+    const P = clamp(1 + SIM.IMPACT_PEN * Math.log2(Math.max(1, mA / mD)), 1, rd), wF = a.u.men <= 6 ? clamp((a.u.rw || 1) / (d.u.rw || 0.65), 1, 6) : 1, N = Math.min(d.pool / d.hp, E * P * wF);
     return N * dm * resMul(d, {}, false);
   };
   let impDone = false;
