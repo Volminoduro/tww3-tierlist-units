@@ -79,6 +79,27 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 - **À identifier** : comment les choix exclusifs sont représentés dans les tables (nœuds frères sous un même parent, verrous…) ; l'interface les listerait pour que l'on tranche.
 - **Dépend du point 1** (extraction des niveaux) et de la **tier list de compositions** (point 2) pour classer des compositions avec seigneur.
 
+## 5. Charge réaliste dans le simulateur (`sim.js`)
+
+**État actuel** : pendant 6 s après le contact, **toutes** les unités de mêlée des deux camps reçoivent leur bonus de charge en entier (touche + `1 + charge/200` sur les dégâts), même un camp immobile ; pas de défense contre la charge, pas de masse.
+
+**Ce que disent les données du jeu** (`_kv_rules`, `unit_attributes`, loc) :
+- **Bonus de charge** : « augmente l'attaque et les dégâts de mêlée en chargeant » ; il **décroît sur `charge_decay_duration` = 13 s** (probablement linéaire) ; l'aire sous la courbe ≈ 6,5 s de bonus plein, proche des 6 s fixes actuels, mais la forme diffère.
+- **Charge Defence (`charge_defense`)** : « quand l'unité **est en position de défense (bracing)**, elle **annule le bonus de charge de tout attaquant** » ; **`charge_defense_vs_large`** : annule celui des **grands** attaquants seulement (lanciers contre cavalerie et monstres). **Ogre Charge** (`ogre_charge`, `ogre_charge_upgraded`) : face à un défenseur en bracing, l'unité ne perd que la moitié (`ogre_charge_factor` 0,5) ou le quart (0,25) de son bonus.
+- **Charge Reflection (`charge_reflection`)** : en bracing, dégâts supplémentaires aux ennemis qui chargent (`charge_reflect_damage_multiplier` 2,0, seuil `charge_reflect_min_charge_factor_threshold` 0,7 = tant que le bonus restant dépasse 70 %).
+- **Masse** : elle n'entre pas dans le bonus de charge mais dans les **dégâts d'impact / de collision** (vitesse × masse) : constantes `collision_damage_modifier` 0,6, `collision_damage_normaliser` 0,8, `collision_damage_maximum` 70, `collision_damage_armour_penetration_ratio` 0,7, seuils de renversement (`collision_speed_delta_threshold_*`) ; la formule exacte n'est pas dans les tables. La masse est dans `battle_entities.mass` (Hallebardier 100, Reiksguard 1 000, Stégadon 4 000). Selon la communauté, le bonus de charge ne compte plus dans les dégâts de collision depuis Warhammer II (source non officielle).
+- **Bracing** : constantes `bracing_*` (`bracing_calibration_ranks` 8, `bracing_calibration_ranks_multiplier` 4, `bracing_max_multiplier_clamp` 10, `unit_braced_status_threshold` 0,75 : on est « en bracing » au-delà de 75 % de la valeur de référence, qui dépend du nombre de rangs et de l'immobilité).
+- **Flanc / dos** : `devastating_flanker_charge_multiplier` 2,0, `melee_defence_direction_penalty_coefficient_flank` 0,6 et `_rear` 0,3 (non modélisés).
+
+**À faire** :
+1. Seul le camp qui **avance** reçoit le bonus de charge ; le camp **immobile** (`staticB`, ou défenseur) n'en reçoit pas. Corriger le cas actuel où l'immobile charge aussi.
+2. Décroissance linéaire du bonus sur 13 s (au lieu de 6 s plein).
+3. Extraire les attributs d'unité (`land_units.attribute_group` → `unit_attributes_groups`/`…_to_groups_junctions`) : `charge_defense`, `charge_defense_vs_large`, `charge_reflection`, `ogre_charge*` ; annuler le bonus de charge des attaquants (tous, ou grands seulement) quand l'unité est en bracing.
+4. **Qui est en bracing** : décision à prendre. Piste : l'armée la plus lente (ou celle réglée « tient sa position ») reste immobile et brace ; ajouter un réglage par armée « Charge / Tient sa position » dans le Combat, et pour les duels précalculés une règle par défaut (ex. l'armée la plus rapide charge).
+5. Masse : dégâts d'impact (cavalerie, monstres) selon masse × vitesse avec les constantes ci-dessus ; formule à calibrer (non fournie par les tables).
+6. Heure d'arrivée **par unité** (selon sa vitesse) au lieu d'une heure commune pour toute l'armée.
+7. Documenter ces limites dans l'onglet Méthode tant que ce n'est pas fait.
+
 ## Autres pistes déjà évoquées
 
 - Noms français des unités et factions : en attente de l'export de localisation française (`local_fr.pack`, voir « Langue » dans le `README.md`).
