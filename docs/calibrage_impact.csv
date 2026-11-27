@@ -1,6 +1,6 @@
 #;Scénario;Attaquant;Soldats att.;Masse att.;Défenseur immobile;Soldats déf.;Armure déf.;Site: déf. perd à +5 s;Site: dont à +1 s;Site: att. perd à +5 s;Observé: déf. soldats restants +5 s;Observé: déf. barre de santé +5 s (%);Observé: déf. soldats restants +1 s;Observé: att. soldats restants +5 s;Observé: soldats à terre +1 s;Notes
 1;Cavalerie lourde contre infanterie légère;Reiksguard;60;1000;Bretteurs;120;30;29;10;4;;;;;;
-2;Cavalerie lourde (moins chère) contre infanterie légère;Chevaliers de l'Empire;60;1000;Bretteurs;120;30;21;10;4;;;;;;
+2;Cavalerie lourde (moins chère) contre infanterie légère;Chevaliers Errants;60;1000;Bretteurs;120;30;25;10;5;;;;;;
 3;Cavalerie légère contre infanterie légère;Cavaliers Noirs;60;600;Bretteurs;120;30;16;7;9;;;;;;
 4;Cavalerie très légère contre infanterie légère;Gobelins chevaucheurs de loup;80;350;Bretteurs;120;30;11;4;14;;;;;;
 5;Cavalerie monstrueuse contre infanterie légère;Chevaliers Demigriffons;32;1500;Bretteurs;120;30;27;9;2;;;;;;

@@ -28,7 +28,7 @@ Colonnes « Site » : **soldats du défenseur perdus** (équivalent) à +5 s, do
 | # | Scénario | Attaquant (soldats, masse) | Défenseur immobile (soldats, armure) | Site : défenseur perd à +5 s (à +1 s) | Site : attaquant perd à +5 s | **Observé : défenseur, soldats restants à +5 s** | **Observé : défenseur, barre de santé à +5 s (%)** | **Observé : défenseur, soldats restants à +1 s** | **Observé : attaquant, soldats restants à +5 s** | **Observé : soldats à terre à +1 s (estimation)** | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 1 | Cavalerie lourde contre infanterie légère | Reiksguard (60, 1000) | Bretteurs (120, 30) | 29 (10) | 4 |  |  |  |  |  |  |
-| 2 | Cavalerie lourde (moins chère) contre infanterie légère | Chevaliers de l'Empire (60, 1000) | Bretteurs (120, 30) | 21 (10) | 4 |  |  |  |  |  |  |
+| 2 | Cavalerie lourde (moins chère) contre infanterie légère | Chevaliers Errants (60, 1000) | Bretteurs (120, 30) | 25 (10) | 5 |  |  |  |  |  |  |
 | 3 | Cavalerie légère contre infanterie légère | Cavaliers Noirs (60, 600) | Bretteurs (120, 30) | 16 (7) | 9 |  |  |  |  |  |  |
 | 4 | Cavalerie très légère contre infanterie légère | Gobelins chevaucheurs de loup (80, 350) | Bretteurs (120, 30) | 11 (4) | 14 |  |  |  |  |  |  |
 | 5 | Cavalerie monstrueuse contre infanterie légère | Chevaliers Demigriffons (32, 1500) | Bretteurs (120, 30) | 27 (9) | 2 |  |  |  |  |  |  |
@@ -47,3 +47,21 @@ Colonnes « Site » : **soldats du défenseur perdus** (équivalent) à +5 s, do
 - **Cas 11 (infanterie contre infanterie)** : contrôle, l'impact doit être très faible.
 
 Si l'observé est systématiquement plus haut ou plus bas que le site, j'ajuste `IMPACT_E` (échelle des dégâts) et `IMPACT_PEN` (nombre de rangs traversés). La colonne « à terre » servira à modéliser le renversement.
+
+## Cartes et factions à choisir (hors DLC)
+
+Carte : bataille rangée plate et dégagée (sans arbres, relief ni bâtiments), météo par défaut. Pas de seigneur ni de héros, même taille d'unité partout.
+
+| # | Attaquant | Faction | Défenseur | Faction |
+|---|---|---|---|---|
+| 1 | Reiksguard | Empire (Reikland) | Bretteurs | Empire (Reikland) |
+| 2 | Chevaliers Errants | Bretonnie (Couronne) | Bretteurs | Empire (Reikland) |
+| 3 | Cavaliers Noirs | Elfes noirs (Naggarond) | Bretteurs | Empire (Reikland) |
+| 4 | Gobelins chevaucheurs de loup | Peaux-Vertes (Grimgor) | Bretteurs | Empire (Reikland) |
+| 5 | Chevaliers Demigriffons | Empire (Reikland) | Bretteurs | Empire (Reikland) |
+| 6 | Géant | Peaux-Vertes (Grimgor) | Bretteurs | Empire (Reikland) |
+| 7 | Stégadon sauvage | Hommes-Lézards (Hexoatl) | Bretteurs | Empire (Reikland) |
+| 8 | Tank à vapeur | Empire (Reikland) | Bretteurs | Empire (Reikland) |
+| 9 | Reiksguard | Empire (Reikland) | Marteliers | Nains (Karaz-a-Karak) |
+| 10 | Reiksguard | Empire (Reikland) | Lanciers | Empire (Reikland) |
+| 11 | Bretteurs | Empire (Reikland) | Bretteurs | Empire (Reikland) |
