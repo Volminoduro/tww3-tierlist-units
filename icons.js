@@ -129,13 +129,13 @@ function factionBanner(key, n) {
     const nm = k => k.startsWith(RACE) ? D.cultures[k.slice(RACE.length)] : D.factions[k] || k;
     const ic = k => `<span class="fi" title="${esc(nm(k))}">${k.startsWith(RACE) ? crest(mainFacOf(k.slice(RACE.length)), "", D.cultures[k.slice(RACE.length)]) : crest(k)}</span>`;
     const more = ks.length > MAX ? `<span class="fbmore" title="${esc(ks.slice(MAX).map(nm).join(", "))}">+${ks.length - MAX}</span>` : "";
-    return `<div class="fb">${crest(ALL)}<div><div class="fbn">${ks.length} sélections</div><small>${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div><div class="fbcr">${ks.slice(0, MAX).map(ic).join("")}${more}</div></div>`;
+    return `<div class="fb">${crest(ALL)}<div><div class="fbn">${ks.length} sélections</div></div><div class="fbcr">${ks.slice(0, MAX).map(ic).join("")}${more}</div></div>`;
   }
   const c = cultOf(key), race = isRace(key), icon = race ? crest(mainFacOf(c), "", D.cultures[c]) : crest(key);
   const nm = race ? D.cultures[c] + " — toute la race" : D.factions[key] || key;
   const sub = key === ALL ? "Toutes les races" : race ? `${factionsOfRace(c).length} factions` : D.cultures[c];
   const rb = key !== ALL && RACE_SET.has(c) ? ` hasrb" style="--rb:url('img/races/${c}.png')` : "";   // bandeau de race du jeu (écran de choix de race)
-  return `<div class="fb${rb}">${icon}<div><div class="fbn">${nm}</div><small>${sub} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
+  return `<div class="fb${rb}">${icon}<div><div class="fbn">${nm}</div><small>${sub}</small></div></div>`;
 }
 
 /* Icônes des factions d'où vient l'unité dans le périmètre choisi (nom en infobulle). Si l'unité est disponible dans TOUTES les factions d'une race,
