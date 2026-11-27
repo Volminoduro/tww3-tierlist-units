@@ -11,7 +11,6 @@ const W = [ // [id,label,min,max,default,step,group]
 const USE_SH={inf:"Anti-infanterie",large:"Anti-gros",armour:"Anti-armure",tank:"Encaisser",ranged:"Distance",charge:"Charge",speed:"Mobilité"}; // libellés courts (puces, matrice)
 const ARCH = {global:"Typologie : globale (tout usage)",inf:"Anti-infanterie",large:"Anti-large (monstres, cavalerie)",armour:"Anti-armure",tank:"Encaisser la ligne de front",ranged:"Dégâts à distance",charge:"Charge / briseur de flanc",speed:"Mobilité"};
 const ARCHK = Object.keys(ARCH).filter(k=>k!=="global");
-Object.entries(ARCH).forEach(([k,l])=>$("#arch").add(new Option(l,k)));
 const S = {}; let view = "tiers", role = new Set(), sortKey = "score", sortDir = -1;
 const factions = D.factions;
 $("#demo").hidden = !D.demo;
@@ -48,7 +47,7 @@ function typoApply(items,get,state,el){
 }
 const TYPO=new Set();
 $("#typo").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)return;const k=b.dataset.k;k===""?TYPO.clear():TYPO.has(k)?TYPO.delete(k):TYPO.add(k);render();};
-["faction","heroes","mode","metric","scope","arch","q"].forEach(i=>$("#"+i).addEventListener("input",render));
+["faction","heroes","mode","metric","scope","q"].forEach(i=>$("#"+i).addEventListener("input",render));
 /* Interrupteur « Tenir compte du coût » (en-tête) : activé = métrique « efficacité » (puissance ou usage ÷ coût), désactivé = « puissance brute » (la meilleure unité par usage, quel que soit son prix).
    Il pilote le menu « Tier par… » et reste synchronisé avec lui. « Résultats de duels » est déjà à coût égal : l'interrupteur est alors sans effet (grisé). */
 const costSw=$("#costsw")||document.createElement("div"), costBtns=[...costSw.querySelectorAll("button")]; // garde-fou : un index.html plus ancien sans ce bloc ne casse pas la page
@@ -111,9 +110,9 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
  const f=fsel.value, seen=new Set();
  let us=D.units.filter(u=>inScope(u,f)&&(withLH||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
  us=us.filter(x=>!seen.has(x.u.id)&&seen.add(x.u.id));
- const key=$("#metric").value, ar=$("#arch").value;
+ const key=$("#metric").value;
  // Mobilité : vitesse pure, jamais divisée par le coût (une unité lente et bon marché ne devient pas « mobile »)
- us.forEach(x=>x.score= ar==="global" ? x[key] : key==="value"&&ar!=="speed" ? x.arche[ar]/Math.max(1,x.cost) : x.arche[ar]);
+ us.forEach(x=>x.score=x[key]);
  us.forEach(x=>{x.pct={};});
  /* Échelle de référence : seigneurs et héros n'y comptent JAMAIS (sinon cocher la case ferait bouger le tier des autres unités). Ils sont simplement placés sur l'échelle des autres unités.
     pos(ref,val,v) = position d'insertion de v parmi les valeurs de ref (égalités = milieu de la plage), ref étant la liste triée des valeurs de référence. */
@@ -124,7 +123,6 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
    const vals=refOf(us).map(v).sort((a,b)=>a-b), n=vals.length;
    // égalités = même percentile (moyenne des rangs) ; une unité qui ne sait pas faire l'usage (valeur 0) est à 0, pas étalée sur l'échelle
    us.forEach(x=>{const val=v(x),[lo,hi]=spread(vals,val);const r=Math.min(n-1,Math.max(0,(lo+hi)/2-.5));x.pct[k]=val<=0?0:n>1?Math.round(r/(n-1)*100):100;});});
- if(ar!=="global") us=us.filter(x=>x.arche[ar]>0);
  const groups={}; us.forEach(x=>(groups[$("#scope").value==="role"?x.u.role:"all"]??=[]).push(x));
  for(const g of Object.values(groups)){ const ref=refOf(g).slice().sort((a,b)=>a.score-b.score), n=ref.length, vals=ref.map(x=>x.score), idx=new Map(ref.map((x,i)=>[x,i]));
   g.forEach(x=>{let p;
@@ -301,13 +299,13 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
 $("#detail").addEventListener("change",e=>{ if(e.target.id==="dpool"){ DPOOL=e.target.value; saveUI(); syncDetail(window._us||[]); } }); // changer de groupe de comparaison redessine la fiche
 /* Mémorisation des filtres et réglages (PREF « ui », localStorage) : faction, catégories, usages, recherche, seigneurs & héros, mode, métrique, rang, typologie, vue, curseurs, groupe de comparaison.
    Les DLC, les bataillons de renom, la langue, l'onglet, les armées du combat et les options de « Unités par faction » ont leur propre entrée. */
-function saveUI(){ if(!uiReady) return; PREF.set("ui",{fac:fsel.value,roles:[...role],typo:[...TYPO],q:$("#q").value,heroes:$("#heroes").checked,mode:$("#mode").value,metric:$("#metric").value,scope:$("#scope").value,arch:$("#arch").value,view,S,dpool:DPOOL}); }
+function saveUI(){ if(!uiReady) return; PREF.set("ui",{fac:fsel.value,roles:[...role],typo:[...TYPO],q:$("#q").value,heroes:$("#heroes").checked,mode:$("#mode").value,metric:$("#metric").value,scope:$("#scope").value,view,S,dpool:DPOOL}); }
 let uiReady=false;
 (()=>{ const s=PREF.get("ui",null); if(s){
   if(okFacKey(s.fac)){ setFac(fsel,s.fac); fsel.dispatchEvent(new Event("change")); }
   (s.roles||[]).filter(r=>roles.includes(r)).forEach(r=>role.add(r)); (s.typo||[]).filter(k=>ARCHK.includes(k)).forEach(k=>TYPO.add(k));
   if(typeof s.q==="string") $("#q").value=s.q; $("#heroes").checked=!!s.heroes;
-  for(const [id,v] of [["mode",s.mode],["metric",s.metric],["scope",s.scope],["arch",s.arch]]) if(v&&[...$("#"+id).options].some(o=>o.value===v)) $("#"+id).value=v;
+  for(const [id,v] of [["mode",s.mode],["metric",s.metric],["scope",s.scope]]) if(v&&[...$("#"+id).options].some(o=>o.value===v)) $("#"+id).value=v;
   if(["tiers","table","matrix"].includes(s.view)){ view=s.view; $("#viewsel").value=view; }
   if(["role_all","all","scope"].includes(s.dpool)) DPOOL=s.dpool;
   for(const w of W){ const v=s.S&&s.S[w[0]]; if(typeof v==="number"&&v>=w[2]&&v<=w[3]){ S[w[0]]=v; $("#"+w[0]).value=v; $("#v_"+w[0]).textContent=v; } }
