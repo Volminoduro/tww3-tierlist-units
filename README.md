@@ -36,6 +36,9 @@ Les portraits sont copiés dans `img/units/` et remplacent automatiquement les e
 **Seigneurs et héros inclus**, mais leurs sorts, capacités et objets ne sont pas modélisés : leurs résultats sont indicatifs (voir `notes` dans le fichier).
 Le workflow `.github/workflows/build-data.yml` régénère données et duels (déclenchement manuel).
 
+### Charge (règles du jeu)
+`sim.js` reprend les règles de charge du jeu (constantes de `_kv_rules`, textes des attributs) : seul le camp qui **avance** reçoit le bonus de charge (attaque et dégâts), qui **décroît linéairement sur 13 s** (`charge_decay_duration`). Un camp réglé **« Tient sa position »** (par armée, dans le Combat) ne charge pas et peut être en **bracing** : ses unités **`charge_defense`** annulent le bonus de charge de tout attaquant, **`charge_defense_vs_large`** celui des grands attaquants (lanciers contre cavalerie et monstres), **`ogre_charge`** n'en perd que la moitié ; **`charge_reflection`** double les dégâts infligés aux ennemis qui chargent tant que leur bonus restant dépasse 70 %. Attributs extraits par `convert_rpfm.py` (`at` : 60 + 125 + 119 + 32 unités). **Duels précalculés** : les deux camps **chargent** (aucun n'est en bracing) ; chacun reçoit son propre bonus (lecture de la communauté ; les tables ne donnent pas de règle pour deux charges qui se rencontrent). **Non modélisés** : masse et dégâts d'impact, heure d'arrivée par unité, flanc et dos.
+
 ### Compositions d'armées
 - **20 unités maximum par armée** (limite du jeu), appliquée dans l'onglet Combat et dans les duels (paires dont le rapport de coût dépasse 20 ignorées).
 - **Protection de l'arrière** : réglage par armée (0–100 %, ou « Auto »). Tant qu'une unité de ligne est debout, la mêlée adverse n'atteint tireurs et artillerie qu'à (1 − protection). « Auto » = 80 % si au moins autant d'unités de ligne que d'unités de tir.

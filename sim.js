@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_T:6, CHARGE_DMG:200, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -35,12 +35,22 @@ function simulate(ARMY, BON, opts) {
             mdm: (1 + b.dmg/100) * (1 + (m.ws||0)/100), rdm: (1 + b.dmg/100) * (1 + (m.ms||0)/100),
             ma: u.ma + (m.ma||0), md: u.md + (m.md||0), charge: u.charge + (m.charge||0), spd: u.speed * (1 + (m.spd||0)/100),
             range: u.ranged ? u.ranged.range * (1 + (m.range||0)/100) : 0,
-            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false};
+            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false};
   });
   const S = {A: mk("A"), B: mk("B")};
   const spd = s => { let w=0, t=0; S[s].forEach(x => { w += x.cnt*x.u.men; t += x.cnt*x.u.men*x.spd; }); return w ? t/w*SIM.SPEED_SCALE : 0; };
-  const vA = spd("A"), vB = opts.staticB ? 0 : spd("B"), closing = Math.max(0.5, vA + vB);
+  /* Charge (règles du jeu, voir TODO.md point 5) : seul le camp qui AVANCE charge ; un camp « tient sa position » (opts.hold.A / .B, ou opts.staticB pour B) ne reçoit pas de bonus de charge et
+     peut être en bracing. Le bonus décroît linéairement sur CHARGE_DECAY = 13 s (charge_decay_duration). Attributs : charge_defense annule le bonus de tout attaquant face à un défenseur en bracing,
+     charge_defense_vs_large celui des grands attaquants ; ogre_charge n'en perd que la moitié (le quart pour ogre_charge_upgraded) ; charge_reflection double les dégâts infligés aux ennemis qui chargent
+     (tant que leur bonus restant dépasse REFLECT_MIN). */
+  const hold = {A: !!(opts.hold && opts.hold.A), B: !!(opts.staticB || (opts.hold && opts.hold.B))};
+  const vA = hold.A ? 0 : spd("A"), vB = hold.B ? 0 : spd("B"), closing = Math.max(0.5, vA + vB);
   const T0 = opts.dist / closing, upTot = s => S[s].reduce((a,x) => a + x.up, 0);
+  const rawF = (a, t) => (hold[a.side] || t < T0) ? 0 : Math.max(0, 1 - (t - T0) / SIM.CHARGE_DECAY);
+  const chargeF = (a, d, t) => { let f = rawF(a, t);
+    if (f > 0 && hold[d.side] && (d.at.has("charge_defense") || (d.at.has("charge_defense_vs_large") && isLarge(a.u)))) f *= a.at.has("ogre_charge_upgraded") ? 0.75 : a.at.has("ogre_charge") ? 0.5 : 0;
+    return f; };
+  const reflected = (a, d, t) => hold[a.side] && a.at.has("charge_reflection") && rawF(d, t) >= SIM.REFLECT_MIN;
   const tot = {A: upTot("A"), B: upTot("B")}, timeline = [];
   const surv = s => S[s].reduce((a,x) => a + (x.out ? 0 : x.up * x.pool/x.pool0), 0);
   const active = s => S[s].some(x => !x.out);
@@ -59,16 +69,16 @@ function simulate(ARMY, BON, opts) {
       const Wm = frontAlive ? tg.reduce((a, x) => a + wt(x), 0) : W;
       for (const a of S[me]) {
         if (a.out) continue;
-        const n = a.pool / a.hp, u = a.u, charging = t >= T0 && t < T0 + SIM.CHARGE_T;
+        const n = a.pool / a.hp, u = a.u;
         for (const d of tg) {
           const w = (d.pool/d.hp) / W; let dps = 0, dpsM = 0;
           if (t >= T0) { // mêlée
             const m = u.melee, eng = n * (u.men <= 6 ? 1 : SIM.ENGAGE);
-            const ma = a.ma + (charging ? a.charge : 0), hit = clamp(35 + ma - d.md, 8, 90) / 100;
+            const f = chargeF(a, d, t), ma = a.ma + f * a.charge, hit = clamp(35 + ma - d.md, 8, 90) / 100;
             let dm = m.dmg, ap = m.ap, bonus = isLarge(d.u) ? m.bvl : isInf(d.u) ? m.bvi : 0;
             if (bonus && dm + ap > 0) { const s = dm + ap; dm += bonus*dm/s; ap += bonus*ap/s; }
-            const cm = charging ? 1 + a.charge/SIM.CHARGE_DMG : 1;
-            dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval) * resMul(d, m, false);
+            const cm = 1 + f * a.charge / SIM.CHARGE_DMG;
+            dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval) * resMul(d, m, false) * (reflected(a, d, t) ? SIM.REFLECT : 1);
             dps += dpsM;
             const wm = frontAlive ? wt(d) / Wm : w;                                                          // part de la mêlée dirigée vers d
             engIn[foe].set(d, (engIn[foe].get(d) || 0) + eng * wm);                                          // attaquants qui cherchent à engager d

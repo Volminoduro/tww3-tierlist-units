@@ -234,6 +234,9 @@ Object.assign(I18N.dict, {
   "Creative Assembly / SEGA / Games Workshop": "Creative Assembly / SEGA / Games Workshop", ": le jeu": ": the game",
   "et son univers, dont ce projet de fan n'est pas affilié.": "and its universe, which this fan project is not affiliated with.",
   "Limites connues": "Known limitations",
+  "Charge : seul le camp qui avance charge ; le bonus de charge (attaque et dégâts) décroît linéairement sur 13 s (valeur du jeu). Un camp qui tient sa position (réglage du Combat) ne charge pas et peut être en bracing : défense contre la charge, réflexion et Ogre Charge sont repris du jeu. Dans les duels précalculés, les deux camps chargent. Masse et dégâts d'impact, heure d'arrivée par unité, flanc et dos ne sont pas modélisés.": "Charge: only the side that advances charges; the charge bonus (attack and damage) decays linearly over 13 s (game value). A side that holds its position (Combat setting) does not charge and can be bracing: charge defence, reflection and Ogre Charge are taken from the game. In the precomputed duels, both sides charge. Mass and impact damage, per-unit arrival time, flank and rear are not modelled.",
+  "Armée A": "Army A", "Armée B": "Army B", "Tient sa position": "Holds position",
+
   "Retrouver mes DLC depuis Steam": "Find my DLC from Steam",
   "Colle ici chaque page des licences Steam (Ctrl+V), l'une après l'autre…": "Paste each page of the Steam licenses here (Ctrl+V), one after the other…",
   "Sélectionne toute la page (Ctrl+A) et copie (Ctrl+C), puis colle-la dans le champ ci-dessous (Ctrl+V) : elle est analysée tout de suite et les produits reconnus sont cochés.": "Select the whole page (Ctrl+A) and copy (Ctrl+C), then paste it into the field below (Ctrl+V): it is analysed immediately and recognised products are checked.",

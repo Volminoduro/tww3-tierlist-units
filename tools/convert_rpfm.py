@@ -105,7 +105,7 @@ NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missi
           # véhicules / artillerie (machines) et dégâts d'explosion des projectiles
           "battlefield_engines", "projectiles_explosions",
           # DLC : unité -> paquets de contenu -> ensembles d'exigences -> produits (jeux et DLC)
-          "main_unit_ownership_content_pack_junctions", "ownership_content_pack_requirements", "ownership_content_pack_required_products", "ownership_products",
+          "main_unit_ownership_content_pack_junctions", "unit_attributes_to_groups_junctions", "ownership_content_pack_requirements", "ownership_content_pack_required_products", "ownership_products",
           # capacités passives de soin (régénération) : unité -> capacité -> phase -> soin
           "land_units_to_unit_abilites_junctions", "unit_special_abilities", "special_ability_to_special_ability_phase_junctions", "special_ability_phases", "special_ability_phase_stat_effects"}
 
@@ -254,6 +254,11 @@ def main():
         a, b = R, w; h = ((a - b) / (a + b)) ** 2     # ellipse : approximation de Ramanujan
         return round(b, 3), round(math.pi * (a + b) * (1 + 3 * h / (10 + math.sqrt(4 - 3 * h))), 3)
 
+    # Attributs de charge (unit_attributes) : land_units.attribute_group -> unit_attributes_to_groups_junctions
+    CHARGE_ATTRS = {"charge_defense", "charge_defense_vs_large", "charge_reflection", "ogre_charge", "ogre_charge_upgraded"}
+    attrs_of_group = defaultdict(set)
+    for r in T.get("unit_attributes_to_groups_junctions", []):
+        if r.get("attribute") in CHARGE_ATTRS: attrs_of_group[r.get("attribute_group")].add(r["attribute"])
     units, warn = [], defaultdict(int)
     for mu in T["main_units"]:
         key = mu.get("unit")
@@ -314,6 +319,7 @@ def main():
             "recruitTurns": num(col(mu, "recruit_turns"), 1),
             "tier": num(col(mu, "tier")),
             "mount": col(lu, "mount") or "",
+            **({"at": sorted(attrs_of_group[lu.get("attribute_group")])} if attrs_of_group.get(lu.get("attribute_group")) else {}),
             # Bataillon de renom : drapeau is_renown de main_units ou clé en « _ror » ; hors seigneurs/héros, unités « boss » et dragons de monture d'Imrik / barge de Grungni (montures de seigneurs)
             **({"ror": 1} if ((mu.get("is_renown") or "").lower() == "true" or re.search(r"_ror(_|$)", key)) and caste not in ("lord", "hero") and "_boss" not in key and not re.search(r"_imrik|thunderbarge_grungni", key) else {}),
             "regen": round(regen_of_land.get(col(mu, "land_unit"), 0), 5), "res": {"ph": num(lu.get("damage_mod_physical")), "mi": num(lu.get("damage_mod_missile")), "ma": num(lu.get("damage_mod_magic")),

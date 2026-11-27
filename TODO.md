@@ -92,10 +92,10 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 - **Flanc / dos** : `devastating_flanker_charge_multiplier` 2,0, `melee_defence_direction_penalty_coefficient_flank` 0,6 et `_rear` 0,3 (non modélisés).
 
 **À faire** :
-1. Seul le camp qui **avance** reçoit le bonus de charge ; le camp **immobile** (`staticB`, ou défenseur) n'en reçoit pas. Corriger le cas actuel où l'immobile charge aussi.
-2. Décroissance linéaire du bonus sur 13 s (au lieu de 6 s plein).
-3. Extraire les attributs d'unité (`land_units.attribute_group` → `unit_attributes_groups`/`…_to_groups_junctions`) : `charge_defense`, `charge_defense_vs_large`, `charge_reflection`, `ogre_charge*` ; annuler le bonus de charge des attaquants (tous, ou grands seulement) quand l'unité est en bracing.
-4. **Qui est en bracing** : décision à prendre. Piste : l'armée la plus lente (ou celle réglée « tient sa position ») reste immobile et brace ; ajouter un réglage par armée « Charge / Tient sa position » dans le Combat, et pour les duels précalculés une règle par défaut (ex. l'armée la plus rapide charge).
+1. ~~Seul le camp qui **avance** reçoit le bonus de charge~~ **fait** (`sim.js`, option `hold` par armée).
+2. ~~Décroissance linéaire du bonus sur 13 s~~ **fait**.
+3. ~~Extraire les attributs d'unité~~ **fait** (champ `at`) :  (`land_units.attribute_group` → `unit_attributes_groups`/`…_to_groups_junctions`) : `charge_defense`, `charge_defense_vs_large`, `charge_reflection`, `ogre_charge*` ; annuler le bonus de charge des attaquants (tous, ou grands seulement) quand l'unité est en bracing.
+4. ~~Qui est en bracing~~ **décidé** : réglage par armée « Charge / Tient sa position » dans le Combat (**fait**) ; duels précalculés : **les deux camps chargent**, chacun reçoit son bonus. À étudier : un second jeu de duels « le défenseur tient sa position » pour valoriser les lanciers (défense contre la charge) dans les typologies anti-cavalerie / anti-large.
 5. Masse : dégâts d'impact (cavalerie, monstres) selon masse × vitesse avec les constantes ci-dessus ; formule à calibrer (non fournie par les tables).
 6. Heure d'arrivée **par unité** (selon sa vitesse) au lieu d'une heure commune pour toute l'armée.
 7. Documenter ces limites dans l'onglet Méthode tant que ce n'est pas fait.

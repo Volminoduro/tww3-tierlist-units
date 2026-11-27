@@ -4455,6 +4455,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -6219,6 +6223,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -6647,6 +6655,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -7175,6 +7187,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -7233,6 +7249,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -7464,6 +7484,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -8158,6 +8182,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -8227,6 +8255,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -11437,6 +11469,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -12087,6 +12123,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -12713,6 +12753,10 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -13035,6 +13079,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -13159,6 +13207,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -13216,6 +13268,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -13275,6 +13330,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -13812,6 +13870,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -13865,6 +13927,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -13971,6 +14037,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_leviathan",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 10.0,
@@ -14208,6 +14277,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14451,6 +14523,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14505,6 +14581,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14559,6 +14638,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14613,6 +14696,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14667,6 +14753,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14721,6 +14811,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14849,6 +14942,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -14977,6 +15073,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15105,6 +15204,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15217,6 +15319,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15325,6 +15430,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15433,6 +15541,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15487,6 +15598,10 @@
    "recruitTurns": 2.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15798,6 +15913,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -15856,6 +15975,10 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -16151,6 +16274,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -16550,6 +16677,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -17048,6 +17179,9 @@
    "recruitTurns": 3.0,
    "tier": 5.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_leviathan",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17106,6 +17240,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17164,6 +17301,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -17222,6 +17362,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_ror",
+   "at": [
+    "charge_defense"
+   ],
    "ror": 1,
    "regen": 0.001,
    "res": {
@@ -18930,6 +19073,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -19523,6 +19670,10 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -19686,6 +19837,10 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -21055,6 +21210,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -21119,6 +21278,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -22577,6 +22739,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -22829,6 +22995,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -23271,6 +23441,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 15.0,
@@ -24670,6 +24844,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -24957,6 +25135,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -25719,6 +25901,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 30.0,
@@ -25775,6 +25961,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -29466,6 +29656,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -30675,6 +30869,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -30807,6 +31005,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -30919,6 +31121,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -31590,6 +31796,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -31755,6 +31965,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -32571,6 +32785,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -32797,6 +33014,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -32853,6 +33073,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -32909,6 +33132,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -34813,6 +35039,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -34868,6 +35097,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -36089,6 +36321,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 55.0,
@@ -39125,6 +39360,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -39369,6 +39608,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -41076,6 +41319,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -42237,6 +42484,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -42303,6 +42554,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -42369,6 +42624,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -42425,6 +42684,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 30.0,
@@ -42481,6 +42744,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -43580,6 +43847,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -44057,6 +44328,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -45235,6 +45510,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -45290,6 +45569,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -45345,6 +45628,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -45880,6 +46167,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -45935,6 +46226,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -47565,6 +47860,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -47621,6 +47920,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -48663,6 +48966,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -49293,6 +49600,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -49523,6 +49833,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -49777,6 +50091,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -50917,6 +51235,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -50973,6 +51295,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -51029,6 +51355,10 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -55362,6 +55692,10 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -55724,6 +56058,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -55842,6 +56180,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -56088,6 +56430,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -56211,6 +56557,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -56576,6 +56926,10 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -56696,6 +57050,10 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -58218,6 +58576,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -59543,6 +59904,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -59598,6 +59963,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -60803,6 +61171,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61043,6 +61414,9 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -61099,6 +61473,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61219,6 +61596,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -61515,6 +61895,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61580,6 +61963,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61637,6 +62023,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61702,6 +62091,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -61757,6 +62149,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -63133,6 +63528,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -63352,6 +63751,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -63861,6 +64264,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -65598,6 +66004,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -67743,6 +68153,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -69819,6 +70232,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -70842,6 +71259,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -71009,6 +71430,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -71896,6 +72320,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -71958,6 +72385,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -72217,6 +72647,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -72272,6 +72706,10 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -73799,6 +74237,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74233,6 +74675,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74288,6 +74733,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74343,6 +74791,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74398,6 +74849,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74453,6 +74907,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74508,6 +74965,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74563,6 +75023,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74618,6 +75081,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -74673,6 +75139,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -74729,6 +75198,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -75565,6 +76037,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -76300,6 +76776,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -76489,6 +76969,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 30.0,
@@ -76881,6 +77365,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -82974,6 +83462,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -83028,6 +83519,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -83084,6 +83579,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -83194,6 +83692,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -83871,6 +84372,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -83930,6 +84434,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -84869,6 +85376,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -90476,6 +90987,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -90918,6 +91433,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -91040,6 +91559,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -91829,6 +92352,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -93025,6 +93552,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -95491,6 +96022,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -95686,6 +96221,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98430,6 +98969,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98485,6 +99027,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98540,6 +99085,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98595,6 +99143,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98660,6 +99211,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98780,6 +99334,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98835,6 +99392,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98890,6 +99450,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -98945,6 +99508,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99185,6 +99751,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99250,6 +99819,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99305,6 +99877,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99361,6 +99936,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99416,6 +99994,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99481,6 +100062,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99537,6 +100121,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99592,6 +100179,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -99647,6 +100237,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -101735,6 +102328,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -101791,6 +102388,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -104131,6 +104732,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -104301,6 +104906,10 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -104551,6 +105160,9 @@
    "recruitTurns": 1.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "ogre_charge"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -105854,6 +106466,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -107501,6 +108117,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 5.0,
@@ -107624,6 +108243,10 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109767,6 +110390,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -109822,6 +110449,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -112246,6 +112877,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "ror": 1,
    "regen": 0.001,
    "res": {
@@ -114018,6 +114652,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -114127,6 +114764,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -115374,6 +116014,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -115430,6 +116074,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -115740,6 +116388,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 20.0,
@@ -116182,6 +116834,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -116459,6 +117114,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 55.0,
@@ -116512,6 +117170,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 55.0,
@@ -116575,6 +117236,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -116630,6 +117294,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -116758,6 +117425,9 @@
    "recruitTurns": 2.0,
    "tier": 4.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -116876,6 +117546,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -117178,6 +117851,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -117875,6 +118551,10 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -120700,6 +121380,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -122235,6 +122919,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -124418,6 +125106,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -124538,6 +125230,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -126987,6 +127683,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -127162,6 +127861,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -127221,6 +127923,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -127276,6 +127981,9 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -127506,6 +128214,9 @@
    "recruitTurns": 2.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -127756,6 +128467,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -127811,6 +128525,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -127866,6 +128583,9 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -131431,6 +132151,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -131559,6 +132283,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -131618,6 +132346,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -133642,6 +134374,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -137138,6 +137874,10 @@
    "recruitTurns": 1.0,
    "tier": 1.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -137602,6 +138342,9 @@
    "recruitTurns": 1.0,
    "tier": 0.0,
    "mount": "",
+   "at": [
+    "charge_defense"
+   ],
    "regen": 0,
    "res": {
     "ph": 0.0,
@@ -138094,6 +138837,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -138148,6 +138895,10 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -138428,6 +139179,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -139209,6 +139964,10 @@
    "recruitTurns": 1.0,
    "tier": 2.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -139263,6 +140022,10 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -139381,6 +140144,10 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense",
+    "charge_reflection"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
@@ -139435,6 +140202,9 @@
    "recruitTurns": 1.0,
    "tier": 3.0,
    "mount": "",
+   "at": [
+    "charge_defense_vs_large"
+   ],
    "ror": 1,
    "regen": 0,
    "res": {
