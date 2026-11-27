@@ -14,7 +14,7 @@ const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLEC
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
   // FRONT_LARGE : valeur de repli si les tailles de corps manquent dans les données
-  FRONT_K:4, FRONT_LARGE:10, RANK_DEFAULT:5};
+  FRONT_K:3, FRONT_LARGE:10, RANK_DEFAULT:5};
 const isLarge = u => ["monster","chariot","cav_melee","cav_ranged"].includes(u.role);
 const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
 const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front

@@ -125,7 +125,6 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 ## Autres pistes déjà évoquées
 
 - Onglet « Combat d'armées » : retravailler la hiérarchie d'affichage comme pour le tier list.
-- Calibrer `FRONT_K` et `ENGAGE` (`sim.js`) si des observations en jeu sont disponibles.
-- Portraits : 26 seigneurs/héros n'ont toujours pas d'image (héraut de Slaanesh Ombres/Slaanesh, Valkia, Festus, Azrik, Kihar, capitaines/généraux de Tilée…) : absents des packs fournis, à extraire du pack du jeu qui les contient. 17 variantes de magie réutilisent le portrait du même personnage (`ICON_ALIAS`, `icons.js`).
-- Calibrer `FRONT_K` et `ENGAGE` sur les 11 mesures (non fait) ; mesures et calage d'impact dans `docs/calibrage_impact.md`.
+- Portraits : 18 seigneurs/héros n'ont toujours pas d'image (Hérauts de Slaanesh Ombres/Slaanesh, Valkia, Festus, Azrik, Kihar, Throgg…) : leur carte de jeu est un « placeholder » (pas d'image dans `ui/units/icons`) ou leur DLC n'est pas installé. 25 variantes réutilisent le portrait du même personnage (`ICON_ALIAS`, `icons.js`).
+- Calibrer `ENGAGE` : non départageable avec les 11 mesures ; demande des essais dédiés (mêlée longue sans charge, par ex. infanterie contre infanterie à l'arrêt). `FRONT_K` calé à 3.
 - Workflow GitHub Actions (`.github/workflows/build-data.yml`) : jamais exécuté.
