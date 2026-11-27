@@ -124,6 +124,10 @@ function crest(key, cls = "", labelOverride = "") {
   return `<span class="crest ${cls}">${svg}${img}</span>`;
 }
 function factionBanner(key, n) {
+  if (isMulti(key)) {   // sélection multiple : factions et races combinées
+    const ks = keysOf(key), nm = k => k.startsWith(RACE) ? D.cultures[k.slice(RACE.length)] : D.factions[k] || k;
+    return `<div class="fb">${crest(ALL)}<div><div class="fbn">${ks.length} sélections</div><small>${ks.map(nm).join(", ")} · ${n} unité${n > 1 ? "s" : ""} affichée${n > 1 ? "s" : ""}</small></div></div>`;
+  }
   const c = cultOf(key), race = isRace(key), icon = race ? crest(mainFacOf(c), "", D.cultures[c]) : crest(key);
   const nm = race ? D.cultures[c] + " — toute la race" : D.factions[key] || key;
   const sub = key === ALL ? "Toutes les races" : race ? `${factionsOfRace(c).length} factions` : D.cultures[c];

@@ -37,7 +37,7 @@
     `<span class="pb" style="background:hsl(${p*1.2},55%,62%)" title="${tip}">${p >= 50 ? "Top " + Math.max(1, Math.round(100-p)) : "Bottom " + Math.max(1, Math.round(p))} %</span>`;
   const f = v => v >= 1000 ? Math.round(v).toLocaleString("fr-FR") : (Math.round(v*10)/10).toString();
 
-  const fs = $b("#bfac"); initPicker(fs, ALL); // sélection de départ : toutes les factions
+  const fs = $b("#bfac"); initPicker(fs, ALL, true); // sélection de départ : toutes les factions
   const BTYPO = TYPO; // même sélection d'usages que le tier list (déclaré tôt : un premier rendu peut avoir lieu pendant la synchronisation des filtres)
   let sortK = "cost", sortD = 1; // catégories, usages, faction, recherche et seigneurs/héros : état PARTAGÉ avec le tier list (variables globales de app.js)
   $b("#bgrp").innerHTML = GROUPS.map(g => `<label><input type="checkbox" data-g="${g}" checked>${g}</label>`).join("");
@@ -53,7 +53,7 @@
   ["bpool","bq","bcols","bheroes"].forEach(i => $b("#"+i).addEventListener("input", render));
   /* Filtres communs aux deux onglets : faction, recherche et case « seigneurs & héros » sont recopiés dans les deux sens ; catégories et usages sont les mêmes ensembles (role, TYPO) */
   const fsel2 = document.querySelector("#faction"), q1 = document.querySelector("#q"), h1 = document.querySelector("#heroes"), h2 = $b("#bheroes");
-  const copyFac = (from, to) => { if (to.value !== from.value) { to.value = from.value; to.dispatchEvent(new Event("change")); } };
+  const copyFac = (from, to) => { if (to.value !== from.value) { setFac(to, from.value); to.dispatchEvent(new Event("change")); } };
   fs.addEventListener("change", () => { copyFac(fs, fsel2); render(); }); fsel2.addEventListener("change", () => copyFac(fsel2, fs));
   $b("#bq").addEventListener("input", () => { q1.value = $b("#bq").value; }); q1.addEventListener("input", () => { $b("#bq").value = q1.value; });
   h2.addEventListener("input", () => { h1.checked = h2.checked; }); h1.addEventListener("input", () => { h2.checked = h1.checked; });
