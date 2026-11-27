@@ -255,7 +255,7 @@ def main():
         return round(b, 3), round(math.pi * (a + b) * (1 + 3 * h / (10 + math.sqrt(4 - 3 * h))), 3)
 
     # Attributs de charge (unit_attributes) : land_units.attribute_group -> unit_attributes_to_groups_junctions
-    CHARGE_ATTRS = {"charge_defense", "charge_defense_vs_large", "charge_reflection", "ogre_charge", "ogre_charge_upgraded"}
+    CHARGE_ATTRS = {"charge_defense", "charge_defense_vs_large", "charge_reflection", "ogre_charge", "ogre_charge_upgraded", "mounted_fire_move"}   # + tir en mouvement (cavalerie à arc)
     attrs_of_group = defaultdict(set)
     for r in T.get("unit_attributes_to_groups_junctions", []):
         if r.get("attribute") in CHARGE_ATTRS: attrs_of_group[r.get("attribute_group")].add(r["attribute"])
@@ -309,7 +309,7 @@ def main():
             "ma": num(col(lu, "ma")), "md": num(col(lu, "md")),
             "charge": num(col(lu, "charge")), "ld": num(col(lu, "morale")),
             "speed": speed_card,
-            "acc": num(col(lu, "acc")), "rd": num(lu.get("rank_depth")), "rw": body(sp_ent)[0], "per": body(sp_ent)[1], "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
+            "acc": num(col(lu, "acc")), "rd": num(lu.get("rank_depth")), "rw": body(sp_ent)[0], "per": body(sp_ent)[1], "mass": round(num(sp_ent.get("mass")), 1), "caste": caste, "cat": lu.get("category", ""), "cls": lu.get("class", ""),
             "melee": {"dmg": num(col(mw, "w_dmg")), "ap": num(col(mw, "w_ap")),
                       "interval": num(col(mw, "w_interval"), 5) or 5,
                       "bvi": num(col(mw, "w_bvi")), "bvl": num(col(mw, "w_bvl")), "fl": 1 if num(mw.get("ignition_amount")) > 0 else 0, "mg": 1 if (mw.get("is_magical") or "").lower() == "true" else 0},

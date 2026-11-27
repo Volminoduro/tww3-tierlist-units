@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_IN_MELEE:0.4, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:2000, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -44,8 +44,39 @@ function simulate(ARMY, BON, opts) {
      charge_defense_vs_large celui des grands attaquants ; ogre_charge n'en perd que la moitié (le quart pour ogre_charge_upgraded) ; charge_reflection double les dégâts infligés aux ennemis qui chargent
      (tant que leur bonus restant dépasse REFLECT_MIN). */
   const hold = {A: !!(opts.hold && opts.hold.A === true), B: !!(opts.staticB || (opts.hold && opts.hold.B === true))};
-  const vA = hold.A ? 0 : spd("A"), vB = hold.B ? 0 : spd("B"), closing = Math.max(0.5, vA + vB);
-  const T0 = opts.dist / closing, upTot = s => S[s].reduce((a,x) => a + x.up, 0);
+  /* Garder ses distances (hit and run, stratégie « kite » d'un camp de tireurs) : le camp K reste immobile et tire ; quand l'ennemi arrive à KITE_GAP m il recule (s'il est plus rapide que lui : vK > vE),
+     puis s'arrête et tire de nouveau, jusqu'à avoir épuisé sa marge de recul (opts.room, KITE_ROOM = 400 m par défaut). Sur toute cette phase (qui dure room / vE) K ne tire qu'une fraction 1 − vE/vK du
+     temps (reculer et tirer en alternance), sauf les unités à tir en mouvement (attribut mounted_fire_move) qui tirent en permanence. Le contact arrive à la fin. Si l'ennemi tient sa position, K avance
+     jusqu'à sa portée et tire sans jamais engager ; si K n'est pas plus rapide que l'ennemi, il ne peut pas se dérober (il tient simplement sa position). Un seul camp peut garder ses distances. */
+  const kiteReq = {A: !!(opts.hold && opts.hold.A === "kite"), B: !!(opts.hold && opts.hold.B === "kite")};
+  const KS = kiteReq.A && !kiteReq.B ? "A" : kiteReq.B && !kiteReq.A ? "B" : null;
+  const vRaw = {A: spd("A"), B: spd("B")};
+  const vA = (hold.A || KS === "A") ? 0 : vRaw.A, vB = (hold.B || KS === "B") ? 0 : vRaw.B;
+  let closing = Math.max(0.5, vA + vB), T0 = opts.dist / closing, kiteT = null;
+  if (KS) { const E = KS === "A" ? "B" : "A", vK = vRaw[KS], vE = hold[E] ? 0 : vRaw[E];
+    if (vE <= 0) { T0 = Infinity; closing = Math.max(0.5, vK); }
+    else if (vK > vE) { const Tg = Math.max(0, (opts.dist - SIM.KITE_GAP) / vE); T0 = Tg + (opts.room ?? SIM.KITE_ROOM) / vE; kiteT = {side: KS, Tg, duty: 1 - vE / vK}; }
+  }
+  const upTot = s => S[s].reduce((a,x) => a + x.up, 0);
+  const meleeShoot = a => a.u.men <= 6 ? 0 : clamp((1 - 1 / (a.u.rd > 0 ? a.u.rd : SIM.RANK_DEFAULT)) * SIM.RANGED_LOS, 0, 1);   // tireurs au contact : les rangs arrière tirent encore, gênés par la ligne de mêlée (RANGED_LOS)
+  /* Impact (collision) d'une charge : au premier contact, chaque modèle attaquant qui charge (ni « marche », ni « tient », ni « garde ses distances ») heurte le défenseur. Dégâts par modèle touché =
+     min(IMPACT_MAX, IMPACT_MOD ÷ IMPACT_NORM × ½·masse·Δv² ÷ IMPACT_E) (IMPACT_MOD, IMPACT_NORM, IMPACT_MAX, IMPACT_AP viennent de _kv_rules ; IMPACT_E et IMPACT_PEN sont des échelles posées par nous, calibrées à vue : une charge de cavalerie lourde fauche de l'ordre de 20 à 30 fantassins légers, non vérifié), dont 70 % perforants (IMPACT_AP) ;
+     Δv = vitesse de course de l'attaquant (+ celle du défenseur s'il avance : choc frontal). Pénétration : modèles heurtés par attaquant = 1 + IMPACT_PEN × log2(masse attaquant ÷ masse du défenseur), bornés par
+     ses rangs ; un défenseur en bracing compte une masse accrue (jusqu'à ×4 à 8 rangs, ×2 de plus avec charge_defense). Ni renversement ni recul modélisés. */
+  const impactDmg = (a, d, E) => {
+    if (hold[a.side] || walk[a.side] || a.side === KS) return 0;
+    const mA = a.u.mass || 0, rvD = (hold[d.side] || d.side === KS) ? 0 : d.spd / 10, dv = a.spd / 10 + rvD;
+    if (!(mA > 0 && dv > 0 && E > 0)) return 0;
+    const rd = d.u.rd > 0 ? d.u.rd : 1, brace = hold[d.side] ? 1 + 3 * Math.min(1, rd / 8) * (d.at.has("charge_defense") ? 2 : 1) : 1, mD = Math.max(1, (d.u.mass || 100) * brace);
+    const dm = Math.min(SIM.IMPACT_MAX, SIM.IMPACT_MOD / SIM.IMPACT_NORM * 0.5 * mA * dv * dv / SIM.IMPACT_E) * (SIM.IMPACT_AP + (1 - SIM.IMPACT_AP) * (1 - d.arm / 200));
+    const P = clamp(1 + SIM.IMPACT_PEN * Math.log2(Math.max(1, mA / mD)), 1, rd), N = Math.min(d.pool / d.hp, E * P);
+    return N * dm * resMul(d, {}, false);
+  };
+  let impDone = false;
+  const contactCap = (d, E, rbar) => {        // nombre maximal d'attaquants qui peuvent engager d en même temps (front de combat)
+    if (d.u.men <= 6) return (d.u.per > 0 && rbar > 0 ? d.u.per / (2 * rbar) + Math.PI : SIM.FRONT_LARGE) * (d.pool / d.hp);
+    const units = Math.max(1, d.cnt), w0 = d.u.men / (d.u.rd > 0 ? d.u.rd : SIM.RANK_DEFAULT); return SIM.FRONT_K * units * Math.min(w0, (d.pool / d.hp) / units);
+  };
   const walk = {A: !!(opts.hold && opts.hold.A === "walk"), B: !!(opts.hold && opts.hold.B === "walk")};   // « marche » : avance sans courir = pas de bonus de charge, mais pas en bracing
   const rawF = (a, t) => (hold[a.side] || walk[a.side] || t < T0) ? 0 : Math.max(0, 1 - (t - T0) / SIM.CHARGE_DECAY);
   const chargeF = (a, d, t) => { let f = rawF(a, t);
@@ -71,6 +102,8 @@ function simulate(ARMY, BON, opts) {
       for (const a of S[me]) {
         if (a.out) continue;
         const n = a.pool / a.hp, u = a.u;
+        const kitingNow = kiteT && kiteT.side === me && t >= kiteT.Tg && t < T0;
+        const rf = t >= T0 ? meleeShoot(a) : (kitingNow && !a.at.has("mounted_fire_move") ? kiteT.duty : 1);     // part du temps / des modèles qui tirent
         for (const d of tg) {
           const w = (d.pool/d.hp) / W; let dps = 0, dpsM = 0;
           if (t >= T0) { // mêlée
@@ -82,18 +115,19 @@ function simulate(ARMY, BON, opts) {
             dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm/200) + ap*cm*a.mdm) / Math.max(1, m.interval) * resMul(d, m, false) * (reflected(a, d, t) ? SIM.REFLECT : 1);
             dps += dpsM;
             const wm = frontAlive ? wt(d) / Wm : w;                                                          // part de la mêlée dirigée vers d
+            if (!impDone) { const Ee = Math.min(eng * wm, contactCap(d, eng * wm, u.rw || 0)), im = impactDmg(a, d, Ee); if (im > 0) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + im); }   // impact de la charge (une fois)
             engIn[foe].set(d, (engIn[foe].get(d) || 0) + eng * wm);                                          // attaquants qui cherchent à engager d
             radIn[foe].set(d, (radIn[foe].get(d) || 0) + eng * wm * (u.rw || 0));                            // … et leur demi-largeur cumulée (pour la taille moyenne des attaquants)
           }
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
-            const inRange = opts.dist - closing*t <= a.range, f = t >= T0 ? SIM.RANGED_IN_MELEE : 1;
+            const inRange = opts.dist - closing*t <= a.range, f = rf;
             if (inRange || t >= T0) dps += n * (r.share ?? 1) * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / Math.max(1, r.reload) * resMul(d, r, true);
           }
           if (dps - dpsM) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (dps - dpsM) * w);                      // tir : pas limité par le front
           if (dpsM) meleeIn[foe].set(d, (meleeIn[foe].get(d) || 0) + dpsM * (frontAlive ? wt(d) / Wm : w)); // mêlée : limitée par le front, voir plus bas
         }
-        if (u.ranged && a.ammo > 0 && (opts.dist - closing*t <= a.range || t >= T0)) a.ammo -= 1/Math.max(1, u.ranged.reload);
+        if (u.ranged && a.ammo > 0 && (opts.dist - closing*t <= a.range || t >= T0)) a.ammo -= rf/Math.max(1, u.ranged.reload);
       }
     }
     // Front de combat : la mêlée subie par une unité est réduite si plus d'attaquants cherchent à l'engager que la surface de contact ne le permet
@@ -109,6 +143,7 @@ function simulate(ARMY, BON, opts) {
       else { const units = Math.max(1, d.cnt), w0 = d.u.men / (d.u.rd > 0 ? d.u.rd : SIM.RANK_DEFAULT); cap = SIM.FRONT_K * units * Math.min(w0, Nd / units); }
       dmgIn[s].set(d, (dmgIn[s].get(d) || 0) + v * (E > cap && E > 0 ? cap / E : 1));
     }
+    if (t >= T0) impDone = true;
     for (const s of ["A","B"]) for (const [d, v] of dmgIn[s]) d.pool = Math.max(0, d.pool - v);
     // Régénération (capacité passive, u.regen = fraction des PV max par seconde, par modèle vivant). Le soin ne ressuscite personne : les modèles morts
     // (PV perdus ÷ PV d'un modèle, au pire moment) sont définitivement perdus, donc le total ne dépasse jamais (modèles vivants × PV d'un modèle).
@@ -136,11 +171,13 @@ function simulate(ARMY, BON, opts) {
 const CAN_HOLD = e => !!(e.u.at && e.u.at.some(a => a === "charge_defense" || a === "charge_defense_vs_large" || a === "charge_reflection"));
 function resolve(ARMY, BON, opts) {
   const w = opts.hold || {};
-  const fixed = s => w[s] === "auto" ? null : ((s === "B" && opts.staticB) || w[s] === true) ? "hold" : w[s] === "walk" ? "walk" : "charge";
+  const fixed = s => w[s] === "auto" ? null : ((s === "B" && opts.staticB) || w[s] === true) ? "hold" : w[s] === "walk" ? "walk" : w[s] === "kite" ? "kite" : "charge";
   const canH = {A: ARMY.A.some(CAN_HOLD), B: ARMY.B.some(CAN_HOLD)};
-  const optsOf = s => { const f = fixed(s); if (f) return [f]; const o = ["charge"]; if (canH[s === "A" ? "B" : "A"]) o.push("walk"); if (canH[s]) o.push("hold"); return o; };
-  const oa = optsOf("A"), ob = optsOf("B"), cache = {}, H = x => x === "hold" ? true : x === "walk" ? "walk" : false,
-    bad = (a, b) => a === "hold" && b === "hold" && (ARMY.A.some(e => e.u.ranged) || ARMY.B.some(e => e.u.ranged));   // avec des tireurs, deux camps immobiles ne sont pas une impasse (ils peuvent tirer) : combinaison exclue
+  const army = s => ARMY[s], spdOf = s => { let w = 0, t = 0; army(s).forEach(e => { const n = e.count * e.u.men; w += n; t += n * e.u.speed; }); return w ? t / w : 0; };
+  const canKite = s => { const o = s === "A" ? "B" : "A"; return army(s).some(e => e.u.ranged) && (spdOf(s) > spdOf(o) || canH[o]); };    // garder ses distances : tireurs plus rapides que l'ennemi (ou ennemi qui tient)
+  const optsOf = s => { const f = fixed(s); if (f) return [f]; const o = ["charge"]; if (canH[s === "A" ? "B" : "A"]) o.push("walk"); if (canH[s]) o.push("hold"); if (canKite(s)) o.push("kite"); return o; };
+  const oa = optsOf("A"), ob = optsOf("B"), cache = {}, H = x => x === "hold" ? true : x === "walk" ? "walk" : x === "kite" ? "kite" : false,
+    bad = (a, b) => (a === "kite" && b === "kite") || (a === "hold" && b === "hold" && (ARMY.A.some(e => e.u.ranged) || ARMY.B.some(e => e.u.ranged)));   // avec des tireurs, deux camps immobiles ne sont pas une impasse (ils peuvent tirer) : combinaison exclue
   const run = (a, b) => cache[a + "|" + b] ??= (() => { const r = simulate(ARMY, BON, {...opts, hold: {A: H(a), B: H(b)}, tmax: a === "hold" && b === "hold" ? 1 : opts.tmax}); return {r, m: (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0)}; })();
   let eq = null; const EPS = 0.005;
   if (oa.length === 1 && ob.length === 1) eq = [oa[0], ob[0]];

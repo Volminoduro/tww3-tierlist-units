@@ -96,12 +96,14 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 2. ~~Décroissance linéaire du bonus sur 13 s~~ **fait**.
 3. ~~Extraire les attributs d'unité~~ **fait** (champ `at`) :  (`land_units.attribute_group` → `unit_attributes_groups`/`…_to_groups_junctions`) : `charge_defense`, `charge_defense_vs_large`, `charge_reflection`, `ogre_charge*` ; annuler le bonus de charge des attaquants (tous, ou grands seulement) quand l'unité est en bracing.
 4. ~~Qui est en bracing~~ **décidé** : réglage par armée « Charge / Tient sa position » dans le Combat (**fait**) ; **fait** : choix automatique de l'option la plus rentable pour chaque camp (`resolve` dans `sim.js`), aussi dans les duels précalculés.
-5. Masse : dégâts d'impact (cavalerie, monstres) selon masse × vitesse avec les constantes ci-dessus ; formule à calibrer (non fournie par les tables).
+5. ~~Masse : dégâts d'impact~~ **fait** (approximation à calibrer : `IMPACT_E`, `IMPACT_PEN` dans `sim.js`).
 6. Heure d'arrivée **par unité** (selon sa vitesse) au lieu d'une heure commune pour toute l'armée.
 7. Documenter ces limites dans l'onglet Méthode tant que ce n'est pas fait.
 8. **Charge à travers plusieurs rangs** : une charge de cavalerie ou de monstre ne se limite pas au premier rang (elle renverse et traverse des modèles, les rangs arrière subissent l'impact). Non modélisé : seule la largeur du front limite aujourd'hui le contact ; à lier aux dégâts d'impact (point 5) et aux rangs (`rank_depth`).
 
-## 6. Impact, masse et charge à travers les rangs (à modéliser)
+## 6. Impact, masse et charge à travers les rangs (première version faite ; reste : renversement, recul, calibrage)
+
+**État** : impact au contact selon masse et vitesse, pénétration des rangs selon le rapport de masse et bracing (masse accrue) sont dans `sim.js` (voir README « Charge »). **Reste** : renversement / recul (modèles hors combat 1 à 2,7 s, `collision_speed_delta_threshold_*`), calibrage de `IMPACT_E` / `IMPACT_PEN` sur des repères en jeu, flancs et dos. Le plan d'origine est conservé ci-dessous.
 
 **Souhait** : modéliser l'impact (dégâts de collision) des charges et leur pénétration dans les rangs, pour que la cavalerie lourde et les monstres aient leur valeur réelle dans les duels et le tier list (aujourd'hui seul le bonus de charge entre en jeu, voir point 5).
 
