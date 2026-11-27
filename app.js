@@ -115,13 +115,22 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
  // Mobilité : vitesse pure, jamais divisée par le coût (une unité lente et bon marché ne devient pas « mobile »)
  us.forEach(x=>x.score= ar==="global" ? x[key] : key==="value"&&ar!=="speed" ? x.arche[ar]/Math.max(1,x.cost) : x.arche[ar]);
  us.forEach(x=>{x.pct={};});
- ARCHK.forEach(k=>{const v=x=>key==="value"&&k!=="speed"?x.arche[k]/Math.max(1,x.cost):x.arche[k];const s=us.slice().sort((a,b)=>v(a)-v(b));
+ /* Échelle de référence : seigneurs et héros n'y comptent JAMAIS (sinon cocher la case ferait bouger le tier des autres unités). Ils sont simplement placés sur l'échelle des autres unités.
+    pos(ref,val,v) = position d'insertion de v parmi les valeurs de ref (égalités = milieu de la plage), ref étant la liste triée des valeurs de référence. */
+ const LHr=x=>x.u.role==="lord"||x.u.role==="hero";
+ const spread=(vals,v)=>{let lo=0,hi=vals.length;while(lo<hi){const m=(lo+hi)>>1;vals[m]<v?lo=m+1:hi=m;}const a=lo;hi=vals.length;while(lo<hi){const m=(lo+hi)>>1;vals[m]<=v?lo=m+1:hi=m;}return [a,lo];};
+ const refOf=l=>{const r=l.filter(x=>!LHr(x));return r.length?r:l;};
+ ARCHK.forEach(k=>{const v=x=>key==="value"&&k!=="speed"?x.arche[k]/Math.max(1,x.cost):x.arche[k];
+   const vals=refOf(us).map(v).sort((a,b)=>a-b), n=vals.length;
    // égalités = même percentile (moyenne des rangs) ; une unité qui ne sait pas faire l'usage (valeur 0) est à 0, pas étalée sur l'échelle
-   for(let i=0;i<s.length;){let j=i;while(j+1<s.length&&v(s[j+1])===v(s[i]))j++;const pc=v(s[i])<=0?0:us.length>1?Math.round((i+j)/2/(us.length-1)*100):100;for(let t=i;t<=j;t++)s[t].pct[k]=pc;i=j+1;}});
+   us.forEach(x=>{const val=v(x),[lo,hi]=spread(vals,val);const r=Math.min(n-1,Math.max(0,(lo+hi)/2-.5));x.pct[k]=val<=0?0:n>1?Math.round(r/(n-1)*100):100;});});
  if(ar!=="global") us=us.filter(x=>x.arche[ar]>0);
  const groups={}; us.forEach(x=>(groups[$("#scope").value==="role"?x.u.role:"all"]??=[]).push(x));
- for(const g of Object.values(groups)){ g.sort((a,b)=>a.score-b.score);
-  g.forEach((x,i)=>{const p=(i+.5)/g.length; x.tier=TIERS.find(t=>1-p<=t[1])[0]; });}
+ for(const g of Object.values(groups)){ const ref=refOf(g).slice().sort((a,b)=>a.score-b.score), n=ref.length, vals=ref.map(x=>x.score), idx=new Map(ref.map((x,i)=>[x,i]));
+  g.forEach(x=>{let p;
+   if(idx.has(x)) p=(idx.get(x)+.5)/n;                         // unité de référence : rang dans le groupe, comme avant
+   else {const [lo,hi]=spread(vals,x.score); p=(lo+hi)/2/n;}    // seigneur / héros : inséré sur l'échelle sans la modifier
+   x.tier=TIERS.find(t=>1-p<=t[1])[0]; });}
  return us;
 }
 /* Pastilles de catégories : « Nom (nombre d'unités disponibles) », grisées s'il n'y en a aucune. cnt(r) = effectif pour la catégorie r (null = toutes). */
