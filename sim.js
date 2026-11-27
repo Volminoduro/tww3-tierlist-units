@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:2000, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:4000, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
