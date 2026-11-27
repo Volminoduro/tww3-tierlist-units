@@ -152,7 +152,7 @@ function render(){
  us=typoApply(us,x=>x.u,TYPO,$("#typo"));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
- const all=fsel.value===ALL||isRace(fsel.value)||isMulti(fsel.value), fn=u=>{ if(!all) return ""; const fl=facsInScope(u,fsel.value), nm=f=>factions[f]; return `<div class="f" title="${fl.map(nm).join(", ").replace(/"/g,"&quot;")}">${fl.length<=2?fl.map(nm).join(", "):nm(fl[0])+", "+nm(fl[1])+" +"+(fl.length-2)}</div>`; };
+ const all=fsel.value===ALL||isRace(fsel.value)||isMulti(fsel.value), fn=u=>all?`<div class="f">${facIcons(u,fsel.value)}</div>`:"";
  const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
@@ -275,7 +275,7 @@ function briefTiles(list){
 function facBlock(u){
  const k=fsel.value; if(!(k===ALL||isRace(k)||isMulti(k))) return "";
  const fl=facsInScope(u,k); if(!fl.length) return "";
- return `<details class="more dfac"><summary>Disponible dans ${fl.length} faction${fl.length>1?"s":""}</summary><p>${fl.map(f=>factions[f]).join(", ")}</p></details>`;
+ return `<div class="dfac"><small>Disponible chez</small><div class="fis">${facIcons(u,k)}</div></div>`;
 }
 function usageBlock(x){
  const ks=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]), top=ks.slice(0,3), rest=ks.slice(3);

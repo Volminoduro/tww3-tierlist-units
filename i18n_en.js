@@ -33,7 +33,7 @@ Object.assign(I18N.dict, {
   "Toutes les races · # unités affichées": "All races · # units shown",
   "{} · # unités affichées": "{} · # units shown", "# factions · # unités affichées": "# factions · # units shown",
   "# faction": "# faction", "# factions": "# factions",
-  "Disponible dans # faction": "Available in # faction", "Disponible dans # factions": "Available in # factions",
+  "Disponible chez": "Available to",
   "Seigneurs & héros inclus dans « Toutes »": "Lords & heroes included in \"All\"",
 
   // ---------- Filtres, vues, réglages (onglet Tier list) ----------

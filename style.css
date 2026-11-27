@@ -305,4 +305,6 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 .tp-cb{flex:none;width:14px;height:14px;border:1px solid var(--gold3);border-radius:2px;background:#0b0907;position:relative;margin-left:-16px;margin-right:2px}
 .tp-cb.on{background:var(--gold);border-color:var(--gold)}.tp-cb.on::after{content:"";position:absolute;left:4px;top:0;width:4px;height:9px;border:solid #1b1611;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .tp-race.part{box-shadow:inset 3px 0 var(--gold3)}.tp-race.sel .tp-pick{background:#c9a45a2e;border-color:var(--gold)}
-#detail .dfac p{margin:4px 0 8px;font-size:12px;color:var(--m);line-height:1.4}
+.crest.xs{width:16px;height:19px}
+.card .f{display:flex;flex-wrap:wrap;gap:2px 3px;margin-top:3px}.fi{display:inline-flex;cursor:help}
+#detail .dfac{margin:8px 0 4px}#detail .dfac small{color:var(--m);font-size:11px}#detail .fis{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px}#detail .fis .crest.xs{width:22px;height:26px}
