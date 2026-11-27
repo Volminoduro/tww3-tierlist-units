@@ -131,7 +131,7 @@ function simulate(ARMY, BON, opts) {
 /* Choix automatique de la stratégie de chaque camp : CHARGER, MARCHER (avancer sans charger : évite la réflexion et les défenses, mais sans bonus de charge) ou TENIR SA POSITION (bracing, seulement
    pour un camp qui compte des unités à défense contre la charge ou à réflexion). opts.hold.A / .B valent false (charge), "walk", true (tient) ou "auto". Chaque camp « auto » joue au mieux pour lui :
    on simule toutes les combinaisons utiles (au plus 8 batailles), la marge étant la survie en coût rapportée au coût de départ de A moins celle de B (A la maximise, B la minimise), et on retient le point selle
-   (équilibre en stratégies pures : aucune des deux armées ne gagne à changer seule) ; sans point selle, le maximin de A et le minimax de B. Deux camps qui tiennent ne se rencontrent pas : c'est une IMPASSE, comptée comme un match nul (marge 0) ; elle est l'équilibre quand aucun des deux n'a intérêt à attaquer (deux armées de mêlée à réflexion, ex. des lanciers). Si l'un des camps compte des tireurs, la combinaison est exclue (ils peuvent tirer).
+   (équilibre en stratégies pures : aucune des deux armées ne gagne à changer seule) ; sans point selle, le maximin de A et le minimax de B. Deux camps qui tiennent ne se rencontrent pas : c'est une IMPASSE (aucun n'a intérêt à attaquer) : le résultat renvoyé est alors celui d'une bataille FORCÉE au contact, sans charge (les deux avancent en marchant) ; elle est l'équilibre quand aucun des deux n'a intérêt à attaquer (deux armées de mêlée à réflexion, ex. des lanciers). Si l'un des camps compte des tireurs, la combinaison est exclue (ils peuvent tirer).
    « Marcher » n'est utile que face à un camp pouvant tenir (sinon dominé par « charger »). Renvoie le résultat de simulate() plus choice = {A, B} parmi "charge" | "walk" | "hold". */
 const CAN_HOLD = e => !!(e.u.at && e.u.at.some(a => a === "charge_defense" || a === "charge_defense_vs_large" || a === "charge_reflection"));
 function resolve(ARMY, BON, opts) {
@@ -154,8 +154,9 @@ function resolve(ARMY, BON, opts) {
       eq = bad(bA, bB) ? [bA, "charge"] : [bA, bB];
     }
   }
-  const out = run(eq[0], eq[1]);
-  return {...out.r, impasse: eq[0] === "hold" && eq[1] === "hold", hold: {A: eq[0] === "hold", B: eq[1] === "hold"}, choice: {A: eq[0], B: eq[1]}, auto: {A: w.A === "auto", B: w.B === "auto"}};
+  const imp = eq[0] === "hold" && eq[1] === "hold";
+  const out = imp ? run("walk", "walk") : run(eq[0], eq[1]);       // impasse : on renvoie la bataille « forcée au contact » (les deux avancent sans charger), pour que le duel ait un vainqueur
+  return {...out.r, impasse: imp, hold: {A: eq[0] === "hold", B: eq[1] === "hold"}, choice: {A: eq[0], B: eq[1]}, auto: {A: w.A === "auto", B: w.B === "auto"}};
 }
 function equalK(ARMY, BON, opts) { // multiplicateur de l'armée A pour obtenir un match nul (survie en coût de recrutement absolu)
   const f = k => { const r = resolve(ARMY, BON, {...opts, k:{A:k,B:1}}); return r.sA - r.sB; };
