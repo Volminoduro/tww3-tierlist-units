@@ -47,6 +47,9 @@ function setRor(v) {
 }
 const inScope = (u, key) => !(RORX.off && u.ror) && DLCX.ok(u) && (key === ALL || keysOf(key).some(k => k.startsWith(RACE) ? u.races.has(k.slice(RACE.length)) : u.factions.includes(k)));
 
+/* Factions de l'unité comprises dans le périmètre choisi (toutes, une race, une faction ou une sélection multiple), triées par nom */
+const facsInScope = (u, key) => { const ks = keysOf(key); return u.factions.filter(f => !ks.length || ks.some(k => k.startsWith(RACE) ? D.facInfo[f].culture === k.slice(RACE.length) : k === f)).sort((a, b) => D.factions[a].localeCompare(D.factions[b], "fr")); };
+
 /* Prépare la hiérarchie race -> faction : calcule u.factions (clés des factions où l'unité est disponible) et u.races.
    Unités : groupe militaire de la faction (recrutement) ou permission explicite ; seigneurs/héros : par race. */
 (() => {

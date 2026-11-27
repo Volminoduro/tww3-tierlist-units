@@ -152,7 +152,7 @@ function render(){
  us=typoApply(us,x=>x.u,TYPO,$("#typo"));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
- const all=fsel.value===ALL||isRace(fsel.value)||isMulti(fsel.value), fn=u=>all?`<div class="f">${u.factions.length} faction${u.factions.length>1?"s":""}</div>`:"";
+ const all=fsel.value===ALL||isRace(fsel.value)||isMulti(fsel.value), fn=u=>{ if(!all) return ""; const fl=facsInScope(u,fsel.value), nm=f=>factions[f]; return `<div class="f" title="${fl.map(nm).join(", ").replace(/"/g,"&quot;")}">${fl.length<=2?fl.map(nm).join(", "):nm(fl[0])+", "+nm(fl[1])+" +"+(fl.length-2)}</div>`; };
  const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
@@ -271,6 +271,12 @@ function briefTiles(list){
   return `<div class="bt" title="${statTip(o)}"><small>${si(STAT_IC[k]||"target")}${lab}</small><b>${fmtv(o.v)}</b>${o.p==null?"":`<span class="pb" style="background:hsl(${o.p*1.2},55%,62%)">${rankTxt(o.p)}</span>`}</div>`}).join("")}</div>`;
 }
 /* « Pour quoi l'utiliser » : les 3 meilleurs usages en évidence, les autres repliés */
+/* Fiche : factions d'où vient l'unité quand le périmètre en couvre plusieurs (toutes, une race ou une sélection multiple) */
+function facBlock(u){
+ const k=fsel.value; if(!(k===ALL||isRace(k)||isMulti(k))) return "";
+ const fl=facsInScope(u,k); if(!fl.length) return "";
+ return `<details class="more dfac"><summary>Disponible dans ${fl.length} faction${fl.length>1?"s":""}</summary><p>${fl.map(f=>factions[f]).join(", ")}</p></details>`;
+}
 function usageBlock(x){
  const ks=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]), top=ks.slice(0,3), rest=ks.slice(3);
  const row=k=>srow("u_"+k,ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées");
@@ -282,6 +288,7 @@ function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  dt.innerHTML=`<div class="dtop"><div class="dh"><div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><button class="x" id="close">✕</button></div>
  <label class="dpool">Comparée à <select id="dpool"><option value="role_all">même catégorie (tout le jeu)</option><option value="all">toutes les unités du jeu</option><option value="scope">unités de la faction / race affichée</option></select></label>
  <div class="dbrief">${fullPic(u)}${briefTiles(list)}</div></div>
+ ${facBlock(u)}
  ${usageBlock(x)}
  ${duelPanel(u)}
  ${abilBlock(u)}
