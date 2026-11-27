@@ -120,6 +120,13 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
   /* ---------- Fenêtre de réglage ---------- */
   const dlg = document.createElement("dialog"); dlg.id = "profdlg"; dlg.dataset.profui = "1"; document.body.appendChild(dlg);
   const byCul = {}; facs.forEach(f => (byCul[D.facInfo[f].culture] ??= []).push(f));
+
+  /* ---------- Sélecteurs avec icônes (faction : blason ; seigneur : portrait) ---------- */
+  const lordIcon = st => { const u = FX.lords[st] && UN[FX.lords[st].unit]; return u && typeof portrait === "function" ? portrait(u, "pks") : ""; };
+  const facBtn = f => `${crest(f, "s")}<span class="pkt">${esc(D.factions[f] || f)}</span>`;
+  const lordBtn = () => { const st = stOf(); return `${st ? lordIcon(st) : ""}<span class="pkt">${st ? esc(lordLabel(st)) + (PROFILE.lord === "auto" ? " (auto)" : "") : "Aucun seigneur"}</span>`; };
+  const pkItem = (kind, v, ic, label, sel) => `<div class="pki${sel ? " sel" : ""}" data-pk-${kind}="${esc(v)}" data-q="${esc(label.toLowerCase())}">${ic}<span class="pkt">${esc(label)}</span></div>`;
+  const picker = (kind, label, btn, items) => `<div class="pkw"><small>${label}</small><button type="button" class="pkb" data-pkbtn="${kind}">${btn}<i>▾</i></button><div class="pkp" hidden><input class="pkq" placeholder="Filtrer…" spellcheck="false"><div class="pkl">${items}</div></div></div>`;
   const draw = () => {
     const st = stOf(), lord = st ? FX.lords[st] : null, eff = effOf(st), cond = lord ? lord.effects.filter(e => e.stat && e.cond).length : 0;
     const cults = D.cultureOrder.filter(c => byCul[c]).sort((a, b) => D.cultures[a].localeCompare(D.cultures[b], "fr"));
@@ -127,8 +134,8 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     dlg.innerHTML = `<div class="dlch"><h2>Ma campagne</h2><button class="x" type="button" data-close>✕</button></div>
       <p class="dlcp">Choisis ta faction et son seigneur : ses bonus de stats par défaut sont appliqués aux unités de la faction <b>partout sur le site</b> (tier list, unités par faction, fiche d'unité, combat). Les rangs « Top / Bottom % » se recalculent sur les stats modifiées.</p>
       <label class="chk dlcmain"><input type="checkbox" data-on ${PROFILE.on ? "checked" : ""}> Activer ma campagne</label>
-      <div class="profrow"><label>Faction<select data-fac>${cults.map(c => `<optgroup label="${esc(D.cultures[c])}">${byCul[c].sort((a, b) => D.factions[a].localeCompare(D.factions[b], "fr")).map(f => `<option value="${f}" ${f === PROFILE.fac ? "selected" : ""}>${esc(D.factions[f])}</option>`).join("")}</optgroup>`).join("")}</select></label>
-      <label>Seigneur<select data-lord><option value="auto" ${PROFILE.lord === "auto" ? "selected" : ""}>Auto — ${auto ? esc(lordLabel(auto)) : "aucun seigneur de départ connu"}</option><option value="none" ${PROFILE.lord === "none" ? "selected" : ""}>Aucun seigneur</option>${lordChoices(PROFILE.fac).map(s => `<option value="${s}" ${PROFILE.lord === s ? "selected" : ""}>${esc(lordLabel(s))}</option>`).join("")}</select></label></div>
+      <div class="profrow">${picker("fac", "Faction", facBtn(PROFILE.fac), cults.map(c => `<div class="pkh">${esc(D.cultures[c])}</div>` + byCul[c].sort((a, b) => D.factions[a].localeCompare(D.factions[b], "fr")).map(f => pkItem("fac", f, crest(f, "s"), D.factions[f], f === PROFILE.fac)).join("")).join(""))}
+      ${picker("lord", "Seigneur", lordBtn(), pkItem("lord", "auto", auto ? lordIcon(auto) : "", "Auto — " + (auto ? lordLabel(auto) : "aucun seigneur de départ connu"), PROFILE.lord === "auto") + pkItem("lord", "none", "", "Aucun seigneur", PROFILE.lord === "none") + lordChoices(PROFILE.fac).map(x => pkItem("lord", x, lordIcon(x), lordLabel(x), PROFILE.lord === x)).join(""))}</div>
       <div class="profrow"><label><span>Niveau du seigneur : <b data-lvtxt>${PROFILE.level}</b> <small>(${Math.max(0, PROFILE.level - 1)} point${PROFILE.level > 2 ? "s" : ""} de compétence${PROFILE.alloc.length ? `, ${spent()} dépensé${spent() > 1 ? "s" : ""} dans les bonus d'armée` : ""})</small></span>
         <input type="range" min="1" max="40" value="${PROFILE.level}" data-level></label><button type="button" data-lvmax>Tout au max (niveau 40)</button></div>
       <h3>Effets appliqués${st ? " — " + esc(lordLabel(st)) : ""}</h3>
@@ -141,6 +148,17 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
   document.addEventListener("click", e => { if (e.target.closest("[data-pedit]")) open(); const o = e.target.closest("[data-poff]"); if (o) { PROFILE.on = false; changed(); } });
   dlg.addEventListener("click", e => { if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
     if (e.target.closest("[data-poff2]")) { PROFILE.on = false; changed(); draw(); } });
+  dlg.addEventListener("click", e => {
+    const b = e.target.closest("[data-pkbtn]");
+    if (b) { const p = b.parentNode.querySelector(".pkp"), was = p.hidden; dlg.querySelectorAll(".pkp").forEach(x => { x.hidden = true; }); p.hidden = !was; if (!p.hidden) { const q = p.querySelector(".pkq"); q.value = ""; p.querySelectorAll(".pki,.pkh").forEach(x => { x.hidden = false; }); q.focus(); const sel = p.querySelector(".pki.sel"); if (sel) sel.scrollIntoView({block: "nearest"}); } return; }
+    const f = e.target.closest("[data-pk-fac]"), l = e.target.closest("[data-pk-lord]");
+    if (f) { PROFILE.fac = f.dataset.pkFac; PROFILE.lord = "auto"; PROFILE.on = true; changed(); draw(); return; }
+    if (l) { PROFILE.lord = l.dataset.pkLord; PROFILE.on = true; changed(); draw(); return; }
+    if (!e.target.closest(".pkp")) dlg.querySelectorAll(".pkp").forEach(x => { x.hidden = true; });
+  });
+  dlg.addEventListener("input", e => { const q = e.target.closest(".pkq"); if (!q) return; const t = q.value.trim().toLowerCase();
+    q.parentNode.querySelectorAll(".pki").forEach(x => { x.hidden = !!t && !x.dataset.q.includes(t); });
+    q.parentNode.querySelectorAll(".pkh").forEach(h => { let n = h.nextElementSibling, any = false; while (n && n.classList.contains("pki")) { if (!n.hidden) any = true; n = n.nextElementSibling; } h.hidden = !!t && !any; }); });
   dlg.addEventListener("input", e => { if ("level" in e.target.dataset) dlg.querySelector("[data-lvtxt]").textContent = e.target.value; });     // pendant le glissement : seulement l'affichage
   dlg.addEventListener("click", e => { if (e.target.closest("[data-lvmax]")) { PROFILE.level = 40; PROFILE.on = true; changed(); draw(); } });
   dlg.addEventListener("change", e => { const c = e.target;
