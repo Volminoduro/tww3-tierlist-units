@@ -24,6 +24,8 @@ Object.assign(I18N.dict, {
   "Race & faction": "Race & faction",
   "Toutes les factions": "All factions", "Toutes les races": "All races",
   "Filtrer races et factions…": "Filter races and factions…",
+  "Coche plusieurs races ou factions pour les combiner.": "Tick several races or factions to combine them.",
+  "# sélections": "# selections", "✓ Tout": "✓ All",
   "Aucun résultat": "No result",
   "Tout": "All", "Choisir toute la race": "Pick the whole race",
   "Cliquer pour déplier / replier": "Click to expand / collapse", "Déplier / replier": "Expand / collapse",

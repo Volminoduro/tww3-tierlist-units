@@ -19,7 +19,7 @@ $("#how").innerHTML = "Puissance = √(PV effectifs × dégâts/s) × bonus vite
 for (const [id,l,mn,mx,df,st,g] of W) { S[id]=df;
  $("#"+g).insertAdjacentHTML("beforeend",`<div class="sl"><span>${l}</span><b id="v_${id}">${df}</b><input type="range" id="${id}" min="${mn}" max="${mx}" step="${st}" value="${df}"></div>`);
  $("#"+id).oninput = e => { S[id]=+e.target.value; $("#v_"+id).textContent=e.target.value; render(); }; }
-const fsel=$("#faction"); initPicker(fsel,ALL); // sélection de départ : toutes les factions
+const fsel=$("#faction"); initPicker(fsel,ALL,true); // sélection de départ : toutes les factions
 const roles = [...new Set(D.units.map(u=>u.role))];
 $("#roles").innerHTML = `<button data-r="">Toutes</button>` + roles.map(r=>`<button data-r="${r}">${ROLES[r]||r}</button>`).join("");
 /* Catégories : sélection multiple (aucune sélectionnée = « Toutes ») */
@@ -152,7 +152,7 @@ function render(){
  us=typoApply(us,x=>x.u,TYPO,$("#typo"));
  $("#tiers").hidden=view!=="tiers"; $("#table").hidden=view!=="table"; $("#matrix").hidden=view!=="matrix";
  $("#fban").innerHTML=factionBanner(fsel.value,us.length);
- const all=fsel.value===ALL||isRace(fsel.value), fn=u=>all?`<div class="f">${u.factions.length} faction${u.factions.length>1?"s":""}</div>`:"";
+ const all=fsel.value===ALL||isRace(fsel.value)||isMulti(fsel.value), fn=u=>all?`<div class="f">${u.factions.length} faction${u.factions.length>1?"s":""}</div>`:"";
  const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
@@ -297,8 +297,7 @@ $("#detail").addEventListener("change",e=>{ if(e.target.id==="dpool"){ DPOOL=e.t
 function saveUI(){ if(!uiReady) return; PREF.set("ui",{fac:fsel.value,roles:[...role],typo:[...TYPO],q:$("#q").value,heroes:$("#heroes").checked,mode:$("#mode").value,metric:$("#metric").value,scope:$("#scope").value,arch:$("#arch").value,view,S,dpool:DPOOL}); }
 let uiReady=false;
 (()=>{ const s=PREF.get("ui",null); if(s){
-  const okFac=f=>f===ALL||(typeof f==="string"&&(f.startsWith(RACE)?D.cultures[f.slice(RACE.length)]:D.facInfo[f]));
-  if(okFac(s.fac)){ fsel.value=s.fac; fsel.dispatchEvent(new Event("change")); }
+  if(okFacKey(s.fac)){ setFac(fsel,s.fac); fsel.dispatchEvent(new Event("change")); }
   (s.roles||[]).filter(r=>roles.includes(r)).forEach(r=>role.add(r)); (s.typo||[]).filter(k=>ARCHK.includes(k)).forEach(k=>TYPO.add(k));
   if(typeof s.q==="string") $("#q").value=s.q; $("#heroes").checked=!!s.heroes;
   for(const [id,v] of [["mode",s.mode],["metric",s.metric],["scope",s.scope],["arch",s.arch]]) if(v&&[...$("#"+id).options].some(o=>o.value===v)) $("#"+id).value=v;
