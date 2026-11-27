@@ -41,9 +41,9 @@ function effectsOf(side) {
 const effHits = (e, u, lord) => e.units == null || (e.units === "lord" ? !!lord && u.id === lord.unit : e.units.includes(u.id));
 function applyMods() { // calcule e.mods de chaque unité des armées (lus par sim.js)
   for (const side of ["A", "B"]) {
-    const {lord, eff} = effectsOf(side), act = eff.filter(e => !e.cond);
+    const {st, lord, eff} = effectsOf(side), act = eff.filter(e => !e.cond), inProf = PROFILE.on && !!st && PROFILE.st === st;   // même seigneur que le profil de campagne : ses effets sont déjà dans les stats (profile.js)
     ARMY[side].forEach(e => { const m = {};
-      for (const x of act) { if (!effHits(x, e.u, lord)) continue;
+      for (const x of act) { if (!effHits(x, e.u, lord) || (inProf && e.u._pm)) continue;
         const base = {ma: e.u.ma, md: e.u.md, arm: e.u.armour, ld: e.u.ld, charge: e.u.charge}[x.stat]; // stat « en points » mais effet en % : converti
         m[x.stat] = (m[x.stat] || 0) + (x.pct && base !== undefined ? base * x.v / 100 : x.v); }
       e.mods = m; });
@@ -59,12 +59,13 @@ function renderLordOptions(side) { // liste des seigneurs de la race / faction c
 function renderLordList(side) {
   const el = document.querySelector(`.army[data-side=${side}]`), ul = el.querySelector(".lfxl"), {st, lord, eff} = effectsOf(side), army = ARMY[side];
   if (!st) { ul.innerHTML = "<li class='none'>Aucun seigneur : aucun effet appliqué.</li>"; return; }
+  const inProf = PROFILE.on && PROFILE.st === st;
   const act = eff.filter(e => !e.cond), cond = eff.filter(e => e.cond);
   const tgt = e => { if (e.units === "lord") return "le seigneur seul"; if (e.units == null) return "toutes les unités";
     const m = e.label.match(/ for (.+)$/); return `pour ${m ? m[1] : "certaines unités"} (${e.units.length} type${e.units.length > 1 ? "s" : ""})`; };
   const line = e => { const on = army.some(a => effHits(e, a.u, lord));
     return `<li class="${on ? "" : "off"}" title="${e.label} (${e.src})">${STAT_LABEL[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)}${on ? "" : " (aucune unité de l'armée concernée)"}</li>`; };
-  ul.innerHTML = (act.length ? act.map(line).join("") : `<li class='none'>${lordLabel(st)} : aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne).</li>`) +
+  ul.innerHTML = (inProf ? "<li class='none'>Seigneur de « Ma campagne » : ses effets sont déjà dans les stats des unités.</li>" : "") + (act.length ? act.map(line).join("") : `<li class='none'>${lordLabel(st)} : aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne).</li>`) +
     (cond.length ? `<li class='none'>${cond.length} effet(s) conditionnel(s) non appliqué(s) (terrain, embuscade, race adverse…).</li>` : "");
 }
 

@@ -137,3 +137,6 @@ Le dump contient la propriété de chaque contenu : `main_unit_ownership_content
 
 
 **Front de l'attaquant (charge)** : seule une part des modèles engagés charge de plein fouet (1er rang + `RANK2` × 1er rang, divisé par les rangs de l'unité et par `ENGAGE`) ; cette part borne l'impact et le bonus de charge. Les 11 mesures en jeu préfèrent `RANK2` = 2 (aucune réduction jusqu'à 5 rangs) : le mécanisme ne joue donc que pour les unités de plus de 5 rangs.
+
+## Ma campagne (profil global)
+`profile.js` : réglage mémorisé « Ma campagne » (bandeau sous les onglets, bouton **Ma campagne…**). Choisis une faction et son seigneur : les effets de stats non conditionnels de ce seigneur (`data/effects.js`) sont appliqués **aux unités de cette faction, partout sur le site** — tier list, unités par faction, fiche d'unité (rangs Top / Bottom % recalculés) et Combat, qui ne compte pas deux fois le même seigneur. Les stats d'origine restent dans `u._b` ; `u._pm` marque une unité modifiée. Les duels précalculés restent au profil par défaut. Niveau, compétences et technologies viendront s'y brancher (voir `TODO.md`, points 1, 3 et 4).

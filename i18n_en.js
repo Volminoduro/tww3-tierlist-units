@@ -1,6 +1,23 @@
 "use strict";
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
+  // ---------- Ma campagne (profil global) ----------
+  "Ma campagne…": "My campaign…",
+  "Ma campagne": "My campaign",
+  "Applique à tout le site le seigneur et les bonus de ta faction.": "Applies your faction's lord and bonuses to the whole site.",
+  "Modifier": "Edit",
+  "Désactiver": "Turn off",
+  "Activer ma campagne": "Enable my campaign",
+  "Faction": "Faction",
+  "Seigneur": "Lord",
+  "Aucun seigneur": "No lord",
+  "Effets appliqués": "Applied effects",
+  "Désactiver et revenir aux stats du jeu": "Turn off and go back to the game's stats",
+  "⚑ Ma campagne : {} — {} · stats modifiées de # unité{} (duels précalculés au profil par défaut)": "⚑ My campaign: {} — {} · stats changed for # unit{} (precomputed duels use the default profile)",
+  "sans seigneur": "no lord",
+  "Seigneur de « Ma campagne » : ses effets sont déjà dans les stats des unités.": "\"My campaign\" lord: its effects are already in the units' stats.",
+  "Choisis ta faction et son seigneur : ses bonus de stats par défaut sont appliqués aux unités de la faction partout sur le site (tier list, unités par faction, fiche d'unité, combat). Les rangs « Top / Bottom % » se recalculent sur les stats modifiées.": "Pick your faction and its lord: its default stat bonuses are applied to the faction's units everywhere on the site (tier list, units by faction, unit sheet, battle). The \"Top / Bottom %\" ranks are recomputed on the modified stats.",
+  "Pas encore pris en compte : niveau et compétences du seigneur, technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.": "Not yet included: the lord's level and skills, technologies and other faction bonuses (planned). The precomputed duels of the \"duels\" ranking stay at the default profile. In Battle, this same lord's effect is not counted twice.",
   // ---------- En-tête, onglets, pied de page ----------
   "Total War : Warhammer III": "Total War: Warhammer III",
   "Tier list & comparateur d'unités": "Tier list & unit comparator",

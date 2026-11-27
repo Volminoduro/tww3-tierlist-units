@@ -1,0 +1,110 @@
+"use strict";
+/* Profil de campagne GLOBAL (« Ma campagne »), voir TODO.md point 0.
+   Un profil = une faction + son seigneur (niveau, compétences et technologies viendront s'y ajouter : points 1 et 3). Il produit des modificateurs PAR UNITÉ
+   (ma, md, arm, ld, charge en points ; ws, ms, spd, hp, ammo, range en %), exactement ceux que le Combat applique déjà au seigneur d'une armée (data/effects.js).
+   Ici ils sont appliqués aux STATS des unités (D.units modifiées sur place, valeurs d'origine gardées dans u._b) : tier list, unités par faction, fiche d'unité et
+   Combat lisent donc tous les stats modifiées, et les rangs « Top / Bottom % » se recalculent d'eux-mêmes. Seules les unités de la faction choisie sont touchées
+   (un bonus « toutes les unités » ne gonfle pas les unités des autres factions). Les duels précalculés (data/duels.js) restent au profil par défaut.
+   Le Combat n'ajoute pas une seconde fois l'effet du même seigneur (u._pm = « déjà modifiée par le profil », lu par battle.js). État mémorisé (PREF « profile »). */
+const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
+(() => {
+  const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}};
+  const UN = Object.fromEntries(D.units.map(u => [u.id, u]));
+  const LAB = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée"};
+  const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+  /* Valeurs d'origine de chaque unité (avant tout profil) */
+  for (const u of D.units) u._b = {ma: u.ma, md: u.md, armour: u.armour, ld: u.ld, charge: u.charge, speed: u.speed, hp: u.hp, m: {...u.melee}, r: u.ranged ? {...u.ranged} : null};
+
+  const facs = Object.keys(FX.leaders).filter(f => D.facInfo[f]);                          // factions dont on connaît le seigneur de départ
+  const inFac = (u, f) => u.factions.includes(f);                                          // périmètre : disponible dans cette faction (indépendant des filtres DLC / renom)
+  const lordLabel = st => { const l = FX.lords[st], u = l && UN[l.unit]; return u ? u.name : st.replace(/^wh\d*_[a-z0-9]+_[a-z]{3}_/, "").replace(/_/g, " "); };
+  const autoLord = f => (FX.leaders[f] || [])[0] || null;
+  const lordChoices = f => Object.keys(FX.lords).filter(st => { const u = UN[FX.lords[st].unit]; return u ? inFac(u, f) : (FX.leaders[f] || []).includes(st); })
+    .sort((a, b) => lordLabel(a).localeCompare(lordLabel(b), "fr"));
+  const stOf = () => !PROFILE.fac ? null : PROFILE.lord === "none" ? null : PROFILE.lord === "auto" ? autoLord(PROFILE.fac) : PROFILE.lord;
+  const effOf = st => { const l = st && FX.lords[st]; return l ? l.effects.filter(e => e.stat && !e.cond) : []; };
+  const hits = (e, u, lord) => e.units == null || (e.units === "lord" ? !!lord && u.id === lord.unit : e.units.includes(u.id));
+
+  /* Modificateurs d'une unité (même conversion que le Combat : un effet en % sur une stat « en points » devient des points) */
+  function modsFor(u, lord, eff) {
+    const m = {};
+    for (const x of eff) { if (!hits(x, u, lord)) continue;
+      const base = {ma: u.ma, md: u.md, arm: u.armour, ld: u.ld, charge: u.charge}[x.stat];
+      m[x.stat] = (m[x.stat] || 0) + (x.pct && base !== undefined ? base * x.v / 100 : x.v); }
+    return m;
+  }
+  function restore(u) {
+    const b = u._b; u.ma = b.ma; u.md = b.md; u.armour = b.armour; u.ld = b.ld; u.charge = b.charge; u.speed = b.speed; u.hp = b.hp;
+    u.melee = {...b.m}; u.ranged = b.r ? {...b.r} : null; u._pm = false;
+  }
+  function modify(u, m) {
+    const p = v => 1 + (v || 0) / 100;
+    u.ma += m.ma || 0; u.md += m.md || 0; u.ld += m.ld || 0; u.charge += m.charge || 0; u.armour = Math.min(100, u.armour + (m.arm || 0));
+    u.speed *= p(m.spd); u.hp *= p(m.hp);
+    if (m.ws) { u.melee.dmg *= p(m.ws); u.melee.ap *= p(m.ws); u.melee.bvi *= p(m.ws); u.melee.bvl *= p(m.ws); }
+    if (u.ranged) {
+      if (m.ms) { u.ranged.dmg *= p(m.ms); u.ranged.ap *= p(m.ms); }
+      if (m.range) u.ranged.range *= p(m.range);
+      if (m.ammo && u.ranged.ammo) u.ranged.ammo *= p(m.ammo);
+    }
+    u._pm = true;
+  }
+  function apply() {
+    const st = PROFILE.on ? stOf() : null, lord = st ? FX.lords[st] : null, eff = effOf(st);
+    PROFILE.st = st; PROFILE.n = 0;
+    for (const u of D.units) {
+      restore(u);
+      if (!st || !eff.length || !(inFac(u, PROFILE.fac) || (lord && u.id === lord.unit))) continue;
+      const m = modsFor(u, lord, eff); if (Object.keys(m).length) { modify(u, m); PROFILE.n++; }
+    }
+  }
+  const save = () => PREF.set("profile", {on: PROFILE.on, fac: PROFILE.fac, lord: PROFILE.lord});
+  const changed = () => { apply(); save(); drawBar(); document.dispatchEvent(new Event("rorchange")); };
+
+  { const s = PREF.get("profile", null);
+    if (s && s.fac && facs.includes(s.fac)) { PROFILE.fac = s.fac; PROFILE.lord = typeof s.lord === "string" ? s.lord : "auto"; PROFILE.on = !!s.on; } }
+  if (!PROFILE.fac) PROFILE.fac = facs.find(f => f === "wh_main_emp_empire") || facs[0] || null;
+  if (!facs.length) { document.querySelectorAll("[data-profui]").forEach(e => e.remove()); return; }
+
+  /* ---------- Bandeau permanent (sous les onglets) : on sait toujours si un profil est actif ---------- */
+  const bar = document.createElement("div"); bar.className = "profbar"; bar.dataset.profui = "1";
+  const nav = document.getElementById("nav"); (nav ? nav.parentNode : document.body).insertBefore(bar, nav ? nav.nextSibling : null);
+  function drawBar() {
+    const st = PROFILE.on ? PROFILE.st : null;
+    if (PROFILE.on) {
+      const who = st ? lordLabel(st) : "sans seigneur", fn = D.factions[PROFILE.fac] || PROFILE.fac;
+      bar.className = "profbar on";
+      bar.innerHTML = `<span class="pbtxt">⚑ <b>Ma campagne</b> : ${esc(fn)} — ${esc(who)} · stats modifiées de ${PROFILE.n} unité${PROFILE.n > 1 ? "s" : ""} (duels précalculés au profil par défaut)</span>` +
+        `<button type="button" data-pedit>Modifier</button><button type="button" data-poff>Désactiver</button>`;
+    } else { bar.className = "profbar"; bar.innerHTML = `<button type="button" data-pedit>Ma campagne…</button><small>Applique à tout le site le seigneur et les bonus de ta faction.</small>`; }
+  }
+
+  /* ---------- Fenêtre de réglage ---------- */
+  const dlg = document.createElement("dialog"); dlg.id = "profdlg"; dlg.dataset.profui = "1"; document.body.appendChild(dlg);
+  const byCul = {}; facs.forEach(f => (byCul[D.facInfo[f].culture] ??= []).push(f));
+  const draw = () => {
+    const st = stOf(), lord = st ? FX.lords[st] : null, eff = effOf(st), cond = lord ? lord.effects.filter(e => e.stat && e.cond).length : 0;
+    const cults = D.cultureOrder.filter(c => byCul[c]).sort((a, b) => D.cultures[a].localeCompare(D.cultures[b], "fr"));
+    const auto = autoLord(PROFILE.fac), tgt = e => e.units === "lord" ? "le seigneur seul" : e.units == null ? "toutes les unités de la faction" : `certaines unités (${e.units.length} type${e.units.length > 1 ? "s" : ""})`;
+    dlg.innerHTML = `<div class="dlch"><h2>Ma campagne</h2><button class="x" type="button" data-close>✕</button></div>
+      <p class="dlcp">Choisis ta faction et son seigneur : ses bonus de stats par défaut sont appliqués aux unités de la faction <b>partout sur le site</b> (tier list, unités par faction, fiche d'unité, combat). Les rangs « Top / Bottom % » se recalculent sur les stats modifiées.</p>
+      <label class="chk dlcmain"><input type="checkbox" data-on ${PROFILE.on ? "checked" : ""}> Activer ma campagne</label>
+      <div class="profrow"><label>Faction<select data-fac>${cults.map(c => `<optgroup label="${esc(D.cultures[c])}">${byCul[c].sort((a, b) => D.factions[a].localeCompare(D.factions[b], "fr")).map(f => `<option value="${f}" ${f === PROFILE.fac ? "selected" : ""}>${esc(D.factions[f])}</option>`).join("")}</optgroup>`).join("")}</select></label>
+      <label>Seigneur<select data-lord><option value="auto" ${PROFILE.lord === "auto" ? "selected" : ""}>Auto — ${auto ? esc(lordLabel(auto)) : "aucun seigneur de départ connu"}</option><option value="none" ${PROFILE.lord === "none" ? "selected" : ""}>Aucun seigneur</option>${lordChoices(PROFILE.fac).map(s => `<option value="${s}" ${PROFILE.lord === s ? "selected" : ""}>${esc(lordLabel(s))}</option>`).join("")}</select></label></div>
+      <h3>Effets appliqués${st ? " — " + esc(lordLabel(st)) : ""}</h3>
+      <ul class="proflist">${eff.length ? eff.map(e => `<li title="${esc(e.label)} (${esc(e.src)})">${LAB[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)}</li>`).join("") : `<li class="none">${st ? "Aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne)." : "Aucun seigneur : aucun effet."}</li>`}${cond ? `<li class="none">${cond} effet(s) conditionnel(s) non appliqué(s) (terrain, embuscade, race adverse…).</li>` : ""}</ul>
+      <p class="dlcp">Pas encore pris en compte : niveau et compétences du seigneur, technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.</p>
+      <p class="dlcp" style="margin-bottom:16px"><button type="button" data-poff2>Désactiver et revenir aux stats du jeu</button></p>`;
+  };
+  const open = () => { draw(); dlg.showModal(); };
+  document.addEventListener("click", e => { if (e.target.closest("[data-pedit]")) open(); const o = e.target.closest("[data-poff]"); if (o) { PROFILE.on = false; changed(); } });
+  dlg.addEventListener("click", e => { if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
+    if (e.target.closest("[data-poff2]")) { PROFILE.on = false; changed(); draw(); } });
+  dlg.addEventListener("change", e => { const c = e.target;
+    if ("on" in c.dataset) PROFILE.on = c.checked;
+    else if ("fac" in c.dataset) { PROFILE.fac = c.value; PROFILE.lord = "auto"; PROFILE.on = true; }
+    else if ("lord" in c.dataset) { PROFILE.lord = c.value; PROFILE.on = true; }
+    else return;
+    changed(); draw(); });
+  apply(); drawBar();
+})();
