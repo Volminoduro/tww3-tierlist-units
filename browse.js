@@ -8,6 +8,7 @@
     ["cost","Coût","Général",u=>u.cost,-1],["upkeep","Entretien","Général",u=>u.upkeep,-1],["rt","Recrut. (tours)","Général",u=>u.recruitTurns,-1,0,1],
     ["mp","Coût MP","Général",u=>u.mpCost,-1],
     ["men","Hommes","Défense",u=>u.men,1],["hp","PV / modèle","Défense",u=>u.hp,1],["thp","PV totaux","Défense",u=>u.men*u.hp,1],
+    ["ehp","Encaissement","Défense",u=>u.men*u.hp/(1-Math.min(100,u.armour)/200)*(1+u.md/150),1],
     ["arm","Armure","Défense",u=>u.armour,1,0,1],["md","Défense CàC","Défense",u=>u.md,1,0,1],["ld","Moral","Défense",u=>u.ld,1,0,1],
     ["ma","Attaque CàC","Attaque",u=>u.ma,1,0,1],["ch","Charge","Attaque",u=>u.charge,1,0,1],["dmg","Dégâts de base","Attaque",u=>N(u,"dmg"),1,hasM],
     ["ap","Dégâts perforants","Attaque",u=>N(u,"ap"),1,hasM],["str","Force d'arme","Attaque",u=>N(u,"dmg")+N(u,"ap"),1,hasM],
@@ -19,7 +20,7 @@
     ["dwc","Victoires en duel, à coût de recrutement égal (%)","Duels",u=>{const d=duelOf(u,"cost");return d?Math.round(d.wr*1000)/10:NaN;},1,0,1],
   ].map(([k,l,g,v,d,ok,z]) => ({k,l,g,v,d,ok:typeof ok==="function"?ok:()=>true,z:!!z}));
   // colonnes affichées par défaut (de quoi tenir dans la largeur) ; « Toutes les colonnes » affiche les 26
-  const ESS = new Set(["cost","upkeep","rt","thp","arm","md","ld","ma","ch","str","dps","rdmg","rng","spd","dwc"]);
+  const ESS = new Set(["cost","upkeep","rt","thp","ehp","arm","md","ld","ma","ch","str","dps","rdmg","rng","spd","dwc"]);
   const GROUPS = [...new Set(ST.map(s => s.g))], shown = new Set(GROUPS), $b = s => document.querySelector(s);
   const applies = (s, u) => { const v = s.v(u); return s.ok(u) && Number.isFinite(v) && (s.z || v > 0); };
   const lower = (a, x) => { let lo = 0, hi = a.length; while (lo < hi) { const m = (lo+hi)>>1; a[m] < x ? lo = m+1 : hi = m; } return lo; };

@@ -86,7 +86,8 @@ Object.assign(I18N.dict, {
   // ---------- Statistiques ----------
   "Général": "General", "Défense": "Defence", "Attaque": "Attack", "Tir": "Shooting", "Duels": "Duels",
   "Coût": "Cost", "Entretien": "Upkeep", "Recrut. (tours)": "Recruit. (turns)", "Recrut.": "Recr.", "Coût MP": "MP cost",
-  "Hommes": "Men", "PV / modèle": "HP / model", "PV totaux": "Total HP", "Armure": "Armour", "Défense CàC": "Melee defence", "Moral": "Leadership",
+  "Hommes": "Men", "PV / modèle": "HP / model", "PV totaux": "Total HP", "Encaissement": "Toughness",
+  "PV totaux ajustés par l'armure et la défense au corps à corps : ce que l'unité peut encaisser avant de tomber. ": "Total HP adjusted for armour and melee defence: how much damage the unit can absorb before it breaks. ", "Armure": "Armour", "Défense CàC": "Melee defence", "Moral": "Leadership",
   "Attaque CàC": "Melee attack", "Charge": "Charge", "Dégâts de base": "Base damage", "Dégâts perforants": "Armour-piercing damage",
   "Force d'arme": "Weapon strength", "Intervalle (s)": "Interval (s)", "DPS / modèle": "DPS / model", "Bonus vs grands": "Bonus vs large", "Bonus vs infanterie": "Bonus vs infantry",
   "Tir : dégâts": "Shooting: damage", "Tir : perforants": "Shooting: armour-piercing", "Portée": "Range", "Rechargement (s)": "Reload (s)", "Munitions": "Ammunition",
