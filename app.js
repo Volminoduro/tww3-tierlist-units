@@ -225,7 +225,7 @@ const uic=k=>si("u_"+k);
 const si=k=>GAME_STAT[k]?`<img class="si sig" src="img/stats/${GAME_STAT[k]}.png" alt="" onerror="this.remove()">`:`<svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${STAT_ICON[k]||""}</svg>`;
 /* Fiche d'unité : chaque stat avec son rang (« Top 8 % » / « Bottom 20 % ») et une barre remplie à valeur ÷ 95ᵉ centile du groupe de comparaison (pleine au-delà). */
 let DPOOL="role_all"; // groupe de comparaison : même catégorie (tout le jeu), toutes les unités, ou périmètre affiché
-const STAT_IC={cost:"coin",upkeep:"upkeep",rt:"calendar",mp:"coin",men:"men",hp:"hp",thp:"hp",arm:"armour",md:"defence",ld:"morale",ma:"attack",ch:"charge",dmg:"weapon",ap:"ap",str:"weapon",int:"clock",dps:"bolt",bvl:"vs_large",bvi:"vs_inf",rdmg:"bow",rap:"rap",rng:"range",rel:"reload",amm:"ammo",spd:"speed",dwc:"attack"};
+const STAT_IC={cost:"coin",upkeep:"upkeep",rt:"calendar",mp:"coin",men:"men",hp:"hp",thp:"hp",ehp:"armour",arm:"armour",md:"defence",ld:"morale",ma:"attack",ch:"charge",dmg:"weapon",ap:"ap",str:"weapon",int:"clock",dps:"bolt",bvl:"vs_large",bvi:"vs_inf",rdmg:"bow",rap:"rap",rng:"range",rel:"reload",amm:"ammo",spd:"speed",dwc:"attack"};
 /* Tuile : chiffres clés (PV totaux, armure, dégâts/s estimés, vitesse) et les deux meilleurs usages (icône + percentile), pour remplir la tuile avec de l'information utile */
 const kfmt=v=>v>=10000?Math.round(v/1000)+"k":v>=1000?(v/1000).toFixed(1).replace(".",",")+"k":String(Math.round(v));
 function cardStats(x){
@@ -254,7 +254,8 @@ function statList(u){
  }
  return out;
 }
-const statTip=o=>`${o.s.l} : ${o.rank}ᵉ sur ${o.n}${o.s.d<0?" (moins = mieux)":""} — 95ᵉ centile du groupe : ${fmtv(o.ref)} ; maximum : ${fmtv(o.mx)}`;
+const EHP_TIP="PV totaux ajustés par l'armure et la défense au corps à corps : ce que l'unité peut encaisser avant de tomber. ";
+const statTip=o=>`${o.s.k==="ehp"?EHP_TIP:""}${o.s.l} : ${o.rank}ᵉ sur ${o.n}${o.s.d<0?" (moins = mieux)":""} — 95ᵉ centile du groupe : ${fmtv(o.ref)} ; maximum : ${fmtv(o.mx)}`;
 function statRows(list){ // liste complète, par groupe
  let h="",g="";
  for(const o of list){ if(o.s.g!==g){g=o.s.g;h+=`<h4>${g}</h4>`}
@@ -262,9 +263,9 @@ function statRows(list){ // liste complète, par groupe
  return h;
 }
 /* « En bref » : les 6 chiffres qui décident d'un recrutement, en tuiles (valeur + rang) */
-const BRIEF=[["cost","Coût"],["thp","PV totaux"],["arm","Armure"],["dps","DPS / modèle"],["rdmg","Tir : dégâts"],["spd","Vitesse"]];
+const BRIEF=[["cost","Coût"],["ehp","Encaissement"],["dps","DPS / modèle"],["rdmg","Tir : dégâts"],["spd","Vitesse"]];
 function briefTiles(list){
- const by=Object.fromEntries(list.map(o=>[o.s.k,o])), keys=["cost","thp","arm"].concat(by.dps?["dps"]:[],by.rdmg?["rdmg"]:[],["spd"]).slice(0,6);
+ const by=Object.fromEntries(list.map(o=>[o.s.k,o])), keys=["cost","ehp"].concat(by.dps?["dps"]:[],by.rdmg?["rdmg"]:[],["spd"]).slice(0,6);
  return `<div class="brief">${keys.filter(k=>by[k]).map(k=>{const o=by[k],lab=(BRIEF.find(b=>b[0]===k)||[k,o.s.l])[1];
   return `<div class="bt" title="${statTip(o)}"><small>${si(STAT_IC[k]||"target")}${lab}</small><b>${fmtv(o.v)}</b>${o.p==null?"":`<span class="pb" style="background:hsl(${o.p*1.2},55%,62%)">${rankTxt(o.p)}</span>`}</div>`}).join("")}</div>`;
 }
