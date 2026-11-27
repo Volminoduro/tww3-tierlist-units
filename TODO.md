@@ -44,6 +44,24 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 
 **Fichiers concernés** (à créer) : `tools/build_comps.js`, `data/comps.js`, un onglet ou une vue dédiée ; `sim.js` reste le seul simulateur.
 
+## 3. Arbre technologique et bonus de faction (à étudier)
+
+**Question** : peut-on tenir compte de l'arbre technologique propre à la faction, et des autres bonus de faction qui touchent les unités ? **Faisable**, comme les compétences de seigneur (point 1) ; l'exploration du dump donne :
+- **Technologies** : `technology_node_sets` (36 arbres, par culture, sous-culture ou faction, parfois plusieurs par faction : ex. `chs_mil`, `chs_mil_azazel`, `chs_mil_belakor`) → `technology_nodes` (2 001 nœuds : `tier`, `research_points_required`, `cost_per_round`, `technology_node_set`) → `technologies` (2 098) → `technology_effects_junction` (4 079 effets : `effect`, `effect_scope`, `value`), prérequis dans `technology_node_links` (1 932 liens).
+- **Effets utiles** : 733 lignes ont une stat de bataille (attaque, défense, armure, moral, charge, force d'arme, force de tir, vitesse, PV, munitions, portée), presque toutes en portée `faction_to_force_own_unseen` (706) ; médiane ≈ 15 technologies utiles par arbre (Bretonnie 27 sur 75, Nains du Chaos 13 sur 78). Certaines sont ciblées (« contre les Rois des Tombes », une unité précise : `effect_bonus_value_ids_unit_sets`, déjà utilisé pour les seigneurs).
+- **Autres bonus de faction qui touchent les unités** : `faction_set_effect_bundles` (365 lots d'effets par ensemble de factions), `campaign_group_pooled_resource_effects` (736 : ressources propres aux factions, ex. corruption, nourriture, Waaagh), les bâtiments (`building_effects_junction` : 523 effets de stats de bataille sur 23 819), les rituels (`ritual…`, `effect_bonus_value_ritual_junctions`) et les traits de faction (`faction_starting_general_effects`, déjà pris en compte pour le seigneur de départ).
+
+**Piste d'interface** (comme le curseur de niveau du point 1) : dans l'onglet Combat, par armée, un réglage « Technologies » : aucune / jusqu'au tier N / tout, avec dépense automatique des points dans les technologies qui touchent les unités ; mêmes `mods` par unité que les effets de seigneur (`sim.js` les gère déjà).
+
+**À vérifier / décider** :
+- l'arbre exact de chaque faction (clés `faction_key`, `culture`, `subculture` des `technology_node_sets` ; plusieurs arbres pour une faction à seigneurs multiples) ;
+- le lien entre technologie et bâtiment (`technologies.building_level`) : certaines technologies exigent un bâtiment ;
+- l'effet des technologies cumulées (valeurs additives ou non, plafonds) ;
+- les bonus de ressources (corruption…) dépendent de l'état de la campagne : à ne pas appliquer par défaut ;
+- les technologies conditionnelles (contre une race, terrain) : même règle que pour les seigneurs (non appliquées).
+
+**Remplace en partie** les curseurs génériques « Technologies / bonus débloqués » du site (bonus de défense, de dégâts, de PV…) par des valeurs lues dans les tables, par faction.
+
 ## Autres pistes déjà évoquées
 
 - Noms français des unités et factions : en attente de l'export de localisation française (`local_fr.pack`, voir « Langue » dans le `README.md`).
