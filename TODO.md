@@ -101,6 +101,24 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 7. Documenter ces limites dans l'onglet Méthode tant que ce n'est pas fait.
 8. **Charge à travers plusieurs rangs** : une charge de cavalerie ou de monstre ne se limite pas au premier rang (elle renverse et traverse des modèles, les rangs arrière subissent l'impact). Non modélisé : seule la largeur du front limite aujourd'hui le contact ; à lier aux dégâts d'impact (point 5) et aux rangs (`rank_depth`).
 
+## 6. Impact, masse et charge à travers les rangs (à modéliser)
+
+**Souhait** : modéliser l'impact (dégâts de collision) des charges et leur pénétration dans les rangs, pour que la cavalerie lourde et les monstres aient leur valeur réelle dans les duels et le tier list (aujourd'hui seul le bonus de charge entre en jeu, voir point 5).
+
+**Données disponibles** :
+- **Masse** : `battle_entities.mass` (Hallebardier 100, Reiksguard 1 000, Géant 6 500, Stégadon 4 000) ; vitesse : `battle_entities.speed` (déjà extraite) ; attribut « grand » (`size`).
+- **Constantes de collision** (`_kv_rules`) : `collision_damage_modifier` 0,6 ; `collision_damage_normaliser` 0,8 ; `collision_damage_maximum` 70 (PV max par modèle touché) ; `collision_damage_armour_penetration_ratio` 0,7 (part des dégâts perforants) ; `collision_damage_immunity_timer` 4 s (un modèle ne reçoit pas deux impacts de suite) ; `collision_restitution_coefficient` 0,3 ; seuils de **différence de vitesse** pour le recul (`collision_speed_delta_threshold_step_back` 3, `_knocked_back` 4, `_knocked_down` 7, `_knocked_flying` 10,5) ; délais de renversement (`knockdown_getting_up_delay_*` 1 à 2,7 s) ; `interrupt_mass_ratio_clamp_*` (rapport de masse qui borne le recul / le renversement) ; `impact_reflection_*` et `charge_reflect_*` (réflexion, déjà utilisée).
+- **Formule exacte non fournie par les tables** : à poser à partir des constantes (dégâts ≈ `modifier` × f(masse attaquant, différence de vitesse) ÷ `normaliser`, plafonnés à `maximum`) et à **calibrer** sur des repères connus du jeu (une charge de cavalerie lourde fauche environ N modèles d'infanterie légère).
+
+**Plan de modèle** :
+1. **Impact au contact** : pour chaque modèle de l'attaquant qui charge (différence de vitesse suffisante), dégâts de collision aux modèles touchés (plafonnés, avec la part perforante 0,7 et l'armure), une fois par `immunity_timer`.
+2. **Pénétration des rangs** : le nombre de modèles défenseurs touchés par l'impact dépend du rapport de masse (attaquant / défenseur) et de la profondeur (`rank_depth`) : une cavalerie lourde (masse 1 000) contre de l'infanterie légère (100) touche plusieurs rangs ; contre un monstre ou un char, le recul est borné par `interrupt_mass_ratio_clamp_*`.
+3. **Renversement** : modèles renversés ou projetés = hors combat pendant `knockdown_getting_up_delay` (retire des attaquants du front pendant quelques secondes).
+4. **Bracing** : les défenseurs en bracing augmentent leur masse effective (`bracing_calibration_ranks`, `bracing_calibration_ranks_multiplier`, `bracing_max_multiplier_clamp`) et peuvent annuler le renversement (`bracing_immovable_by_small_entity_mass` 600).
+5. **Validation** : comparer à des repères en jeu (ex. combien de PV une charge de Reiksguard enlève à des lanciers en bracing / sans bracing), et à l'écart des résultats actuels des duels de cavalerie (aujourd'hui trop sévères : pas d'impact ni de flanc).
+
+**Dépend de** : point 5 (bracing et attributs déjà en place), flancs et dos (non modélisés : `devastating_flanker_charge_multiplier` 2,0, `melee_defence_direction_penalty_coefficient_flank` 0,6 / `_rear` 0,3).
+
 ## Autres pistes déjà évoquées
 
 - Noms français des unités et factions : en attente de l'export de localisation française (`local_fr.pack`, voir « Langue » dans le `README.md`).

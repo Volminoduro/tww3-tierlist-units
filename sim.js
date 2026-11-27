@@ -131,7 +131,7 @@ function simulate(ARMY, BON, opts) {
 /* Choix automatique de la stratégie de chaque camp : CHARGER, MARCHER (avancer sans charger : évite la réflexion et les défenses, mais sans bonus de charge) ou TENIR SA POSITION (bracing, seulement
    pour un camp qui compte des unités à défense contre la charge ou à réflexion). opts.hold.A / .B valent false (charge), "walk", true (tient) ou "auto". Chaque camp « auto » joue au mieux pour lui :
    on simule toutes les combinaisons utiles (au plus 8 batailles), la marge étant la survie en coût rapportée au coût de départ de A moins celle de B (A la maximise, B la minimise), et on retient le point selle
-   (équilibre en stratégies pures : aucune des deux armées ne gagne à changer seule) ; sans point selle, le maximin de A et le minimax de B. Deux camps qui tiennent ne se rencontrent pas : c'est une IMPASSE, comptée comme un match nul (marge 0) ; elle est l'équilibre quand aucun des deux n'a intérêt à attaquer (ex. deux armées de lanciers identiques).
+   (équilibre en stratégies pures : aucune des deux armées ne gagne à changer seule) ; sans point selle, le maximin de A et le minimax de B. Deux camps qui tiennent ne se rencontrent pas : c'est une IMPASSE, comptée comme un match nul (marge 0) ; elle est l'équilibre quand aucun des deux n'a intérêt à attaquer (deux armées de mêlée à réflexion, ex. des lanciers). Si l'un des camps compte des tireurs, la combinaison est exclue (ils peuvent tirer).
    « Marcher » n'est utile que face à un camp pouvant tenir (sinon dominé par « charger »). Renvoie le résultat de simulate() plus choice = {A, B} parmi "charge" | "walk" | "hold". */
 const CAN_HOLD = e => !!(e.u.at && e.u.at.some(a => a === "charge_defense" || a === "charge_defense_vs_large" || a === "charge_reflection"));
 function resolve(ARMY, BON, opts) {
@@ -139,7 +139,8 @@ function resolve(ARMY, BON, opts) {
   const fixed = s => w[s] === "auto" ? null : ((s === "B" && opts.staticB) || w[s] === true) ? "hold" : w[s] === "walk" ? "walk" : "charge";
   const canH = {A: ARMY.A.some(CAN_HOLD), B: ARMY.B.some(CAN_HOLD)};
   const optsOf = s => { const f = fixed(s); if (f) return [f]; const o = ["charge"]; if (canH[s === "A" ? "B" : "A"]) o.push("walk"); if (canH[s]) o.push("hold"); return o; };
-  const oa = optsOf("A"), ob = optsOf("B"), cache = {}, H = x => x === "hold" ? true : x === "walk" ? "walk" : false, bad = () => false;
+  const oa = optsOf("A"), ob = optsOf("B"), cache = {}, H = x => x === "hold" ? true : x === "walk" ? "walk" : false,
+    bad = (a, b) => a === "hold" && b === "hold" && (ARMY.A.some(e => e.u.ranged) || ARMY.B.some(e => e.u.ranged));   // avec des tireurs, deux camps immobiles ne sont pas une impasse (ils peuvent tirer) : combinaison exclue
   const run = (a, b) => cache[a + "|" + b] ??= (() => { const r = simulate(ARMY, BON, {...opts, hold: {A: H(a), B: H(b)}, tmax: a === "hold" && b === "hold" ? 1 : opts.tmax}); return {r, m: (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0)}; })();
   let eq = null; const EPS = 0.005;
   if (oa.length === 1 && ob.length === 1) eq = [oa[0], ob[0]];
