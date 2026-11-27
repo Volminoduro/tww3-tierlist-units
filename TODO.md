@@ -13,6 +13,8 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 
 ## 1. Niveau et compétences des seigneurs / héros (profil global, voir point 0)
 
+**État : fait pour les seigneurs** (curseur de niveau 1–40 dans « Ma campagne », dépense automatique des points, `data/skills.js` généré par `tools/effects_extract.py` / `tools/skills_only.py`). **Vérifié** : la valeur d'un niveau est le TOTAL à ce niveau (rapport médian niveau 2 / niveau 1 = 2,0, niveau 3 / niveau 1 = 3,0 sur 1 200 effets de stats) ; 1 point = 1 niveau de compétence ; `unlocked_at_rank` vaut 0 pour presque toutes les compétences (pas de seuil de niveau par compétence). **Reste** : héros (arbres non extraits), noms de compétences en français (loc FR absente ici ; noms anglais pour l'instant), valeurs de `W` (poids des stats dans l'allocation, heuristique non calibrée), effets de résistances / ward / rechargement non modélisés.
+
 **Décision** : curseur automatique (pas de choix compétence par compétence).
 
 **Idée** : réglage « Niveau du seigneur » (1 à 40), dans le profil global (et non plus seulement par armée du Combat). Le budget de points = niveau − 1 + points de départ. Le site dépense ces points automatiquement dans les bonus d'armée, en priorisant le gain par point. Bouton « Tout au max » = meilleur cas. Les duels précalculés restent au niveau et aux compétences par défaut. Même mécanisme pour les héros (leurs arbres sont dans le dump).

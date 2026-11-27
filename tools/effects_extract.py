@@ -108,4 +108,43 @@ def build_effects(T, units, loc, facinfo):
     # on ne garde que les seigneurs utiles (au moins un effet exploitable) ou désignés comme seigneur de départ
     keep = {st for fl in leaders.values() for st in fl} | {st for st, l in lords.items() if any(e.get("stat") for e in l["effects"])}
     lords = {st: l for st, l in lords.items() if st in keep}
-    return {"leaders": dict(leaders), "lords": lords}
+
+    # --- arbres de compétences (niveau du seigneur, voir TODO.md point 1) ---
+    # Vérifié sur les tables : la valeur d'un niveau est le TOTAL à ce niveau (rapport médian niveau 2 / niveau 1 = 2,0 ; niveau 3 / niveau 1 = 3,0 sur 1 200 effets de stats), pas un supplément.
+    # Un point de compétence = un niveau de compétence ; un seigneur de niveau N dispose de N − 1 points (la compétence innée est donnée à la création : points_on_creation).
+    parents = defaultdict(list)
+    for r in T.get("character_skill_node_links", []): parents[r["child_key"]].append(r["parent_key"])
+    by_level = defaultdict(lambda: defaultdict(list))
+    for r in T.get("character_skill_level_to_effects_junctions", []): by_level[r["character_skill_key"]][r["level"]].append(r)
+    sets_, set_idx = [], {}
+    def sref(lst):
+        key = tuple(lst)
+        if key not in set_idx: set_idx[key] = len(sets_); sets_.append(list(lst))
+        return set_idx[key]
+    def nm_(k):                                  # nom de la compétence ; certains noms sont des renvois « {{tr:autre_clé}} »
+        v = loc.get("character_skills_localised_name_" + k) or ""
+        if v.startswith("{{tr:"): v = loc.get(v[5:-2]) or ""
+        return v or k
+    skills = {}
+    for st in lords:
+        tree, pos = [], {}
+        for ss in sub_sets.get(st, []):
+            for it in set_items.get(ss, []):
+                n = nodes.get(it)
+                if not n: continue
+                L = {}
+                for lv, rows in by_level.get(n["character_skill_key"], {}).items():
+                    effs = []
+                    for r in rows:
+                        d = describe(r["effect_key"], r["effect_scope"], r["value"], "")
+                        if not d or not d.get("stat") or d["cond"]: continue         # conditionnels (embuscade, terrain…) : non appliqués, donc non stockés
+                        u_ = d["units"]
+                        effs.append({"s": d["stat"], "v": d["v"], "p": 1 if d["pct"] else 0, "u": sref(u_) if isinstance(u_, list) else u_})
+                    if effs: L[lv] = effs
+                if not L: continue
+                pos[it] = len(tree)
+                tree.append({"id": it, "n": nm_(n["character_skill_key"]), "t": int(n.get("tier") or 0), "p0": int(n.get("points_on_creation") or 0),
+                             "rq": int(n.get("required_num_parents") or 0), "r": 0, "L": L})
+        for t in tree: t["pa"] = [pos[p] for p in parents.get(t.pop("id"), []) if p in pos]
+        if tree: skills[st] = tree
+    return {"leaders": dict(leaders), "lords": lords, "skills": skills, "skillSets": sets_}

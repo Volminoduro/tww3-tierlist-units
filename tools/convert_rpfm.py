@@ -100,7 +100,7 @@ NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missi
           "units_custom_battle_mounts",
           # effets par défaut des seigneurs (tools/effects_extract.py)
           "agent_subtypes", "faction_starting_general_effects", "effect_bundles_to_effects_junctions", "character_skill_nodes",
-          "character_skill_node_sets", "character_skill_node_set_items", "character_skill_level_to_effects_junctions",
+          "character_skill_node_sets", "character_skill_node_set_items", "character_skill_node_links", "character_skill_level_to_effects_junctions",
           "effect_bonus_value_ids_unit_sets", "unit_set_to_unit_junctions", "frontend_faction_leaders",
           # véhicules / artillerie (machines) et dégâts d'explosion des projectiles
           "battlefield_engines", "projectiles_explosions",
@@ -117,7 +117,7 @@ def load_tables(root, only_needed=False):
                 p = os.path.join(dp, fn)
                 if only_needed:
                     name = norm_table(p) if "_tables" in p.lower() else fn.lower()
-                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__") or name.startswith("effects__") or name.startswith("ownership_products__") or name.startswith("units_custom_battle_mounts__")): continue
+                    if not (name in NEEDED or name.startswith("land_units__") or name.startswith("factions__") or name.startswith("effects__") or name.startswith("character_skills__") or name.startswith("ownership_products__") or name.startswith("units_custom_battle_mounts__")): continue
                 tables[norm_table(p) if "_tables" in p.lower() else re.sub(r"\.tsv$","",fn.lower())].extend(read_tsv(p))
     return tables
 
@@ -480,6 +480,7 @@ def main():
     factions = names
     from effects_extract import build_effects  # effets par défaut des seigneurs et de leur trait
     effects = build_effects(T, units, loc, facinfo)
+    skills = {"sets": effects.pop("skillSets"), "lords": effects.pop("skills")}   # arbres de compétences -> data/skills.js (chargé par profile.js)
     def remap(o):                                   # les unités fusionnées (doublons identiques) renvoient à celle conservée
         if isinstance(o, dict): return {k: (removed.get(v, v) if k == "unit" and isinstance(v, str) else remap(v)) for k, v in o.items()}
         if isinstance(o, list): return [remap(x) for x in o]
@@ -551,6 +552,7 @@ def main():
         print(f"noms français : {len(names_fr['units'])} unités, {len(names_fr['factions'])} factions")
     os.makedirs(a.out, exist_ok=True)
     with open(os.path.join(a.out, "effects.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_EFFECTS=" + json.dumps(effects, ensure_ascii=False) + ";")
+    with open(os.path.join(a.out, "skills.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_SKILLS=" + json.dumps(skills, ensure_ascii=False, separators=(",", ":")) + ";")
     print(f"effets par défaut : {len(effects['lords'])} seigneurs, {sum(len(v) for v in effects['leaders'].values())} associations faction -> seigneur de départ")
     with open(os.path.join(a.out, "units.json"), "w", encoding="utf-8") as f: json.dump(out, f, ensure_ascii=False, indent=1)
     with open(os.path.join(a.out, "units.js"), "w", encoding="utf-8") as f: f.write("window.TWW3_DATA=" + json.dumps(out, ensure_ascii=False) + ";")

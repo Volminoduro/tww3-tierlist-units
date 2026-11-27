@@ -2,6 +2,12 @@
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
   // ---------- Ma campagne (profil global) ----------
+  "Tout au max (niveau 40)": "Max everything (level 40)",
+  "Compétences choisies automatiquement": "Skills picked automatically",
+  "Niveau du seigneur : {} ({} point{} de compétence{})": "Lord level: {} ({} skill point{}{})",
+  ", # dépensé{} dans les bonus d'armée": ", # spent{} on army bonuses",
+  " niv. #": " lvl #",
+  "Le site dépense les points tout seul, en priorisant ce qui apporte le plus à la faction (heuristique) ; pas de choix compétence par compétence. Pas encore pris en compte : technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.": "The site spends the points by itself, favouring what helps the faction most (heuristic); no skill-by-skill choice. Not yet included: technologies and other faction bonuses (planned). The precomputed duels of the \"duels\" ranking stay at the default profile. In Battle, this same lord's effect is not counted twice.",
   "Ma campagne…": "My campaign…",
   "Ma campagne": "My campaign",
   "Applique à tout le site le seigneur et les bonus de ta faction.": "Applies your faction's lord and bonuses to the whole site.",

@@ -2,13 +2,14 @@
 /* Profil de campagne GLOBAL (« Ma campagne »), voir TODO.md point 0.
    Un profil = une faction + son seigneur (niveau, compétences et technologies viendront s'y ajouter : points 1 et 3). Il produit des modificateurs PAR UNITÉ
    (ma, md, arm, ld, charge en points ; ws, ms, spd, hp, ammo, range en %), exactement ceux que le Combat applique déjà au seigneur d'une armée (data/effects.js).
+   NIVEAU du seigneur (TODO point 1) : un curseur 1 à 40 donne N − 1 points de compétence, dépensés automatiquement (arbres de data/skills.js, voir allocate()). La valeur d'un niveau de compétence est le TOTAL à ce niveau (vérifié : rapport médian niveau 2 / niveau 1 = 2,0).
    Ici ils sont appliqués aux STATS des unités (D.units modifiées sur place, valeurs d'origine gardées dans u._b) : tier list, unités par faction, fiche d'unité et
    Combat lisent donc tous les stats modifiées, et les rangs « Top / Bottom % » se recalculent d'eux-mêmes. Seules les unités de la faction choisie sont touchées
    (un bonus « toutes les unités » ne gonfle pas les unités des autres factions). Les duels précalculés (data/duels.js) restent au profil par défaut.
    Le Combat n'ajoute pas une seconde fois l'effet du même seigneur (u._pm = « déjà modifiée par le profil », lu par battle.js). État mémorisé (PREF « profile »). */
-const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
+const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, alloc: []};
 (() => {
-  const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}};
+  const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}}, SK = window.TWW3_SKILLS || {lords: {}, sets: []};
   const UN = Object.fromEntries(D.units.map(u => [u.id, u]));
   const LAB = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée"};
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
@@ -23,7 +24,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
     .sort((a, b) => lordLabel(a).localeCompare(lordLabel(b), "fr"));
   const stOf = () => !PROFILE.fac ? null : PROFILE.lord === "none" ? null : PROFILE.lord === "auto" ? autoLord(PROFILE.fac) : PROFILE.lord;
   const effOf = st => { const l = st && FX.lords[st]; return l ? l.effects.filter(e => e.stat && !e.cond) : []; };
-  const hits = (e, u, lord) => e.units == null || (e.units === "lord" ? !!lord && u.id === lord.unit : e.units.includes(u.id));
+  const hits = (e, u, lord) => e.units == null || (e.units === "lord" ? !!lord && u.id === lord.unit : (e.units instanceof Set ? e.units.has(u.id) : e.units.includes(u.id)));
 
   /* Modificateurs d'une unité (même conversion que le Combat : un effet en % sur une stat « en points » devient des points) */
   function modsFor(u, lord, eff) {
@@ -39,7 +40,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
   }
   function modify(u, m) {
     const p = v => 1 + (v || 0) / 100;
-    u.ma += m.ma || 0; u.md += m.md || 0; u.ld += m.ld || 0; u.charge += m.charge || 0; u.armour = Math.min(100, u.armour + (m.arm || 0));
+    u.ma += m.ma || 0; u.md += m.md || 0; u.ld += m.ld || 0; u.charge += m.charge || 0; u.armour = u.armour >= 100 ? u.armour : Math.min(100, u.armour + (m.arm || 0));
     u.speed *= p(m.spd); u.hp *= p(m.hp);
     if (m.ws) { u.melee.dmg *= p(m.ws); u.melee.ap *= p(m.ws); u.melee.bvi *= p(m.ws); u.melee.bvl *= p(m.ws); }
     if (u.ranged) {
@@ -49,8 +50,45 @@ const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
     }
     u._pm = true;
   }
+
+  /* ---------- Compétences : dépense automatique des points ---------- */
+  const SETS = {}, setOf = i => (SETS[i] ??= new Set(SK.sets[i]));
+  const maxLv = t => Math.max(...Object.keys(t.L).map(Number));
+  /* Valeur approximative d'une unité de chaque stat (en % de puissance) ; ×  la part de la faction touchée par l'effet. Heuristique : le but est d'ordonner les compétences, pas de mesurer leur gain exact. */
+  const W = {ma: 1.5, md: 1.5, arm: 0.8, ld: 0.4, charge: 0.4, ws: 1, ms: 1, spd: 0.3, hp: 1, ammo: 0.2, range: 0.2}, BASE = {ma: 40, md: 35, arm: 45, ld: 65, charge: 35};
+  const RANGED_ONLY = new Set(["ms", "ammo", "range"]);
+  let pool = null, poolFac = null; const memo = {};
+  const getPool = () => { if (poolFac !== PROFILE.fac) { poolFac = PROFILE.fac; pool = D.units.filter(u => inFac(u, PROFILE.fac) && u.role !== "lord" && u.role !== "hero" && !u.ror); Object.keys(memo).forEach(k => delete memo[k]); } return pool; };
+  const cover = e => {                                   // part de la faction qui profite de l'effet
+    if (e.u === "lord") return 0.04;                     // le seigneur seul : un modèle sur ~25
+    const P = getPool(), ranged = RANGED_ONLY.has(e.s), key = (e.u === null ? "a" : e.u) + (ranged ? "r" : "m");
+    return memo[key] ??= (P.filter(u => (e.u === null || setOf(e.u).has(u.id)) && (!ranged || u._b.r)).length / Math.max(1, P.length));
+  };
+  const effValue = effs => effs.reduce((a, e) => a + W[e.s] * (e.p && BASE[e.s] ? BASE[e.s] * e.v / 100 : e.v) * cover(e), 0);
+  const atLevel = (t, l) => (l > 0 ? t.L[l] || [] : []);
+  /* Dépense `points` points : à chaque étape on prend le niveau de compétence qui apporte le plus (valeur ajoutée par rapport au niveau actuel), compétence débloquée si ses prérequis (parents avec au moins 1 point) sont remplis. */
+  function allocate(st, points) {
+    const tree = SK.lords[st] || [], lv = tree.map(() => 0);
+    tree.forEach((t, i) => { if (t.p0 > 0 && t.L[1]) lv[i] = 1; });                      // compétence innée : donnée à la création
+    for (let p = 0; p < points; p++) {
+      let best = -1, bg = 0;
+      tree.forEach((t, i) => {
+        if (lv[i] >= maxLv(t) || !t.L[lv[i] + 1]) return;
+        if (t.rq > 0 && t.pa.filter(j => lv[j] > 0).length < t.rq) return;
+        const g = effValue(t.L[lv[i] + 1]) - effValue(atLevel(t, lv[i]));
+        if (g > bg) { bg = g; best = i; }
+      });
+      if (best < 0) break;
+      lv[best]++;
+    }
+    return tree.map((t, i) => ({i, n: t.n, lv: lv[i], max: maxLv(t), effs: atLevel(t, lv[i]), innate: t.p0 > 0})).filter(x => x.lv > 0);
+  }
+  const toEff = e => ({stat: e.s, v: e.v, pct: !!e.p, units: e.u === null ? null : e.u === "lord" ? "lord" : setOf(e.u), cond: false, label: "", src: "compétence"});
+  const spent = () => PROFILE.alloc.reduce((a, x) => a + x.lv - (x.innate ? 1 : 0), 0);
   function apply() {
-    const st = PROFILE.on ? stOf() : null, lord = st ? FX.lords[st] : null, eff = effOf(st);
+    const st = PROFILE.on ? stOf() : null, lord = st ? FX.lords[st] : null;
+    PROFILE.alloc = st ? allocate(st, Math.max(0, PROFILE.level - 1)) : [];
+    const eff = effOf(st).concat(PROFILE.alloc.flatMap(x => x.effs.map(toEff)));
     PROFILE.st = st; PROFILE.n = 0;
     for (const u of D.units) {
       restore(u);
@@ -58,11 +96,11 @@ const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
       const m = modsFor(u, lord, eff); if (Object.keys(m).length) { modify(u, m); PROFILE.n++; }
     }
   }
-  const save = () => PREF.set("profile", {on: PROFILE.on, fac: PROFILE.fac, lord: PROFILE.lord});
+  const save = () => PREF.set("profile", {on: PROFILE.on, fac: PROFILE.fac, lord: PROFILE.lord, level: PROFILE.level});
   const changed = () => { apply(); save(); drawBar(); document.dispatchEvent(new Event("rorchange")); };
 
   { const s = PREF.get("profile", null);
-    if (s && s.fac && facs.includes(s.fac)) { PROFILE.fac = s.fac; PROFILE.lord = typeof s.lord === "string" ? s.lord : "auto"; PROFILE.on = !!s.on; } }
+    if (s && s.fac && facs.includes(s.fac)) { PROFILE.fac = s.fac; PROFILE.lord = typeof s.lord === "string" ? s.lord : "auto"; PROFILE.on = !!s.on; PROFILE.level = Math.min(40, Math.max(1, Math.round(+s.level) || 1)); } }
   if (!PROFILE.fac) PROFILE.fac = facs.find(f => f === "wh_main_emp_empire") || facs[0] || null;
   if (!facs.length) { document.querySelectorAll("[data-profui]").forEach(e => e.remove()); return; }
 
@@ -74,7 +112,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
     if (PROFILE.on) {
       const who = st ? lordLabel(st) : "sans seigneur", fn = D.factions[PROFILE.fac] || PROFILE.fac;
       bar.className = "profbar on";
-      bar.innerHTML = `<span class="pbtxt">⚑ <b>Ma campagne</b> : ${esc(fn)} — ${esc(who)} · stats modifiées de ${PROFILE.n} unité${PROFILE.n > 1 ? "s" : ""} (duels précalculés au profil par défaut)</span>` +
+      bar.innerHTML = `<span class="pbtxt">⚑ <b>Ma campagne</b> : ${esc(fn)} — ${esc(who)}${PROFILE.level > 1 ? ` niv. ${PROFILE.level}` : ""} · stats modifiées de ${PROFILE.n} unité${PROFILE.n > 1 ? "s" : ""} (duels précalculés au profil par défaut)</span>` +
         `<button type="button" data-pedit>Modifier</button><button type="button" data-poff>Désactiver</button>`;
     } else { bar.className = "profbar"; bar.innerHTML = `<button type="button" data-pedit>Ma campagne…</button><small>Applique à tout le site le seigneur et les bonus de ta faction.</small>`; }
   }
@@ -91,17 +129,23 @@ const PROFILE = {on: false, fac: null, lord: "auto", st: null, n: 0};
       <label class="chk dlcmain"><input type="checkbox" data-on ${PROFILE.on ? "checked" : ""}> Activer ma campagne</label>
       <div class="profrow"><label>Faction<select data-fac>${cults.map(c => `<optgroup label="${esc(D.cultures[c])}">${byCul[c].sort((a, b) => D.factions[a].localeCompare(D.factions[b], "fr")).map(f => `<option value="${f}" ${f === PROFILE.fac ? "selected" : ""}>${esc(D.factions[f])}</option>`).join("")}</optgroup>`).join("")}</select></label>
       <label>Seigneur<select data-lord><option value="auto" ${PROFILE.lord === "auto" ? "selected" : ""}>Auto — ${auto ? esc(lordLabel(auto)) : "aucun seigneur de départ connu"}</option><option value="none" ${PROFILE.lord === "none" ? "selected" : ""}>Aucun seigneur</option>${lordChoices(PROFILE.fac).map(s => `<option value="${s}" ${PROFILE.lord === s ? "selected" : ""}>${esc(lordLabel(s))}</option>`).join("")}</select></label></div>
+      <div class="profrow"><label><span>Niveau du seigneur : <b data-lvtxt>${PROFILE.level}</b> <small>(${Math.max(0, PROFILE.level - 1)} point${PROFILE.level > 2 ? "s" : ""} de compétence${PROFILE.alloc.length ? `, ${spent()} dépensé${spent() > 1 ? "s" : ""} dans les bonus d'armée` : ""})</small></span>
+        <input type="range" min="1" max="40" value="${PROFILE.level}" data-level></label><button type="button" data-lvmax>Tout au max (niveau 40)</button></div>
       <h3>Effets appliqués${st ? " — " + esc(lordLabel(st)) : ""}</h3>
       <ul class="proflist">${eff.length ? eff.map(e => `<li title="${esc(e.label)} (${esc(e.src)})">${LAB[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)}</li>`).join("") : `<li class="none">${st ? "Aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne)." : "Aucun seigneur : aucun effet."}</li>`}${cond ? `<li class="none">${cond} effet(s) conditionnel(s) non appliqué(s) (terrain, embuscade, race adverse…).</li>` : ""}</ul>
-      <p class="dlcp">Pas encore pris en compte : niveau et compétences du seigneur, technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.</p>
+      ${PROFILE.alloc.length ? `<h3>Compétences choisies automatiquement</h3><ul class="proflist">${PROFILE.alloc.map(x => `<li>${esc(x.n)} <b>${x.lv}/${x.max}</b> — ${x.effs.map(e => `${LAB[e.s]} ${e.v > 0 ? "+" : ""}${e.v}${e.p ? " %" : ""}${e.u === "lord" ? " (seigneur)" : ""}`).join(", ")}${x.innate ? " · innée" : ""}</li>`).join("")}</ul>` : ""}
+      <p class="dlcp">Le site dépense les points tout seul, en priorisant ce qui apporte le plus à la faction (heuristique) ; pas de choix compétence par compétence. Pas encore pris en compte : technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.</p>
       <p class="dlcp" style="margin-bottom:16px"><button type="button" data-poff2>Désactiver et revenir aux stats du jeu</button></p>`;
   };
   const open = () => { draw(); dlg.showModal(); };
   document.addEventListener("click", e => { if (e.target.closest("[data-pedit]")) open(); const o = e.target.closest("[data-poff]"); if (o) { PROFILE.on = false; changed(); } });
   dlg.addEventListener("click", e => { if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
     if (e.target.closest("[data-poff2]")) { PROFILE.on = false; changed(); draw(); } });
+  dlg.addEventListener("input", e => { if ("level" in e.target.dataset) dlg.querySelector("[data-lvtxt]").textContent = e.target.value; });     // pendant le glissement : seulement l'affichage
+  dlg.addEventListener("click", e => { if (e.target.closest("[data-lvmax]")) { PROFILE.level = 40; PROFILE.on = true; changed(); draw(); } });
   dlg.addEventListener("change", e => { const c = e.target;
-    if ("on" in c.dataset) PROFILE.on = c.checked;
+    if ("level" in c.dataset) { PROFILE.level = +c.value; PROFILE.on = true; }
+    else if ("on" in c.dataset) PROFILE.on = c.checked;
     else if ("fac" in c.dataset) { PROFILE.fac = c.value; PROFILE.lord = "auto"; PROFILE.on = true; }
     else if ("lord" in c.dataset) { PROFILE.lord = c.value; PROFILE.on = true; }
     else return;
