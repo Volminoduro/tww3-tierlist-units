@@ -34,7 +34,7 @@ Colonnes « Site » : **soldats du défenseur perdus** (équivalent) à +5 s, do
 | 5 | Cavalerie monstrueuse contre infanterie légère | Chevaliers Demigriffons (32, 1500) | Bretteurs (120, 30) | 27 (9) | 2 |  |  |  |  |  |  |
 | 6 | Monstre (très lourd) contre infanterie légère | Géant (1, 6500) | Bretteurs (120, 30) | 16 (3) | 0 |  |  |  |  |  |  |
 | 7 | Monstre (lourd) contre infanterie légère | Stégadon sauvage (1, 4000) | Bretteurs (120, 30) | 12 (3) | 0 |  |  |  |  |  |  |
-| 8 | Char (très lourd) contre infanterie légère | Tank à vapeur (3, 5000) | Bretteurs (120, 30) | 29 (13) | 0 |  |  |  |  |  |  |
+| 8 | Char (très lourd) contre infanterie légère | Tank à vapeur (1, 5000) | Bretteurs (120, 30) | 10 (5) | 0 |  |  |  |  |  |  |
 | 9 | Cavalerie lourde contre infanterie lourde blindée | Reiksguard (60, 1000) | Marteliers (100, 100) | 14 (5) | 14 |  |  |  |  |  |  |
 | 10 | Cavalerie lourde contre lanciers (masse accrue en position de défense) | Reiksguard (60, 1000) | Lanciers (120, 30) | 16 (10) | 5 |  |  |  |  |  |  |
 | 11 | Infanterie contre infanterie (impact attendu très faible) | Bretteurs (120, 100) | Bretteurs (120, 30) | 14 (0) | 10 |  |  |  |  |  |  |

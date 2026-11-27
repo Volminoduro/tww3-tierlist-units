@@ -291,6 +291,7 @@ def main():
             if n_mount < men: men_fight = n_mount               # monstre portant un équipage : le bonus va au monstre une seule fois ; l'équipage compte dans les PV mais seul le monstre combat
         else:                                                   # cas général : (PV soldat + bonus) × modèles
             total_hp = men * (soldier_hp + bonus_hp)
+        if "steam_tank" in key and caste == "chariot" and men_fight == 3: men_fight = 1   # le Tank à vapeur est UN seul modèle en jeu (num_men = 3 compte l'équipage) ; PV totaux inchangés
         hp = total_hp / men_fight if men_fight else 0
         # vitesse de la carte = vitesse de course (ou de vol si plus élevée) de la monture, de la machine ou du soldat, × 10
         sp_ent = ment if ment else (eent if eng else ent)
