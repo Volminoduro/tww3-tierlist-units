@@ -118,6 +118,7 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 3. **Renversement** : modèles renversés ou projetés = hors combat pendant `knockdown_getting_up_delay` (retire des attaquants du front pendant quelques secondes).
 4. **Bracing** : les défenseurs en bracing augmentent leur masse effective (`bracing_calibration_ranks`, `bracing_calibration_ranks_multiplier`, `bracing_max_multiplier_clamp`) et peuvent annuler le renversement (`bracing_immovable_by_small_entity_mass` 600).
 5. **Validation** : comparer à des repères en jeu (ex. combien de PV une charge de Reiksguard enlève à des lanciers en bracing / sans bracing), et à l'écart des résultats actuels des duels de cavalerie (aujourd'hui trop sévères : pas d'impact ni de flanc).
+6. **Front de l'attaquant** (observé en jeu : les chevaucheurs de loups, 80 modèles sur 5 rangs, ne chargent presque pas de plein fouet) : seuls les modèles du premier rang (et en partie du second) heurtent le défenseur à pleine vitesse. Aujourd'hui le nombre de chargeurs n'est borné que par le front du **défenseur** (`contactCap`), et la mêlée compte 60 % de tous les modèles attaquants quel que soit leur nombre de rangs. À faire : borner impact, bonus de charge et engagement par la largeur de l'attaquant (`men ÷ rank_depth`, × une fraction du 2ᵉ rang), puis recaler `IMPACT_E` avec les mesures.
 
 **Dépend de** : point 5 (bracing et attributs déjà en place), flancs et dos (non modélisés : `devastating_flanker_charge_multiplier` 2,0, `melee_defence_direction_penalty_coefficient_flank` 0,6 / `_rear` 0,3).
 
