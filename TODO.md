@@ -2,11 +2,18 @@
 
 Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'exploration faite dans la conversation de conception.
 
-## 1. Niveau et compétences des seigneurs / héros (onglet Combat)
+## 0. Profil de campagne GLOBAL (cadre commun des points 1, 3 et 4)
+
+**Décision** : le niveau du seigneur, ses compétences, les technologies de la faction et les autres bonus de faction ne sont **pas** un réglage de l'onglet Combat : c'est un **profil de campagne global**, appliqué à **tout** le site (tier list, matrice, unités par faction, fiche d'unité, combat). Exemple d'usage : dans une campagne Légion des Tertres, le tier list dit que le lancier et le squelette sont S ; avec les technologies et le seigneur de la campagne boosté, le classement peut changer (le Spectre de Cain peut devenir meilleur).
+
+**Principe technique** : un profil = faction (ou seigneur choisi) + niveau + compétences + technologies. Il produit des modificateurs **par unité** (`mods` : ma, md, arm, ld, charge, ws, ms, spd, hp, ammo, range — déjà gérés par `sim.js` pour les effets de seigneur par défaut). Le tier list (`app.js`, `score()` et usages), les stats de la fiche (`browse.js`) et le combat appliquent ces `mods` aux stats avant de calculer ; les rangs « Top / Bottom % » se recalculent sur les stats modifiées. Les duels précalculés restent à profil par défaut (indiqué dans la page) ; à terme, calcul à la volée pour le profil actif.
+**À décider** : où règle-t-on le profil (barre latérale, réglage « Ma campagne » mémorisé dans `localStorage`), et comment l'afficher pour qu'on sache toujours qu'il est actif.
+
+## 1. Niveau et compétences des seigneurs / héros (profil global, voir point 0)
 
 **Décision** : curseur automatique (pas de choix compétence par compétence).
 
-**Idée** : réglage « Niveau du seigneur » (1 à 40) par armée. Le budget de points = niveau − 1 + points de départ. Le site dépense ces points automatiquement dans les bonus d'armée, en priorisant le gain par point. Bouton « Tout au max » = meilleur cas. Les duels précalculés restent au niveau et aux compétences par défaut. Même mécanisme pour les héros (leurs arbres sont dans le dump).
+**Idée** : réglage « Niveau du seigneur » (1 à 40), dans le profil global (et non plus seulement par armée du Combat). Le budget de points = niveau − 1 + points de départ. Le site dépense ces points automatiquement dans les bonus d'armée, en priorisant le gain par point. Bouton « Tout au max » = meilleur cas. Les duels précalculés restent au niveau et aux compétences par défaut. Même mécanisme pour les héros (leurs arbres sont dans le dump).
 
 **Ce que contiennent les tables** (dump Shazbot/wh3-dump) :
 - `character_skill_node_sets` (594 arbres, par `agent_subtype_key`) → `character_skill_node_set_items` → `character_skill_nodes` (`tier`, `indent`, `points_on_creation`) → `character_skills` (`unlocked_at_rank`) ;
@@ -44,14 +51,14 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 
 **Fichiers concernés** (à créer) : `tools/build_comps.js`, `data/comps.js`, un onglet ou une vue dédiée ; `sim.js` reste le seul simulateur.
 
-## 3. Arbre technologique et bonus de faction (à étudier)
+## 3. Arbre technologique et bonus de faction (à étudier ; profil global, voir point 0)
 
 **Question** : peut-on tenir compte de l'arbre technologique propre à la faction, et des autres bonus de faction qui touchent les unités ? **Faisable**, comme les compétences de seigneur (point 1) ; l'exploration du dump donne :
 - **Technologies** : `technology_node_sets` (36 arbres, par culture, sous-culture ou faction, parfois plusieurs par faction : ex. `chs_mil`, `chs_mil_azazel`, `chs_mil_belakor`) → `technology_nodes` (2 001 nœuds : `tier`, `research_points_required`, `cost_per_round`, `technology_node_set`) → `technologies` (2 098) → `technology_effects_junction` (4 079 effets : `effect`, `effect_scope`, `value`), prérequis dans `technology_node_links` (1 932 liens).
 - **Effets utiles** : 733 lignes ont une stat de bataille (attaque, défense, armure, moral, charge, force d'arme, force de tir, vitesse, PV, munitions, portée), presque toutes en portée `faction_to_force_own_unseen` (706) ; médiane ≈ 15 technologies utiles par arbre (Bretonnie 27 sur 75, Nains du Chaos 13 sur 78). Certaines sont ciblées (« contre les Rois des Tombes », une unité précise : `effect_bonus_value_ids_unit_sets`, déjà utilisé pour les seigneurs).
 - **Autres bonus de faction qui touchent les unités** : `faction_set_effect_bundles` (365 lots d'effets par ensemble de factions), `campaign_group_pooled_resource_effects` (736 : ressources propres aux factions, ex. corruption, nourriture, Waaagh), les bâtiments (`building_effects_junction` : 523 effets de stats de bataille sur 23 819), les rituels (`ritual…`, `effect_bonus_value_ritual_junctions`) et les traits de faction (`faction_starting_general_effects`, déjà pris en compte pour le seigneur de départ).
 
-**Piste d'interface** (comme le curseur de niveau du point 1) : dans l'onglet Combat, par armée, un réglage « Technologies » : aucune / jusqu'au tier N / tout, avec dépense automatique des points dans les technologies qui touchent les unités ; mêmes `mods` par unité que les effets de seigneur (`sim.js` les gère déjà).
+**Piste d'interface** : réglage « Technologies » du profil global (aucune / jusqu'au tier N / tout) avec dépense automatique des points dans les technologies qui touchent les unités ; mêmes `mods` par unité que les effets de seigneur. Il agit sur le tier list, la matrice, la fiche et le combat, pas seulement sur le Combat.
 
 **À vérifier / décider** :
 - l'arbre exact de chaque faction (clés `faction_key`, `culture`, `subculture` des `technology_node_sets` ; plusieurs arbres pour une faction à seigneurs multiples) ;
@@ -61,6 +68,14 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 - les technologies conditionnelles (contre une race, terrain) : même règle que pour les seigneurs (non appliquées).
 
 **Remplace en partie** les curseurs génériques « Technologies / bonus débloqués » du site (bonus de défense, de dégâts, de PV…) par des valeurs lues dans les tables, par faction.
+
+## 4. Seigneur d'armée « full niveau » avec tous ses perks (duels avec le seigneur comme unité)
+
+**But** : choisir un seigneur au **niveau maximum**, le mettre comme **seigneur d'armée** pour renforcer une unité (ou une composition), et voir le résultat dans les duels et le tier list : par exemple, avec le seigneur de ma campagne entièrement monté, le Spectre de Cain devient-il meilleur ?
+- **Un emplacement de moins** : le seigneur occupe 1 des 20 emplacements de l'armée (19 autres unités au plus) et son **coût de recrutement** entre dans le budget des duels à coût égal (donc parfois moins de 19 unités). Il combat aussi (ses PV, ses dégâts, ses compétences de personnage), pas seulement par ses bonus d'armée.
+- **Tous ses perks** : toutes les compétences d'armée à effet de stat, sauf les **choix exclusifs** (deux options dont on ne peut prendre qu'une) : l'utilisateur choisit alors l'option. Données utiles : `character_skill_node_links` (types `REQUIRED` / `SUBSET_REQUIRED`, `required_num_parents`), `character_skill_nodes_skill_locks` (2 694 lignes : verrous, à interpréter), `character_experience_skill_tiers` (points de compétence par rang), `character_skill_level_details` (rang requis par niveau de compétence).
+- **À identifier** : comment les choix exclusifs sont représentés dans les tables (nœuds frères sous un même parent, verrous…) ; l'interface les listerait pour que l'on tranche.
+- **Dépend du point 1** (extraction des niveaux) et de la **tier list de compositions** (point 2) pour classer des compositions avec seigneur.
 
 ## Autres pistes déjà évoquées
 
