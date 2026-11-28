@@ -331,3 +331,4 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #profdlg .pki{display:flex;align-items:center;gap:8px;padding:3px 10px;cursor:pointer;font-size:13px}#profdlg .pki:hover{background:#ffffff12}#profdlg .pki.sel{background:#c8a24a22;color:var(--gold2)}
 #profdlg .pkb .crest,#profdlg .pki .crest{width:28px;height:32px}#profdlg .pks.pt{width:36px;height:36px}#profdlg .pks.pt svg{padding:5px}
 #profdlg .profsv{margin:6px 18px 8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px}#profdlg .profsv small{color:var(--m);flex-basis:100%}
+#profdlg .pks.pt{width:36px;height:36px;min-width:36px;max-width:36px;aspect-ratio:1/1;flex:none}#profdlg .pks.pt img,#profdlg .pks.pt img.sq{-webkit-mask-image:none;mask-image:none;object-fit:cover;object-position:center 25%;inset:0;width:100%;height:100%;transform:none}
