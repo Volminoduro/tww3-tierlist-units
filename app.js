@@ -145,7 +145,7 @@ function duelPanel(u){
  const ranged=d.basis==="dps", lbl=duelMode()==="count"?"en 20 contre 20 (sans tenir compte du coût)":"à coût de recrutement équivalent", wr=Math.round(d.wr*100);
  const rows=Object.keys(d.vs).filter(r=>ranged?d.dps[r]>0:d.vs[r]!=null).map(r=>`<div class="kv"><span>${ranged?"DPS /100 vs ":"Victoires vs "}${rl(r)}</span><b>${ranged?d.dps[r]:Math.round(d.vs[r]*100)+" %"}</b></div>`).join("");
  const top=l=>l.slice(0,3).map(([id,m])=>`${nm(id)} (${m>0?"+":""}${Math.round(m*100)})`).join(", ");
- return `<h4>Résultats de duels</h4><div class="duelhead"><div class="big" style="color:hsl(${wr*1.2},55%,62%)">${wr} %<small>de victoires ${lbl}</small></div>
+ return `<h4>Résultats de duels</h4><div class="duelhead"><div class="big" style="color:hsl(${wr*1.2},55%,62%)">${wr} %${(()=>{const pd=CMP&&pinnedUnit()?duelOf(pinnedUnit()):null;return pd?ptag(wr,Math.round(pd.wr*100)," pts"):""})()}<small>de victoires ${lbl}</small></div>
   <div class="anti">${si("target")}<span>${d.anti.length?"Domine : "+d.anti.map(([r,p])=>`${rl(r)} (top ${Math.max(1,100-p)} %)`).join(", "):"Aucune typologie dominante"}</span></div></div>
   <details class="more"><summary>Détail par catégorie et adversaires</summary>${rows}
   <small class="kv2">Bat le mieux : ${top(d.best)}<br>Battue par : ${top(d.worst)}</small></details>
@@ -260,7 +260,7 @@ function syncDetail(us){
  if(!x){dt.hidden=true;return;}
  const st=dt.scrollTop; detail(x); dt.scrollTop=st;
 }
-function setPin(id){ PIN=PIN===id?null:id; document.querySelectorAll(".cpin").forEach(b=>b.classList.toggle("on",b.dataset.pin===PIN)); const dt=$("#detail"); if(!dt.hidden&&dt.dataset.unit){const x=(window._us||[]).find(y=>y.u.id===dt.dataset.unit); if(x) detail(x);} }
+function setPin(id){ PIN=PIN===id?null:id; window._pinX=PIN?(window._us||[]).find(y=>y.u.id===PIN)||null:null; document.querySelectorAll(".cpin").forEach(b=>b.classList.toggle("on",b.dataset.pin===PIN)); const dt=$("#detail"); if(!dt.hidden&&dt.dataset.unit){const x=(window._us||[]).find(y=>y.u.id===dt.dataset.unit); if(x) detail(x);} }
 document.addEventListener("click",e=>{
  const pb=e.target.closest("[data-pin]"); if(pb){ e.stopPropagation(); return setPin(pb.dataset.pin); }
  const th=e.target.closest("th[data-k]"); if(th){sortDir=sortKey===th.dataset.k?-sortDir:-1;sortKey=th.dataset.k;return render();}
@@ -376,7 +376,7 @@ function facBlock(u){
 }
 function usageBlock(x){
  const ks=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]), top=ks.slice(0,3), rest=ks.slice(3);
- const row=k=>srow("u_"+k,ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées");
+ const px=CMP?pinnedX():null, row=k=>srow("u_"+k,ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées",false,px?ptag(x.pct[k],px.pct[k]):"");
  return `<h4>Pour quoi l'utiliser</h4>${top.map(row).join("")}<details class="more"><summary>Autres usages</summary>${rest.map(row).join("")}</details>`;
 }
 /* Épingler une unité (comme en jeu) : la prochaine unité ouverte est comparée à l'unité épinglée (stats côte à côte, écart coloré, duel direct). Valable pour la session. */
@@ -387,6 +387,9 @@ let CMP=null;   // stats de l'unité épinglée (clé -> {v}) quand une autre un
 function cmpTag(o){ const q=CMP&&CMP[o.s.k]; if(!q) return ""; const dv=o.v-q.v; if(Math.abs(dv)<1e-9) return `<em class="dl eq" title="Identique à l'unité épinglée">=</em>`;
  const good=o.s.d*dv>0, rel=q.v?Math.round(Math.abs(dv)/Math.abs(q.v)*100):null;
  return `<em class="dl ${good?"good":"bad"}" title="Écart avec l'unité épinglée (${fmtv(q.v)})${rel==null?"":" : "+(dv>0?"+":"−")+rel+" %"}">${dv>0?"+":"−"}${fmtv(Math.abs(dv))}</em>`; }
+/* Étiquette d'écart pour une valeur « plus haut = mieux » (points de percentile, % de victoires…) ; null si rien n'est épinglé */
+function ptag(v,q,unit){ if(q==null||v==null||!CMP) return ""; const dv=Math.round((v-q)*10)/10; if(!dv) return `<em class="dl eq" title="Identique à l'unité épinglée">=</em>`; return `<em class="dl ${dv>0?"good":"bad"}" title="Écart avec l'unité épinglée (${fmtv(q)}${unit||""})">${dv>0?"+":"−"}${fmtv(Math.abs(dv))}${unit||""}</em>`; }
+const pinnedX=()=>{ const p=pinnedUnit(); return p?(window._us||[]).find(y=>y.u.id===p.id)||(window._pinX&&window._pinX.u.id===p.id?window._pinX:null):null; };
 function compareHead(u){
  const p=pinnedUnit(); if(!p||p.id===u.id) return "";
  let duel="";
