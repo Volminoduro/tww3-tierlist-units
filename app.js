@@ -264,6 +264,7 @@ document.addEventListener("click",e=>{
  const th=e.target.closest("th[data-k]"); if(th){sortDir=sortKey===th.dataset.k?-sortDir:-1;sortKey=th.dataset.k;return render();}
  const c=e.target.closest("[data-id]"); if(c){const x=window._us.find(y=>y.u.id===c.dataset.id); if(x) detail(x);}
  if(e.target.id==="close")$("#detail").hidden=true;
+ if(e.target.closest("#pin")||e.target.closest("#unpin")){ const id=$("#detail").dataset.unit; PIN=e.target.closest("#unpin")||PIN===id?null:id; const x=(window._us||[]).find(y=>y.u.id===id); if(x) detail(x); }
  /* Clic dans le vide (élément non interactif, hors fiche) : ferme la fiche */
  const dt=$("#detail");
  if(dt&&!dt.hidden&&e.target.isConnected&&!e.target.closest("#detail,[data-id],button,a,input,select,textarea,label,summary,dialog,.tp,.tp-pop,th,[role=button],[data-p],#nav,.dseg")) dt.hidden=true;
@@ -374,12 +375,30 @@ function usageBlock(x){
  const row=k=>srow("u_"+k,ARCH[k],x.pct[k],x.pct[k],x.pct[k],"Percentile parmi les unités affichées");
  return `<h4>Pour quoi l'utiliser</h4>${top.map(row).join("")}<details class="more"><summary>Autres usages</summary>${rest.map(row).join("")}</details>`;
 }
+/* Épingler une unité (comme en jeu) : la prochaine unité ouverte est comparée à l'unité épinglée (stats côte à côte, écart coloré, duel direct). Valable pour la session. */
+let PIN=null, _DC=null;
+const pinnedUnit=()=>PIN?D.units.find(v=>v.id===PIN):null;
+function compareBlock(u,list){
+ const p=pinnedUnit(); if(!p||p.id===u.id) return "";
+ const pl=Object.fromEntries(statList(p).map(o=>[o.s.k,o]));
+ let rows="",g="";
+ for(const o of list){ const q=pl[o.s.k]; if(!q) continue;
+  const dv=o.v-q.v, same=Math.abs(dv)<1e-9, good=o.s.d*dv>0;
+  if(o.s.g!==g){g=o.s.g;rows+=`<tr class="cg"><th colspan="4">${g}</th></tr>`}
+  const rel=q.v?Math.round(dv/Math.abs(q.v)*100):null;
+  rows+=`<tr><td>${o.s.l}</td><td class="cp">${fmtv(q.v)}</td><td class="cn">${fmtv(o.v)}</td><td class="cd ${same?"":good?"good":"bad"}">${same?"=":(dv>0?"+":"−")+fmtv(Math.abs(dv))+(rel==null?"":` <small>(${dv>0?"+":"−"}${Math.abs(rel)} %)</small>`)}</td></tr>`; }
+ let duel="";
+ try{ if(window.TWW3Sim&&window.DuelCalc){ _DC=_DC||DuelCalc.make(window.TWW3Sim,D.units.filter(v=>v.cost>0&&v.men>0&&v.hp>0)); const mode=duelMode(), m=_DC.duel(u,p,mode);
+   if(!Number.isNaN(m)) duel=`<div class="cduel" title="Duel du simulateur, sans bonus, ${mode==="count"?"20 contre 20":"à coût de recrutement équivalent"} (indicatif)">Duel direct ${mode==="count"?"(20 contre 20)":"(coût équivalent)"} : <b class="${m>0?"good":m<0?"bad":""}">${m>0?u.name+" l'emporte":m<0?p.name+" l'emporte":"égalité"}</b> <small>(marge ${Math.round(Math.abs(m)*100)} %)</small></div>`; } }catch(e){}
+ return `<div class="cmp"><h4>Comparatif <button type="button" class="unpin" id="unpin" title="Retirer l'épingle">✕</button></h4><div class="cmph"><span>📌 ${p.name}</span><span>${u.name}</span></div>${duel}<table>${rows}</table></div>`;
+}
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
  const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false, wasAbilOpen=dt.querySelector("details.abil")?.open;
- dt.innerHTML=`<div class="dtop"><div class="dh"><div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><button class="x" id="close">✕</button></div>
+ dt.innerHTML=`<div class="dtop"><div class="dh"><div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><span class="dbtn"><button type="button" class="pin${PIN===u.id?" on":""}" id="pin" title="${PIN===u.id?"Retirer l'épingle":"Épingler cette unité : la prochaine unité ouverte lui sera comparée"}">📌</button><button class="x" id="close">✕</button></span></div>
  ${dpoolBar(u)}
  <div class="dbrief">${fullPic(u)}${briefTiles(list)}</div></div>
+ ${compareBlock(u,list)}
  ${facBlock(u)}
  ${usageBlock(x)}
  ${duelPanel(u)}

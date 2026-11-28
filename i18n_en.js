@@ -83,6 +83,7 @@ Object.assign(I18N.dict, {
   "Bataille personnalisée / multi (coût MP)": "Custom battle / multiplayer (MP cost)",
   "Tier par efficacité (puissance ÷ coût)": "Tier by efficiency (power ÷ cost)",
   "Tier par puissance brute": "Tier by raw power",
+  "Comparatif": "Comparison", "Retirer l'épingle": "Unpin", "Épingler cette unité : la prochaine unité ouverte lui sera comparée": "Pin this unit: the next unit you open is compared to it",
   "Tier par résultats de duels (taux de victoire)": "Tier by duel results (win rate)",
   "Typologie : globale (tout usage)": "Typology: overall (any use)",
   "Rang relatif à toutes les unités": "Rank relative to all units", "Rang relatif à la catégorie": "Rank relative to the category",

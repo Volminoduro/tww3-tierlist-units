@@ -381,3 +381,11 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 .ctxbox{margin:6px 0;border:1px solid var(--gold3);border-radius:3px;background:#0b090766}.ctxbox>summary{padding:5px 9px;cursor:pointer;font-size:12px;color:var(--m)}
 .ctxg{display:flex;flex-wrap:wrap;gap:4px 14px;padding:4px 10px 8px}.ctxg .chk{font-size:12px}.ctxg select{width:auto;font-size:12px;padding:3px 6px}.lfxl i{color:var(--m);font-size:11px}
 .cduel{margin:8px 0;padding:8px 10px;border:1px solid var(--gold3);border-radius:3px;background:#0b090766;display:flex;flex-direction:column;gap:5px;font-size:13px}.cduel small{color:var(--m);font-size:12px}.cduel .up{color:#7cc491}.cduel .dn{color:#e58b80}
+
+/* Épingle et comparatif (fiche d'unité) */
+#detail .dbtn{display:flex;gap:4px;align-items:flex-start}#detail .dbtn .x{float:none}#detail .pin{padding:1px 6px;opacity:.55;filter:grayscale(1)}#detail .pin.on{opacity:1;filter:none;border-color:var(--gold)}
+#detail .cmp{margin:6px 0}#detail .cmp h4{display:flex;justify-content:space-between;align-items:center}#detail .unpin{padding:0 6px;font-size:11px}
+#detail .cmph{display:grid;grid-template-columns:1fr 1fr;gap:6px;font:700 12px var(--serif);color:var(--gold2);margin-bottom:4px}#detail .cmph span:last-child{text-align:right}
+#detail .cduel{font-size:12px;margin:2px 0 6px}#detail .cmp .good{color:#7cc491}#detail .cmp .bad{color:#e58b80}
+#detail .cmp table{width:100%;border-collapse:collapse;font-size:12px}#detail .cmp td{padding:2px 4px;border-bottom:1px solid #ffffff10}#detail .cmp .cp,#detail .cmp .cn{text-align:right;white-space:nowrap}#detail .cmp .cd{text-align:right;white-space:nowrap;font-weight:700}
+#detail .cmp .cg th{text-align:left;padding-top:6px;font:700 10px var(--serif);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
