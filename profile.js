@@ -5,7 +5,7 @@
    NIVEAU du seigneur (TODO point 1) : un curseur 1 à 40 donne N − 1 points de compétence, dépensés automatiquement (arbres de data/skills.js, voir allocate()). La valeur d'un niveau de compétence est le TOTAL à ce niveau (vérifié : rapport médian niveau 2 / niveau 1 = 2,0).
    Ici ils sont appliqués aux STATS des unités (D.units modifiées sur place, valeurs d'origine gardées dans u._b) : tier list, unités par faction, fiche d'unité et
    Combat lisent donc tous les stats modifiées, et les rangs « Top / Bottom % » se recalculent d'eux-mêmes. Seules les unités de la faction choisie sont touchées
-   (un bonus « toutes les unités » ne gonfle pas les unités des autres factions). Les duels précalculés (data/duels.js) restent au profil par défaut.
+   (un bonus « toutes les unités » ne gonfle pas les unités des autres factions). Les duels sont rejoués automatiquement pour le profil (campduels.js).
    Le Combat n'ajoute pas une seconde fois l'effet du même seigneur (u._pm = « déjà modifiée par le profil », lu par battle.js). État mémorisé (PREF « profile »). */
 const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, alloc: [], sv: null, fromSave: false, condEff: []};
 (() => {
@@ -105,7 +105,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     }
   }
   const save = () => PREF.set("profile", {on: PROFILE.on, fac: PROFILE.fac, lord: PROFILE.lord, level: PROFILE.level, sv: PROFILE.sv, fromSave: PROFILE.fromSave});
-  const changed = () => { apply(); save(); PROFILE.duelsOk = false; if (window.setDU) window.setDU(null); drawBar(); document.dispatchEvent(new Event("rorchange")); };
+  const changed = () => { apply(); save(); drawBar(); if (typeof CampDuels !== "undefined") CampDuels.schedule(); document.dispatchEvent(new Event("rorchange")); };
 
   { const s = PREF.get("profile", null);
     if (s && s.fac && facs.includes(s.fac)) { PROFILE.fac = s.fac; PROFILE.lord = typeof s.lord === "string" ? s.lord : "auto"; PROFILE.on = !!s.on; PROFILE.level = Math.min(50, Math.max(1, Math.round(+s.level) || 1)); if (s.sv && s.sv.lords) { PROFILE.sv = s.sv; PROFILE.fromSave = !!s.fromSave; } } }
@@ -120,8 +120,8 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     if (PROFILE.on) {
       const who = st ? lordLabel(st) : "sans seigneur", fn = D.factions[PROFILE.fac] || PROFILE.fac;
       bar.className = "profbar on";
-      bar.innerHTML = `<span class="pbtxt">⚑ <b>Ma campagne</b> : ${esc(fn)} — ${esc(who)}${PROFILE.level > 1 ? ` niv. ${PROFILE.level}` : ""} · stats modifiées de ${PROFILE.n} unité${PROFILE.n > 1 ? "s" : ""} (duels précalculés au profil par défaut)</span>` +
-        `<button type="button" data-pduel title="Rejoue les duels des unités de ta faction avec les stats du profil et les effets conditionnels du seigneur (quelques dizaines de secondes à quelques minutes), puis recalcule le classement par duels et la matrice">${PROFILE.duelsOk ? "Duels recalculés ✓" : "Recalculer les duels…"}</button><small class="pbst"></small><button type="button" data-pedit>Modifier</button><button type="button" data-poff>Désactiver</button>`;
+      bar.innerHTML = `<span class="pbtxt">⚑ <b>Ma campagne</b> : ${esc(fn)} — ${esc(who)}${PROFILE.level > 1 ? ` niv. ${PROFILE.level}` : ""} · stats modifiées de ${PROFILE.n} unité${PROFILE.n > 1 ? "s" : ""}</span>` +
+        `<small class="pbst">${esc(PROFILE.duelSt || "")}</small><button type="button" data-pedit>Modifier</button><button type="button" data-poff>Désactiver</button>`;
     } else { bar.className = "profbar"; bar.innerHTML = `<button type="button" data-pedit>Ma campagne…</button><small>Applique à tout le site le seigneur et les bonus de ta faction.</small>`; }
   }
 
@@ -150,7 +150,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
       <h3>Effets appliqués${st ? " — " + esc(lordLabel(st)) : ""}</h3>
       <ul class="proflist">${eff.length ? eff.map(e => `<li title="${esc(e.label)} (${esc(e.src)})">${LAB[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)}</li>`).join("") : `<li class="none">${st ? "Aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne)." : "Aucun seigneur : aucun effet."}</li>`}${cond ? `<li class="none">${cond} effet(s) conditionnel(s) non appliqué(s) (terrain, embuscade, race adverse…).</li>` : ""}</ul>
       ${PROFILE.alloc.length ? `<h3>${usingSave(st) ? "Compétences prises dans ta sauvegarde" : "Compétences choisies automatiquement"}</h3><ul class="proflist">${PROFILE.alloc.map(x => `<li>${esc(x.n)} <b>${x.lv}/${x.max}</b> — ${x.effs.map(e => `${LAB[e.s]} ${e.v > 0 ? "+" : ""}${e.v}${e.p ? " %" : ""}${e.u === "lord" ? " (seigneur)" : ""}${e.c ? ` <i>si ${e.c.map(g => (typeof TAG_TXT !== "undefined" && TAG_TXT[g]) || g).join(" / ")} (Combat)</i>` : ""}`).join(", ")}${x.innate ? " · innée" : ""}</li>`).join("")}</ul>` : ""}
-      <p class="dlcp">Le site dépense les points tout seul, en priorisant ce qui apporte le plus à la faction (heuristique) ; pas de choix compétence par compétence. Pas encore pris en compte : technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.</p>
+      <p class="dlcp">Le site dépense les points tout seul, en priorisant ce qui apporte le plus à la faction (heuristique) ; pas de choix compétence par compétence. Pas encore pris en compte : technologies et autres bonus de faction (chantiers à venir). Les duels et le classement par duels sont recalculés automatiquement pour ton profil (voir le bandeau). Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.</p>
       <p class="dlcp" style="margin-bottom:16px"><button type="button" data-poff2>Désactiver et revenir aux stats du jeu</button></p>`;
   };
 
