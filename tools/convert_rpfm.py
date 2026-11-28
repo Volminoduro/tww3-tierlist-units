@@ -255,7 +255,7 @@ def main():
         return round(b, 3), round(math.pi * (a + b) * (1 + 3 * h / (10 + math.sqrt(4 - 3 * h))), 3)
 
     # Attributs de charge (unit_attributes) : land_units.attribute_group -> unit_attributes_to_groups_junctions
-    CHARGE_ATTRS = {"charge_defense", "charge_defense_vs_large", "charge_reflection", "ogre_charge", "ogre_charge_upgraded", "mounted_fire_move"}   # + tir en mouvement (cavalerie à arc)
+    CHARGE_ATTRS = {"charge_defense", "charge_defense_vs_large", "charge_reflection", "ogre_charge", "ogre_charge_upgraded", "mounted_fire_move", "causes_fear", "causes_terror", "immune_to_psychology", "unbreakable"}   # + psychologie (peur, terreur, immunité, indémoralisable)   # + tir en mouvement (cavalerie à arc)
     attrs_of_group = defaultdict(set)
     for r in T.get("unit_attributes_to_groups_junctions", []):
         if r.get("attribute") in CHARGE_ATTRS: attrs_of_group[r.get("attribute_group")].add(r["attribute"])

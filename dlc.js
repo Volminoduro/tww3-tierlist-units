@@ -16,6 +16,8 @@
   recalc();
   const jeu = k => /^TW_WH1_/.test(k) ? 1 : /^TW_WH2_/.test(k) ? 2 : /^TW_WH3_/.test(k) ? 3 : 0;
   const GROUPS = {3: "Total War: Warhammer III", 2: "Total War: Warhammer II", 1: "Total War: Warhammer", 0: "Autres contenus"};
+  /* Contenus offerts à une période : souvent absents de la liste des licences Steam alors qu'on les possède, à cocher à la main. */
+  const NOTE = {TW_WH3_OGRE_KINGDOMS: "offert aux précommandes et la 1re semaine : peut manquer à la liste Steam, à cocher à la main"};
   const nUnits = {};                                          // unités qui dépendent (au moins en partie) de chaque produit
   for (const u of D.units) { const s = new Set(); (u.pk || []).forEach(i => DLC.packs[i].forEach(ps => ps.forEach(p => s.add(p)))); s.forEach(p => nUnits[p] = (nUnits[p] || 0) + 1); }
 
@@ -95,7 +97,7 @@
         <div class="dlcbar"><button type="button" data-copy="code">Copier mon code</button><button type="button" data-copy="link">Copier le lien</button></div>
         <div class="dlcbar"><input type="text" data-code placeholder="Coller un code…" spellcheck="false"><button type="button" data-import>Importer</button></div><small class="dlcmsg" data-msg></small></details>
       <div class="dlclist">${[3, 2, 1, 0].filter(g => by[g].length).map(g => `<h3>${GROUPS[g]}</h3>` + by[g].sort((a, b) => DLC.products[a].o - DLC.products[b].o || DLC.products[a].n.localeCompare(DLC.products[b].n)).map(k => { const p = DLC.products[k];
-        return `<label class="dlcit${p.free ? " free" : ""}"><input type="checkbox" data-k="${k}" ${owned(k) ? "checked" : ""} ${p.free ? "disabled" : ""}><span>${p.n}</span><small>${p.free ? "gratuit · " : ""}${nUnits[k] || 0} unités</small>${p.sid ? `<a class="dlcsl" href="https://store.steampowered.com/app/${p.sid}" target="_blank" rel="noopener" title="Voir sur Steam">Steam</a>` : ""}</label>`; }).join("")).join("")}</div>`;
+        return `<label class="dlcit${p.free ? " free" : ""}"><input type="checkbox" data-k="${k}" ${owned(k) ? "checked" : ""} ${p.free ? "disabled" : ""}><span>${p.n}${NOTE[k] ? ` <em class="dlcnote">${NOTE[k]}</em>` : ""}</span><small>${p.free ? "gratuit · " : ""}${nUnits[k] || 0} unités</small>${p.sid ? `<a class="dlcsl" href="https://store.steampowered.com/app/${p.sid}" target="_blank" rel="noopener" title="Voir sur Steam">Steam</a>` : ""}</label>`; }).join("")).join("")}</div>`;
   };
   const open = () => { draw(); dlg.showModal(); };
   document.addEventListener("click", e => { if (e.target.closest("[data-dlcbtn]")) open(); });

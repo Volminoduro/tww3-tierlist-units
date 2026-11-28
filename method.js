@@ -44,7 +44,7 @@
   <h2>Ce que le site ajoute (calculs propres, pas des nombres du jeu)</h2>
   <ul>
     <li><b>Puissance, tiers et typologies d'usage</b> : formules simplifiées (voir « Comment c'est calculé ? » dans l'onglet Tier list), réglables.</li>
-    <li><b>Simulateur de combat et duels précalculés</b> (à coût de recrutement équivalent) : un même fichier (<code>sim.js</code>) pour le site et pour les calculs de duels. Modèle approximatif : pas de ciblage ni de flanquement, moral simplifié, précision des tirs fixe.</li>
+    <li><b>Simulateur de combat et duels précalculés</b> (à coût de recrutement équivalent) : un même fichier (<code>sim.js</code>) pour le site et pour les calculs de duels. Modèle approximatif : pas de ciblage ni de flanquement, moral simplifié, précision des tirs fixe. <b>Moral</b> : une unité fuit quand ses pertes dépassent un seuil (15 % + moral × 0,6), valeurs posées par nous, non recoupées en jeu ; les unités <code>unbreakable</code> (indémoralisables) ne fuient jamais. <b>Peur et terreur</b> (<code>causes_fear</code>, <code>causes_terror</code>) : au contact, −8 de moral pour l'adversaire ; la terreur donne un choc de −50 et fait fuir 14 s les unités dont le moral − 50 est sous 13, qui sont ensuite insensibles 85 s. Constantes lues dans <code>_kv_morale_tables</code> du dump, interprétation non validée en jeu ; <code>immune_to_psychology</code> et <code>unbreakable</code> protègent. Non modélisés : choc de flanc ou de dos, mort du général, ralliement, malus de pertes récentes.</li>
     <li><b>Effets par défaut du seigneur</b> : seuls les effets de stats d'unités, non conditionnels, de l'effet de départ et des compétences innées.</li>
   </ul>
 

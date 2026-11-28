@@ -4547,6 +4547,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -4616,6 +4619,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -4672,6 +4678,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -4731,6 +4741,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -4790,6 +4803,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -4848,6 +4864,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -4907,6 +4926,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -4965,6 +4987,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5024,6 +5049,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5074,6 +5102,7 @@
    "tier": 1.0,
    "mount": "wh2_dlc09_tmb_mnt_tomb_steed",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -5151,6 +5180,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5206,6 +5238,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5261,6 +5296,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5315,6 +5353,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5369,6 +5410,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5423,6 +5467,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5477,6 +5524,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5531,6 +5581,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5585,6 +5638,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5649,6 +5705,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5708,6 +5767,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5763,6 +5825,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5822,6 +5887,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5877,6 +5945,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5936,6 +6007,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -5991,6 +6065,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6050,6 +6127,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6105,6 +6185,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6164,6 +6247,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6219,6 +6305,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6259,6 +6348,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -6331,6 +6421,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6385,6 +6478,10 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -6439,6 +6536,10 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -6494,6 +6595,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6549,6 +6653,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6604,6 +6711,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6659,6 +6769,10 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -6699,6 +6813,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -6777,6 +6892,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6832,6 +6950,9 @@
    ],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -6888,6 +7009,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -6944,6 +7069,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7003,6 +7131,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7061,6 +7192,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -7130,6 +7265,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7200,6 +7338,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7240,6 +7381,7 @@
    "tier": 1.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -7303,6 +7445,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense",
     "charge_reflection"
    ],
@@ -7386,6 +7529,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7442,6 +7588,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -7502,6 +7652,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7542,6 +7695,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -7626,6 +7780,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7685,6 +7842,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7743,6 +7903,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7799,6 +7962,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7855,6 +8021,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7911,6 +8080,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -7970,6 +8142,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -8026,6 +8202,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -8082,6 +8262,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -8142,6 +8326,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -8202,6 +8390,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -8252,6 +8444,7 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -8326,6 +8519,7 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -8410,6 +8604,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -8470,6 +8668,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -8539,6 +8740,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -8609,6 +8813,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -8668,6 +8875,10 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -8718,6 +8929,7 @@
    "tier": 3.0,
    "mount": "wh2_dlc09_tmb_mnt_tomb_steed_chariot",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -8799,6 +9011,9 @@
    "cultures": [],
    "pk": [
     52
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -8914,6 +9129,10 @@
    "cultures": [],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -9040,6 +9259,9 @@
    "cultures": [],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -9097,6 +9319,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -9151,6 +9376,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -9205,6 +9433,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -9259,6 +9491,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -9421,6 +9657,9 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -9637,6 +9876,9 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -9853,6 +10095,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -9961,6 +10206,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -10015,6 +10264,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -10180,6 +10433,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -10288,6 +10544,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -10342,6 +10602,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -10504,6 +10768,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -10612,6 +10879,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -10666,6 +10937,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -10831,6 +11106,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -10939,6 +11217,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -10993,6 +11275,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -11158,6 +11444,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -11266,6 +11555,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -11320,6 +11613,10 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -11378,6 +11675,9 @@
    "cultures": [],
    "pk": [
     32
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -11493,6 +11793,10 @@
    "cultures": [],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -11681,6 +11985,10 @@
    "cultures": [],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -11745,6 +12053,10 @@
     2,
     8,
     13
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -11802,6 +12114,10 @@
    "cultures": [],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -11858,6 +12174,9 @@
    "cultures": [],
    "pk": [
     3
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -12152,6 +12471,9 @@
    ],
    "pk": [
     32
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -12812,6 +13134,10 @@
    "pk": [
     13,
     32
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -12920,8 +13246,10 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -13390,6 +13718,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection",
     "mounted_fire_move"
@@ -13453,7 +13782,9 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "causes_fear",
+    "charge_defense_vs_large",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -13516,6 +13847,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -13608,6 +13941,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -13677,6 +14013,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -13747,6 +14086,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -13797,6 +14139,7 @@
    "tier": 1.0,
    "mount": "wh2_dlc11_cst_mon_deck_dropper_bat",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -13888,6 +14231,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -13957,6 +14303,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -14027,6 +14376,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -14068,7 +14420,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -14125,8 +14478,10 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -14197,6 +14552,10 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -14237,6 +14596,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_leviathan",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -14308,6 +14669,10 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -14362,6 +14727,10 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -14431,6 +14800,9 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -14481,6 +14853,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -14549,6 +14922,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -14617,6 +14991,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_terrorgheist",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0.001,
@@ -14697,6 +15073,10 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -14737,6 +15117,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -14796,6 +15177,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -14854,6 +15236,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -14913,6 +15296,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -14971,6 +15355,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -15030,6 +15415,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -15098,6 +15484,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -15166,6 +15553,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "mounted_fire_move"
    ],
@@ -15235,6 +15623,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -15303,6 +15692,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "mounted_fire_move"
    ],
@@ -15372,6 +15762,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -15440,6 +15831,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "mounted_fire_move"
    ],
@@ -15518,6 +15910,9 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -15558,6 +15953,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -15631,6 +16027,9 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -15671,6 +16070,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -15744,6 +16144,9 @@
    ],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -15784,6 +16187,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -15842,6 +16246,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -15910,6 +16315,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_necrofex_colossus_noctilus",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -15996,6 +16403,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -16066,6 +16476,10 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -16125,6 +16539,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -16165,6 +16582,7 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -16228,6 +16646,7 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense",
     "charge_reflection"
    ],
@@ -16436,6 +16855,10 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -16495,6 +16918,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -16535,6 +16961,7 @@
    "tier": 1.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -16618,6 +17045,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -16668,6 +17098,7 @@
    "tier": 1.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -16759,6 +17190,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -16828,6 +17262,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -16897,6 +17334,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -16947,6 +17387,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -17030,6 +17471,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -17090,6 +17534,9 @@
    "pk": [
     34,
     76
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -17153,6 +17600,9 @@
    "pk": [
     11,
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -17215,6 +17665,10 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -17278,6 +17732,10 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -17328,6 +17786,8 @@
    "tier": 4.0,
    "mount": "wh2_dlc11_cst_mnt_necrofex_colossus",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -17420,6 +17880,10 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -17460,6 +17924,8 @@
    "tier": 5.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_leviathan",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -17522,6 +17988,7 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -17584,6 +18051,7 @@
    "tier": 3.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -17646,6 +18114,7 @@
    "tier": 4.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_ror",
    "at": [
+    "causes_fear",
     "charge_defense"
    ],
    "ror": 1,
@@ -17727,6 +18196,9 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -17784,6 +18256,10 @@
    "cultures": [],
    "pk": [
     34
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -17841,6 +18317,9 @@
    ],
    "pk": [
     33
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -17898,6 +18377,10 @@
    ],
    "pk": [
     33
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -17952,6 +18435,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18006,6 +18492,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18060,6 +18549,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18114,6 +18606,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -18168,6 +18664,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18222,6 +18721,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18276,6 +18778,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18330,6 +18835,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -18384,6 +18893,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18438,6 +18950,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18492,6 +19007,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18546,6 +19064,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -18600,6 +19122,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18654,6 +19179,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -18708,6 +19237,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18762,6 +19294,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18816,6 +19351,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -18870,6 +19408,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -18927,6 +19469,9 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19116,6 +19661,10 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -19172,6 +19721,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19228,6 +19780,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19283,6 +19838,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19333,6 +19891,7 @@
    "tier": 2.0,
    "mount": "wh2_dlc12_lzd_mnt_terradon_ror",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -19463,6 +20022,9 @@
    ],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19517,6 +20079,9 @@
    ],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19567,6 +20132,8 @@
    "tier": 0.0,
    "mount": "wh2_main_lzd_mnt_stegadon_ancient",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -19624,6 +20191,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc12_lzd_mnt_stegadon_ancient_engine_gods",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -19681,6 +20250,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc12_lzd_mnt_stegadon_ancient_engine_gods",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -19806,6 +20377,9 @@
    ],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19860,6 +20434,9 @@
    ],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -19900,6 +20477,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc12_lzd_mnt_stegadon_ancient_engine_gods",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -19971,6 +20550,9 @@
    ],
    "pk": [
     36
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -20141,6 +20723,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -20254,6 +20839,10 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -20320,6 +20909,10 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -20386,6 +20979,10 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -20426,6 +21023,8 @@
    "tier": 5.0,
    "mount": "wh2_dlc12_lzd_mnt_stegadon_ancient_engine_gods",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -20495,6 +21094,8 @@
    "tier": 5.0,
    "mount": "wh2_dlc12_lzd_mnt_stegadon_ancient_ror",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -20569,6 +21170,10 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -20635,6 +21240,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -20701,6 +21309,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -20766,6 +21377,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -21071,6 +21685,10 @@
    ],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -21233,6 +21851,10 @@
    ],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -21584,7 +22206,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -21652,7 +22275,8 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -21862,6 +22486,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -21917,6 +22544,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -21975,6 +22605,9 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -22030,6 +22663,10 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -22088,6 +22725,10 @@
    "cultures": [],
    "pk": [
     35
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -22263,6 +22904,10 @@
    "cultures": [],
    "pk": [
     4
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -22318,6 +22963,9 @@
    "cultures": [],
    "pk": [
     4
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -22504,6 +23152,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -22842,6 +23491,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -23115,6 +23765,9 @@
    "cultures": [],
    "pk": [
     4
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -23361,6 +24014,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -23495,6 +24149,9 @@
    "cultures": [],
    "pk": [
     4
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -23545,7 +24202,10 @@
    "tier": 5.0,
    "mount": "emp_hidden_mount_steam_tank",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -23881,7 +24541,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -23952,6 +24613,9 @@
    ],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -24008,6 +24672,10 @@
    ],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -24388,6 +25056,10 @@
    "cultures": [],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -24428,6 +25100,8 @@
    "tier": 5.0,
    "mount": "wh2_dlc13_lzd_mnt_dread_saurian",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -24487,6 +25161,8 @@
    "tier": 5.0,
    "mount": "wh2_dlc13_lzd_mnt_dread_saurian_ror",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -24571,6 +25247,9 @@
    "cultures": [],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -24637,6 +25316,9 @@
    "cultures": [],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -24702,6 +25384,9 @@
    "cultures": [],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -24758,6 +25443,9 @@
    "cultures": [],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -24814,6 +25502,9 @@
    "cultures": [],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -24869,6 +25560,9 @@
    "cultures": [],
    "pk": [
     38
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -24977,6 +25671,10 @@
    ],
    "pk": [
     39
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -25085,6 +25783,9 @@
    ],
    "pk": [
     39
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -25139,6 +25840,9 @@
    ],
    "pk": [
     39
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -25462,6 +26166,10 @@
    ],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -25519,6 +26227,9 @@
    ],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -25576,6 +26287,9 @@
    ],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -25751,6 +26465,9 @@
    ],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -25859,6 +26576,9 @@
    ],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -25917,6 +26637,9 @@
    "cultures": [],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -25984,6 +26707,10 @@
    "cultures": [],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -26052,6 +26779,10 @@
    "cultures": [],
    "pk": [
     40
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -26102,6 +26833,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -26799,6 +27532,9 @@
     5,
     42,
     81
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -26907,6 +27643,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -26965,6 +27704,10 @@
     5,
     42,
     81
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -27024,6 +27767,9 @@
    "pk": [
     8,
     85
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -27079,6 +27825,10 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -27135,6 +27885,10 @@
    "cultures": [],
    "pk": [
     85
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -27200,6 +27954,10 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -27259,6 +28017,9 @@
    "pk": [
     8,
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -27319,6 +28080,10 @@
     42,
     50,
     81
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -27487,6 +28252,9 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -27596,6 +28364,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -27812,6 +28583,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -27866,6 +28640,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -28082,6 +28860,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -28136,6 +28917,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -28352,6 +29137,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -28406,6 +29194,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -28622,6 +29414,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -28676,6 +29471,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -28892,6 +29691,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -28946,6 +29748,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -29162,6 +29968,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -29216,6 +30025,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -29432,6 +30245,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -29486,6 +30302,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -29702,6 +30522,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -29756,6 +30579,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -29972,6 +30799,9 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -30026,6 +30856,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -30188,6 +31022,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -30354,6 +31192,10 @@
    ],
    "pk": [
     41
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -30894,6 +31736,10 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -31113,6 +31959,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -31163,6 +32013,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc15_hef_mnt_griffon",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -31234,6 +32086,10 @@
    ],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -31416,6 +32272,10 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -31608,7 +32468,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -31803,6 +32664,10 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -31861,6 +32726,10 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -31917,6 +32786,10 @@
    "cultures": [],
    "pk": [
     41
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -31976,6 +32849,10 @@
    "pk": [
     13,
     41
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32032,6 +32909,10 @@
    "cultures": [],
    "pk": [
     41
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32088,6 +32969,10 @@
    "cultures": [],
    "pk": [
     41
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32144,6 +33029,11 @@
    "cultures": [],
    "pk": [
     41
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -32200,6 +33090,10 @@
    "cultures": [],
    "pk": [
     41
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32257,6 +33151,9 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -32315,6 +33212,9 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -32372,6 +33272,9 @@
    "cultures": [],
    "pk": [
     42
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -32490,6 +33393,9 @@
    ],
    "pk": [
     43
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -32544,6 +33450,11 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -32656,6 +33567,10 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32710,6 +33625,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -32764,6 +33682,10 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32818,6 +33740,10 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32875,6 +33801,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32930,6 +33860,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -32987,6 +33921,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -33042,6 +33980,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -33097,6 +34039,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -33324,6 +34270,9 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -33379,6 +34328,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -33419,7 +34372,10 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "causes_fear",
+    "causes_terror",
+    "charge_defense",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -33494,6 +34450,10 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -33548,6 +34508,10 @@
    ],
    "pk": [
     27
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -33598,6 +34562,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc16_wef_mnt_great_stag_lord",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -33655,6 +34620,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -33715,6 +34682,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -33775,6 +34744,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -33851,6 +34822,10 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -33905,6 +34880,10 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -33959,6 +34938,10 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -34009,6 +34992,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc16_wef_mnt_great_eagle_gwindalor",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -34076,6 +35060,8 @@
    "tier": 0.0,
    "mount": "wh2_dlc16_wef_mnt_forest_dragon_ceithin_har",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -34255,6 +35241,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -34309,6 +35298,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -34471,6 +35463,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -34525,6 +35520,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -34687,6 +35685,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -34741,6 +35742,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -34903,6 +35907,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -34957,6 +35964,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35119,6 +36129,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35173,6 +36186,9 @@
    ],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35229,6 +36245,9 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -35284,6 +36303,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -35340,6 +36363,10 @@
    "cultures": [],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -35398,6 +36425,9 @@
    "pk": [
     13,
     75
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35452,6 +36482,10 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -35514,6 +36548,9 @@
     50,
     73,
     75
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35568,6 +36605,9 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35683,6 +36723,9 @@
    "cultures": [],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35723,7 +36766,9 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "causes_fear",
+    "charge_defense_vs_large",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -35782,6 +36827,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -35919,6 +36966,9 @@
    "pk": [
     13,
     50
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -35977,6 +37027,9 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -36032,6 +37085,9 @@
    "cultures": [],
    "pk": [
     44
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -36414,6 +37470,9 @@
    ],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -36524,6 +37583,9 @@
    ],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -36636,6 +37698,9 @@
    ],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -36819,6 +37884,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -36878,6 +37947,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -36934,6 +38007,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -36991,6 +38068,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -37031,7 +38112,10 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "causes_fear",
+    "causes_terror",
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -37210,6 +38294,11 @@
    "cultures": [],
    "pk": [
     46
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -37343,6 +38432,10 @@
    ],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -37538,6 +38631,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -37594,6 +38691,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -37651,6 +38752,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -37717,6 +38822,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -37784,6 +38893,10 @@
    "cultures": [],
    "pk": [
     45
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -37918,6 +39031,9 @@
    "cultures": [],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -37975,6 +39091,9 @@
    "cultures": [],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -38032,6 +39151,9 @@
    "cultures": [],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -38324,6 +39446,10 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -38511,6 +39637,7 @@
    "tier": 0.0,
    "mount": "wh2_main_def_mnt_cold_one_armoured_hero",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -38578,6 +39705,8 @@
    "tier": 0.0,
    "mount": "wh2_main_def_mnt_black_dragon",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -38824,6 +39953,9 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -38878,6 +40010,10 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -38982,6 +40118,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -39059,6 +40196,10 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -39113,6 +40254,10 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -39167,6 +40312,10 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -39221,6 +40370,10 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -39497,6 +40650,9 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -39713,6 +40869,9 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -39929,6 +41088,9 @@
    ],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -40151,7 +41313,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -40480,6 +41643,9 @@
    "cultures": [],
    "pk": [
     2
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -40795,6 +41961,10 @@
    "cultures": [],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -40852,6 +42022,10 @@
    "cultures": [],
    "pk": [
     2
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -41452,6 +42626,9 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -41506,6 +42683,10 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -41560,6 +42741,10 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -42278,6 +43463,9 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -42500,6 +43688,9 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -42554,6 +43745,10 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -42608,6 +43803,10 @@
    ],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -42792,6 +43991,7 @@
    "tier": 0.0,
    "mount": "wh2_main_hef_mnt_great_eagle",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -42859,6 +44059,8 @@
    "tier": 0.0,
    "mount": "wh2_main_hef_mnt_moon_dragon",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -42926,6 +44128,8 @@
    "tier": 0.0,
    "mount": "wh2_main_hef_mnt_star_dragon",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -43552,8 +44756,10 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -43809,6 +45015,9 @@
    "pk": [
     6,
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -43866,6 +45075,10 @@
    "cultures": [],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -43923,6 +45136,10 @@
    "cultures": [],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -43980,6 +45197,10 @@
    "cultures": [],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -44037,6 +45258,10 @@
    "cultures": [],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -44094,6 +45319,10 @@
    "cultures": [],
    "pk": [
     6
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -44150,6 +45379,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44206,6 +45438,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44262,6 +45497,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44319,6 +45557,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44375,6 +45616,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44431,6 +45675,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44481,6 +45728,7 @@
    "tier": 2.0,
    "mount": "wh2_main_lzd_mnt_terradon",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -44550,6 +45798,7 @@
    "tier": 2.0,
    "mount": "wh2_main_lzd_mnt_terradon_blessed",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -44619,6 +45868,7 @@
    "tier": 2.0,
    "mount": "wh2_main_lzd_mnt_terradon",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -44688,6 +45938,7 @@
    "tier": 2.0,
    "mount": "wh2_main_lzd_mnt_terradon_blessed",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -44819,6 +46070,10 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -44873,6 +46128,9 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44927,6 +46185,9 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -44981,6 +46242,9 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -45021,6 +46285,8 @@
    "tier": 0.0,
    "mount": "wh2_main_lzd_mnt_stegadon_zlaaq",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -45146,6 +46412,9 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -45200,6 +46469,10 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -45316,6 +46589,9 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -45372,6 +46648,10 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -45491,6 +46771,7 @@
    "tier": 0.0,
    "mount": "wh2_main_lzd_mnt_terradon_hero",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -45572,6 +46853,10 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -45622,6 +46907,8 @@
    "tier": 0.0,
    "mount": "wh2_main_lzd_mnt_stegadon_ancient",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -45749,6 +47036,9 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -45813,6 +47103,10 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -45863,6 +47157,8 @@
    "tier": 0.0,
    "mount": "wh2_main_lzd_mnt_stegadon_ancient",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -45990,6 +47286,9 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -46054,6 +47353,10 @@
    ],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -46104,6 +47407,8 @@
    "tier": 0.0,
    "mount": "wh2_main_lzd_mnt_stegadon_ancient",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -47267,6 +48572,8 @@
    "tier": 4.0,
    "mount": "wh2_main_lzd_mnt_stegadon_ancient",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -47336,6 +48643,8 @@
    "tier": 4.0,
    "mount": "wh2_main_lzd_mnt_stegadon_ancient",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -47411,6 +48720,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47467,6 +48780,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47533,6 +48850,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47599,6 +48920,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47656,6 +48981,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47712,6 +49041,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47768,6 +49101,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -47824,6 +49160,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47881,6 +49221,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -47947,6 +49291,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -48013,6 +49361,10 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -48318,6 +49670,9 @@
    ],
    "pk": [
     10
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -48426,6 +49781,9 @@
    ],
    "pk": [
     10
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -48483,6 +49841,9 @@
    ],
    "pk": [
     29
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -48825,6 +50186,9 @@
    ],
    "pk": [
     10
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -50200,6 +51564,10 @@
    "cultures": [],
    "pk": [
     10
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -50257,6 +51625,9 @@
    "cultures": [],
    "pk": [
     10
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -50314,6 +51685,10 @@
    "cultures": [],
    "pk": [
     10
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -50383,6 +51758,10 @@
    "cultures": [],
    "pk": [
     30
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -50643,7 +52022,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -50720,6 +52100,9 @@
    ],
    "pk": [
     5
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -50776,6 +52159,9 @@
    ],
    "pk": [
     5
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -50816,6 +52202,8 @@
    "tier": 0.0,
    "mount": "wh2_twa01_grn_mnt_arachnarok_spider_catchweb_spidershrine",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -51025,6 +52413,7 @@
    "tier": 0.0,
    "mount": "wh_dlc05_wef_mnt_great_eagle",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -51095,6 +52484,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc16_wef_mnt_great_stag_lord",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -51294,6 +52684,10 @@
    ],
    "pk": [
     50
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -51348,6 +52742,10 @@
    ],
    "pk": [
     50
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -51404,6 +52802,10 @@
    "pk": [
     50,
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -51512,6 +52914,9 @@
    ],
    "pk": [
     49
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -51674,6 +53079,9 @@
    ],
    "pk": [
     49
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -51836,6 +53244,9 @@
    ],
    "pk": [
     49
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -51998,6 +53409,9 @@
    ],
    "pk": [
     49
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -52381,8 +53795,10 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -52774,6 +54190,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -52835,6 +54254,10 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -52957,6 +54380,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -53018,6 +54444,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -53080,6 +54509,9 @@
    "cultures": [],
    "pk": [
     92
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -53142,6 +54574,9 @@
    "cultures": [],
    "pk": [
     92
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -53203,6 +54638,10 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -53264,6 +54703,10 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -53325,6 +54768,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -53524,6 +54970,7 @@
    "tier": 2.0,
    "mount": "wh3_dlc20_chs_mnt_norscan_warhorse_horsemen_msla",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -53794,6 +55241,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -53851,6 +55301,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -53908,6 +55361,9 @@
    ],
    "pk": [
     67
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -53965,6 +55421,9 @@
    ],
    "pk": [
     67
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -54022,6 +55481,9 @@
    ],
    "pk": [
     67
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -54080,6 +55542,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54134,6 +55599,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54305,6 +55773,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54363,6 +55834,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54421,6 +55895,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54649,6 +56126,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54707,6 +56187,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54878,6 +56361,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -54936,6 +56422,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -55164,6 +56653,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -55392,6 +56884,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -55451,6 +56946,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -55508,6 +57006,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -55565,6 +57066,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -55622,6 +57126,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -55680,6 +57188,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -55737,6 +57248,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -55794,6 +57308,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -55851,6 +57368,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -56079,6 +57600,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -56135,6 +57659,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -56198,6 +57726,10 @@
    ],
    "pk": [
     69
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -56256,6 +57788,10 @@
    ],
    "pk": [
     69
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -56314,6 +57850,10 @@
    ],
    "pk": [
     69
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -56372,6 +57912,10 @@
    ],
    "pk": [
     69
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -56430,6 +57974,10 @@
    ],
    "pk": [
     69
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -56601,6 +58149,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -56658,6 +58209,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -57201,6 +58755,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -57242,7 +58799,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -57579,6 +59137,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -57620,7 +59181,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -58083,6 +59645,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -58124,7 +59689,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -58336,6 +59902,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -58398,6 +59967,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -58460,6 +60032,10 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -58519,6 +60095,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -58581,6 +60160,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -58644,6 +60226,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -58706,6 +60291,10 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -58768,6 +60357,9 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -58829,6 +60421,10 @@
    "cultures": [],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -58885,6 +60481,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -58942,6 +60541,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -58998,6 +60600,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -59112,6 +60717,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -59168,6 +60777,9 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -59281,6 +60893,9 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -59337,6 +60952,9 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -59387,6 +61005,7 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -59463,6 +61082,9 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -59714,6 +61336,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -59770,6 +61395,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -59895,6 +61523,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -59961,6 +61592,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60027,6 +61663,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60093,6 +61734,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60159,6 +61805,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -60225,6 +61874,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60291,6 +61945,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60357,6 +62016,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60423,6 +62087,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -60489,6 +62156,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60555,6 +62227,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60621,6 +62298,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60687,6 +62369,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -60753,6 +62438,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60819,6 +62509,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60885,6 +62580,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -60941,6 +62641,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -60997,6 +62700,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -61294,6 +63002,10 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -61350,6 +63062,10 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -61416,6 +63132,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -61482,6 +63201,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -61548,6 +63272,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -61614,6 +63343,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -61680,6 +63414,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -61746,6 +63483,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -61812,6 +63554,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -61878,6 +63625,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -61944,6 +63696,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -62010,6 +63765,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -62076,6 +63836,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -62142,6 +63907,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -62208,6 +63978,9 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -62274,6 +64047,11 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -62340,6 +64118,10 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -62406,6 +64188,10 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -62521,6 +64307,10 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -62575,6 +64365,10 @@
    ],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -63575,6 +65369,10 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -63631,6 +65429,10 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -63687,6 +65489,10 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -63743,6 +65549,9 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -63799,6 +65608,10 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -63981,7 +65794,10 @@
    "tier": 3.0,
    "mount": "chd_hidden_mount_locomotive",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -64050,7 +65866,10 @@
    "tier": 5.0,
    "mount": "chd_hidden_mount_train",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -64109,7 +65928,10 @@
    "tier": 5.0,
    "mount": "chd_hidden_mount_train",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -64176,7 +65998,10 @@
    "tier": 4.0,
    "mount": "chd_hidden_mount_locomotive",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -64246,7 +66071,10 @@
    "tier": 5.0,
    "mount": "chd_hidden_mount_train",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -64388,6 +66216,11 @@
    "cultures": [],
    "pk": [
     70
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -64438,7 +66271,10 @@
    "tier": 5.0,
    "mount": "chd_hidden_mount_train",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -64507,6 +66343,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -64580,6 +66417,7 @@
    "tier": 0.0,
    "mount": "wh3_dlc23_ksl_mnt_horse_heavy_ulrika",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -64773,6 +66611,10 @@
    "pk": [
     73,
     76
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -64829,6 +66671,10 @@
    "cultures": [],
    "pk": [
     75
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -65338,6 +67184,10 @@
    ],
    "pk": [
     74
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -65510,6 +67360,10 @@
    ],
    "pk": [
     74
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -65568,6 +67422,9 @@
    "pk": [
     73,
     74
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -65777,6 +67634,10 @@
    ],
    "pk": [
     74
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -65835,6 +67696,10 @@
    "pk": [
     73,
     74
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -66017,6 +67882,9 @@
    "cultures": [],
    "pk": [
     74
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -66075,6 +67943,9 @@
    "cultures": [],
    "pk": [
     74
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -66131,6 +68002,10 @@
    "pk": [
     73,
     74
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -66187,6 +68062,10 @@
    "pk": [
     73,
     74
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -66244,6 +68123,9 @@
    "cultures": [],
    "pk": [
     74
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -66302,6 +68184,9 @@
    "pk": [
     73,
     74
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -66359,6 +68244,9 @@
    "cultures": [],
    "pk": [
     74
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -66417,6 +68305,9 @@
    "cultures": [],
    "pk": [
     74
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -66603,6 +68494,9 @@
    ],
    "pk": [
     75
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -66658,6 +68552,10 @@
    "pk": [
     73,
     75
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -66708,6 +68606,7 @@
    "tier": 0.0,
    "mount": "wh3_dlc24_ksl_mnt_steed_of_kurnous_draught",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -66777,6 +68676,7 @@
    "tier": 0.0,
    "mount": "wh3_dlc24_ksl_mnt_steed_of_kurnous_draught",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -66847,6 +68747,7 @@
    "tier": 0.0,
    "mount": "wh3_dlc24_ksl_mnt_steed_of_kurnous_draught",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -66917,6 +68818,7 @@
    "tier": 0.0,
    "mount": "wh3_dlc24_ksl_mnt_steed_of_kurnous_draught",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -66991,6 +68893,10 @@
    ],
    "pk": [
     75
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -67045,6 +68951,10 @@
    ],
    "pk": [
     75
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -67099,6 +69009,10 @@
    ],
    "pk": [
     75
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -67163,6 +69077,9 @@
    ],
    "pk": [
     55
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -67213,6 +69130,7 @@
    "tier": 0.0,
    "mount": "wh3_dlc24_ksl_mnt_the_thing_in_the_woods_draught",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -67552,6 +69470,10 @@
    "cultures": [],
    "pk": [
     75
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -67608,6 +69530,10 @@
    "cultures": [],
    "pk": [
     75
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -67665,6 +69591,9 @@
    "pk": [
     73,
     75
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -67723,6 +69652,9 @@
    "pk": [
     73,
     75
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -67777,6 +69709,10 @@
    "cultures": [],
    "pk": [
     76
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -67834,6 +69770,9 @@
    ],
    "pk": [
     72
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -67884,6 +69823,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -67961,6 +69901,9 @@
    ],
    "pk": [
     76
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68094,6 +70037,9 @@
    "pk": [
     73,
     76
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68220,6 +70166,10 @@
    "pk": [
     73,
     76
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -68293,6 +70243,9 @@
    "cultures": [],
    "pk": [
     76
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68355,6 +70308,10 @@
    "cultures": [],
    "pk": [
     76
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -68414,6 +70371,10 @@
    "pk": [
     73,
     76
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -68474,6 +70435,9 @@
    "pk": [
     73,
     76
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68587,6 +70551,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68644,6 +70611,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68701,6 +70671,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68758,6 +70731,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68815,6 +70791,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68872,6 +70851,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68929,6 +70911,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -68986,6 +70971,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -69040,6 +71029,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -69094,6 +71086,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -69151,6 +71146,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -69208,6 +71206,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -69265,6 +71266,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -69322,6 +71326,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -69379,6 +71387,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -69435,6 +71446,9 @@
    "cultures": [],
    "pk": [
     78
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -69557,6 +71571,9 @@
    ],
    "pk": [
     78
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -69597,7 +71614,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -69672,6 +71690,9 @@
    ],
    "pk": [
     78
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -69738,6 +71759,9 @@
    ],
    "pk": [
     78
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -69794,6 +71818,9 @@
    "cultures": [],
    "pk": [
     78
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -69851,6 +71878,9 @@
    "cultures": [],
    "pk": [
     78
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -69901,7 +71931,8 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "mounted_fire_move"
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -69970,7 +72001,8 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "mounted_fire_move"
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -70171,6 +72203,7 @@
    "tier": 5.0,
    "mount": "wh3_dlc25_dwf_mnt_veh_thunderbarge",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -70240,6 +72273,7 @@
    "tier": 5.0,
    "mount": "wh3_dlc25_dwf_mnt_veh_thunderbarge_grungni",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -70385,6 +72419,9 @@
    "cultures": [],
    "pk": [
     79
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -70435,6 +72472,7 @@
    "tier": 3.0,
    "mount": "wh_main_emp_mnt_warhorse_outriders",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -70513,6 +72551,9 @@
    ],
    "pk": [
     79
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -70572,6 +72613,10 @@
    ],
    "pk": [
     79
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -70631,6 +72676,9 @@
    ],
    "pk": [
     79
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -71038,7 +73086,10 @@
    "tier": 0.0,
    "mount": "emp_hidden_mount_steam_tank",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -71250,6 +73301,10 @@
    ],
    "pk": [
     79
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -71702,6 +73757,9 @@
    "cultures": [],
    "pk": [
     79
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -71743,7 +73801,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -71815,7 +73874,9 @@
    "tier": 4.0,
    "mount": "emp_hidden_mount_land_ship",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -71887,7 +73948,10 @@
    "tier": 5.0,
    "mount": "emp_hidden_mount_land_ship",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -71956,7 +74020,10 @@
    "tier": 5.0,
    "mount": "emp_hidden_mount_land_ship",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -72028,7 +74095,10 @@
    "tier": 4.0,
    "mount": "emp_hidden_mount_steam_tank",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -72100,6 +74170,7 @@
    "tier": 4.0,
    "mount": "wh3_dlc25_nur_mnt_rot_fly_ror",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -72187,6 +74258,9 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72251,6 +74325,10 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -72307,6 +74385,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72363,6 +74444,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72419,6 +74503,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72477,6 +74564,9 @@
    ],
    "pk": [
     77
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72533,6 +74623,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72586,6 +74679,9 @@
    "facs": [],
    "cultures": [
     "wh3_main_nur_nurgle"
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72642,6 +74738,10 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -72695,6 +74795,9 @@
    "facs": [],
    "cultures": [
     "wh3_main_nur_nurgle"
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72751,6 +74854,10 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -72879,6 +74986,9 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -72935,6 +75045,10 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -72975,7 +75089,9 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "ogre_charge"
+    "causes_fear",
+    "ogre_charge",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -73054,6 +75170,11 @@
    ],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -73126,6 +75247,9 @@
    "pk": [
     12,
     80
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -73321,6 +75445,10 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -73381,6 +75509,10 @@
    "pk": [
     12,
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -73437,6 +75569,9 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -73493,6 +75628,9 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -73549,6 +75687,10 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -73603,6 +75745,10 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -73662,6 +75808,9 @@
    "pk": [
     8,
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -73716,6 +75865,10 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -73883,6 +76036,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -73949,6 +76104,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -74041,6 +76198,9 @@
    "pk": [
     8,
     80
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -74112,6 +76272,10 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -74175,6 +76339,10 @@
    "cultures": [],
    "pk": [
     80
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -74491,6 +76659,10 @@
    "cultures": [],
    "pk": [
     81
+   ],
+   "at": [
+    "immune_to_psychology",
+    "unbreakable"
    ]
   },
   {
@@ -74715,6 +76887,9 @@
    ],
    "pk": [
     81
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -74883,6 +77058,10 @@
    ],
    "pk": [
     81
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -74939,6 +77118,9 @@
    ],
    "pk": [
     81
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -74995,6 +77177,9 @@
    "cultures": [],
    "pk": [
     81
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -75128,6 +77313,10 @@
    "cultures": [],
    "pk": [
     81
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -75184,6 +77373,10 @@
    "cultures": [],
    "pk": [
     81
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -75241,6 +77434,10 @@
    "cultures": [],
    "pk": [
     81
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -75349,6 +77546,9 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -75517,6 +77717,9 @@
    ],
    "pk": [
     86
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -75575,6 +77778,10 @@
    ],
    "pk": [
     82
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -75631,6 +77838,9 @@
    ],
    "pk": [
     82
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -75685,6 +77895,9 @@
    ],
    "pk": [
     82
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -75739,6 +77952,9 @@
    ],
    "pk": [
     82
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -75793,6 +78009,9 @@
    ],
    "pk": [
     82
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -76042,6 +78261,9 @@
    "cultures": [],
    "pk": [
     82
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -76104,6 +78326,9 @@
    "cultures": [],
    "pk": [
     82
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -76166,6 +78391,10 @@
    "cultures": [],
    "pk": [
     82
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -76216,6 +78445,7 @@
    "tier": 3.0,
    "mount": "wh3_main_kho_mnt_skullcannon_ror",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -76281,6 +78511,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76340,6 +78572,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76399,6 +78632,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76458,6 +78692,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76517,6 +78752,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76576,6 +78813,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76635,6 +78873,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76694,6 +78933,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -76753,6 +78993,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "ror": 1,
@@ -76813,6 +79055,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -77067,6 +79311,10 @@
    "cultures": [],
    "pk": [
     83
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -77123,6 +79371,9 @@
    "cultures": [],
    "pk": [
     83
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -77180,6 +79431,10 @@
    "cultures": [],
    "pk": [
     83
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -77236,6 +79491,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -77292,6 +79550,10 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -77349,6 +79611,10 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -77405,6 +79671,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -77462,6 +79732,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -77517,6 +79791,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -77572,6 +79850,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -77627,6 +79909,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -77668,7 +79954,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -77745,6 +80032,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -77802,6 +80092,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -77859,6 +80152,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -77916,6 +80213,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -77973,6 +80273,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -78030,6 +80333,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -78087,6 +80394,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -78144,6 +80455,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -78201,6 +80515,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -78258,6 +80575,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -78315,6 +80636,10 @@
    ],
    "pk": [
     66
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -78575,6 +80900,10 @@
    "pk": [
     12,
     88
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -78615,8 +80944,10 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -78693,6 +81024,10 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -78750,6 +81085,10 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -78807,6 +81146,10 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -78921,6 +81264,9 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -79094,6 +81440,9 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -79150,6 +81499,9 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -79206,6 +81558,9 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -79260,6 +81615,10 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -79316,6 +81675,9 @@
    ],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -79373,6 +81735,9 @@
    "cultures": [],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -79488,6 +81853,9 @@
    "cultures": [],
    "pk": [
     87
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -79603,6 +81971,10 @@
    "cultures": [],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -79661,6 +82033,10 @@
    "cultures": [],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -79718,6 +82094,10 @@
    "cultures": [],
    "pk": [
     87
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -79768,6 +82148,7 @@
    "tier": 3.0,
    "mount": "wh3_dlc27_hef_mnt_skycutter_bolt",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -79838,6 +82219,7 @@
    "tier": 3.0,
    "mount": "wh3_dlc27_hef_mnt_skycutter",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -79988,6 +82370,10 @@
     8,
     60,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -80152,6 +82538,7 @@
    "tier": 2.0,
    "mount": "wh3_dlc27_chs_mnt_norscan_warhorse_horsemen_ror",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -80245,6 +82632,10 @@
    ],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -80302,6 +82693,9 @@
    ],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -80473,6 +82867,10 @@
    ],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -80701,6 +83099,10 @@
    ],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -80929,6 +83331,10 @@
    ],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81154,6 +83560,10 @@
    ],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81342,6 +83752,9 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -81407,6 +83820,9 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -81473,6 +83889,10 @@
    "pk": [
     8,
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81539,6 +83959,10 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81596,6 +84020,10 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81653,6 +84081,10 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81725,6 +84157,10 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81800,6 +84236,10 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -81866,6 +84306,10 @@
     8,
     62,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -81925,6 +84369,9 @@
    "pk": [
     63,
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -81988,6 +84435,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82042,6 +84492,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82100,6 +84553,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82158,6 +84614,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82214,6 +84673,11 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "immune_to_psychology"
    ]
   },
   {
@@ -82271,6 +84735,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -82327,6 +84795,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -82383,6 +84855,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -82441,6 +84917,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82499,6 +84978,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82555,6 +85037,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82617,6 +85102,9 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -82679,6 +85167,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -82741,6 +85233,10 @@
    ],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -82795,6 +85291,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82849,6 +85348,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -82906,6 +85408,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -82973,6 +85478,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -83035,6 +85543,9 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -83097,6 +85608,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -83159,6 +85674,11 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology",
+    "unbreakable"
    ]
   },
   {
@@ -83221,6 +85741,9 @@
     63,
     68,
     89
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -83275,6 +85798,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83332,6 +85859,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83387,6 +85918,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83452,6 +85987,10 @@
     63,
     68,
     89
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -83506,6 +86045,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83568,6 +86111,10 @@
    "cultures": [],
    "pk": [
     89
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83624,6 +86171,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -83689,6 +86239,9 @@
    "pk": [
     8,
     12
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -83754,6 +86307,10 @@
     8,
     64,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -83810,6 +86367,10 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83866,6 +86427,10 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83923,6 +86488,10 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -83987,6 +86556,10 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -84049,6 +86622,9 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84111,6 +86687,10 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -84173,6 +86753,10 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -84236,6 +86820,10 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -84299,6 +86887,10 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -84361,6 +86953,9 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84423,6 +87018,10 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -84485,6 +87084,9 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84547,6 +87149,10 @@
    ],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -84674,6 +87280,9 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84736,6 +87345,9 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84798,6 +87410,9 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84861,6 +87476,9 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84923,6 +87541,9 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -84985,6 +87606,10 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -85047,6 +87672,10 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -85110,6 +87739,10 @@
    "cultures": [],
    "pk": [
     91
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -85160,6 +87793,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -85230,6 +87864,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "mounted_fire_move"
    ],
@@ -85289,6 +87924,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -85350,6 +87986,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -85425,6 +88062,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -85465,6 +88105,7 @@
    "tier": 0.0,
    "mount": "wh2_dlc11_cst_mnt_rotting_promethean_character",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large"
    ],
    "regen": 0,
@@ -85543,6 +88184,9 @@
    "cultures": [],
    "pk": [
     90
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -85603,6 +88247,9 @@
    "cultures": [],
    "pk": [
     90
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -85663,6 +88310,9 @@
    "cultures": [],
    "pk": [
     90
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -85719,6 +88369,9 @@
    ],
    "pk": [
     90
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -85773,6 +88426,9 @@
    ],
    "pk": [
     90
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -86117,6 +88773,9 @@
    "cultures": [],
    "pk": [
     90
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -86157,7 +88816,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "charge_defense",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -86220,7 +88880,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "charge_defense",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -86612,6 +89273,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -86666,6 +89331,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -86722,6 +89391,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -86834,6 +89507,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -86900,6 +89577,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -86957,6 +89638,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -87007,6 +89692,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -87084,6 +89771,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -87141,6 +89832,10 @@
    ],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -87317,6 +90012,9 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87374,6 +90072,9 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87441,6 +90142,9 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87498,6 +90202,9 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87565,6 +90272,9 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87632,6 +90342,9 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87700,6 +90413,9 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87757,6 +90473,10 @@
    "cultures": [],
    "pk": [
     94
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -87811,6 +90531,10 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -87869,6 +90593,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87924,6 +90651,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -87982,6 +90712,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88037,6 +90770,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88095,6 +90831,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88150,6 +90889,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88208,6 +90950,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88263,6 +91008,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88320,6 +91068,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88375,6 +91126,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88432,6 +91186,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88487,6 +91244,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88545,6 +91305,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88600,6 +91363,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88655,6 +91421,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88714,6 +91483,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -88774,6 +91547,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -88833,6 +91610,9 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88892,6 +91672,9 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -88950,6 +91733,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89009,6 +91795,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89068,6 +91857,10 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -89127,6 +91920,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -89186,6 +91983,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89245,6 +92045,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89304,6 +92107,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89361,6 +92167,10 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -89418,6 +92228,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89473,6 +92286,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89528,6 +92344,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89583,6 +92402,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89638,6 +92460,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89693,6 +92518,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89747,6 +92575,10 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -89807,6 +92639,9 @@
    "pk": [
     11,
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89867,6 +92702,9 @@
    "pk": [
     11,
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89927,6 +92765,9 @@
    "pk": [
     11,
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -89987,6 +92828,10 @@
    "pk": [
     11,
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -90044,6 +92889,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90099,6 +92947,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90154,6 +93005,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90209,6 +93063,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90264,6 +93121,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90322,6 +93182,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90380,6 +93243,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90438,6 +93304,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90495,6 +93364,10 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -90553,6 +93426,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90611,6 +93487,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -90669,6 +93549,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90728,6 +93611,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90787,6 +93673,9 @@
    ],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90846,6 +93735,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90905,6 +93797,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -90964,6 +93859,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -91020,6 +93919,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -91077,6 +93980,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -91133,6 +94040,10 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -91192,6 +94103,10 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -91251,6 +94166,9 @@
    "cultures": [],
    "pk": [
     93
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -91566,6 +94484,9 @@
    "cultures": [],
    "pk": [
     57
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -92149,6 +95070,9 @@
    ],
    "pk": [
     57
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -92320,6 +95244,9 @@
    ],
    "pk": [
     57
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -92434,6 +95361,10 @@
    ],
    "pk": [
     54
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -92789,6 +95720,10 @@
    ],
    "pk": [
     54
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -93555,6 +96490,10 @@
    "cultures": [],
    "pk": [
     57
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -93804,6 +96743,10 @@
    ],
    "pk": [
     56
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -93858,6 +96801,10 @@
    ],
    "pk": [
     59
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -93912,6 +96859,10 @@
    ],
    "pk": [
     59
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -93966,6 +96917,10 @@
    ],
    "pk": [
     59
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -94020,6 +96975,10 @@
    ],
    "pk": [
     59
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -94074,6 +97033,10 @@
    ],
    "pk": [
     59
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -94128,6 +97091,10 @@
    ],
    "pk": [
     59
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -94190,6 +97157,9 @@
    "pk": [
     59,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94364,6 +97334,10 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -94420,6 +97394,9 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94479,6 +97456,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94542,6 +97522,9 @@
    "pk": [
     60,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94605,6 +97588,9 @@
    "pk": [
     60,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94663,6 +97649,9 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94718,6 +97707,9 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94773,6 +97765,9 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -94940,6 +97935,10 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -94998,6 +97997,9 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95053,6 +98055,9 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95108,6 +98113,9 @@
    ],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95162,6 +98170,10 @@
    ],
    "pk": [
     99
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -95225,6 +98237,9 @@
    "pk": [
     60,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95287,6 +98302,9 @@
    "pk": [
     60,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95346,6 +98364,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95596,6 +98617,9 @@
    "pk": [
     60,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95658,6 +98682,10 @@
     60,
     68,
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -95715,6 +98743,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95772,6 +98803,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95822,6 +98856,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -95903,6 +98939,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -95953,6 +98992,7 @@
    "tier": 3.0,
    "mount": "wh3_main_kho_mnt_skullcannon",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -96033,6 +99073,9 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -96214,6 +99257,9 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -96270,6 +99316,9 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -96448,6 +99497,9 @@
    ],
    "pk": [
     55
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -96504,6 +99556,9 @@
    ],
    "pk": [
     55
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -96672,6 +99727,9 @@
    ],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -96840,6 +99898,9 @@
    ],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -97008,6 +100069,9 @@
    ],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -97176,6 +100240,9 @@
    ],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -97344,6 +100411,9 @@
    ],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -97512,6 +100582,9 @@
    ],
    "pk": [
     55
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -97680,6 +100753,9 @@
    ],
    "pk": [
     55
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -97848,6 +100924,9 @@
    ],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -98031,7 +101110,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -98116,6 +101196,9 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -98486,6 +101569,10 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -98542,6 +101629,9 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -98592,6 +101682,7 @@
    "tier": 3.0,
    "mount": "wh3_main_ksl_mnt_war_bear_draught_war_sled_heavy",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -98661,6 +101752,7 @@
    "tier": 3.0,
    "mount": "wh3_main_ksl_mnt_war_bear_draught_war_sled_light",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -98746,6 +101838,9 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -98809,6 +101904,9 @@
     50,
     73,
     75
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -98867,6 +101965,9 @@
    "pk": [
     50,
     75
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -98929,6 +102030,9 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -98979,6 +102083,7 @@
    "tier": 4.0,
    "mount": "wh3_main_nur_mnt_rot_fly",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -99064,6 +102169,9 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99239,6 +102347,10 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -99298,6 +102410,10 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -99357,6 +102473,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99416,6 +102535,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99475,6 +102597,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99534,6 +102659,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99593,6 +102721,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99652,6 +102783,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99702,6 +102836,8 @@
    "tier": 0.0,
    "mount": "wh3_main_nur_mnt_nurgling_palanquin_kugath",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -99782,6 +102918,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99841,6 +102980,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99900,6 +103042,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -99959,6 +103104,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100018,6 +103166,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100077,6 +103228,9 @@
    ],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100137,6 +103291,9 @@
    "cultures": [],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100201,6 +103358,10 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -100263,6 +103424,9 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100327,6 +103491,9 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100400,6 +103567,9 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100462,6 +103632,9 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100525,6 +103698,10 @@
     62,
     68,
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -100586,6 +103763,9 @@
    "cultures": [],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100647,6 +103827,9 @@
    "cultures": [],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100718,6 +103901,10 @@
    "pk": [
     62,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -100774,6 +103961,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100830,6 +104020,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100886,6 +104079,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100942,6 +104138,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -100998,6 +104197,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -101038,6 +104240,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101097,6 +104300,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101156,6 +104360,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101215,6 +104420,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101284,6 +104490,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101353,6 +104560,8 @@
    "tier": 0.0,
    "mount": "wh3_main_ogr_mnt_stonehorn",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -101412,6 +104621,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101471,6 +104681,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101530,6 +104741,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101589,6 +104801,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101836,6 +105049,7 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101905,6 +105119,7 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -101964,6 +105179,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -102024,6 +105241,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -102083,6 +105302,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "ogre_charge"
    ],
    "regen": 0,
@@ -102152,6 +105373,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "mounted_fire_move",
     "ogre_charge"
    ],
@@ -102213,6 +105436,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -102272,6 +105496,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -102331,6 +105556,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "ogre_charge"
    ],
    "regen": 0,
@@ -102406,6 +105632,10 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -102462,6 +105692,10 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -102520,6 +105754,9 @@
    "pk": [
     9,
     50
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -102576,6 +105813,10 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -102626,6 +105867,8 @@
    "tier": 5.0,
    "mount": "wh3_main_ogr_mnt_stonehorn",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -102711,6 +105954,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -102777,6 +106023,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -102840,6 +106089,10 @@
    "pk": [
     63,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -102903,6 +106156,10 @@
    "pk": [
     63,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -102961,6 +106218,9 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103019,6 +106279,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103077,6 +106340,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103135,6 +106401,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103193,6 +106462,10 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -103251,6 +106524,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103309,6 +106585,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103367,6 +106646,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103425,6 +106707,10 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -103482,6 +106768,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -103539,6 +106828,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -103597,6 +106889,10 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -103655,6 +106951,10 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -103713,6 +107013,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103771,6 +107074,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103829,6 +107135,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -103887,6 +107196,10 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -103945,6 +107258,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104003,6 +107319,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104061,6 +107380,9 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104119,6 +107441,10 @@
    ],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -104176,6 +107502,10 @@
    ],
    "pk": [
     99
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -104235,6 +107565,9 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104300,6 +107633,9 @@
     2,
     63,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104364,6 +107700,9 @@
     2,
     63,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104421,6 +107760,9 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -104462,7 +107804,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -104523,7 +107866,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -104605,6 +107949,10 @@
     63,
     68,
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -104665,6 +108013,10 @@
    "pk": [
     63,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -104723,6 +108075,10 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -104781,6 +108137,9 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104841,6 +108200,9 @@
    "pk": [
     63,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104903,6 +108265,9 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -104966,6 +108331,9 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -105138,6 +108506,10 @@
    ],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -105196,6 +108568,10 @@
    ],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -105246,6 +108622,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105317,6 +108694,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105388,6 +108766,7 @@
    "tier": 0.0,
    "mount": "wh3_main_tze_burning_chariot",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105459,6 +108838,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105530,6 +108910,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105601,6 +108982,7 @@
    "tier": 0.0,
    "mount": "wh3_main_tze_burning_chariot",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105672,6 +109054,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105743,6 +109126,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105814,6 +109198,7 @@
    "tier": 0.0,
    "mount": "wh3_main_tze_burning_chariot",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105885,6 +109270,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -105956,6 +109342,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -106027,6 +109414,7 @@
    "tier": 0.0,
    "mount": "wh3_main_tze_burning_chariot",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -106105,6 +109493,10 @@
    ],
    "pk": [
     99
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -106174,6 +109566,9 @@
    "cultures": [],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106233,6 +109628,9 @@
    "cultures": [],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106296,6 +109694,9 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -106369,6 +109770,9 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106441,6 +109845,9 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106509,6 +109916,9 @@
    "cultures": [],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106580,6 +109990,9 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106642,6 +110055,10 @@
     64,
     68,
     88
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -106702,6 +110119,9 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106772,6 +110192,10 @@
    "pk": [
     64,
     68
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -106822,6 +110246,7 @@
    "tier": 4.0,
    "mount": "wh3_main_tze_burning_chariot",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -106902,6 +110327,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -106942,6 +110370,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -107022,6 +110451,11 @@
    ],
    "pk": [
     97
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -107079,6 +110513,9 @@
    ],
    "pk": [
     98
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107120,7 +110557,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -107200,6 +110638,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107327,6 +110768,9 @@
    "cultures": [],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107377,6 +110821,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "immune_to_psychology",
     "mounted_fire_move",
     "ogre_charge"
    ],
@@ -107457,6 +110903,9 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107526,6 +110975,9 @@
    "cultures": [],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107584,6 +111036,10 @@
    "cultures": [],
    "pk": [
     57
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -107643,6 +111099,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107700,6 +111159,9 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107761,6 +111223,9 @@
    "cultures": [],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107818,6 +111283,9 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107877,6 +111345,9 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107936,6 +111407,9 @@
    "cultures": [],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -107994,6 +111468,10 @@
    "cultures": [],
    "pk": [
     57
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108055,6 +111533,10 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108112,6 +111594,10 @@
    "cultures": [],
    "pk": [
     61
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108174,6 +111660,10 @@
    "cultures": [],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108231,6 +111721,10 @@
    "cultures": [],
    "pk": [
     9
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108292,6 +111786,10 @@
    "cultures": [],
    "pk": [
     63
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108353,6 +111851,10 @@
    "cultures": [],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108481,6 +111983,9 @@
    "cultures": [],
    "pk": [
     60
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -108599,6 +112104,9 @@
    "cultures": [],
    "pk": [
     62
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -108707,7 +112215,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -108798,6 +112307,9 @@
    "cultures": [],
    "pk": [
     64
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -108860,6 +112372,9 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -108922,6 +112437,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -108984,6 +112503,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -109046,6 +112569,9 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -109170,6 +112696,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -109294,6 +112824,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -109418,6 +112952,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -109542,6 +113080,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -109666,6 +113208,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -109790,6 +113336,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -109976,6 +113526,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -110038,6 +113592,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -110220,6 +113778,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -110282,6 +113844,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -110344,6 +113910,10 @@
    ],
    "pk": [
     17
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -110384,7 +113954,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "charge_defense",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -110472,6 +114043,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -110600,6 +114175,9 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -110658,6 +114236,9 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -110891,6 +114472,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -110947,6 +114531,9 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111059,6 +114646,9 @@
    ],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111171,6 +114761,9 @@
    ],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111283,6 +114876,9 @@
    ],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111395,6 +114991,9 @@
    ],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111507,6 +115106,9 @@
    ],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111563,6 +115165,9 @@
    ],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111675,6 +115280,9 @@
    ],
    "pk": [
     15
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -111787,6 +115395,10 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -112202,6 +115814,10 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -112370,6 +115986,9 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -112426,6 +116045,9 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -112482,6 +116104,9 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -112538,6 +116163,9 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -112836,6 +116464,10 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -112892,6 +116524,10 @@
    "cultures": [],
    "pk": [
     0
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -113112,6 +116748,10 @@
    "pk": [
     90,
     101
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -113274,6 +116914,10 @@
    ],
    "pk": [
     4
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -113578,6 +117222,10 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -113635,6 +117283,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -113851,6 +117502,11 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -113964,6 +117620,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -114095,6 +117754,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -114212,6 +117874,7 @@
    "tier": 2.0,
    "mount": "",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -114289,6 +117952,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -114416,6 +118082,10 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -114476,6 +118146,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114530,6 +118203,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114584,6 +118260,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114639,6 +118318,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114694,6 +118376,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114749,6 +118434,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114804,6 +118492,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114859,6 +118550,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114914,6 +118608,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -114968,6 +118665,9 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115022,6 +118722,10 @@
    ],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -115077,6 +118781,10 @@
    ],
    "pk": [
     100
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -115137,6 +118845,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115197,6 +118908,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115237,6 +118951,7 @@
    "tier": 3.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense"
    ],
    "ror": 1,
@@ -115320,6 +119035,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115380,6 +119098,10 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -115440,6 +119162,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115500,6 +119225,10 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -115559,6 +119288,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115618,6 +119350,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115677,6 +119412,9 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -115736,6 +119474,10 @@
    "cultures": [],
    "pk": [
     22
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -115792,6 +119534,9 @@
    ],
    "pk": [
     15
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -116288,6 +120033,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -116342,6 +120090,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -116396,6 +120147,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -116450,6 +120204,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -116508,6 +120266,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -116566,6 +120327,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -116624,6 +120388,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -116959,6 +120726,9 @@
    "cultures": [],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -117015,6 +120785,9 @@
    "cultures": [],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -117055,6 +120828,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -117129,6 +120904,10 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -117169,6 +120948,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "charge_defense"
    ],
    "regen": 0,
@@ -117379,6 +121160,7 @@
    "tier": 0.0,
    "mount": "wh_dlc05_wef_mnt_great_eagle",
    "at": [
+    "causes_fear",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -117449,6 +121231,8 @@
    "tier": 0.0,
    "mount": "wh_dlc05_wef_mnt_forest_dragon",
    "at": [
+    "causes_fear",
+    "causes_terror",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -117519,7 +121303,10 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -117707,6 +121494,9 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -117763,6 +121553,9 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -117931,6 +121724,9 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -117987,6 +121783,9 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -118155,6 +121954,9 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -118211,6 +122013,9 @@
    ],
    "pk": [
     13
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -118813,6 +122618,9 @@
    "cultures": [],
    "pk": [
     13
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -118854,7 +122662,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -119000,6 +122809,9 @@
    "cultures": [],
    "pk": [
     13
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -119141,6 +122953,10 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -119393,6 +123209,11 @@
    ],
    "pk": [
     23
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -119557,6 +123378,11 @@
    ],
    "pk": [
     23
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -119597,7 +123423,10 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "causes_fear",
+    "causes_terror",
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -119654,7 +123483,10 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "causes_fear",
+    "causes_terror",
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -119721,7 +123553,8 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -119780,7 +123613,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -119913,7 +123747,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "charge_defense",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -120036,7 +123871,8 @@
    "tier": 3.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -120109,6 +123945,9 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -120675,6 +124514,9 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -120725,6 +124567,7 @@
    "tier": 2.0,
    "mount": "wh_dlc06_grn_mnt_giant_wolf_marauders",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "ror": 1,
@@ -120798,6 +124641,9 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -120854,6 +124700,9 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -121030,6 +124879,9 @@
    ],
    "pk": [
     23
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -121251,6 +125103,9 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -121371,6 +125226,9 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -121426,6 +125284,9 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -121541,6 +125402,9 @@
     23,
     42,
     81
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -121597,6 +125461,9 @@
    "cultures": [],
    "pk": [
     5
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -121652,6 +125519,10 @@
    "cultures": [],
    "pk": [
     23
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -121774,6 +125645,9 @@
    "cultures": [],
    "pk": [
     1
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -121886,6 +125760,9 @@
    "cultures": [],
    "pk": [
     1
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -121942,6 +125819,10 @@
    "cultures": [],
    "pk": [
     1
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -121998,6 +125879,9 @@
    "cultures": [],
    "pk": [
     1
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -122214,6 +126098,10 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -122714,6 +126602,9 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -122770,6 +126661,9 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -122826,6 +126720,11 @@
    ],
    "pk": [
     1
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -124094,6 +127993,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -124148,6 +128050,11 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -124205,6 +128112,9 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -124262,6 +128172,9 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -124316,6 +128229,10 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -124886,6 +128803,9 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -124943,6 +128863,9 @@
    ],
    "pk": [
     25
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -125171,6 +129094,10 @@
    ],
    "pk": [
     25
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -125228,6 +129155,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -125593,6 +129523,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -125649,6 +129582,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -125705,6 +129641,10 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -125759,6 +129699,11 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -125818,6 +129763,10 @@
     8,
     73,
     76
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -125875,6 +129824,10 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -125931,6 +129884,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -125988,6 +129944,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -126045,6 +130004,10 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -126102,6 +130065,10 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -126159,6 +130126,10 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -126214,6 +130185,10 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -126272,6 +130247,10 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -126328,6 +130307,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -126394,6 +130376,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -126452,6 +130437,10 @@
     5,
     42,
     81
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -126574,6 +130563,9 @@
    "cultures": [],
    "pk": [
     1
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -127089,6 +131081,9 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -127145,6 +131140,10 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -127201,6 +131200,9 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -127257,6 +131259,9 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -127313,6 +131318,10 @@
    ],
    "pk": [
     16
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -127425,6 +131434,10 @@
    ],
    "pk": [
     1
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -128015,6 +132028,9 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -128077,6 +132093,9 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -128289,6 +132308,9 @@
    ],
    "pk": [
     17
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -128351,6 +132373,10 @@
    ],
    "pk": [
     17
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -128777,6 +132803,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -128955,6 +132985,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -129133,6 +133167,10 @@
    ],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -129444,6 +133482,10 @@
    ],
    "pk": [
     17
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -129882,6 +133924,10 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -129944,6 +133990,9 @@
    "cultures": [],
    "pk": [
     12
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -130614,7 +134663,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -131167,7 +135217,8 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -131226,7 +135277,8 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "charge_defense_vs_large",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -131285,7 +135337,8 @@
    "tier": 2.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "charge_defense",
+    "immune_to_psychology"
    ],
    "regen": 0,
    "res": {
@@ -131680,6 +135733,9 @@
    "cultures": [],
    "pk": [
     3
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -131736,6 +135792,9 @@
    "cultures": [],
    "pk": [
     3
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -132402,6 +136461,9 @@
    "cultures": [],
    "pk": [
     4
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -132461,6 +136523,9 @@
    "cultures": [],
    "pk": [
     4
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -133443,6 +137508,10 @@
    ],
    "pk": [
     4
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -133561,6 +137630,9 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -133620,6 +137692,10 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -133679,6 +137755,9 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -133738,6 +137817,9 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -133797,6 +137879,9 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -134024,6 +138109,7 @@
    "tier": 0.0,
    "mount": "",
    "at": [
+    "immune_to_psychology",
     "mounted_fire_move"
    ],
    "regen": 0,
@@ -135325,7 +139411,10 @@
    "tier": 4.0,
    "mount": "emp_hidden_mount_steam_tank",
    "at": [
-    "mounted_fire_move"
+    "causes_fear",
+    "causes_terror",
+    "mounted_fire_move",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -136203,6 +140292,10 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -136649,6 +140742,9 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -136925,6 +141021,10 @@
    ],
    "pk": [
     5
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -137090,6 +141190,9 @@
    "cultures": [],
    "pk": [
     5
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -137886,6 +141989,10 @@
    "cultures": [],
    "pk": [
     5
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -137942,6 +142049,10 @@
    "cultures": [],
    "pk": [
     5
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -138000,6 +142111,9 @@
    "cultures": [],
    "pk": [
     5
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -138539,6 +142653,10 @@
    ],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -138710,6 +142828,9 @@
    "cultures": [],
    "pk": [
     8
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139315,6 +143436,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139374,6 +143498,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139433,6 +143560,10 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -139492,6 +143623,10 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -139549,6 +143684,9 @@
    ],
    "pk": [
     14
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139607,6 +143745,9 @@
    ],
    "pk": [
     95
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139665,6 +143806,9 @@
    ],
    "pk": [
     95
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139723,6 +143867,10 @@
    ],
    "pk": [
     95
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -139781,6 +143929,9 @@
    ],
    "pk": [
     95
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139840,6 +143991,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139899,6 +144053,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -139958,6 +144115,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140017,6 +144177,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140076,6 +144239,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140135,6 +144301,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140194,6 +144363,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140253,6 +144425,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140312,6 +144487,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140370,6 +144548,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140429,6 +144610,9 @@
    ],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140488,6 +144672,10 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -140547,6 +144735,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140606,6 +144797,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140665,6 +144859,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140724,6 +144921,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140764,6 +144964,7 @@
    "tier": 1.0,
    "mount": "",
    "at": [
+    "causes_fear",
     "charge_defense_vs_large",
     "charge_reflection"
    ],
@@ -140846,6 +145047,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140905,6 +145109,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -140964,6 +145171,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -141023,6 +145233,10 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -141082,6 +145296,9 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -141141,6 +145358,10 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -141200,6 +145421,10 @@
    "cultures": [],
    "pk": [
     11
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -141240,7 +145465,8 @@
    "tier": 0.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "charge_defense",
+    "unbreakable"
    ],
    "regen": 0,
    "res": {
@@ -141311,6 +145537,9 @@
    ],
    "pk": [
     20
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -141365,6 +145594,9 @@
    ],
    "pk": [
     20
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -141419,6 +145651,9 @@
    ],
    "pk": [
     20
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -141529,6 +145764,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -141652,6 +145890,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -141945,6 +146186,10 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -142055,6 +146300,10 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -142183,6 +146432,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "unbreakable"
    ]
   },
   {
@@ -142240,6 +146492,10 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -142296,6 +146552,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -142354,6 +146613,10 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "immune_to_psychology"
    ]
   },
   {
@@ -142410,6 +146673,11 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror",
+    "unbreakable"
    ]
   },
   {
@@ -142467,6 +146735,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -142522,6 +146793,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   },
   {
@@ -142579,6 +146853,10 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "unbreakable"
    ]
   },
   {
@@ -142634,6 +146912,10 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -142744,6 +147026,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -142799,6 +147084,10 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear",
+    "causes_terror"
    ]
   },
   {
@@ -142854,6 +147143,9 @@
    "cultures": [],
    "pk": [
     26
+   ],
+   "at": [
+    "causes_fear"
    ]
   },
   {
@@ -142895,7 +147187,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "unbreakable"
    ],
    "ror": 1,
    "regen": 0,
@@ -142954,7 +147247,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -143081,7 +147375,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -143139,7 +147434,9 @@
    "tier": 3.0,
    "mount": "",
    "at": [
-    "charge_defense_vs_large"
+    "causes_fear",
+    "charge_defense_vs_large",
+    "immune_to_psychology"
    ],
    "ror": 1,
    "regen": 0,
@@ -143211,6 +147508,9 @@
    "cultures": [],
    "pk": [
     50
+   ],
+   "at": [
+    "immune_to_psychology"
    ]
   }
  ]

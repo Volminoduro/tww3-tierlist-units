@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -35,7 +35,7 @@ function simulate(ARMY, BON, opts) {
             mdm: (1 + b.dmg/100) * (1 + (m.ws||0)/100), rdm: (1 + b.dmg/100) * (1 + (m.ms||0)/100),
             ma: u.ma + (m.ma||0), md: u.md + (m.md||0), charge: u.charge + (m.charge||0), spd: u.speed * (1 + (m.spd||0)/100),
             range: u.ranged ? u.ranged.range * (1 + (m.range||0)/100) : 0,
-            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false};
+            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false, flee: false, back: 0, imm: 0};
   });
   const S = {A: mk("A"), B: mk("B")};
   const spd = s => { let w=0, t=0; S[s].forEach(x => { w += x.cnt*x.u.men; t += x.cnt*x.u.men*x.spd; }); return w ? t/w*SIM.SPEED_SCALE : 0; };
@@ -92,7 +92,7 @@ function simulate(ARMY, BON, opts) {
     if (!active("A") || !active("B")) break;
     const dmgIn = {A: new Map(), B: new Map()}, meleeIn = {A: new Map(), B: new Map()}, engIn = {A: new Map(), B: new Map()}, radIn = {A: new Map(), B: new Map()};
     for (const me of ["A","B"]) {
-      const foe = me === "A" ? "B" : "A", tg = S[foe].filter(x => !x.out);
+      const foe = me === "A" ? "B" : "A", tg = S[foe].filter(x => !x.out && !x.flee);
       const W = tg.reduce((a,x) => a + x.pool/x.hp, 0);
       if (!W) continue;
       // Protection de l'arrière : tant qu'une unité de ligne du camp attaqué est debout, la mêlée adverse n'atteint les tireurs/artillerie qu'à (1 − protection)
@@ -100,7 +100,7 @@ function simulate(ARMY, BON, opts) {
       const wt = x => (frontAlive && isBack(x.u) ? 1 - protF : 1) * x.pool / x.hp;
       const Wm = frontAlive ? tg.reduce((a, x) => a + wt(x), 0) : W;
       for (const a of S[me]) {
-        if (a.out) continue;
+        if (a.out || a.flee) continue;
         const n = a.pool / a.hp, u = a.u;
         const kitingNow = kiteT && kiteT.side === me && t >= kiteT.Tg && t < T0;
         const rf = t >= T0 ? meleeShoot(a) : (kitingNow && !a.at.has("mounted_fire_move") ? kiteT.duty : 1);     // part du temps / des modèles qui tirent
@@ -154,11 +154,21 @@ function simulate(ARMY, BON, opts) {
       const maxPool = x.pool0 - x.dead * x.hp;
       if (x.pool > 0 && x.pool < maxPool) x.pool = Math.min(maxPool, x.pool + x.u.regen * maxPool);
     }
+    /* Moral : seuil de pertes (voir MORALE_BASE / MORALE_K) + psychologie. PEUR (causes_fear) : −FEAR_LD de moral au contact (constante du jeu ume_concerned_unit_frightened = −8).
+       TERREUR (causes_terror) : choc de panique −TERROR_LD (ume_concerned_panic = −50) à la première rencontre ; si moral − 50 < TERROR_THR (13, morale_shock_terror_morale_threshold) l'unité fuit
+       SHOCK_ROUT s (14) puis revient, insensible au choc SHOCK_IMMUNE s (85). Immunisées : immune_to_psychology et unbreakable (qui ne fuit jamais). Interprétation des constantes du jeu, non validée en jeu. */
+    const scary = {A: false, B: false}, terr = {A: false, B: false};                     // le camp adverse compte-t-il des unités qui causent peur / terreur (actives au contact) ?
+    if (t >= T0) for (const side of ["A", "B"]) for (const e of S[side]) if (!e.out && !e.flee && e.pool > 0) { const o = side === "A" ? "B" : "A"; if (e.at.has("causes_fear") || e.at.has("causes_terror")) scary[o] = true; if (e.at.has("causes_terror")) terr[o] = true; }
     for (const x of [...S.A, ...S.B]) {
       if (x.out) continue;
+      if (x.flee) { if (t >= x.back) { x.flee = false; x.imm = t + SIM.SHOCK_IMMUNE; } else continue; }
+      const free = x.at.has("immune_to_psychology") || x.at.has("unbreakable");
+      let ld = x.ld;
+      if (!free && scary[x.side]) ld -= SIM.FEAR_LD;
+      if (!free && terr[x.side] && t >= x.imm && x.ld - SIM.TERROR_LD < SIM.TERROR_THR && x.pool > 0.5) { x.flee = true; x.back = t + SIM.SHOCK_ROUT; continue; }
       const c = 1 - x.pool/x.pool0;
       if (x.pool <= 0.5) x.out = true;
-      else if (c >= SIM.MORALE_BASE + clamp(x.ld,0,100)/100 * SIM.MORALE_K) { x.out = x.routed = true; }
+      else if (!x.at.has("unbreakable") && c >= SIM.MORALE_BASE + clamp(ld,0,100)/100 * SIM.MORALE_K) { x.out = x.routed = true; }
     }
   }
   timeline.push([t, surv("A"), surv("B")]);

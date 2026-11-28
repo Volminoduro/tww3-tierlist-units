@@ -64,11 +64,13 @@ $("#viewsel").onchange=()=>{view=$("#viewsel").value;render()};
 const syncView=()=>document.querySelectorAll("#viewseg button").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
 /* Raccourcis clavier 1 / 2 / 3 : Tiers / Tableau / Matrice (onglet Tier list actif, hors saisie de texte et fenêtres) */
 document.addEventListener("keydown",e=>{
- if(e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||!["1","2","3"].includes(e.key)) return;
+ /* touches physiques (e.code) : rangée du haut (« & é " » en AZERTY, 1 2 3 en QWERTY) et pavé numérique, quelle que soit la disposition du clavier ; avec ou sans Maj */
+ const m=/^(?:Digit|Numpad)([123])$/.exec(e.code||"");
+ if(e.ctrlKey||e.metaKey||e.altKey||!m) return;
  if(e.target.closest&&e.target.closest("input,textarea,select,[contenteditable],dialog")) return;
  if(document.querySelector("dialog[open]")) return;
  const tab=document.querySelector("#nav button.on"); if(!tab||tab.dataset.tab!=="tier") return;
- const b=document.querySelectorAll("#viewseg button")[+e.key-1]; if(b){e.preventDefault();b.click();}
+ const b=document.querySelectorAll("#viewseg button")[+m[1]-1]; if(b){e.preventDefault();b.click();}
 });
 $("#viewseg").onclick=e=>{const b=e.target.closest("button");if(!b)return;view=b.dataset.v;$("#viewsel").value=view;syncView();render()};
 $("#reset").onclick=()=>{for(const w of W){S[w[0]]=w[4];$("#"+w[0]).value=w[4];$("#v_"+w[0]).textContent=w[4]}render()};
