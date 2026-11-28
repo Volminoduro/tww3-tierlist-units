@@ -362,3 +362,8 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #table td.tcell{text-align:center;font:700 16px var(--serif);color:#120d08;text-shadow:none;width:52px}
 #table th{white-space:nowrap}#table th .si{width:16px;height:16px;vertical-align:-3px;margin-right:5px;color:var(--gold2)}#table th.num,#table th:nth-child(n+4){text-align:right}
 #table td:nth-child(2),#table th:nth-child(2){padding:0;text-align:center}
+
+/* Matrice / tableau : la carte entière (60×130) en miniature, pas un recadrage carré, pour reconnaître l'unité d'un coup d'œil */
+#matrix .mu .pt,#table .mu .pt{width:34px;height:74px;min-height:0;aspect-ratio:auto;align-self:center;flex:none}
+#matrix .mu .pt img,#table .mu .pt img,#matrix .mu .pt img.sq,#table .mu .pt img.sq{object-fit:contain;object-position:center;-webkit-mask-image:none;mask-image:none}
+#matrix td,#table td{padding-block:3px}

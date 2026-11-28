@@ -165,12 +165,12 @@ function render(){
    return `<td class="hc${p===mx&&p>=60?" top":""}" style="--p:${p}%;background:hsl(${Math.round(p*1.25)},${38+Math.round(p*.2)}%,${20+Math.round(p*.2)}%)" title="Valeur brute : ${Math.round(x.arche[k])}${p===mx&&p>=60?" · meilleur usage de l'unité":""}">${p}</td>`};
   const SH=USE_SH;
   $("#matrix").innerHTML=`<table><colgroup><col class="c-n"><col class="c-t">${ARCHK.map(()=>'<col class="c-a">').join("")}<col class="c-b"></colgroup><tr><th data-k="score">Unité</th><th data-k="score">Tier</th>${ARCHK.map(k=>`<th data-k="m:${k}" title="${ARCH[k]}" style="text-align:center" aria-label="${ARCH[k]}">${uic(k)}</th>`).join("")}<th>Meilleur usage</th></tr>`+
-   us.map(x=>{const mx=Math.max(...ARCHK.map(k=>x.pct[k]));return `<tr data-id="${x.u.id}"><td class="mn"><div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b><small>${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or</small></span></div></td><td class="mt">${tb(x.tier)}</td>${ARCHK.map(k=>cell(x,k,mx)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`}).join("")+
+   us.map(x=>{const mx=Math.max(...ARCHK.map(k=>x.pct[k]));return `<tr data-id="${x.u.id}"><td class="mn"><div class="mu">${portrait(x.u,"tall")}<span><b>${roricon(x.u)}${x.u.name}</b><small>${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or</small></span></div></td><td class="mt">${tb(x.tier)}</td>${ARCHK.map(k=>cell(x,k,mx)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`}).join("")+
    `</table><p style="padding:8px;color:var(--m);font-size:12px">Chaque case = percentile (0-100) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. 100 = la meilleure pour ça. La mobilité est la vitesse seule, jamais rapportée au coût. Cliquer un en-tête trie.</p>`;
  } else {
   /* colonnes : [libellé, valeur, rendu, icône, couleur de barre, infobulle] ; « Puissance » n'apparaît que si elle diffère du score (mode « avec coût ») */
   const same=us.every(x=>Math.abs(x.score-x.power)<1e-6);
-  const cols=[["Unité",x=>x.u.name,x=>`<div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b></span></div>`],
+  const cols=[["Unité",x=>x.u.name,x=>`<div class="mu">${portrait(x.u,"tall")}<span><b>${roricon(x.u)}${x.u.name}</b></span></div>`],
    ["Tier",x=>x.tier,x=>x.tier],
    ["Rôle",x=>ROLES[x.u.role],x=>`<span class="rl">${catIc(x.u)}${ROLES[x.u.role]||x.u.role}</span>`],
    ["Score",x=>x.score,null,"target","#d6b25e","Score utilisé pour le tier"]]
