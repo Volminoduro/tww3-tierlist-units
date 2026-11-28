@@ -91,6 +91,50 @@ function archeScores(u){
 const DU = window.TWW3_DUELS || null, UNIT_BY_ID = Object.fromEntries(D.units.map(u => [u.id, u]));
 const duelMode = () => "cost"; // les duels précalculés sont à coût de recrutement équivalent
 const duelOf = (u, mode) => DU && DU.modes[mode || duelMode()] ? DU.modes[mode || duelMode()][u.id] || null : null;
+/* ---------- Duels « avec ma campagne » ----------
+   Les duels précalculés se jouent sans seigneur. Quand « Ma campagne » est active et que l'unité en fait partie, on peut recalculer à la volée ses duels contre toutes les autres unités : les stats du profil sont déjà
+   dans l'unité (profile.js) et les effets CONDITIONNELS du seigneur dont la condition dépend de l'adversaire (« contre les Nains »…) s'ajoutent duel par duel, la race de l'adversaire étant connue.
+   Même méthode que tools/build_duels.js : budget de recrutement équivalent (1 à 20 exemplaires), stratégie automatique, 400 m. */
+const CDUEL = {};   // cache : clé profil|unité -> résultat
+const cduelKey = u => [u.id, PROFILE.fac, PROFILE.st, PROFILE.level, PROFILE.fromSave, (PROFILE.condEff || []).length].join("|");
+function cduelRun(u, onProgress, done) {
+ const Sim = window.TWW3Sim, FX = window.TWW3_EFFECTS || {lords: {}}, lord = FX.lords[PROFILE.st];
+ const conds = ((lord && lord.effects) || []).filter(e => e.cond).concat(PROFILE.condEff || []);
+ const hits = e => e.units == null || (e.units === "lord" ? !!lord && u.id === lord.unit : (e.units instanceof Set ? e.units.has(u.id) : e.units.includes(u.id)));
+ const mine = conds.filter(hits), NB = {A: {arm: 0, dmg: 0, hp: 0, mor: 0, up: 0}, B: {arm: 0, dmg: 0, hp: 0, mor: 0, up: 0}};
+ const base = {ma: u.ma, md: u.md, arm: u.armour, ld: u.ld, charge: u.charge};
+ const tagsOf = v => { const t = new Set(); for (const c of (v.races || [])) { const m = /_([a-z]{3})_/.exec(c); for (const g of (m && CULT_TAGS[m[1]]) || []) t.add("vs:" + g); } return t; };
+ const modsVs = v => { const t = tagsOf(v), m = {}; let n = 0;
+  for (const e of mine) if (condOn(e, t)) { n++; m[e.stat] = (m[e.stat] || 0) + (e.pct && base[e.stat] !== undefined ? base[e.stat] * e.v / 100 : e.v); }
+  return {m: n ? m : undefined, n}; };
+ const pool = D.units.filter(v => v.id !== u.id && v.cost > 0 && v.men > 0 && v.hp > 0);
+ const res = []; let i = 0, nCond = 0; const t0 = Date.now();
+ const step = () => {
+  const end = Math.min(pool.length, i + 60);
+  for (; i < end; i++) { const v = pool[i], lo = Math.max(u.cost, v.cost), hi = 20 * Math.min(u.cost, v.cost);
+   if (lo > hi) continue; const budget = Math.max(lo, Math.min(2000, hi)), {m, n} = modsVs(v); if (n) nCond++;
+   const r = Sim.resolve({A: [{u, count: budget / u.cost, mods: m}], B: [{u: v, count: budget / v.cost}]}, NB, {dist: 400, acc: 0.4, staticB: false, hold: {A: "auto", B: "auto"}});
+   res.push([v.id, (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0), n]); }
+  onProgress(i, pool.length);
+  if (i < pool.length) return setTimeout(step, 0);
+  const w = res.reduce((a, [, m]) => a + (m > 0 ? 1 : m < 0 ? 0 : .5), 0) / Math.max(1, res.length), sorted = res.slice().sort((a, b) => b[1] - a[1]);
+  done({wr: w, n: res.length, nCond, best: sorted.slice(0, 3), worst: sorted.slice(-3).reverse(), ms: Date.now() - t0});
+ };
+ step();
+}
+function cduelHtml(u){
+ if(typeof PROFILE==="undefined"||!PROFILE.on||!PROFILE.st||!(u.factions||[]).includes(PROFILE.fac)) return "";
+ const r=CDUEL[cduelKey(u)], nm=id=>(UNIT_BY_ID[id]||{name:id}).name, d=duelOf(u);
+ if(!r) return `<div class="cduel"><button type="button" data-cduel="${u.id}">Recalculer ces duels avec ma campagne…</button><small>Stats du profil et effets conditionnels du seigneur selon la race de chaque adversaire.</small></div>`;
+ const top=l=>l.map(([id,m])=>`${nm(id)} (${m>0?"+":""}${Math.round(m*100)})`).join(", "), delta=d?Math.round((r.wr-d.wr)*100):null;
+ return `<div class="cduel"><b>Avec ma campagne : ${Math.round(r.wr*100)} % de victoires</b>${delta!==null?` <span class="${delta>0?"up":delta<0?"dn":""}">(${delta>0?"+":""}${delta} points par rapport aux duels sans campagne)</span>`:""}
+  <small>${r.n} duels, dont ${r.nCond} où un effet conditionnel du seigneur s'applique (race de l'adversaire). Bat le mieux : ${top(r.best)} · Battue par : ${top(r.worst)}</small></div>`;
+}
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-cduel]"); if(!b) return; const u=UNIT_BY_ID[b.dataset.cduel]; if(!u) return;
+ b.disabled=true; const box=b.closest(".cduel"), say=t=>{box.querySelector("small").textContent=t;};
+ cduelRun(u,(i,n)=>say(`Calcul… ${Math.round(i/n*100)} %`),r=>{CDUEL[cduelKey(u)]=r; const dt=$("#detail"); if(dt&&!dt.hidden&&dt.dataset.unit===u.id){const x=(window._us||[]).find(y=>y.u.id===u.id); if(x) detail(x);} });
+});
 function duelPanel(u){
  if(!DU) return "";
  const d=duelOf(u), rl=r=>ROLES[r]||r, nm=id=>(UNIT_BY_ID[id]||{name:id}).name;
@@ -102,6 +146,7 @@ function duelPanel(u){
   <div class="anti">${si("target")}<span>${d.anti.length?"Domine : "+d.anti.map(([r,p])=>`${rl(r)} (top ${Math.max(1,100-p)} %)`).join(", "):"Aucune typologie dominante"}</span></div></div>
   <details class="more"><summary>Détail par catégorie et adversaires</summary>${rows}
   <small class="kv2">Bat le mieux : ${top(d.best)}<br>Battue par : ${top(d.worst)}</small></details>
+  ${cduelHtml(u)}
   ${DU.caveat.includes(u.id)?`<p class="dn">Seigneur / héros : sorts, capacités et objets non modélisés, résultats indicatifs.</p>`:""}
   ${ranged?`<p class="dn">Unité à distance : la typologie vient du DPS contre un défenseur moyen de chaque catégorie (${ranged?"efficacité de DPS":"duels"}), pas de duels contre de la mêlée.</p>`:""}`;
 }
