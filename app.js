@@ -167,8 +167,8 @@ function score(u){
  return {power, cost, value: power/Math.max(1,cost), ehp, mel, rng, rt, arche: archeScores(u), duels: (duelOf(u)||{}).wr ?? 0};
 }
 function compute(withLH){ // withLH : inclure seigneurs et héros dans le périmètre (et donc dans le classement)
- const f=fsel.value, seen=new Set();
- let us=D.units.filter(u=>inScope(u,f)&&(withLH||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
+ const seen=new Set();   // le classement porte TOUJOURS sur toutes les unités (comme pour seigneurs/héros) : la faction choisie ne filtre que l'affichage (voir render)
+ let us=D.units.filter(u=>inScope(u,ALL)&&(withLH||!["lord","hero"].includes(u.role))).map(u=>({u,...score(u)}));
  us=us.filter(x=>!seen.has(x.u.id)&&seen.add(x.u.id));
  const key=$("#metric").value;
  // Mobilité : vitesse pure, jamais divisée par le coût (une unité lente et bon marché ne devient pas « mobile »)
@@ -202,8 +202,10 @@ function render(){
  // Seigneurs et héros : exclus de « Toutes » sauf si la case est cochée, mais toujours accessibles (et comptés) via leurs pastilles « Seigneurs » / « Héros »
  const incl=$("#heroes").checked, LH=x=>x.u.role==="lord"||x.u.role==="hero", shown=x=>role.size?role.has(x.u.role):(incl||!LH(x));
  const wantLH=incl||role.has("lord")||role.has("hero"), q=$("#q").value.toLowerCase();
+ const inFac=x=>inScope(x.u,fsel.value);       // tiers calculés sur toutes les unités ; la faction ne filtre que l'affichage
  let us=compute(wantLH);                       // classement : seigneurs/héros seulement s'ils sont affichés
- const pool=wantLH?us:compute(true);           // effectifs des pastilles : tous les seigneurs/héros comptés, même masqués
+ const pool=(wantLH?us:compute(true)).filter(inFac);
+ us=us.filter(inFac);           // effectifs des pastilles : tous les seigneurs/héros comptés, même masqués
  const byName=pool.filter(x=>x.u.name.toLowerCase().includes(q));
  const cnt=r=>byName.filter(x=>(r?x.u.role===r:(incl||!LH(x)))&&[...TYPO].every(k=>canDo(x.u,k))).length; // périmètre, recherche et usages actifs
  [...role].forEach(r=>{if(!cnt(r))role.delete(r);}); // une catégorie devenue vide est retirée de la sélection

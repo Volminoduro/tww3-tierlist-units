@@ -85,7 +85,7 @@ Object.assign(I18N.dict, {
   "Tier par puissance brute": "Tier by raw power",
   "Tier par résultats de duels (taux de victoire)": "Tier by duel results (win rate)",
   "Typologie : globale (tout usage)": "Typology: overall (any use)",
-  "Rang relatif à la faction": "Rank relative to the faction", "Rang relatif à la catégorie": "Rank relative to the category",
+  "Rang relatif à toutes les unités": "Rank relative to all units", "Rang relatif à la catégorie": "Rank relative to the category",
   "Poids de puissance": "Power weights", "Poids mêlée": "Melee weight", "Poids distance": "Ranged weight",
   "Poids survie (PV+armure)": "Survivability weight (HP+armour)", "Poids vitesse": "Speed weight", "Poids moral": "Leadership weight",
   "Coût effectif (campagne)": "Effective cost (campaign)",
