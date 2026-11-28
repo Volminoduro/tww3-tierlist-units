@@ -105,7 +105,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     }
   }
   const save = () => PREF.set("profile", {on: PROFILE.on, fac: PROFILE.fac, lord: PROFILE.lord, level: PROFILE.level, sv: PROFILE.sv, fromSave: PROFILE.fromSave});
-  const changed = () => { apply(); save(); drawBar(); document.dispatchEvent(new Event("rorchange")); };
+  const changed = () => { apply(); save(); PROFILE.duelsOk = false; if (window.setDU) window.setDU(null); drawBar(); document.dispatchEvent(new Event("rorchange")); };
 
   { const s = PREF.get("profile", null);
     if (s && s.fac && facs.includes(s.fac)) { PROFILE.fac = s.fac; PROFILE.lord = typeof s.lord === "string" ? s.lord : "auto"; PROFILE.on = !!s.on; PROFILE.level = Math.min(50, Math.max(1, Math.round(+s.level) || 1)); if (s.sv && s.sv.lords) { PROFILE.sv = s.sv; PROFILE.fromSave = !!s.fromSave; } } }
@@ -121,7 +121,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
       const who = st ? lordLabel(st) : "sans seigneur", fn = D.factions[PROFILE.fac] || PROFILE.fac;
       bar.className = "profbar on";
       bar.innerHTML = `<span class="pbtxt">⚑ <b>Ma campagne</b> : ${esc(fn)} — ${esc(who)}${PROFILE.level > 1 ? ` niv. ${PROFILE.level}` : ""} · stats modifiées de ${PROFILE.n} unité${PROFILE.n > 1 ? "s" : ""} (duels précalculés au profil par défaut)</span>` +
-        `<button type="button" data-pedit>Modifier</button><button type="button" data-poff>Désactiver</button>`;
+        `<button type="button" data-pduel title="Rejoue les duels des unités de ta faction avec les stats du profil et les effets conditionnels du seigneur (quelques dizaines de secondes à quelques minutes), puis recalcule le classement par duels et la matrice">${PROFILE.duelsOk ? "Duels recalculés ✓" : "Recalculer les duels…"}</button><small class="pbst"></small><button type="button" data-pedit>Modifier</button><button type="button" data-poff>Désactiver</button>`;
     } else { bar.className = "profbar"; bar.innerHTML = `<button type="button" data-pedit>Ma campagne…</button><small>Applique à tout le site le seigneur et les bonus de ta faction.</small>`; }
   }
 

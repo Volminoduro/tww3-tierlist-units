@@ -88,7 +88,8 @@ function archeScores(u){
   ranged:r?vs(REF.inf,false).rg*(1+r.range/400):0, charge:vs(REF.inf,true).mel*6, speed:u.speed};
 }
 /* Résultats de duels précalculés (data/duels.js, générés par tools/build_duels.js avec le même sim.js) */
-const DU = window.TWW3_DUELS || null, UNIT_BY_ID = Object.fromEntries(D.units.map(u => [u.id, u]));
+let DU = window.TWW3_DUELS || null; const DU0 = DU; window.setDU = o => { DU = o || DU0; render(); };   // setDU(objet) : duels recalculés pour « Ma campagne » (campduels.js) ; setDU(null) : retour aux précalculés
+const UNIT_BY_ID = Object.fromEntries(D.units.map(u => [u.id, u]));
 const duelMode = () => "cost"; // les duels précalculés sont à coût de recrutement équivalent
 const duelOf = (u, mode) => DU && DU.modes[mode || duelMode()] ? DU.modes[mode || duelMode()][u.id] || null : null;
 /* ---------- Duels « avec ma campagne » ----------

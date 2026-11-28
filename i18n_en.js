@@ -1,6 +1,7 @@
 "use strict";
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
+  "Recalculer les duels…": "Recompute duels…", "Duels recalculés ✓": "Duels recomputed ✓",
   "Conditions de bataille (effets conditionnels)": "Battle conditions (conditional effects)",
   "Cette armée attaque": "This army attacks", "Embuscade tendue": "Ambush set", "Après une retraite": "After a retreat", "Siège / encerclement": "Siege / encirclement",
   "Bataille de colonie": "Settlement battle", "Renforts en cours": "Reinforcements arriving", "Bataille de nuit": "Night battle", "Terrain : sans effet": "Terrain: no effect",
