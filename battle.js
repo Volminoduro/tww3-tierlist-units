@@ -25,9 +25,27 @@ const equalK = opts => { applyMods(); return TWW3Sim.equalK(ARMY, BON, opts); };
    non conditionnels sont appliqués ; les effets de campagne (entretien, mouvement…) n'ont pas d'effet en bataille et sont ignorés. */
 const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}};
 const LORD = {A: {sel: "auto"}, B: {sel: "auto"}};
+/* Conditions de bataille par armée (effets conditionnels des seigneurs et compétences : « contre les Nains », « en embuscade », « en forêt »…). Les races adverses se déduisent de l'armée d'en face ;
+   le reste se coche à la main. Étiquettes lues dans data/effects.js / skills.js (champ c : l'une d'elles suffit). */
+const CTX = {A: {}, B: {}};
+const CTX_BOX = [["attack", "Cette armée attaque"], ["ambush", "Embuscade tendue"], ["retreat", "Après une retraite"], ["siege", "Siège / encerclement"], ["settlement", "Bataille de colonie"], ["reinf", "Renforts en cours"], ["night", "Bataille de nuit"]];
+const CTX_TERRAIN = {"": "Terrain : sans effet", desert: "Désert", snow: "Neige", forest: "Forêt", jungle: "Jungle", underground: "Souterrain"};
+const CULT_TAGS = {emp: ["human"], brt: ["human", "bretonnia"], ksl: ["human"], cth: ["human"], dwf: ["dwarf"], hef: ["elf"], def: ["elf"], wef: ["elf"], grn: ["greenskin"], ogr: ["ogre"], skv: ["skaven", "corrupt"], lzd: ["lizardmen"],
+  bst: ["beastmen"], vmp: ["undead", "vmp", "corrupt"], tmb: ["undead", "tmb"], nag: ["undead"], cst: ["undead"], chs: ["wc", "corrupt"], dae: ["daemons", "corrupt"], kho: ["khorne", "daemons", "corrupt"],
+  nur: ["nurgle", "daemons", "corrupt"], sla: ["slaanesh", "daemons", "corrupt"], tze: ["tzeentch", "daemons", "corrupt"], chd: ["chd"], nor: ["norsca"]};
+const TAG_TXT = {"vs:human": "Humains", "vs:elf": "Elfes", "vs:dwarf": "Nains", "vs:greenskin": "Peaux-Vertes", "vs:ogre": "Ogres", "vs:skaven": "Skavens", "vs:lizardmen": "Hommes-Lézards", "vs:beastmen": "Hommes-Bêtes",
+  "vs:bretonnia": "Bretonnie", "vs:undead": "Mort-vivants", "vs:wc": "Guerriers du Chaos", "vs:daemons": "Démons", "vs:chd": "Nains du Chaos", "vs:norsca": "Norsca", "vs:khorne": "Khorne", "vs:nurgle": "Nurgle",
+  "vs:tzeentch": "Tzeentch", "vs:slaanesh": "Slaanesh", "vs:corrupt": "armées de corruption", "vs:vmp": "Comtes Vampires", "vs:tmb": "Rois des Tombes", "vs:contract": "ennemi sous contrat", ambush: "embuscade", retreat: "après retraite",
+  attack: "en attaque", siege: "siège", reinf: "renforts", night: "nuit", settlement: "colonie", naval: "bataille navale", "terrain:desert": "désert", "terrain:snow": "neige", "terrain:forest": "forêt", "terrain:jungle": "jungle", "terrain:underground": "souterrain"};
+const enemyTags = side => { const t = new Set(), o = side === "A" ? "B" : "A";
+  for (const e of ARMY[o]) for (const c of (e.u.races || [])) { const m = /_([a-z]{3})_/.exec(c); for (const g of (m && CULT_TAGS[m[1]]) || []) t.add("vs:" + g); }
+  return t; };
+const ctxTags = side => { const t = enemyTags(side), c = CTX[side] || {}; for (const [k] of CTX_BOX) if (c[k]) t.add(k); if (c.terrain) t.add("terrain:" + c.terrain); return t; };
+const condOn = (e, tags) => !!e.cond && !!e.c && !e.c.includes("?") && e.c.some(g => tags.has(g));
+const condTxt = e => (e.c || []).map(g => TAG_TXT[g] || g).join(" / ");
 /* Composition des armées, factions et seigneurs mémorisés (PREF « army ») ; on ne sauvegarde qu'une fois la restauration faite, pour ne pas écraser l'état enregistré avec des armées vides. */
 const SAVED_ARMY = PREF.get("army", null); let armyReady = false;
-const saveArmy = () => { if (!armyReady) return; const o = {}; for (const s of ["A","B"]) { const el = document.querySelector(`.army[data-side=${s}]`); o[s] = {f: el.querySelector(".fac").value, lord: LORD[s].sel, u: ARMY[s].map(e => [e.u.id, e.count])}; } PREF.set("army", o); };
+const saveArmy = () => { if (!armyReady) return; const o = {}; for (const s of ["A","B"]) { const el = document.querySelector(`.army[data-side=${s}]`); o[s] = {f: el.querySelector(".fac").value, lord: LORD[s].sel, ctx: CTX[s], u: ARMY[s].map(e => [e.u.id, e.count])}; } PREF.set("army", o); };
 const STAT_LABEL = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée", vig: "Perte de vigueur", pv: "Vigueur parfaite"};
 const scopeOf = side => document.querySelector(`.army[data-side=${side}] .fac`).value;
 const lordLabel = st => { const l = FX.lords[st], u = l && UNIT[l.unit]; return u ? u.name : st.replace(/^wh\d*_[a-z0-9]+_[a-z]{3}_/, "").replace(/_/g, " "); };
@@ -41,9 +59,11 @@ function effectsOf(side) {
 const effHits = (e, u, lord) => e.units == null || (e.units === "lord" ? !!lord && u.id === lord.unit : e.units.includes(u.id));
 function applyMods() { // calcule e.mods de chaque unité des armées (lus par sim.js)
   for (const side of ["A", "B"]) {
-    const {st, lord, eff} = effectsOf(side), act = eff.filter(e => !e.cond), inProf = PROFILE.on && !!st && PROFILE.st === st;   // même seigneur que le profil de campagne : ses effets sont déjà dans les stats (profile.js)
+    const {st, lord, eff} = effectsOf(side), tags = ctxTags(side), inProf = PROFILE.on && !!st && PROFILE.st === st;   // même seigneur que le profil de campagne : ses effets sont déjà dans les stats (profile.js)
+    const act = eff.filter(e => !e.cond).map(e => ({x: e, prof: inProf})), on = eff.filter(e => condOn(e, tags)).map(e => ({x: e, prof: false}));
+    const sk = inProf ? (PROFILE.condEff || []).filter(e => condOn(e, tags)).map(e => ({x: e, prof: false})) : [];          // effets conditionnels des compétences du profil
     ARMY[side].forEach(e => { const m = {};
-      for (const x of act) { if (!effHits(x, e.u, lord) || (inProf && e.u._pm)) continue;
+      for (const {x, prof} of act.concat(on, sk)) { if (!effHits(x, e.u, lord) || (prof && e.u._pm)) continue;
         const base = {ma: e.u.ma, md: e.u.md, arm: e.u.armour, ld: e.u.ld, charge: e.u.charge}[x.stat]; // stat « en points » mais effet en % : converti
         m[x.stat] = (m[x.stat] || 0) + (x.pct && base !== undefined ? base * x.v / 100 : x.v); }
       e.mods = m; });
@@ -58,15 +78,16 @@ function renderLordOptions(side) { // liste des seigneurs de la race / faction c
 }
 function renderLordList(side) {
   const el = document.querySelector(`.army[data-side=${side}]`), ul = el.querySelector(".lfxl"), {st, lord, eff} = effectsOf(side), army = ARMY[side];
+  if (!ul) return;                                                  // appelée aussi pendant l'initialisation, avant la création de la boîte du seigneur
   if (!st) { ul.innerHTML = "<li class='none'>Aucun seigneur : aucun effet appliqué.</li>"; return; }
   const inProf = PROFILE.on && PROFILE.st === st;
-  const act = eff.filter(e => !e.cond), cond = eff.filter(e => e.cond);
+  const act = eff.filter(e => !e.cond), cond = eff.filter(e => e.cond), tags = ctxTags(side);
   const tgt = e => { if (e.units === "lord") return "le seigneur seul"; if (e.units == null) return "toutes les unités";
     const m = e.label.match(/ for (.+)$/); return `pour ${m ? m[1] : "certaines unités"} (${e.units.length} type${e.units.length > 1 ? "s" : ""})`; };
   const line = e => { const on = army.some(a => effHits(e, a.u, lord));
     return `<li class="${on ? "" : "off"}" title="${e.label} (${e.src})">${STAT_LABEL[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)}${on ? "" : " (aucune unité de l'armée concernée)"}</li>`; };
   ul.innerHTML = (inProf ? "<li class='none'>Seigneur de « Ma campagne » : ses effets sont déjà dans les stats des unités.</li>" : "") + (act.length ? act.map(line).join("") : `<li class='none'>${lordLabel(st)} : aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne).</li>`) +
-    (cond.length ? `<li class='none'>${cond.length} effet(s) conditionnel(s) non appliqué(s) (terrain, embuscade, race adverse…).</li>` : "");
+    (cond.length ? cond.map(e => { const k = condOn(e, tags); return `<li class="${k ? "" : "off"}" title="${e.label} (${e.src})">${STAT_LABEL[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)} <i>si ${condTxt(e) || "condition inconnue"}</i>${k ? " : <b>actif</b>" : ""}</li>`; }).join("") : "");
 }
 
 /* ---------- UI ---------- */
@@ -90,6 +111,9 @@ document.querySelectorAll(".army").forEach(el => {
     <div class="ph"><small id="pr${side}h"></small><button class="auto" type="button">Auto</button></div></div>`);
   $$(".prot", el).insertAdjacentHTML("beforebegin", `<div class="lordbox"><label class="lab"><span>Seigneur (effets par défaut)</span><select class="lsel"></select></label><ul class="lfxl"></ul></div>`);
   $$(".lsel", el).onchange = e => { LORD[side].sel = e.target.value; renderLordList(side); saveArmy(); };
+  $$(".lordbox", el).insertAdjacentHTML("afterend", `<details class="ctxbox"><summary>Conditions de bataille (effets conditionnels)</summary><div class="ctxg">${CTX_BOX.map(([k, l]) => `<label class="chk"><input type="checkbox" data-c="${k}"> ${l}</label>`).join("")}
+    <label class="lab"><select data-c="terrain">${Object.entries(CTX_TERRAIN).map(([k, l]) => `<option value="${k}">${l}</option>`).join("")}</select></label></div></details>`);
+  const cb = $$(".ctxbox", el); cb.onchange = e => { const k = e.target.dataset.c; if (!k) return; CTX[side][k] = e.target.type === "checkbox" ? e.target.checked : e.target.value; renderLordList("A"); renderLordList("B"); saveArmy(); };
   fs.addEventListener("change", () => renderLordOptions(side)); renderLordOptions(side);
   $$(`#pr${side}`, el).oninput = e => { BON[side].prot = +e.target.value; $(`#pr${side}v`).textContent = e.target.value; };
   $$(".auto", el).onclick = () => { const {f, b} = frontBack(side), v = b ? Math.round(80 * Math.min(1, f / b)) : 0;
@@ -110,6 +134,7 @@ function draw(side) {
   renderLordList(side);
   const {f, b} = frontBack(side), h = $(`#pr${side}h`); if (h) h.textContent = `Écran : ${f} unité(s) de ligne pour ${b} de tir/artillerie`;
   $$(".list", el).querySelectorAll(".x").forEach(b => b.onclick = () => { ARMY[side].splice(+b.dataset.i, 1); draw(side); });
+  renderLordList("A"); renderLordList("B");   // les races adverses changent avec l'armée d'en face : les effets conditionnels actifs aussi
   saveArmy();
 }
 (() => { // restauration des armées, factions et seigneurs
@@ -117,7 +142,8 @@ function draw(side) {
     const el = document.querySelector(`.army[data-side=${side}]`), fs = el.querySelector(".fac");
     if (x.f && (x.f === ALL || D.factions[x.f])) { fs.value = x.f; fs.dispatchEvent(new Event("change")); }
     ARMY[side] = (x.u || []).map(([id, c]) => UNIT[id] ? {u: UNIT[id], count: Math.max(1, +c || 1)} : null).filter(Boolean); capArmy(side);
-    LORD[side].sel = x.lord || "auto"; draw(side); }
+    LORD[side].sel = x.lord || "auto"; CTX[side] = x.ctx || {};
+    el.querySelectorAll(".ctxbox [data-c]").forEach(i => { const v = CTX[side][i.dataset.c]; if (i.type === "checkbox") i.checked = !!v; else i.value = v || ""; }); draw(side); }
   armyReady = true; saveArmy();
   const tab = PREF.get("tab", "tier"), tb = document.querySelector(`#nav [data-tab=${tab}]`); if (tab !== "tier" && tb) tb.click();   // onglet actif mémorisé
 })();

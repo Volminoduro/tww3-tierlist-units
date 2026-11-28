@@ -7,7 +7,7 @@
    Combat lisent donc tous les stats modifiées, et les rangs « Top / Bottom % » se recalculent d'eux-mêmes. Seules les unités de la faction choisie sont touchées
    (un bonus « toutes les unités » ne gonfle pas les unités des autres factions). Les duels précalculés (data/duels.js) restent au profil par défaut.
    Le Combat n'ajoute pas une seconde fois l'effet du même seigneur (u._pm = « déjà modifiée par le profil », lu par battle.js). État mémorisé (PREF « profile »). */
-const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, alloc: [], sv: null, fromSave: false};
+const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, alloc: [], sv: null, fromSave: false, condEff: []};
 (() => {
   const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}}, SK = window.TWW3_SKILLS || {lords: {}, sets: []};
   const UN = Object.fromEntries(D.units.map(u => [u.id, u]));
@@ -65,7 +65,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     const P = getPool(), ranged = RANGED_ONLY.has(e.s), key = (e.u === null ? "a" : e.u) + (ranged ? "r" : "m");
     return memo[key] ??= (P.filter(u => (e.u === null || setOf(e.u).has(u.id)) && (!ranged || u._b.r)).length / Math.max(1, P.length));
   };
-  const effValue = effs => effs.reduce((a, e) => a + W[e.s] * (e.p && BASE[e.s] ? BASE[e.s] * e.v / 100 : e.v) * cover(e), 0);
+  const effValue = effs => effs.reduce((a, e) => a + (e.c ? 0 : 1) * W[e.s] * (e.p && BASE[e.s] ? BASE[e.s] * e.v / 100 : e.v) * cover(e), 0);
   const atLevel = (t, l) => (l > 0 ? t.L[l] || [] : []);
   /* Dépense `points` points : à chaque étape on prend le niveau de compétence qui apporte le plus (valeur ajoutée par rapport au niveau actuel), compétence débloquée si ses prérequis (parents avec au moins 1 point) sont remplis. */
   function allocate(st, points) {
@@ -90,12 +90,13 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     return tree.map((t, i) => ({i, n: t.n, lv: Math.min(maxLv(t), got[t.k] || 0), max: maxLv(t), innate: t.p0 > 0})).filter(x => x.lv > 0).map(x => ({...x, effs: atLevel(tree[x.i], x.lv)}));
   }
   const usingSave = st => !!(PROFILE.fromSave && PROFILE.sv && st && PROFILE.sv.lords[st]);
-  const toEff = e => ({stat: e.s, v: e.v, pct: !!e.p, units: e.u === null ? null : e.u === "lord" ? "lord" : setOf(e.u), cond: false, label: "", src: "compétence"});
+  const toEff = e => ({stat: e.s, v: e.v, pct: !!e.p, units: e.u === null ? null : e.u === "lord" ? "lord" : setOf(e.u), cond: !!e.c, c: e.c, label: "", src: "compétence"});
   const spent = () => PROFILE.alloc.reduce((a, x) => a + x.lv - (x.innate ? 1 : 0), 0);
   function apply() {
     const st = PROFILE.on ? stOf() : null, lord = st ? FX.lords[st] : null;
     PROFILE.alloc = !st ? [] : usingSave(st) ? fromSaveAlloc(st) : allocate(st, Math.max(0, PROFILE.level - 1));
-    const eff = effOf(st).concat(PROFILE.alloc.flatMap(x => x.effs.map(toEff)));
+    const all = effOf(st).concat(PROFILE.alloc.flatMap(x => x.effs.map(toEff))), eff = all.filter(e => !e.cond);
+    PROFILE.condEff = all.filter(e => e.cond);                                     // effets conditionnels des compétences : appliqués par le Combat selon le contexte (battle.js)
     PROFILE.st = st; PROFILE.n = 0;
     for (const u of D.units) {
       restore(u);
@@ -148,7 +149,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
         <input type="range" min="1" max="50" value="${PROFILE.level}" data-level></label><button type="button" data-lvmax>Tout au max (niveau 50)</button></div>
       <h3>Effets appliqués${st ? " — " + esc(lordLabel(st)) : ""}</h3>
       <ul class="proflist">${eff.length ? eff.map(e => `<li title="${esc(e.label)} (${esc(e.src)})">${LAB[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)}</li>`).join("") : `<li class="none">${st ? "Aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne)." : "Aucun seigneur : aucun effet."}</li>`}${cond ? `<li class="none">${cond} effet(s) conditionnel(s) non appliqué(s) (terrain, embuscade, race adverse…).</li>` : ""}</ul>
-      ${PROFILE.alloc.length ? `<h3>${usingSave(st) ? "Compétences prises dans ta sauvegarde" : "Compétences choisies automatiquement"}</h3><ul class="proflist">${PROFILE.alloc.map(x => `<li>${esc(x.n)} <b>${x.lv}/${x.max}</b> — ${x.effs.map(e => `${LAB[e.s]} ${e.v > 0 ? "+" : ""}${e.v}${e.p ? " %" : ""}${e.u === "lord" ? " (seigneur)" : ""}`).join(", ")}${x.innate ? " · innée" : ""}</li>`).join("")}</ul>` : ""}
+      ${PROFILE.alloc.length ? `<h3>${usingSave(st) ? "Compétences prises dans ta sauvegarde" : "Compétences choisies automatiquement"}</h3><ul class="proflist">${PROFILE.alloc.map(x => `<li>${esc(x.n)} <b>${x.lv}/${x.max}</b> — ${x.effs.map(e => `${LAB[e.s]} ${e.v > 0 ? "+" : ""}${e.v}${e.p ? " %" : ""}${e.u === "lord" ? " (seigneur)" : ""}${e.c ? ` <i>si ${e.c.map(g => (typeof TAG_TXT !== "undefined" && TAG_TXT[g]) || g).join(" / ")} (Combat)</i>` : ""}`).join(", ")}${x.innate ? " · innée" : ""}</li>`).join("")}</ul>` : ""}
       <p class="dlcp">Le site dépense les points tout seul, en priorisant ce qui apporte le plus à la faction (heuristique) ; pas de choix compétence par compétence. Pas encore pris en compte : technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.</p>
       <p class="dlcp" style="margin-bottom:16px"><button type="button" data-poff2>Désactiver et revenir aux stats du jeu</button></p>`;
   };

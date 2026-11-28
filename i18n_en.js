@@ -1,6 +1,10 @@
 "use strict";
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
+  "Conditions de bataille (effets conditionnels)": "Battle conditions (conditional effects)",
+  "Cette armée attaque": "This army attacks", "Embuscade tendue": "Ambush set", "Après une retraite": "After a retreat", "Siège / encerclement": "Siege / encirclement",
+  "Bataille de colonie": "Settlement battle", "Renforts en cours": "Reinforcements arriving", "Bataille de nuit": "Night battle", "Terrain : sans effet": "Terrain: no effect",
+  "Désert": "Desert", "Neige": "Snow", "Forêt": "Forest", "Jungle": "Jungle", "Souterrain": "Underground",
   "Ordre dans un tier : score décroissant, métrique « {} » (score en cible, taux de victoire en duels à côté sur chaque carte).": "Order within a tier: score descending, metric \"{}\" (score next to the target icon, duel win rate beside it on each card).",
   "efficacité (puissance ÷ coût)": "efficiency (power ÷ cost)", "puissance brute": "raw power", "résultats de duels": "duel results",
   " Jouables au lancement de campagne seulement": " Playable at campaign start only",

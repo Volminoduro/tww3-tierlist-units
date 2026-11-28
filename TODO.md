@@ -137,4 +137,5 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 - Factions « jouables au lancement de campagne » : 105 factions (table `frontend_faction_leaders`, hors variantes Royaume du Chaos) ; 11 clés de campagne diffèrent de la table de bataille personnalisée (alias dans `tools/effects_extract.py`) ; Khemri (Settra) n'a pas d'équivalent dans cette table. Filtre du sélecteur, coché par défaut.
 - **Charge** : `devastating_flanker` (88 unités) demande un modèle de flanc / dos ; capacités actives qui touchent la charge (liste à établir via `unit_special_abilities`).
 - **Fatigue** : fait (voir README) ; échelle de temps des taux supposée (par 0,1 s), sans effet marqué sur les marges ; reste `fatigue_res`, la vitesse hors contact, terrain et pluie.
+- **Effets conditionnels** : fait pour le Combat (voir README) ; reste : les prendre en compte dans le tier list / la fiche (contexte global « mon ennemi habituel »), les terrains réels (le simulateur n'a pas de terrain), `naval`.
 - Workflow GitHub Actions (`.github/workflows/build-data.yml`) : jamais exécuté.

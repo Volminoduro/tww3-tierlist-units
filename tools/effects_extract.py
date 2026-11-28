@@ -28,6 +28,26 @@ ARMY_SCOPES = ("to_force",)       # effets qui touchent l'armée
 CHAR_SCOPES = ("to_character",)   # effets qui touchent le seigneur seul
 
 
+# Conditions d'un effet, lues dans son texte anglais (« Melee attack when fighting against Dwarfs and Greenskins », « during ambushes »…). Étiquettes : vs:<race>, ambush, retreat, terrain:<type>,
+# siege, reinf, night, attack, naval, settlement. Plusieurs étiquettes = « l'une d'elles suffit ». Un effet à condition sans étiquette reconnue reçoit ["?"] (jamais appliqué).
+RACE_TAGS = [("Warriors of Chaos", "wc"), ("Daemons of Chaos", "daemons"), ("Chaos Dwarfs", "chd"), ("Khornate", "khorne"), ("Nurglish", "nurgle"), ("Tzeentchian", "tzeentch"), ("Slaaneshi", "slaanesh"),
+             ("armies that spread corruption", "corrupt"), ("Greenskins", "greenskin"), ("Dwarfs", "dwarf"), ("Elves", "elf"), ("Humans", "human"), ("Human", "human"), ("Ogres", "ogre"), ("Skaven", "skaven"),
+             ("Lizardmen", "lizardmen"), ("Beastmen", "beastmen"), ("Bretonnia", "bretonnia"), ("Undead", "undead"), ("Norsca", "norsca"), ("Vampire Counts", "vmp"), ("Tomb Kings", "tmb"), ("Empire", "human"), ("Kislev", "human"), ("Cathay", "human")]
+def cond_tags(key, label):
+    L = label or ""; tags = []
+    m = re.search(r"against (.+)$", L)
+    if m:
+        rest = m.group(1)
+        for name, tag in RACE_TAGS:
+            if name in rest: tags.append("vs:" + tag); rest = rest.replace(name, " ")
+    for pat, tag in ((r"ambush", "ambush"), (r"retreat", "retreat"), (r"desert", "terrain:desert"), (r"snow", "terrain:snow"), (r"forest", "terrain:forest"), (r"jungle", "terrain:jungle"),
+                     (r"underground|tunnel", "terrain:underground"), (r"siege|encircl", "siege"), (r"reinforc", "reinf"), (r"(?:at|during|in) night|night battle|nighttime", "night"), (r"when attacking|while attacking|when attacked", "attack"),
+                     (r"naval|at sea|sea battle", "naval"), (r"settlement|garrison", "settlement")):
+        if re.search(pat, L, re.I) and tag not in tags: tags.append(tag)
+    if not tags and not L.strip() and COND.search(key): tags = ["?"]                       # pas de texte : on ne sait pas
+    return tags
+
+
 def build_effects(T, units, loc, facinfo):
     index = lambda rows, k: {r.get(k): r for r in rows if r.get(k)}
     ids = {u["id"] for u in units}
@@ -58,7 +78,6 @@ def build_effects(T, units, loc, facinfo):
         pct = ("%+n%" in desc) if desc else stat[1]
         try: v = float(value)
         except ValueError: return None
-        cond = bool(COND.search(key))             # effet conditionnel (terrain, embuscade, race adverse…) : non appliqué par défaut
         units_ = None
         if eff_sets.get(key):
             lst = sorted({i for s in eff_sets[key] for i in members(s)})
@@ -67,8 +86,11 @@ def build_effects(T, units, loc, facinfo):
             units_ = "lord"                      # stat de personnage : le seigneur lui-même
         if any(s in scope for s in CHAR_SCOPES) and not any(s in scope for s in ARMY_SCOPES): units_ = "lord"
         if isinstance(units_, list) and len(units_) >= 0.98 * len(ids): units_ = None   # « toutes les unités » : inutile de répéter la liste
-        return {"k": key, "stat": stat[0], "v": v, "pct": pct, "units": units_, "cond": cond, "src": src,
-                "label": re.sub(r"\s+", " ", re.sub(r"\[\[[^\]]*\]\]", "", desc).replace("%+n%", "").replace("%+n", "").replace(":", "")).strip() or key}
+        lab = re.sub(r"\s+", " ", re.sub(r"\[\[[^\]]*\]\]", "", desc).replace("%+n%", "").replace("%+n", "").replace(":", "")).strip() or key
+        tags = cond_tags(key, lab if lab != key else "")
+        out = {"k": key, "stat": stat[0], "v": v, "pct": pct, "units": units_, "cond": bool(tags), "src": src, "label": lab}
+        if tags: out["c"] = tags
+        return out
 
     # --- effets par défaut de chaque sous-type de seigneur ---
     bundle_eff = defaultdict(list)
@@ -144,9 +166,11 @@ def build_effects(T, units, loc, facinfo):
                     effs = []
                     for r in rows:
                         d = describe(r["effect_key"], r["effect_scope"], r["value"], "")
-                        if not d or not d.get("stat") or d["cond"]: continue         # conditionnels (embuscade, terrain…) : non appliqués, donc non stockés
+                        if not d or not d.get("stat") or (d["cond"] and "?" in d["c"]): continue         # conditionnels sans étiquette reconnue : ignorés
                         u_ = d["units"]
-                        effs.append({"s": d["stat"], "v": d["v"], "p": 1 if d["pct"] else 0, "u": sref(u_) if isinstance(u_, list) else u_})
+                        e_ = {"s": d["stat"], "v": d["v"], "p": 1 if d["pct"] else 0, "u": sref(u_) if isinstance(u_, list) else u_}
+                        if d["cond"]: e_["c"] = d["c"]
+                        effs.append(e_)
                     if effs: L[lv] = effs
                 if not L: continue
                 pos[it] = len(tree)
