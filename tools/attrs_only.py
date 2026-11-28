@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Met à jour le champ `at` (attributs d'unité) de data/units.json et data/units.js SANS relancer tout convert_rpfm.py :
-ajoute causes_fear, causes_terror, immune_to_psychology, unbreakable à ceux déjà présents.
+ajoute causes_fear, causes_terror, immune_to_psychology, unbreakable, glorious_charge, devastating_flanker à ceux déjà présents.
 Usage : python tools/attrs_only.py DOSSIER_DU_DUMP"""
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -8,7 +8,7 @@ from collections import defaultdict
 import convert_rpfm as C
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 T = C.load_tables(sys.argv[1], only_needed=True)
-NEW = {"causes_fear", "causes_terror", "immune_to_psychology", "unbreakable"}
+NEW = {"causes_fear", "causes_terror", "immune_to_psychology", "unbreakable", "glorious_charge", "devastating_flanker"}
 grp = defaultdict(set)
 for r in T.get("unit_attributes_to_groups_junctions", []):
     if r.get("attribute") in NEW: grp[r.get("attribute_group")].add(r["attribute"])

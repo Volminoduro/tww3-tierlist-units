@@ -135,4 +135,5 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 - Calibrer `ENGAGE` : non départageable avec les 11 mesures ; demande des essais dédiés (mêlée longue sans charge, par ex. infanterie contre infanterie à l'arrêt). `FRONT_K` calé à 3.
 - **Moral** : modèle à la table fait (voir README) ; reste : flancs / dos (`was_attacked_in_flank/rear`), mort du général, voisins en fuite (`routing_*`), malus d'ennemis proches (`enemy_morale_penalty_*`), durée réelle de la fenêtre des pertes récentes (absente des tables), et calage sur des mesures en jeu.
 - Factions « jouables au lancement de campagne » : 105 factions (table `frontend_faction_leaders`, hors variantes Royaume du Chaos) ; 11 clés de campagne diffèrent de la table de bataille personnalisée (alias dans `tools/effects_extract.py`) ; Khemri (Settra) n'a pas d'équivalent dans cette table. Filtre du sélecteur, coché par défaut.
+- **Charge** : `devastating_flanker` (88 unités) demande un modèle de flanc / dos ; capacités actives qui touchent la charge (liste à établir via `unit_special_abilities`).
 - Workflow GitHub Actions (`.github/workflows/build-data.yml`) : jamais exécuté.

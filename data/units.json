@@ -6481,7 +6481,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "glorious_charge"
    ]
   },
   {
@@ -19664,6 +19665,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -19782,7 +19784,8 @@
     35
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -53523,6 +53526,9 @@
    ],
    "pk": [
     65
+   ],
+   "at": [
+    "devastating_flanker"
    ]
   },
   {
@@ -54192,6 +54198,7 @@
     66
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -54257,6 +54264,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -54641,6 +54649,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -54706,6 +54715,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -54970,6 +54980,7 @@
    "tier": 2.0,
    "mount": "wh3_dlc20_chs_mnt_norscan_warhorse_horsemen_msla",
    "at": [
+    "devastating_flanker",
     "immune_to_psychology",
     "mounted_fire_move"
    ],
@@ -55423,6 +55434,7 @@
     67
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -55483,6 +55495,7 @@
     67
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -57068,6 +57081,7 @@
     66
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -57310,6 +57324,7 @@
     66
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -57915,7 +57930,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -59969,6 +59985,7 @@
     66
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -60720,7 +60737,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -68555,6 +68573,7 @@
    ],
    "at": [
     "causes_fear",
+    "glorious_charge",
     "immune_to_psychology"
    ]
   },
@@ -77120,7 +77139,8 @@
     81
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -79674,7 +79694,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -79735,7 +79756,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -79794,6 +79816,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -79853,6 +79876,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -79912,6 +79936,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -80034,6 +80059,7 @@
     89
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -80094,6 +80120,7 @@
     89
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -80155,6 +80182,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -80275,6 +80303,7 @@
     89
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -80336,6 +80365,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -80517,6 +80547,7 @@
     89
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -80578,6 +80609,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -82431,6 +82463,9 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "devastating_flanker"
    ]
   },
   {
@@ -82488,6 +82523,9 @@
    "cultures": [],
    "pk": [
     88
+   ],
+   "at": [
+    "devastating_flanker"
    ]
   },
   {
@@ -82538,6 +82576,7 @@
    "tier": 2.0,
    "mount": "wh3_dlc27_chs_mnt_norscan_warhorse_horsemen_ror",
    "at": [
+    "devastating_flanker",
     "immune_to_psychology",
     "mounted_fire_move"
    ],
@@ -84371,7 +84410,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -84437,7 +84477,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -84494,7 +84535,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -84555,7 +84597,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -84616,7 +84659,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -84677,6 +84721,7 @@
    "at": [
     "causes_fear",
     "causes_terror",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -84858,6 +84903,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -84919,7 +84965,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -84980,7 +85027,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -85039,7 +85087,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -85170,6 +85219,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -85236,6 +85286,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -85293,7 +85344,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -85350,7 +85402,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -85611,6 +85664,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -85677,6 +85731,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "immune_to_psychology",
     "unbreakable"
    ]
@@ -85743,7 +85798,8 @@
     89
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -85801,7 +85857,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -85862,7 +85919,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -85921,7 +85979,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -85990,6 +86049,7 @@
    ],
    "at": [
     "causes_fear",
+    "devastating_flanker",
     "unbreakable"
    ]
   },
@@ -86048,7 +86108,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -86114,7 +86175,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -97036,7 +97098,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -99075,7 +99138,8 @@
     61
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "glorious_charge"
    ]
   },
   {
@@ -99318,7 +99382,8 @@
     61
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "glorious_charge"
    ]
   },
   {
@@ -99499,7 +99564,8 @@
     55
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "glorious_charge"
    ]
   },
   {
@@ -106220,7 +106286,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -106281,7 +106348,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -106342,7 +106410,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -106403,7 +106472,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -106465,7 +106535,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -106526,7 +106597,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -106587,7 +106659,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -106648,7 +106721,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -106710,7 +106784,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -106770,6 +106845,7 @@
     63
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -106830,6 +106906,7 @@
     63
    ],
    "at": [
+    "devastating_flanker",
     "immune_to_psychology"
    ]
   },
@@ -106892,7 +106969,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -106954,7 +107032,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -107015,7 +107094,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107076,7 +107156,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107137,7 +107218,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107199,7 +107281,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -107260,7 +107343,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107321,7 +107405,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107382,7 +107467,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107444,7 +107530,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -107505,7 +107592,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -107567,7 +107655,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107635,7 +107724,8 @@
     68
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107702,7 +107792,8 @@
     68
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -107952,7 +108043,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -108016,7 +108108,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -108078,7 +108171,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -108139,7 +108233,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -108202,7 +108297,8 @@
     68
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -110905,7 +111001,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -111347,7 +111444,8 @@
     63
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "devastating_flanker"
    ]
   },
   {
@@ -111789,7 +111887,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "devastating_flanker"
    ]
   },
   {
@@ -117225,7 +117324,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "glorious_charge"
    ]
   },
   {

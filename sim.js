@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85, MORALE_MODEL:"table", RECENT_WIN:10, MORALE_UPD:0.15, MORALE_MINSTEP:1, ARMY_PEN_K:1,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85, MORALE_MODEL:"table", RECENT_WIN:10, MORALE_UPD:0.15, MORALE_MINSTEP:1, ARMY_PEN_K:1, FLANK_PEN:6,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -84,7 +84,7 @@ function simulate(ARMY, BON, opts) {
     const units = Math.max(1, d.cnt), w0 = d.u.men / (d.u.rd > 0 ? d.u.rd : SIM.RANK_DEFAULT); return SIM.FRONT_K * units * Math.min(w0, (d.pool / d.hp) / units);
   };
   const walk = {A: !!(opts.hold && opts.hold.A === "walk"), B: !!(opts.hold && opts.hold.B === "walk")};   // « marche » : avance sans courir = pas de bonus de charge, mais pas en bracing
-  const rawF = (a, t) => (hold[a.side] || walk[a.side] || t < T0) ? 0 : Math.max(0, 1 - (t - T0) / SIM.CHARGE_DECAY);
+  const rawF = (a, t) => (hold[a.side] || walk[a.side] || t < T0) ? 0 : Math.max(0, 1 - (t - T0) / (SIM.CHARGE_DECAY * (a.at.has("glorious_charge") ? 2 : 1)));      // glorious_charge : durée du bonus de charge doublée
   const chargeF = (a, d, t) => { let f = rawF(a, t);
     if (f > 0 && hold[d.side] && (d.at.has("charge_defense") || (d.at.has("charge_defense_vs_large") && isLarge(a.u)))) f *= a.at.has("ogre_charge_upgraded") ? 0.75 : a.at.has("ogre_charge") ? 0.5 : 0;
     return f; };
@@ -166,6 +166,8 @@ function simulate(ARMY, BON, opts) {
     for (const x of [...S.A, ...S.B]) x.hist.push(x.pool);
     const fl = {A: 0, B: 0}, armyCas = {A: 0, B: 0};                                       // pertes récentes et pertes cumulées par camp (part des PV de départ)
     for (const side of ["A", "B"]) { let p0 = 0, lost = 0, rec = 0; for (const x of S[side]) { p0 += x.pool0; lost += x.pool0 - x.pool; const W0 = Math.max(0, x.hist.length - 1 - SIM.RECENT_WIN); rec += Math.max(0, x.hist[W0] - x.pool); } fl[side] = p0 ? rec / p0 : 0; armyCas[side] = p0 ? lost / p0 : 0; }
+    const glo = {A: false, B: false};                                                      // glorious_charge : tant que son bonus dure, l'ennemi subit le malus de moral « attaqué de flanc » (was_attacked_in_flank = −6)
+    if (t >= T0) for (const side of ["A", "B"]) for (const e of S[side]) if (!e.out && !e.flee && e.pool > 0 && e.at.has("glorious_charge") && rawF(e, t) > 0) glo[side === "A" ? "B" : "A"] = true;
     const scary = {A: false, B: false}, terr = {A: false, B: false};                     // le camp adverse compte-t-il des unités qui causent peur / terreur (actives au contact) ?
     if (t >= T0) for (const side of ["A", "B"]) for (const e of S[side]) if (!e.out && !e.flee && e.pool > 0) { const o = side === "A" ? "B" : "A"; if (e.at.has("causes_fear") || e.at.has("causes_terror")) scary[o] = true; if (e.at.has("causes_terror")) terr[o] = true; }
     for (const x of [...S.A, ...S.B]) {
@@ -183,7 +185,7 @@ function simulate(ARMY, BON, opts) {
           const W0 = Math.max(0, x.hist.length - 1 - SIM.RECENT_WIN), rec = (x.hist[W0] - x.pool) / x.pool0 * 100, o = x.side === "A" ? "B" : "A";
           const own = fl[x.side], foe = fl[o];                                                 // pertes récentes (part des PV de départ) de chaque camp : qui gagne le combat ?
           let cb = 0; if (own + foe > 0.01) { const r = foe / Math.max(own, 1e-6); cb = r >= 3 ? 8 : r >= 1.5 ? 6 : r >= 1.1 ? 3 : (1 / Math.max(r, 1e-6)) >= 3 ? -8 : (1 / Math.max(r, 1e-6)) >= 1.5 ? -3 : 0; }
-          const target = clamp(ld, 0, 100) + mpen(MTAB.tot, c * 100) + mpen(MTAB.rec, rec) + SIM.ARMY_PEN_K * mpen(MTAB.ext, armyCas[x.side] * 100) + cb;
+          const target = clamp(ld, 0, 100) + mpen(MTAB.tot, c * 100) + mpen(MTAB.rec, rec) + SIM.ARMY_PEN_K * mpen(MTAB.ext, armyCas[x.side] * 100) + cb - (glo[x.side] ? SIM.FLANK_PEN : 0);
           const diff = target - x.M, step = Math.max(Math.abs(diff) * SIM.MORALE_UPD, Math.min(Math.abs(diff), SIM.MORALE_MINSTEP));
           x.M += Math.sign(diff) * Math.min(Math.abs(diff), step);
           if (x.M <= 0) x.out = x.routed = true;
