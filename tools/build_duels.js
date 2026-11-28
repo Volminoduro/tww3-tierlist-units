@@ -13,7 +13,8 @@
                               contre un défenseur moyen de la catégorie X (percentile parmi les unités à distance).
 
    Usage : node tools/build_duels.js [--out data] [--limit N]    (écrit data/duels.json et data/duels.js) */
-const fs = require("fs"), path = require("path");
+const fs = require("fs"), path = require("path"), os = require("os");
+const {Worker, isMainThread, parentPort, workerData} = require("worker_threads");
 const Sim = require("../sim.js");
 const arg = (k, d) => { const i = process.argv.indexOf("--" + k); return i > 0 ? process.argv[i + 1] : d; };
 const OUT = path.resolve(__dirname, "..", arg("out", "data")), LIMIT = +arg("limit", 0);
@@ -63,10 +64,21 @@ function percentiles(vals) { // vals : tableau de nombres -> fonction valeur -> 
   return v => { if (s.length < 2) return 100; let lo = 0, hi = s.length; while (lo < hi) { const m = (lo + hi) >> 1; s[m] < v ? lo = m + 1 : hi = m; } return Math.round(lo / (s.length - 1) * 100); };
 }
 
-function runMode(key) {
-  const M = new Float32Array(n * n);
-  let skipped = 0;
-  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const m = duel(units[i], units[j], key); if (Number.isNaN(m)) skipped++; M[i * n + j] = m; M[j * n + i] = -m; }
+/* Calcul parallèle de la matrice des duels : chaque thread prend les lignes i ≡ k (mod W) (la ligne i compte n − i − 1 duels : l'entrelacement équilibre la charge). */
+if (!isMainThread) {
+  const {k, W, key} = workerData, rows = [];
+  for (let i = k; i < n; i += W) { const row = new Float32Array(n); for (let j = i + 1; j < n; j++) row[j] = duel(units[i], units[j], key); rows.push([i, row]); }
+  parentPort.postMessage(rows); return;
+}
+const matrix = key => new Promise((resolve, reject) => {
+  const W = Math.max(1, +arg("threads", os.cpus().length)), M = new Float32Array(n * n); let skipped = 0, left = W;
+  for (let k = 0; k < W; k++) {
+    const w = new Worker(__filename, {workerData: {k, W, key}, argv: process.argv.slice(2)});
+    w.on("message", rows => { for (const [i, row] of rows) for (let j = i + 1; j < n; j++) { const m = row[j]; if (Number.isNaN(m)) skipped++; M[i * n + j] = m; M[j * n + i] = -m; } });
+    w.on("error", reject); w.on("exit", () => { if (--left === 0) resolve({M, skipped}); });
+  }
+});
+function runMode(key, M, skipped) {
   const roleIdx = Object.fromEntries(ROLES.map((r, k) => [r, k]));
   const rows = [];
   for (let i = 0; i < n; i++) {
@@ -107,11 +119,13 @@ function runMode(key) {
 const t0 = Date.now();
 const result = {version: 2, budget: BUDGET, maxArmy: MAX_ARMY, opts: OPTS, units: n, notes: NOTES, roles: ROLES,
   caveat: units.filter(u => u.role === "lord" || u.role === "hero").map(u => u.id), modes: {}};
-for (const key of ["cost"]) {
-  const r = runMode(key); result.modes[key] = r.units;
-  console.log(`mode ${key} : ${(n * (n - 1) / 2 - r.skipped)} duels joués, ${r.skipped} paires ignorées (rapport de coût > ${MAX_ARMY}), ${((Date.now() - t0) / 1000).toFixed(1)} s`);
-}
-fs.mkdirSync(OUT, {recursive: true});
-fs.writeFileSync(path.join(OUT, "duels.json"), JSON.stringify(result));
-fs.writeFileSync(path.join(OUT, "duels.js"), "window.TWW3_DUELS=" + JSON.stringify(result) + ";");
-console.log(`écrit ${path.join(OUT, "duels.js")} (${(fs.statSync(path.join(OUT, "duels.js")).size / 1e6).toFixed(2)} Mo)`);
+(async () => {
+  for (const key of ["cost"]) {
+    const {M, skipped: sk} = await matrix(key), r = runMode(key, M, sk); result.modes[key] = r.units;
+    console.log(`mode ${key} : ${(n * (n - 1) / 2 - r.skipped)} duels joués, ${r.skipped} paires ignorées (rapport de coût > ${MAX_ARMY}), ${((Date.now() - t0) / 1000).toFixed(1)} s sur ${Math.max(1, +arg("threads", os.cpus().length))} threads`);
+  }
+  fs.mkdirSync(OUT, {recursive: true});
+  fs.writeFileSync(path.join(OUT, "duels.json"), JSON.stringify(result));
+  fs.writeFileSync(path.join(OUT, "duels.js"), "window.TWW3_DUELS=" + JSON.stringify(result) + ";");
+  console.log(`écrit ${path.join(OUT, "duels.js")} (${(fs.statSync(path.join(OUT, "duels.js")).size / 1e6).toFixed(2)} Mo)`);
+})();

@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85, MORALE_MODEL:"table", RECENT_WIN:10, MORALE_UPD:0.15, MORALE_MINSTEP:1,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85, MORALE_MODEL:"table", RECENT_WIN:10, MORALE_UPD:0.15, MORALE_MINSTEP:1, ARMY_PEN_K:1,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -183,7 +183,7 @@ function simulate(ARMY, BON, opts) {
           const W0 = Math.max(0, x.hist.length - 1 - SIM.RECENT_WIN), rec = (x.hist[W0] - x.pool) / x.pool0 * 100, o = x.side === "A" ? "B" : "A";
           const own = fl[x.side], foe = fl[o];                                                 // pertes récentes (part des PV de départ) de chaque camp : qui gagne le combat ?
           let cb = 0; if (own + foe > 0.01) { const r = foe / Math.max(own, 1e-6); cb = r >= 3 ? 8 : r >= 1.5 ? 6 : r >= 1.1 ? 3 : (1 / Math.max(r, 1e-6)) >= 3 ? -8 : (1 / Math.max(r, 1e-6)) >= 1.5 ? -3 : 0; }
-          const target = clamp(ld, 0, 100) + mpen(MTAB.tot, c * 100) + mpen(MTAB.rec, rec) + mpen(MTAB.ext, armyCas[x.side] * 100) + cb;
+          const target = clamp(ld, 0, 100) + mpen(MTAB.tot, c * 100) + mpen(MTAB.rec, rec) + SIM.ARMY_PEN_K * mpen(MTAB.ext, armyCas[x.side] * 100) + cb;
           const diff = target - x.M, step = Math.max(Math.abs(diff) * SIM.MORALE_UPD, Math.min(Math.abs(diff), SIM.MORALE_MINSTEP));
           x.M += Math.sign(diff) * Math.min(Math.abs(diff), step);
           if (x.M <= 0) x.out = x.routed = true;
