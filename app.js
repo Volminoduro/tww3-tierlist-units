@@ -61,6 +61,8 @@ $("#noror").addEventListener("input",e=>setRor(e.target.checked)); document.addE
 $("#noror").checked=RORX.off;
 document.querySelector('[data-tab=tier]').addEventListener("click",()=>render()); // revient sur les filtres modifiés dans l'onglet « Unités par faction »
 $("#viewsel").onchange=()=>{view=$("#viewsel").value;render()};
+const syncView=()=>document.querySelectorAll("#viewseg button").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
+$("#viewseg").onclick=e=>{const b=e.target.closest("button");if(!b)return;view=b.dataset.v;$("#viewsel").value=view;syncView();render()};
 $("#reset").onclick=()=>{for(const w of W){S[w[0]]=w[4];$("#"+w[0]).value=w[4];$("#v_"+w[0]).textContent=w[4]}render()};
 
 function archeScores(u){
@@ -137,6 +139,7 @@ function roleChips(list,sel,cnt){
   return `<button data-r="${r}" class="${on?"on":""}" ${!n&&!on?"disabled":""}>${roleIc(r)}<span>${ROLES[r]||r}</span> <small>(${n})</small></button>`;}).join("");
 }
 function render(){
+ syncView();
  // Seigneurs et héros : exclus de « Toutes » sauf si la case est cochée, mais toujours accessibles (et comptés) via leurs pastilles « Seigneurs » / « Héros »
  const incl=$("#heroes").checked, LH=x=>x.u.role==="lord"||x.u.role==="hero", shown=x=>role.size?role.has(x.u.role):(incl||!LH(x));
  const wantLH=incl||role.has("lord")||role.has("hero"), q=$("#q").value.toLowerCase();

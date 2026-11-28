@@ -367,3 +367,10 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #matrix .mu .pt,#table .mu .pt{width:34px;height:74px;min-height:0;aspect-ratio:auto;align-self:center;flex:none}
 #matrix .mu .pt img,#table .mu .pt img,#matrix .mu .pt img.sq,#table .mu .pt img.sq{object-fit:contain;object-position:center;-webkit-mask-image:none;mask-image:none}
 #matrix td,#table td{padding-block:3px}
+
+/* Sélecteur de vue : boutons segmentés toujours visibles */
+.vseg{display:flex;gap:0;border:1px solid var(--gold3);border-radius:3px;overflow:hidden;flex:none}
+.vseg button{display:flex;align-items:center;gap:6px;padding:6px 11px;margin:0;border:0;border-radius:0;background:linear-gradient(#2a2118,#17120d);color:var(--m);font-size:12px;letter-spacing:.04em;border-right:1px solid var(--gold3)}
+.vseg button:last-child{border-right:0}.vseg button svg{width:16px;height:16px;flex:none}
+.vseg button:hover{color:var(--gold2)}.vseg button.on{background:linear-gradient(#6b1f12,#3a0f08);color:var(--gold2);box-shadow:inset 0 0 0 1px var(--gold)}
+@media (max-width:620px){.vseg button span{display:none}.vseg button{padding:7px 10px}}

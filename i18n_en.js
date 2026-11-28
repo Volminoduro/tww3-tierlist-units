@@ -1,6 +1,7 @@
 "use strict";
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
+  "Tiers": "Tiers", "Tableau": "Table", "Matrice": "Matrix", "Vue tiers : unités classées par tier": "Tiers view: units ranked by tier", "Vue tableau : toutes les valeurs, triables": "Table view: every value, sortable", "Matrice typologique : le percentile de chaque unité par usage": "Typology matrix: each unit's percentile per usage",
   // ---------- Ma campagne (profil global) ----------
   "Tout au max (niveau 50)": "Max everything (level 50)",
   "Ma sauvegarde": "My save",
