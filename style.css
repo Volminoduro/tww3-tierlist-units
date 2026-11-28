@@ -392,3 +392,5 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #detail .unpin{padding:0 6px;font-size:11px}#detail .cmpduel{font-size:12px;margin-top:4px;display:block}#detail .cmp .good,#detail .dl.good{color:#9fe0b0}#detail .cmp .bad,#detail .dl.bad{color:#f0a198}
 #detail .dl{font-style:normal;font-size:11px;font-weight:700;margin-left:6px;padding:1px 7px 1px 10px;clip-path:polygon(7px 0,100% 0,100% 100%,7px 100%,0 50%);white-space:nowrap;background:#3a3128}#detail .dl.good{background:#2d5a3a}#detail .dl.bad{background:#6a2a24}#detail .dl.eq{color:var(--m)}
 #detail .sh b{display:flex;align-items:center}#detail .bt .dl{display:inline-block;margin:2px 0 0}
+
+#detail .pasl{margin:4px 0 0;padding-left:16px;font-size:12px}#detail .pasl li{margin:2px 0}#detail .pasl small{display:block;color:var(--m)}

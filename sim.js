@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85, MORALE_MODEL:"table", RECENT_WIN:10, MORALE_UPD:0.15, MORALE_MINSTEP:1, ARMY_PEN_K:1, FLANK_PEN:6, FORMED_MD:5, ENEMY_PEN_K:1, ENEMY_POWER_UNIT:100, FATIGUE_RES:0.5, FATIGUE:true, FATIGUE_SCALE:10, CHARGE_RUN:4,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85, MORALE_MODEL:"table", RECENT_WIN:10, MORALE_UPD:0.15, MORALE_MINSTEP:1, ARMY_PEN_K:1, FLANK_PEN:6, FORMED_MD:5, ENEMY_PEN_K:1, ENEMY_POWER_UNIT:100, FATIGUE_RES:0.5, FATIGUE:true, FATIGUE_SCALE:10, CHARGE_RUN:4, PAS:true, AURA_COV:0.3, NEARBY_K:0.3,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -20,7 +20,7 @@ const isInf = u => u.role === "inf_melee" || u.role === "inf_ranged";
 const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arrière » : protégé par la ligne de front
 // Résistances (u.res, en % : > 0 résiste, < 0 vulnérable) : tout (parade magique) toujours ; magie si l'attaque est magique, sinon physique ; feu si elle est enflammée ;
 // missile si c'est un tir. Elles s'additionnent (pas de produit), après l'armure, avec un plafond de 90 % (plafond non vérifié pour WH3).
-const resMul = (d, atk, ranged) => { const r = d.u.res; if (!r) return 1;
+const resMul = (d, atk, ranged) => { const r = d.rs; if (!r) return 1;
   const t = (r.all || 0) + (atk.mg ? r.ma || 0 : r.ph || 0) + (atk.fl ? r.fl || 0 : 0) + (ranged ? r.mi || 0 : 0);
   return 1 - clamp(t, -100, SIM.RES_CAP) / 100; };
 /* Moral « table » : constantes de _kv_morale_tables (dump). Pénalités par pourcentage de pertes (interpolées linéairement entre les paliers, plafonnées au dernier) :
@@ -37,6 +37,56 @@ const mpen = (tab, pct) => { if (pct <= 0) return 0; let px = 0, py = 0; for (co
 const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
 const upk = (BON, side, e) => e.u.cost * (1 - BON[side].up/100); // base de comparaison = COÛT DE RECRUTEMENT (le champ « up » du camp = réduction de ce coût, en %)
 
+/* CAPACITÉS PASSIVES (u.pas, tools/passives.py) : appliquées ICI, pendant le combat, et non intégrées aux stats affichées. Chaque effet est {stat, valeur, add|mult} sur soi (« s »), les alliés (« f », part AURA_COV d'entre eux :
+   l'aura n'a qu'une portée de 35-55 m) ou les ennemis (« e », idem). Capacités à INTENSITÉ (special_ability_intensity_settings) : l'effet croît linéairement de 0 à son plein effet quand la jauge va de 0 à son maximum ; jauges modélisées :
+   time_in_melee (secondes au contact), kills_made (modèles tués, estimés d'après les dégâts infligés ÷ PV de la cible), damage_taken (PV perdus), nearby_all_deaths / nearby_enemy_deaths (morts sur le terrain × NEARBY_K) ;
+   les autres sources (harmony, all_wom_spent, enemies_in_range…) ne sont pas modélisées : effet nul. Conditions d'usage : « moving » (inactive pendant l'approche), health_above_X% / health_below_X% (inactive si la santé est au-dessus / en dessous).
+   « Blessures » (wh3_main_unit_passive_single_entity) : malus croissant avec les PV perdus. Les mêmes capacités d'unités identiques ne se cumulent pas. Résistance / faiblesse au feu : déjà dans u.res.fl (convert_rpfm), non recomptée. */
+const PSUP = new Set(["stat_melee_attack","stat_morale","stat_melee_damage_ap","stat_melee_damage_base","stat_melee_defence","scalar_speed","stat_resistance_all","stat_resistance_physical","stat_resistance_magic","stat_resistance_missile",
+  "stat_charge_bonus","stat_reloading","stat_armour","stat_accuracy","scalar_missile_damage_ap","scalar_missile_damage_base","scalar_missile_range","stat_damage_reflection"]);
+const HEALTH_SCALED = new Set(["wh3_main_unit_passive_single_entity"]);
+function passiveLists(S) {     // x.pl = effets qui s'appliquent à l'entrée x (soi, auras alliées, auras ennemies), dédoublonnés par capacité
+  for (const side of ["A", "B"]) for (const x of S[side]) x.pl = new Map();
+  const put = (x, p, w, src) => { const k = p.k + "|" + p.t, o = x.pl.get(k); if (!o || w > o.w) x.pl.set(k, {p, w, src}); };
+  for (const side of ["A", "B"]) { const foe = side === "A" ? "B" : "A";
+    for (const src of S[side]) for (const p of (src.u.pas || [])) {
+      if (!p.e.some(e => PSUP.has(e[0]))) continue;
+      if (p.t.includes("s")) put(src, p, 1, src);
+      if (p.t.includes("f")) for (const x of S[side]) if (x !== src) put(x, p, SIM.AURA_COV, src);
+      if (p.t.includes("e")) for (const x of S[foe]) put(x, p, SIM.AURA_COV, src);
+    } }
+  for (const side of ["A", "B"]) for (const x of S[side]) x.pl = [...x.pl.values()];
+}
+function passiveMods(x, inC, G) {   // effets cumulés {a: sommes des « add », m: produits des « mult »} de l'entrée x à cet instant
+  const a = {}, m = {};
+  for (const {p, w, src} of x.pl) {
+    if (src !== x && (src.out || src.flee)) continue;
+    let f = w;
+    if (p.c) { let off = false; for (const c of p.c) { if (c === "moving") { if (!inC) off = true; } else { const q = /^health_(above|below)_(\d+)%/.exec(c); if (q) { const h = x.pool / x.pool0 * 100; if (q[1] === "above" ? h > +q[2] : h < +q[2]) off = true; } } } if (off) continue; }
+    if (HEALTH_SCALED.has(p.k)) f *= clamp(1 - x.pool / x.pool0, 0, 1);
+    if (p.i) {
+      const [srcN, ty, mx] = p.i; let amt = 0;
+      if (srcN === "time_in_melee") amt = x.tm; else if (srcN === "kills_made") amt = x.kills; else if (srcN === "damage_taken") amt = x.pool0 - x.pool;
+      else if (srcN === "nearby_all_deaths") amt = (G.dead.A + G.dead.B) * SIM.NEARBY_K; else if (srcN === "nearby_enemy_deaths") amt = G.dead[x.side === "A" ? "B" : "A"] * SIM.NEARBY_K;
+      else continue;
+      const q = mx > 0 ? clamp(amt / mx, 0, 1) : 0; f *= ty === "inverse_linear_multiplier" ? 1 - q : q;
+    }
+    if (f <= 0) continue;
+    for (const [st, v, how] of p.e) { if (!PSUP.has(st)) continue; if (how === "a") a[st] = (a[st] || 0) + v * f; else m[st] = (m[st] ?? 1) * (1 + (v - 1) * f); }
+  }
+  return {a, m};
+}
+function applyPassives(x, inC, G) {
+  const {a, m} = passiveMods(x, inC, G), b = x.b, ga = k => a[k] || 0, gm = k => m[k] ?? 1;
+  x.ma = (b.ma + ga("stat_melee_attack")) * gm("stat_melee_attack"); x.md = b.md + ga("stat_melee_defence"); x.ld = b.ld + ga("stat_morale");
+  x.charge = (b.charge + ga("stat_charge_bonus")) * gm("stat_charge_bonus"); x.arm = b.arm >= 100 ? 100 : Math.min(100, b.arm + ga("stat_armour"));
+  x.pdm = gm("stat_melee_damage_base"); x.pap = gm("stat_melee_damage_ap"); x.prd = gm("scalar_missile_damage_base"); x.prap = gm("scalar_missile_damage_ap");
+  x.prl = 1 + ga("stat_reloading") / 100; x.pacc = 1 + ga("stat_accuracy") / 100; x.refl = ga("stat_damage_reflection") / 100;
+  x.spd = b.spd * gm("scalar_speed"); x.range = b.range * gm("scalar_missile_range");
+  const r0 = x.u.res, ra = ga("stat_resistance_all"), rp = ga("stat_resistance_physical"), rm = ga("stat_resistance_magic"), rmi = ga("stat_resistance_missile");
+  x.rs = (ra || rp || rm || rmi) ? {...(r0 || {}), all: ((r0 && r0.all) || 0) + ra, ph: ((r0 && r0.ph) || 0) + rp, ma: ((r0 && r0.ma) || 0) + rm, mi: ((r0 && r0.mi) || 0) + rmi} : r0;
+}
+
 function simulate(ARMY, BON, opts) {
   const mk = side => ARMY[side].map(e => {
     // e.mods (optionnel) : modificateurs propres à l'unité, issus des effets de seigneur/faction : ma, md, arm, ld, charge (points) ; ws, ms, spd, hp, ammo, range (%)
@@ -47,9 +97,11 @@ function simulate(ARMY, BON, opts) {
             ma: u.ma + (m.ma||0), md: u.md + (m.md||0) + ((u.at || []).includes("formed_attack") ? SIM.FORMED_MD : 0), charge: u.charge + (m.charge||0), spd: u.speed * (1 + (m.spd||0)/100),
             range: u.ranged ? u.ranged.range * (1 + (m.range||0)/100) : 0,
             vigK: Math.max(0, 1 + ((m.vig||0) + (u.vig||0))/100) * ((u.at || []).includes("fatigue_res") ? SIM.FATIGUE_RES : 1), pvOn: !!m.pv || !!u.pvx,   // perte de vigueur (% : −15 = 15 % de fatigue en moins) et vigueur parfaite (effets de seigneur, profil)
-            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false, flee: false, back: 0, imm: 0, M: u.ld * (1 + b.mor/100) + (m.ld||0), hist: [], fat: 0, fm: null};
+            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false, flee: false, back: 0, imm: 0, M: u.ld * (1 + b.mor/100) + (m.ld||0), hist: [], fat: 0, fm: null, tm: 0, kills: 0, pl: [], b: null, rs: u.res, pdm: 1, pap: 1, prd: 1, prap: 1, prl: 1, pacc: 1, refl: 0};
   });
-  const S = {A: mk("A"), B: mk("B")};
+  const S = {A: mk("A"), B: mk("B")}, G = {dead: {A: 0, B: 0}};
+  for (const x of [...S.A, ...S.B]) x.b = {ma: x.ma, md: x.md, ld: x.ld, charge: x.charge, arm: x.arm, spd: x.spd, range: x.range};
+  if (SIM.PAS) { passiveLists(S); for (const x of [...S.A, ...S.B]) if (x.pl.length) { applyPassives(x, false, G); x.M = x.ld; } }   // passifs permanents : appliqués dès le départ (vitesse et portée comprises)
   const spd = s => { let w=0, t=0; S[s].forEach(x => { w += x.cnt*x.u.men; t += x.cnt*x.u.men*x.spd; }); return w ? t/w*SIM.SPEED_SCALE : 0; };
   /* Charge (règles du jeu, voir TODO.md point 5) : seul le camp qui AVANCE charge ; un camp « tient sa position » (opts.hold.A / .B, ou opts.staticB pour B) ne reçoit pas de bonus de charge et
      peut être en bracing. Le bonus décroît linéairement sur CHARGE_DECAY = 13 s (charge_decay_duration). Attributs : charge_defense annule le bonus de tout attaquant face à un défenseur en bracing,
@@ -118,6 +170,7 @@ function simulate(ARMY, BON, opts) {
       x.fat = clamp(x.fat + rate * SIM.FATIGUE_SCALE * (rate > 0 ? x.vigK : 1), 0, FMAX);
       const m = fatMul(x.fat); x.fm = x.at.has("unyielding_assault") && m.ma < 1 ? {...m, ma: 1} : m;
     }
+    if (SIM.PAS) for (const x of [...S.A, ...S.B]) if (x.pl.length && !x.out) applyPassives(x, t >= T0, G);   // passifs dynamiques (intensité, santé, conditions)
     const dmgIn = {A: new Map(), B: new Map()}, meleeIn = {A: new Map(), B: new Map()}, engIn = {A: new Map(), B: new Map()}, radIn = {A: new Map(), B: new Map()};
     for (const me of ["A","B"]) {
       const foe = me === "A" ? "B" : "A", tg = S[foe].filter(x => !x.out && !x.flee);
@@ -141,7 +194,7 @@ function simulate(ARMY, BON, opts) {
             let dm = m.dmg, ap = m.ap, bonus = isLarge(d.u) ? m.bvl : isInf(d.u) ? m.bvi : 0;
             if (bonus && dm + ap > 0) { const s = dm + ap; dm += bonus*dm/s; ap += bonus*ap/s; }
             const cm = 1 + f * a.charge * fa.ch / SIM.CHARGE_DMG;
-            dpsM = eng * hit * ((dm*cm*a.mdm) * (1 - d.arm * fd.arm/200) + ap*fa.ap*cm*a.mdm) / Math.max(1, m.interval) * resMul(d, m, false) * (reflected(a, d, t) ? SIM.REFLECT : 1);
+            dpsM = eng * hit * ((dm*cm*a.mdm*a.pdm) * (1 - d.arm * fd.arm/200) + ap*fa.ap*cm*a.mdm*a.pap) / Math.max(1, m.interval) * resMul(d, m, false) * (reflected(a, d, t) ? SIM.REFLECT : 1);
             dps += dpsM;
             const wm = frontAlive ? wt(d) / Wm : w;                                                          // part de la mêlée dirigée vers d
             if (!impDone) { const Ee = Math.min(eng * wm * sh, contactCap(d, eng * wm * sh, u.rw || 0)), im = impactDmg(a, d, Ee); if (im > 0) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + im); }   // impact de la charge (une fois)
@@ -151,10 +204,12 @@ function simulate(ARMY, BON, opts) {
           const r = u.ranged;
           if (r && a.ammo > 0) { // distance : portée atteinte quand dist − closing·t ≤ portée
             const inRange = opts.dist - closing*t <= a.range, f = rf;
-            if (inRange || t >= T0) dps += n * (r.share ?? 1) * r.shots * ((r.dmg*a.rdm)*(1 - d.arm/200) + r.ap*a.rdm) * opts.acc * f / (Math.max(1, r.reload) / (a.fm || FONE).rl) * resMul(d, r, true);
+            if (inRange || t >= T0) dps += n * (r.share ?? 1) * r.shots * ((r.dmg*a.rdm*a.prd)*(1 - d.arm/200) + r.ap*a.rdm*a.prap) * opts.acc * a.pacc * f / (Math.max(1, r.reload) / ((a.fm || FONE).rl * a.prl)) * resMul(d, r, true);
           }
           if (dps - dpsM) dmgIn[foe].set(d, (dmgIn[foe].get(d) || 0) + (dps - dpsM) * w);                      // tir : pas limité par le front
-          if (dpsM) meleeIn[foe].set(d, (meleeIn[foe].get(d) || 0) + dpsM * (frontAlive ? wt(d) / Wm : w)); // mêlée : limitée par le front, voir plus bas
+          { const shM = frontAlive ? wt(d) / Wm : w; a.kills += (dpsM * shM + (dps - dpsM) * w) / d.hp;                         // modèles tués estimés (jauge « kills_made »)
+            if (dpsM) { meleeIn[foe].set(d, (meleeIn[foe].get(d) || 0) + dpsM * shM);                                          // mêlée : limitée par le front, voir plus bas
+              if (d.refl > 0) dmgIn[me].set(a, (dmgIn[me].get(a) || 0) + dpsM * shM * d.refl); } }                             // réflexion des dégâts (stat_damage_reflection)
         }
         if (u.ranged && a.ammo > 0 && (opts.dist - closing*t <= a.range || t >= T0)) a.ammo -= rf/Math.max(1, u.ranged.reload);
       }
@@ -174,6 +229,7 @@ function simulate(ARMY, BON, opts) {
     }
     if (t >= T0) impDone = true;
     for (const s of ["A","B"]) for (const [d, v] of dmgIn[s]) d.pool = Math.max(0, d.pool - v);
+    for (const s of ["A","B"]) { let dd = 0; for (const x of S[s]) { dd += (x.pool0 - x.pool) / x.hp; if (t >= T0 && !x.out && !x.flee) x.tm++; } G.dead[s] = dd; }   // morts cumulées par camp ; secondes au contact
     // Régénération (capacité passive, u.regen = fraction des PV max par seconde, par modèle vivant). Le soin ne ressuscite personne : les modèles morts
     // (PV perdus ÷ PV d'un modèle, au pire moment) sont définitivement perdus, donc le total ne dépasse jamais (modèles vivants × PV d'un modèle).
     for (const x of [...S.A, ...S.B]) {

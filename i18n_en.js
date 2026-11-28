@@ -335,6 +335,7 @@ Object.assign(I18N.dict, {
   "Chargement…": "Loading…",
   "Capacités indisponibles.": "Abilities unavailable.",
   "Aucune capacité.": "No abilities.",
+  "Capacités passives : appliquées par le simulateur, pas aux stats affichées (la carte du jeu ne les compte pas). Bonus permanents dès le départ ; bonus à intensité (temps au contact, victimes, dégâts subis, morts alentour) qui montent au fil du combat jusqu'à leur maximum ; conditions de santé ; auras de soutien appliquées à 30 % des alliés / ennemis (hypothèse). Les unités qui portent de tels passifs peuvent donc gagner ou perdre des duels par rapport à leurs stats nues.": "Passive abilities: applied by the simulator, not to the displayed stats (the game card does not include them). Permanent bonuses from the start; intensity bonuses (time in melee, kills, damage taken, nearby deaths) that build up during the fight to their maximum; health conditions; support auras applied to 30 % of allies / enemies (assumption). Units carrying such passives can therefore win or lose duels compared with their bare stats.",
   "Passif": "Passive",
   "Actif": "Active",
   "Sort": "Spell",

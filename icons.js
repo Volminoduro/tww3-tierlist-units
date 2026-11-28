@@ -105,15 +105,25 @@ function abilItem(a, isAttr) {
   const ic = a.ic ? `<img src="img/abilities/${a.ic}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
   return `<div class="ab${a.sp ? " sp" : ""}${a.pa ? " pa" : ""}" title="${htmlEsc(d)}">${ic}<div><b>${htmlEsc(n)}</b>${meta.length ? `<small>${meta.join(" · ")}</small>` : ""}${d ? `<p>${htmlEsc(d)}</p>` : ""}</div></div>`;
 }
-/* Passifs intégrés aux stats (tools/passives.py) : la carte de jeu n'affiche pas les bonus des capacités passives (Frénésie +10 d'attaque…), mais ils jouent en bataille et sont comptés dans les stats du site. */
-const PAS_LAB = {ma: "Attaque", md: "Défense", ld: "Moral", charge: "Charge", speed: "Vitesse", armour: "Armure", dmg: "Dégâts de base", ap: "Dégâts perforants", rdmg: "Dégâts de tir", rap: "Perforants de tir", mass: "Masse"};
+/* Passifs (tools/passives.py) : la carte de jeu n'affiche pas leurs bonus (Frénésie +10 d'attaque…) ; la fiche indique donc seulement ce qu'ils font. Ils sont appliqués par le simulateur (duels, calcul d'armée) avec leurs conditions :
+   permanents dès le départ, à intensité (temps en mêlée, victimes, dégâts subis…) au fil du combat, auras sur une part des alliés / ennemis. Les stats affichées sont celles de la carte du jeu. */
+const PAS_ST = {stat_melee_attack: "attaque de mêlée", stat_melee_defence: "défense de mêlée", stat_morale: "commandement", stat_melee_damage_base: "dégâts de mêlée", stat_melee_damage_ap: "dégâts perforants de mêlée", scalar_speed: "vitesse",
+  stat_charge_bonus: "bonus de charge", stat_armour: "armure", stat_resistance_all: "résistance (tout)", stat_resistance_physical: "résistance physique", stat_resistance_magic: "résistance magique", stat_resistance_missile: "résistance aux projectiles",
+  stat_resistance_flame: "résistance au feu", stat_weakness_flame: "faiblesse au feu", stat_reloading: "rechargement", stat_accuracy: "précision", scalar_missile_damage_base: "dégâts de tir", scalar_missile_damage_ap: "perforants de tir",
+  scalar_missile_range: "portée", stat_damage_reflection: "réflexion des dégâts", stat_mass: "masse", scalar_charge_speed: "vitesse de charge", stat_healing_power: "soins", scalar_spell_mastery: "maîtrise des sorts"};
+const PAS_SRC = {time_in_melee: "temps au contact", kills_made: "victimes faites", damage_taken: "dégâts subis", nearby_all_deaths: "morts alentour", nearby_enemy_deaths: "morts ennemies alentour", harmony: "harmonie", all_wom_spent: "vents de magie dépensés", enemies_in_range: "ennemis proches", allies_in_range: "alliés proches", enemy_in_range_low_morale: "ennemis proches au moral bas"};
 function passiveNote(u) {
-  if (!u.base) return "";
-  const r1 = v => Math.round(v * 10) / 10, cur = {ma: u.ma, md: u.md, ld: u.ld, charge: u.charge, speed: u.speed, armour: u.armour, dmg: u.melee.dmg, ap: u.melee.ap, rdmg: u.ranged && u.ranged.dmg, rap: u.ranged && u.ranged.ap, mass: u.mass};
-  const rows = Object.keys(PAS_LAB).filter(k => u.base[k] != null && cur[k] != null && Math.abs(cur[k] - u.base[k]) > 0.05).map(k => `${PAS_LAB[k]} <b>${r1(cur[k])}</b> <small>(carte : ${r1(u.base[k])})</small>`);
-  if (!rows.length) return "";
-  const A = window.TWW3_ABIL, names = (u.pas || []).map(p => { const a = A && A.ab[p[0]]; return a ? (window.LANG === "en" ? a.ne || a.n : a.n) : p[0]; });
-  return `<h4>Passifs intégrés aux stats</h4><p class="dn">${names.join(", ")} : ces capacités passives jouent en bataille mais ne figurent pas sur la carte du jeu ; elles sont comptées dans les stats du site. ${rows.join(" · ")}.</p>`;
+  if (!u.pas || !u.pas.length) return "";
+  const A = window.TWW3_ABIL, en = window.LANG === "en", r1 = v => Math.round(v * 10) / 10, seen = new Set(), rows = [];
+  for (const p of u.pas) {
+    const k = p.k + "|" + p.t; if (seen.has(k)) continue; seen.add(k);
+    const a = A && A.ab[p.k], nm = a ? (en ? a.ne || a.n : a.n) : p.k;
+    const effs = p.e.map(([st, v, how]) => `${PAS_ST[st] || st} ${how === "a" ? (v > 0 ? "+" : "") + r1(v) : "×" + r1(v)}`).join(", ");
+    const tg = p.t === "s" ? "" : p.t.includes("e") ? " · ennemis proches" : p.t === "sf" ? " · soi et alliés proches" : " · alliés proches";
+    const cond = (p.i ? ` · croît avec : ${PAS_SRC[p.i[0]] || p.i[0]} (max ${r1(p.i[2])})` : "") + (p.c ? " · conditionnel" : "");
+    rows.push(`<li><b>${htmlEsc(nm)}</b> : ${htmlEsc(effs)}<small>${tg}${cond}</small></li>`);
+  }
+  return `<h4>Passifs</h4><p class="dn">La carte du jeu n'affiche pas ces bonus ; ils sont pris en compte par le simulateur (duels et calcul d'armée), pas dans les stats ci-dessus.</p><ul class="pasl">${rows.join("")}</ul>`;
 }
 function abilHTML(u) {
   const A = window.TWW3_ABIL; if (!A) return `<p class="abmsg">Capacités indisponibles.</p>`;
