@@ -348,3 +348,8 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #table .rl{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
 @media (max-width:720px){#matrix .c-a{width:9%}#matrix .mu small{display:none}}
 #table td:nth-child(3),#table th:nth-child(3){text-align:left}#table td:nth-child(2),#table th:nth-child(2){text-align:center}
+/* Portraits carrés : les illustrations sont des cartes hautes (60×130) dont la tête est dans le tiers supérieur ; on cadre en haut, pas au centre */
+.pt img{object-position:50% 9%}.pt.tall img,.pt.full img{object-position:center}
+#profdlg .pks.pt img,#profdlg .pks.pt img.sq{object-position:50% 9%}
+#matrix .mu .pt.s,#table .mu .pt.s{width:38px;height:38px}#matrix .mu .pt.s img,#table .mu .pt.s img,#matrix .mu .pt.s img.sq,#table .mu .pt.s img.sq{object-position:50% 9%;-webkit-mask-image:none;mask-image:none}
+#table td,#matrix td{vertical-align:middle}#matrix .rormark,#table .rormark{display:inline-flex;vertical-align:-3px;margin-right:4px}#matrix .rormark svg,#table .rormark svg{width:16px;height:16px}
