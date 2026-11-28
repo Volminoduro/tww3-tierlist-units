@@ -1,6 +1,8 @@
 "use strict";
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
+  "Ordre dans un tier : score décroissant, métrique « {} » (score en cible, taux de victoire en duels à côté sur chaque carte).": "Order within a tier: score descending, metric \"{}\" (score next to the target icon, duel win rate beside it on each card).",
+  "efficacité (puissance ÷ coût)": "efficiency (power ÷ cost)", "puissance brute": "raw power", "résultats de duels": "duel results",
   " Jouables au lancement de campagne seulement": " Playable at campaign start only",
   "Jouables au lancement de campagne seulement": "Playable at campaign start only",
   "# faction{}": "# faction{}",

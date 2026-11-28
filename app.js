@@ -167,7 +167,7 @@ function render(){
  const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
-  $("#tiers").innerHTML=TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
+  $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte).</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
    return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u,"tall")}<div class="ct"><b>${x.u.name}</b><div class="tags">${rortag(x.u)}${gtier(x.u)}</div><small>${cardInfo(x)}</small>${cardStats(x)}${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
@@ -263,7 +263,9 @@ const kfmt=v=>v>=10000?Math.round(v/1000)+"k":v>=1000?(v/1000).toFixed(1).replac
 function cardStats(x){
  const u=x.u, dps=x.mel+x.rng, top=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]).slice(0,2);
  const c=(ic,v,t)=>`<span class="cs1" title="${t}">${si(ic)}${v}</span>`;
- return `<div class="cs">${c("hp",kfmt(u.men*u.hp),"PV totaux")}${c("armour",Math.round(u.armour),"Armure")}${c("bolt",kfmt(dps),"Dégâts par seconde estimés (mêlée + tir)")}${c("speed",Math.round(u.speed),"Vitesse")}</div>
+ const mk=$("#metric").value, sc=mk==="duels"?Math.round(x.score*100)+" %":mk==="power"?kfmt(x.score):x.score.toFixed(2), wr=Math.round(((duelOf(u)||{}).wr||0)*100);
+ const MET={value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"taux de victoire en duels"}[mk];
+ return `<div class="cs sc">${c("target",sc,"Score de classement : "+MET+". Il fixe le tier et l'ordre dans le tier (décroissant)")}${c("attack",wr+" %","Taux de victoire en duels à coût équivalent (indicatif, ne sert à classer que dans la métrique « duels »)")}</div><div class="cs">${c("hp",kfmt(u.men*u.hp),"PV totaux")}${c("armour",Math.round(u.armour),"Armure")}${c("bolt",kfmt(dps),"Dégâts par seconde estimés (mêlée + tir)")}${c("speed",Math.round(u.speed),"Vitesse")}</div>
   <div class="cu">${top.map(k=>`<span class="cu1" title="${ARCH[k]} : percentile ${x.pct[k]}">${uic(k)}${x.pct[k]}</span>`).join("")}</div>`;
 }
 const fmtv=v=>v>=1000?Math.round(v).toLocaleString("fr-FR"):(Math.round(v*10)/10).toString();

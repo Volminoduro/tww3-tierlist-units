@@ -9,7 +9,7 @@
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory(); else root.TWW3Sim = factory();
 })(typeof self !== "undefined" ? self : this, function () {
-const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85,
+const SIM = {SPEED_SCALE:0.24, TMAX:900, CHARGE_DECAY:13, CHARGE_DMG:200, REFLECT:2, REFLECT_MIN:0.7, ENGAGE:0.6, RANGED_LOS:0.55, KITE_GAP:40, KITE_ROOM:400, IMPACT_MOD:0.6, IMPACT_NORM:0.8, IMPACT_E:3500, RANK2:2, IMPACT_PEN:0.5, IMPACT_MAX:70, IMPACT_AP:0.7, MORALE_BASE:0.15, MORALE_K:0.6, RES_CAP:90, FEAR_LD:8, TERROR_LD:50, TERROR_THR:13, SHOCK_ROUT:14, SHOCK_IMMUNE:85, MORALE_MODEL:"table", RECENT_WIN:10, MORALE_UPD:0.15, MORALE_MINSTEP:1,
   // Front de combat : nombre de modèles qui peuvent engager une unité adverse en même temps (approximation de la surface de contact)
   // FRONT_K : attaquants par modèle du front ; RANK_DEFAULT : nombre de rangs si la donnée manque ;
   // grands modèles (≤ 6) : surface de contact géométrique = périmètre du corps du défenseur ÷ (2 × demi-largeur de l'attaquant moyen) + π (formule de Steiner), voir plus bas ;
@@ -23,6 +23,12 @@ const isBack = u => u.role === "inf_ranged" || u.role === "artillery"; // « arr
 const resMul = (d, atk, ranged) => { const r = d.u.res; if (!r) return 1;
   const t = (r.all || 0) + (atk.mg ? r.ma || 0 : r.ph || 0) + (atk.fl ? r.fl || 0 : 0) + (ranged ? r.mi || 0 : 0);
   return 1 - clamp(t, -100, SIM.RES_CAP) / 100; };
+/* Moral « table » : constantes de _kv_morale_tables (dump). Pénalités par pourcentage de pertes (interpolées linéairement entre les paliers, plafonnées au dernier) :
+   total_casualties_penalty_* (pertes totales de l'unité, en PV : use_hitpoints_instead_of_casualties_prop_in_morale_calculation), recent_casualties_penalty_* (pertes sur la fenêtre RECENT_WIN,
+   durée non fournie par les tables : 10 s supposées), extended_casualties_penalty_* (pertes de l'armée, interprétation). Combat gagné / perdu : winning_combat_* / losing_combat_*.
+   Le moral courant rejoint la cible de MORALE_UPD (percent_update_per_tick = 0,15) par seconde, d'au moins MORALE_MINSTEP ; l'unité fuit à 0 (ums_broken_threshold_upper). */
+const MTAB = {tot: [[10,-2],[20,-4],[30,-7],[40,-11],[50,-16],[60,-22],[70,-32],[80,-47],[90,-74]], rec: [[6,-6],[10,-12],[15,-20],[33,-44],[50,-80]], ext: [[10,-4],[15,-6],[33,-14],[50,-32],[80,-60]]};
+const mpen = (tab, pct) => { if (pct <= 0) return 0; let px = 0, py = 0; for (const [x, y] of tab) { if (pct <= x) return py + (y - py) * (pct - px) / (x - px); px = x; py = y; } return py; };
 const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
 const upk = (BON, side, e) => e.u.cost * (1 - BON[side].up/100); // base de comparaison = COÛT DE RECRUTEMENT (le champ « up » du camp = réduction de ce coût, en %)
 
@@ -35,7 +41,7 @@ function simulate(ARMY, BON, opts) {
             mdm: (1 + b.dmg/100) * (1 + (m.ws||0)/100), rdm: (1 + b.dmg/100) * (1 + (m.ms||0)/100),
             ma: u.ma + (m.ma||0), md: u.md + (m.md||0), charge: u.charge + (m.charge||0), spd: u.speed * (1 + (m.spd||0)/100),
             range: u.ranged ? u.ranged.range * (1 + (m.range||0)/100) : 0,
-            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false, flee: false, back: 0, imm: 0};
+            ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false, flee: false, back: 0, imm: 0, M: u.ld * (1 + b.mor/100) + (m.ld||0), hist: []};
   });
   const S = {A: mk("A"), B: mk("B")};
   const spd = s => { let w=0, t=0; S[s].forEach(x => { w += x.cnt*x.u.men; t += x.cnt*x.u.men*x.spd; }); return w ? t/w*SIM.SPEED_SCALE : 0; };
@@ -157,6 +163,9 @@ function simulate(ARMY, BON, opts) {
     /* Moral : seuil de pertes (voir MORALE_BASE / MORALE_K) + psychologie. PEUR (causes_fear) : −FEAR_LD de moral au contact (constante du jeu ume_concerned_unit_frightened = −8).
        TERREUR (causes_terror) : choc de panique −TERROR_LD (ume_concerned_panic = −50) à la première rencontre ; si moral − 50 < TERROR_THR (13, morale_shock_terror_morale_threshold) l'unité fuit
        SHOCK_ROUT s (14) puis revient, insensible au choc SHOCK_IMMUNE s (85). Immunisées : immune_to_psychology et unbreakable (qui ne fuit jamais). Interprétation des constantes du jeu, non validée en jeu. */
+    for (const x of [...S.A, ...S.B]) x.hist.push(x.pool);
+    const fl = {A: 0, B: 0}, armyCas = {A: 0, B: 0};                                       // pertes récentes et pertes cumulées par camp (part des PV de départ)
+    for (const side of ["A", "B"]) { let p0 = 0, lost = 0, rec = 0; for (const x of S[side]) { p0 += x.pool0; lost += x.pool0 - x.pool; const W0 = Math.max(0, x.hist.length - 1 - SIM.RECENT_WIN); rec += Math.max(0, x.hist[W0] - x.pool); } fl[side] = p0 ? rec / p0 : 0; armyCas[side] = p0 ? lost / p0 : 0; }
     const scary = {A: false, B: false}, terr = {A: false, B: false};                     // le camp adverse compte-t-il des unités qui causent peur / terreur (actives au contact) ?
     if (t >= T0) for (const side of ["A", "B"]) for (const e of S[side]) if (!e.out && !e.flee && e.pool > 0) { const o = side === "A" ? "B" : "A"; if (e.at.has("causes_fear") || e.at.has("causes_terror")) scary[o] = true; if (e.at.has("causes_terror")) terr[o] = true; }
     for (const x of [...S.A, ...S.B]) {
@@ -168,7 +177,18 @@ function simulate(ARMY, BON, opts) {
       if (!free && terr[x.side] && t >= x.imm && x.ld - SIM.TERROR_LD < SIM.TERROR_THR && x.pool > 0.5) { x.flee = true; x.back = t + SIM.SHOCK_ROUT; continue; }
       const c = 1 - x.pool/x.pool0;
       if (x.pool <= 0.5) x.out = true;
-      else if (!x.at.has("unbreakable") && c >= SIM.MORALE_BASE + clamp(ld,0,100)/100 * SIM.MORALE_K) { x.out = x.routed = true; }
+      else if (!x.at.has("unbreakable")) {
+        if (SIM.MORALE_MODEL === "threshold") { if (c >= SIM.MORALE_BASE + clamp(ld,0,100)/100 * SIM.MORALE_K) x.out = x.routed = true; }
+        else {
+          const W0 = Math.max(0, x.hist.length - 1 - SIM.RECENT_WIN), rec = (x.hist[W0] - x.pool) / x.pool0 * 100, o = x.side === "A" ? "B" : "A";
+          const own = fl[x.side], foe = fl[o];                                                 // pertes récentes (part des PV de départ) de chaque camp : qui gagne le combat ?
+          let cb = 0; if (own + foe > 0.01) { const r = foe / Math.max(own, 1e-6); cb = r >= 3 ? 8 : r >= 1.5 ? 6 : r >= 1.1 ? 3 : (1 / Math.max(r, 1e-6)) >= 3 ? -8 : (1 / Math.max(r, 1e-6)) >= 1.5 ? -3 : 0; }
+          const target = clamp(ld, 0, 100) + mpen(MTAB.tot, c * 100) + mpen(MTAB.rec, rec) + mpen(MTAB.ext, armyCas[x.side] * 100) + cb;
+          const diff = target - x.M, step = Math.max(Math.abs(diff) * SIM.MORALE_UPD, Math.min(Math.abs(diff), SIM.MORALE_MINSTEP));
+          x.M += Math.sign(diff) * Math.min(Math.abs(diff), step);
+          if (x.M <= 0) x.out = x.routed = true;
+        }
+      }
     }
   }
   timeline.push([t, surv("A"), surv("B")]);

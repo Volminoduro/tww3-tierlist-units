@@ -376,3 +376,4 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 @media (max-width:620px){.vseg button span{display:none}.vseg button{padding:7px 10px}}
 #dlcdlg .dlcnote{display:block;color:var(--gold2);font-size:11px;font-style:normal}
 .tp-camp{display:flex;gap:6px;align-items:center;padding:4px 10px;font-size:12px;color:var(--m);cursor:pointer}.tp-camp input{width:auto;margin:0}
+.cs.sc{margin-bottom:2px}.cs.sc .cs1:first-child{color:var(--gold2);font-weight:700}.tcap{margin:0 0 8px;color:var(--m);font-size:12px}
