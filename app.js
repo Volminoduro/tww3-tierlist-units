@@ -172,7 +172,7 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
  us=us.filter(x=>!seen.has(x.u.id)&&seen.add(x.u.id));
  const key=$("#metric").value;
  // Mobilité : vitesse pure, jamais divisée par le coût (une unité lente et bon marché ne devient pas « mobile »)
- us.forEach(x=>x.score=x[key]);
+ us.forEach(x=>{x.rg=((duelOf(x.u)||{}).basis==="dps"); x.score=x.rg?(COSTON?x.value:x.power):x[key];});   // distance : efficacité (avec coût) ou puissance brute (sans coût) ; mêlée (y compris hybrides à dominante mêlée) : taux de victoire en duels
  us.forEach(x=>{x.pct={};});
  /* Échelle de référence : seigneurs et héros n'y comptent JAMAIS (sinon cocher la case ferait bouger le tier des autres unités). Ils sont simplement placés sur l'échelle des autres unités.
     pos(ref,val,v) = position d'insertion de v parmi les valeurs de ref (égalités = milieu de la plage), ref étant la liste triée des valeurs de référence. */
@@ -184,7 +184,6 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
    // égalités = même percentile (moyenne des rangs) ; une unité qui ne sait pas faire l'usage (valeur 0) est à 0, pas étalée sur l'échelle
    us.forEach(x=>{const val=v(x),[lo,hi]=spread(vals,val);const r=Math.min(n-1,Math.max(0,(lo+hi)/2-.5));x.pct[k]=val<=0?0:n>1?Math.round(r/(n-1)*100):100;});});
  /* Les unités à distance (base « dps » des duels) sont classées ENTRE ELLES : leurs duels contre de la mêlée sont peu représentatifs (pas de ciblage, de couvert ni de flanquement). Échelles de tiers séparées. */
- us.forEach(x=>x.rg=((duelOf(x.u)||{}).basis==="dps"));
  const groups={}; us.forEach(x=>(groups[($("#scope").value==="role"?x.u.role:"all")+(x.rg?"|d":"|m")]??=[]).push(x));
  for(const g of Object.values(groups)){ const ref=refOf(g).slice().sort((a,b)=>a.score-b.score), n=ref.length, vals=ref.map(x=>x.score), idx=new Map(ref.map((x,i)=>[x,i]));
   g.forEach(x=>{let p;
@@ -217,7 +216,7 @@ function render(){
  const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
-  $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte). Les unités à distance sont classées entre elles (échelle de tiers à part) : leurs duels contre de la mêlée ne sont pas représentatifs, le simulateur ne modélisant ni ciblage, ni couvert, ni flanquement.</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
+  $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte). Les unités à distance sont classées entre elles (échelle de tiers à part), sur leur efficacité (Avec coût) ou leur puissance brute (Sans coût) : leurs duels contre de la mêlée ne sont pas représentatifs, le simulateur ne modélisant ni ciblage, ni couvert, ni flanquement. Les unités de mêlée pouvant tirer restent classées en mêlée.</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
    return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u,"tall")}<div class="ct"><b>${x.u.name}</b><div class="tags">${rortag(x.u)}${gtier(x.u)}</div><small>${cardInfo(x)}</small>${cardStats(x)}${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
@@ -313,9 +312,9 @@ const kfmt=v=>v>=10000?Math.round(v/1000)+"k":v>=1000?(v/1000).toFixed(1).replac
 function cardStats(x){
  const u=x.u, dps=x.mel+x.rng, top=ARCHK.slice().sort((a,b)=>x.pct[b]-x.pct[a]).slice(0,2);
  const c=(ic,v,t)=>`<span class="cs1" title="${t}">${si(ic)}${v}</span>`;
- const mk=$("#metric").value, sc=mk==="duels"?Math.round(x.score*100)+" %":mk==="power"?kfmt(x.score):x.score.toFixed(2), wr=Math.round(((duelOf(u)||{}).wr||0)*100);
- const MET={value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"taux de victoire en duels"}[mk];
- return `<div class="cs sc">${c("target",sc,"Score de classement : "+MET+". Il fixe le tier et l'ordre dans le tier (décroissant)")}${c("attack",wr+" %","Taux de victoire en duels à coût équivalent (indicatif, ne sert à classer que dans la métrique « duels »)")}</div><div class="cs">${c("hp",kfmt(u.men*u.hp),"PV totaux")}${c("armour",Math.round(u.armour),"Armure")}${c("bolt",kfmt(dps),"Dégâts par seconde estimés (mêlée + tir)")}${c("speed",Math.round(u.speed),"Vitesse")}</div>
+ const sc=x.rg?(COSTON?x.score.toFixed(2):kfmt(x.score)):Math.round(x.score*100)+" %", wr=Math.round(((duelOf(u)||{}).wr||0)*100);
+ const MET=x.rg?(COSTON?"efficacité (puissance ÷ coût), unités à distance":"puissance brute, unités à distance"):"taux de victoire en duels";
+ return `<div class="cs sc">${c("target",sc,"Score de classement : "+MET+". Il fixe le tier et l'ordre dans le tier (décroissant)")}${c("attack",wr+" %","Taux de victoire en duels à coût équivalent (indicatif, sert à classer les unités de mêlée)")}</div><div class="cs">${c("hp",kfmt(u.men*u.hp),"PV totaux")}${c("armour",Math.round(u.armour),"Armure")}${c("bolt",kfmt(dps),"Dégâts par seconde estimés (mêlée + tir)")}${c("speed",Math.round(u.speed),"Vitesse")}</div>
   <div class="cu">${top.map(k=>`<span class="cu1" title="${ARCH[k]} : percentile ${x.pct[k]}">${uic(k)}${x.pct[k]}</span>`).join("")}</div>`;
 }
 const fmtv=v=>v>=1000?Math.round(v).toLocaleString("fr-FR"):(Math.round(v*10)/10).toString();

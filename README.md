@@ -7,7 +7,7 @@
 4. Ouvre `index.html` (double-clic) ou `python -m http.server`.
 
 ## Onglets
-- **Tier list** : tiers S→F toujours par taux de victoire en duels (« Avec coût » = coût équivalent, « Sans coût » = 20 contre 20) ; les unités à distance ont leur propre échelle de tiers (leurs duels contre de la mêlée ne sont pas représentatifs : pas de ciblage, couvert ni flanquement), par faction, avec une *typologie d'usage* au choix (anti-infanterie, anti-large, anti-armure, encaisser la ligne de front, tir, charge, mobilité) et une *matrice typologique* (percentiles par usage).
+- **Tier list** : tiers S→F toujours par taux de victoire en duels (« Avec coût » = coût équivalent, « Sans coût » = 20 contre 20) ; les unités à distance ont leur propre échelle de tiers, classées par efficacité ou puissance brute (leurs duels contre de la mêlée ne sont pas représentatifs : pas de ciblage, couvert ni flanquement), par faction, avec une *typologie d'usage* au choix (anti-infanterie, anti-large, anti-armure, encaisser la ligne de front, tir, charge, mobilité) et une *matrice typologique* (percentiles par usage).
 - **Unités par faction** : toutes les stats de chaque unité, chacune avec son rang (« Top 8 % » / « Bottom 20 % ») comparé à la même catégorie, la faction ou tout le jeu.
 - **Combat d'armées** : simulation de deux armées avec entretien affiché et rendement par entretien.
 
