@@ -160,16 +160,18 @@ function render(){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
   const best=x=>ARCHK.reduce((p,k)=>x.pct[k]>x.pct[p]?k:p,ARCHK[0]);
-  const cell=(x,k)=>{const p=x.pct[k];return `<td style="background:hsl(${p*1.2},55%,62%);color:#111;text-align:center" title="Valeur brute : ${Math.round(x.arche[k])}">${p}</td>`};
+  const tb=t=>`<span class="tb" style="background:var(--${t})">${t}</span>`;
+  const cell=(x,k,mx)=>{const p=x.pct[k]; if(p<=0) return `<td class="hc z" title="Ne sait pas faire cet usage">–</td>`;
+   return `<td class="hc${p===mx&&p>=60?" top":""}" style="--p:${p}%;background:hsl(${Math.round(p*1.25)},${38+Math.round(p*.2)}%,${20+Math.round(p*.2)}%)" title="Valeur brute : ${Math.round(x.arche[k])}${p===mx&&p>=60?" · meilleur usage de l'unité":""}">${p}</td>`};
   const SH=USE_SH;
-  $("#matrix").innerHTML=`<table><colgroup><col class="c-n"><col class="c-r">${ARCHK.map(()=>'<col class="c-a">').join("")}<col class="c-b"></colgroup><tr><th data-k="score">Unité</th><th>Rôle</th>${ARCHK.map(k=>`<th data-k="m:${k}" title="${ARCH[k]}" style="text-align:center" aria-label="${ARCH[k]}">${uic(k)}</th>`).join("")}<th>Meilleur usage</th></tr>`+
-   us.map(x=>`<tr data-id="${x.u.id}"><td>${roricon(x.u)}${x.u.name}</td><td>${ROLES[x.u.role]||x.u.role}</td>${ARCHK.map(k=>cell(x,k)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`).join("")+
+  $("#matrix").innerHTML=`<table><colgroup><col class="c-n"><col class="c-t">${ARCHK.map(()=>'<col class="c-a">').join("")}<col class="c-b"></colgroup><tr><th data-k="score">Unité</th><th data-k="score">Tier</th>${ARCHK.map(k=>`<th data-k="m:${k}" title="${ARCH[k]}" style="text-align:center" aria-label="${ARCH[k]}">${uic(k)}</th>`).join("")}<th>Meilleur usage</th></tr>`+
+   us.map(x=>{const mx=Math.max(...ARCHK.map(k=>x.pct[k]));return `<tr data-id="${x.u.id}"><td class="mn"><div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b><small>${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or</small></span></div></td><td class="mt">${tb(x.tier)}</td>${ARCHK.map(k=>cell(x,k,mx)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`}).join("")+
    `</table><p style="padding:8px;color:var(--m);font-size:12px">Chaque case = percentile (0-100) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. 100 = la meilleure pour ça. La mobilité est la vitesse seule, jamais rapportée au coût. Cliquer un en-tête trie.</p>`;
  } else {
-  const cols=[["Unité",x=>x.u.name],["Tier",x=>x.tier],["Rôle",x=>ROLES[x.u.role]],["Score",x=>x.score],["Puissance",x=>x.power],["Coût eff.",x=>x.cost],["PV eff.",x=>x.ehp],["Mêlée/s",x=>x.mel],["Dist./s",x=>x.rng],["Recrut.",x=>x.rt],["Entretien",x=>x.u.upkeep]];
+  const cols=[["Unité",x=>x.u.name,x=>`<div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b></span></div>`],["Tier",x=>x.tier,x=>`<span class="tb" style="background:var(--${x.tier})">${x.tier}</span>`],["Rôle",x=>ROLES[x.u.role],x=>`<span class="rl">${catIc(x.u)}${ROLES[x.u.role]||x.u.role}</span>`],["Score",x=>x.score],["Puissance",x=>x.power],["Coût eff.",x=>x.cost],["PV eff.",x=>x.ehp],["Mêlée/s",x=>x.mel],["Dist./s",x=>x.rng],["Recrut.",x=>x.rt],["Entretien",x=>x.u.upkeep]];
   const sk=cols.find(c=>c[0]===sortKey)||cols[3]; us.sort((a,b)=>{const A=sk[1](a),B=sk[1](b);return (A>B?1:A<B?-1:0)*sortDir});
   const f=v=>typeof v==="number"?(v>=100?Math.round(v):v.toFixed(2)):v;
-  $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}">${c[0]}</th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map(c=>`<td>${f(c[1](x))}</td>`).join("")}</tr>`).join("")}</table>`;
+  $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}">${c[0]}</th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map(c=>`<td class="${typeof c[1](x)==="number"?"num":""}">${c[2]?c[2](x):f(c[1](x))}</td>`).join("")}</tr>`).join("")}</table>`;
  }
  window._us=us; syncDetail(us); saveUI();
 }
