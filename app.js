@@ -168,15 +168,24 @@ function render(){
    us.map(x=>{const mx=Math.max(...ARCHK.map(k=>x.pct[k]));return `<tr data-id="${x.u.id}"><td class="mn"><div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b><small>${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or</small></span></div></td><td class="mt">${tb(x.tier)}</td>${ARCHK.map(k=>cell(x,k,mx)).join("")}<td class="best" title="${ARCH[best(x)]}">${uic(best(x))}<span>${SH[best(x)]||ARCH[best(x)]}</span></td></tr>`}).join("")+
    `</table><p style="padding:8px;color:var(--m);font-size:12px">Chaque case = percentile (0-100) de l'unité (rapporté au coût si le mode « efficacité » est choisi) parmi les unités affichées de la faction pour cet usage. 100 = la meilleure pour ça. La mobilité est la vitesse seule, jamais rapportée au coût. Cliquer un en-tête trie.</p>`;
  } else {
-  const cols=[["Unité",x=>x.u.name,x=>`<div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b></span></div>`],["Tier",x=>x.tier,x=>`<span class="tb" style="background:var(--${x.tier})">${x.tier}</span>`],["Rôle",x=>ROLES[x.u.role],x=>`<span class="rl">${catIc(x.u)}${ROLES[x.u.role]||x.u.role}</span>`],["Score",x=>x.score],["Puissance",x=>x.power],["Coût eff.",x=>x.cost],["PV eff.",x=>x.ehp],["Mêlée/s",x=>x.mel],["Dist./s",x=>x.rng],["Recrut.",x=>x.rt],["Entretien",x=>x.u.upkeep]];
-  const sk=cols.find(c=>c[0]===sortKey)||cols[3]; us.sort((a,b)=>{const A=sk[1](a),B=sk[1](b);return (A>B?1:A<B?-1:0)*sortDir});
+  /* colonnes : [libellé, valeur, rendu, icône, couleur de barre, infobulle] ; « Puissance » n'apparaît que si elle diffère du score (mode « avec coût ») */
+  const same=us.every(x=>Math.abs(x.score-x.power)<1e-6);
+  const cols=[["Unité",x=>x.u.name,x=>`<div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b></span></div>`],
+   ["Tier",x=>x.tier,x=>x.tier],
+   ["Rôle",x=>ROLES[x.u.role],x=>`<span class="rl">${catIc(x.u)}${ROLES[x.u.role]||x.u.role}</span>`],
+   ["Score",x=>x.score,null,"target","#d6b25e","Score utilisé pour le tier"]]
+   .concat(same?[]:[["Puissance",x=>x.power,null,"attack","#b996d9","Puissance brute (avant division par le coût)"]])
+   .concat([["Coût eff.",x=>x.cost,null,"coin","#9a98a8","Coût effectif (recrutement + entretien selon les réglages)"],["PV eff.",x=>x.ehp,null,"hp","#5fb98a","Points de vie effectifs (armure et défense comprises)"],["Mêlée/s",x=>x.mel,null,"weapon","#e0804f","Dégâts de mêlée par seconde"],["Dist./s",x=>x.rng,null,"bow","#5b9bd6","Dégâts à distance par seconde"]]);
+  const sk=cols.find(c=>c[0]===sortKey)||cols.find(c=>c[0]==="Score"); us.sort((a,b)=>{const A=sk[1](a),B=sk[1](b);return (A>B?1:A<B?-1:0)*sortDir});
   const f=v=>typeof v==="number"?(v>=100?Math.round(v):v.toFixed(2)):v;
-  /* Remplissage de barre par colonne chiffrée : valeur ÷ P95 de la colonne (parmi les unités affichées), plafonné à 100 % — même principe que les barres de la fiche */
+  /* Barre : valeur ÷ P95 de la colonne (parmi les unités affichées), plafonnée à 100 %. Chaque colonne a sa couleur et sa piste ; les barres sont inscrites avec une marge pour que deux barres pleines côte à côte restent distinctes. */
   const p95=c=>{const v=us.map(x=>c[1](x)).filter(n=>typeof n==="number"&&isFinite(n)).sort((a,b)=>a-b);if(!v.length)return 0;return v[Math.floor(.95*(v.length-1))]||v[v.length-1]||0};
   const P=cols.map(p95);
-  const cellT=(c,x,i)=>{const v=c[1](x),num=typeof v==="number";const fill=num&&P[i]>0?Math.max(0,Math.min(100,Math.round(v/P[i]*100))):0;
-   return `<td class="${num?"num bar":""}"${num?` style="--p:${fill}%"`:""}>${c[2]?c[2](x):f(v)}</td>`};
-  $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}">${c[0]}</th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map((c,i)=>cellT(c,x,i)).join("")}</tr>`).join("")}</table><p style="padding:8px;color:var(--m);font-size:12px">Barres : valeur ÷ P95 de la colonne parmi les unités affichées (100 % = les plus fortes). Cliquer un en-tête trie ; cliquer dans le vide ferme la fiche.</p>`;
+  const cellT=(c,x,i)=>{const v=c[1](x);
+   if(c[0]==="Tier") return `<td class="tcell" style="background:var(--${x.tier})">${x.tier}</td>`;
+   const num=typeof v==="number", fill=num&&P[i]>0?Math.max(0,Math.min(1,v/P[i])):0;
+   return `<td class="${num?"num bar":""}"${num?` style="--f:${fill.toFixed(3)};--bc:${c[4]}"`:""}>${c[2]?c[2](x):f(v)}</td>`};
+  $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}"${c[5]?` title="${c[5]}"`:""}>${c[3]?si(c[3]):""}<span>${c[0]}</span></th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map((c,i)=>cellT(c,x,i)).join("")}</tr>`).join("")}</table><p style="padding:8px;color:var(--m);font-size:12px">Barres : valeur ÷ P95 de la colonne parmi les unités affichées (100 % = les plus fortes), une couleur par colonne. Cliquer un en-tête trie ; cliquer dans le vide ferme la fiche.</p>`;
  }
  window._us=us; syncDetail(us); saveUI();
 }

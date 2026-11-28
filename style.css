@@ -354,5 +354,11 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #matrix .mu .pt.s,#table .mu .pt.s{width:38px;height:38px}#matrix .mu .pt.s img,#table .mu .pt.s img,#matrix .mu .pt.s img.sq,#table .mu .pt.s img.sq{object-position:50% 9%;-webkit-mask-image:none;mask-image:none}
 #table td,#matrix td{vertical-align:middle}#matrix .rormark,#table .rormark{display:inline-flex;vertical-align:-3px;margin-right:4px}#matrix .rormark svg,#table .rormark svg{width:16px;height:16px}
 
-#table td.bar{position:relative;background-image:linear-gradient(90deg,#c8a24a38 var(--p),transparent var(--p));background-repeat:no-repeat}
-#table td.bar::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--p);background:#c8a24a99}
+
+/* Vue tableau : barres inscrites (piste + remplissage) par colonne, pastille de tier en fond de cellule, en-têtes à icône */
+#table td.bar{position:relative;z-index:0;font-weight:600;text-shadow:0 1px 1px #000c;padding-inline:10px}
+#table td.bar::before{content:"";position:absolute;z-index:-2;inset:7px 4px;background:#ffffff0d;border-radius:3px}
+#table td.bar::after{content:"";position:absolute;z-index:-1;left:4px;top:7px;bottom:7px;width:calc((100% - 8px) * var(--f));background:linear-gradient(90deg,color-mix(in srgb,var(--bc) 55%,transparent),color-mix(in srgb,var(--bc) 85%,transparent));border-radius:3px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--bc) 60%,#000)}
+#table td.tcell{text-align:center;font:700 16px var(--serif);color:#120d08;text-shadow:none;width:52px}
+#table th{white-space:nowrap}#table th .si{width:16px;height:16px;vertical-align:-3px;margin-right:5px;color:var(--gold2)}#table th.num,#table th:nth-child(n+4){text-align:right}
+#table td:nth-child(2),#table th:nth-child(2){padding:0;text-align:center}
