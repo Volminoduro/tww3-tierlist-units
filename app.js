@@ -53,11 +53,10 @@ $("#typo").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)retu
 const costSw=$("#costsw")||document.createElement("div"), costBtns=[...costSw.querySelectorAll("button")]; // garde-fou : un index.html plus ancien sans ce bloc ne casse pas la page
 /* « Avec coût / Sans coût » : tiers par efficacité ou par puissance brute ET duels à coût équivalent ou 20 contre 20 (mode de duels « cost » / « count »). Reste actif quand la métrique est « duels ». */
 let COSTON=true; try{COSTON=localStorage.getItem("costOn")!=="0"}catch(e){}
-const syncCost=()=>{const m=$("#metric").value; if(m!=="duels") COSTON=(m==="value"); costSw.classList.remove("dis"); costBtns.forEach(b=>{b.disabled=false; b.classList.toggle("on",(b.dataset.on==="1")===COSTON);});};
-const setCost=on=>{COSTON=on; try{localStorage.setItem("costOn",on?"1":"0")}catch(e){} if($("#metric").value!=="duels") $("#metric").value=on?"value":"power"; syncCost(); if(typeof CampDuels!=="undefined") CampDuels.schedule(); render();};
+const syncCost=()=>{costSw.classList.remove("dis"); costBtns.forEach(b=>{b.disabled=false; b.classList.toggle("on",(b.dataset.on==="1")===COSTON);});};
+const setCost=on=>{COSTON=on; try{localStorage.setItem("costOn",on?"1":"0")}catch(e){} syncCost(); if(typeof CampDuels!=="undefined") CampDuels.schedule(); render();};
 costSw.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;setCost(b.dataset.on==="1");});
-$("#metric").addEventListener("input",()=>{if($("#metric").value!=="duels"){try{localStorage.setItem("costOn",$("#metric").value==="value"?"1":"0")}catch(e){}} syncCost()});
-try{if(localStorage.getItem("costOn")==="0"&&$("#metric").value==="value")$("#metric").value="power"}catch(e){}
+$("#metric").value="duels";   // tiers et ordre : TOUJOURS le taux de victoire en duels ; « Avec/Sans coût » choisit le mode de duels (coût équivalent / 20 contre 20)
 syncCost();
 $("#noror").addEventListener("input",e=>setRor(e.target.checked)); document.addEventListener("rorchange",()=>render());
 $("#noror").checked=RORX.off;
@@ -180,7 +179,7 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
  const LHr=x=>x.u.role==="lord"||x.u.role==="hero";
  const spread=(vals,v)=>{let lo=0,hi=vals.length;while(lo<hi){const m=(lo+hi)>>1;vals[m]<v?lo=m+1:hi=m;}const a=lo;hi=vals.length;while(lo<hi){const m=(lo+hi)>>1;vals[m]<=v?lo=m+1:hi=m;}return [a,lo];};
  const refOf=l=>{const r=l.filter(x=>!LHr(x));return r.length?r:l;};
- ARCHK.forEach(k=>{const v=x=>key==="value"&&k!=="speed"?x.arche[k]/Math.max(1,x.cost):x.arche[k];
+ ARCHK.forEach(k=>{const v=x=>COSTON&&k!=="speed"?x.arche[k]/Math.max(1,x.cost):x.arche[k];
    const vals=refOf(us).map(v).sort((a,b)=>a-b), n=vals.length;
    // égalités = même percentile (moyenne des rangs) ; une unité qui ne sait pas faire l'usage (valeur 0) est à 0, pas étalée sur l'échelle
    us.forEach(x=>{const val=v(x),[lo,hi]=spread(vals,val);const r=Math.min(n-1,Math.max(0,(lo+hi)/2-.5));x.pct[k]=val<=0?0:n>1?Math.round(r/(n-1)*100):100;});});
@@ -397,7 +396,7 @@ let uiReady=false;
   if(okFacKey(s.fac)){ setFac(fsel,s.fac); fsel.dispatchEvent(new Event("change")); }
   (s.roles||[]).filter(r=>roles.includes(r)).forEach(r=>role.add(r)); (s.typo||[]).filter(k=>ARCHK.includes(k)).forEach(k=>TYPO.add(k));
   if(typeof s.q==="string") $("#q").value=s.q; $("#heroes").checked=!!s.heroes;
-  for(const [id,v] of [["mode",s.mode],["metric",s.metric],["scope",s.scope]]) if(v&&[...$("#"+id).options].some(o=>o.value===v)) $("#"+id).value=v;
+  for(const [id,v] of [["mode",s.mode],["scope",s.scope]]) if(v&&[...$("#"+id).options].some(o=>o.value===v)) $("#"+id).value=v;
   if(["tiers","table","matrix"].includes(s.view)){ view=s.view; $("#viewsel").value=view; }
   if(["role_all","all","scope"].includes(s.dpool)) DPOOL=s.dpool;
   for(const w of W){ const v=s.S&&s.S[w[0]]; if(typeof v==="number"&&v>=w[2]&&v<=w[3]){ S[w[0]]=v; $("#"+w[0]).value=v; $("#v_"+w[0]).textContent=v; } }
