@@ -183,7 +183,9 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
    const vals=refOf(us).map(v).sort((a,b)=>a-b), n=vals.length;
    // égalités = même percentile (moyenne des rangs) ; une unité qui ne sait pas faire l'usage (valeur 0) est à 0, pas étalée sur l'échelle
    us.forEach(x=>{const val=v(x),[lo,hi]=spread(vals,val);const r=Math.min(n-1,Math.max(0,(lo+hi)/2-.5));x.pct[k]=val<=0?0:n>1?Math.round(r/(n-1)*100):100;});});
- const groups={}; us.forEach(x=>(groups[$("#scope").value==="role"?x.u.role:"all"]??=[]).push(x));
+ /* Les unités à distance (base « dps » des duels) sont classées ENTRE ELLES : leurs duels contre de la mêlée sont peu représentatifs (pas de ciblage, de couvert ni de flanquement). Échelles de tiers séparées. */
+ us.forEach(x=>x.rg=((duelOf(x.u)||{}).basis==="dps"));
+ const groups={}; us.forEach(x=>(groups[($("#scope").value==="role"?x.u.role:"all")+(x.rg?"|d":"|m")]??=[]).push(x));
  for(const g of Object.values(groups)){ const ref=refOf(g).slice().sort((a,b)=>a.score-b.score), n=ref.length, vals=ref.map(x=>x.score), idx=new Map(ref.map((x,i)=>[x,i]));
   g.forEach(x=>{let p;
    if(idx.has(x)) p=(idx.get(x)+.5)/n;                         // unité de référence : rang dans le groupe, comme avant
@@ -215,7 +217,7 @@ function render(){
  const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
-  $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte).</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
+  $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte). Les unités à distance sont classées entre elles (échelle de tiers à part) : leurs duels contre de la mêlée ne sont pas représentatifs, le simulateur ne modélisant ni ciblage, ni couvert, ni flanquement.</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
    return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u,"tall")}<div class="ct"><b>${x.u.name}</b><div class="tags">${rortag(x.u)}${gtier(x.u)}</div><small>${cardInfo(x)}</small>${cardStats(x)}${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
