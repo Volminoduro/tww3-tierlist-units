@@ -171,7 +171,12 @@ function render(){
   const cols=[["Unité",x=>x.u.name,x=>`<div class="mu">${portrait(x.u,"s")}<span><b>${roricon(x.u)}${x.u.name}</b></span></div>`],["Tier",x=>x.tier,x=>`<span class="tb" style="background:var(--${x.tier})">${x.tier}</span>`],["Rôle",x=>ROLES[x.u.role],x=>`<span class="rl">${catIc(x.u)}${ROLES[x.u.role]||x.u.role}</span>`],["Score",x=>x.score],["Puissance",x=>x.power],["Coût eff.",x=>x.cost],["PV eff.",x=>x.ehp],["Mêlée/s",x=>x.mel],["Dist./s",x=>x.rng],["Recrut.",x=>x.rt],["Entretien",x=>x.u.upkeep]];
   const sk=cols.find(c=>c[0]===sortKey)||cols[3]; us.sort((a,b)=>{const A=sk[1](a),B=sk[1](b);return (A>B?1:A<B?-1:0)*sortDir});
   const f=v=>typeof v==="number"?(v>=100?Math.round(v):v.toFixed(2)):v;
-  $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}">${c[0]}</th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map(c=>`<td class="${typeof c[1](x)==="number"?"num":""}">${c[2]?c[2](x):f(c[1](x))}</td>`).join("")}</tr>`).join("")}</table>`;
+  /* Remplissage de barre par colonne chiffrée : valeur ÷ P95 de la colonne (parmi les unités affichées), plafonné à 100 % — même principe que les barres de la fiche */
+  const p95=c=>{const v=us.map(x=>c[1](x)).filter(n=>typeof n==="number"&&isFinite(n)).sort((a,b)=>a-b);if(!v.length)return 0;return v[Math.floor(.95*(v.length-1))]||v[v.length-1]||0};
+  const P=cols.map(p95);
+  const cellT=(c,x,i)=>{const v=c[1](x),num=typeof v==="number";const fill=num&&P[i]>0?Math.max(0,Math.min(100,Math.round(v/P[i]*100))):0;
+   return `<td class="${num?"num bar":""}"${num?` style="--p:${fill}%"`:""}>${c[2]?c[2](x):f(v)}</td>`};
+  $("#table").innerHTML=`<table><tr>${cols.map(c=>`<th data-k="${c[0]}">${c[0]}</th>`).join("")}</tr>${us.map(x=>`<tr data-id="${x.u.id}">${cols.map((c,i)=>cellT(c,x,i)).join("")}</tr>`).join("")}</table><p style="padding:8px;color:var(--m);font-size:12px">Barres : valeur ÷ P95 de la colonne parmi les unités affichées (100 % = les plus fortes). Cliquer un en-tête trie ; cliquer dans le vide ferme la fiche.</p>`;
  }
  window._us=us; syncDetail(us); saveUI();
 }
@@ -186,6 +191,9 @@ document.addEventListener("click",e=>{
  const th=e.target.closest("th[data-k]"); if(th){sortDir=sortKey===th.dataset.k?-sortDir:-1;sortKey=th.dataset.k;return render();}
  const c=e.target.closest("[data-id]"); if(c){const x=window._us.find(y=>y.u.id===c.dataset.id); if(x) detail(x);}
  if(e.target.id==="close")$("#detail").hidden=true;
+ /* Clic dans le vide (élément non interactif, hors fiche) : ferme la fiche */
+ const dt=$("#detail");
+ if(dt&&!dt.hidden&&e.target.isConnected&&!e.target.closest("#detail,[data-id],button,a,input,select,textarea,label,summary,dialog,.tp,.tp-pop,th,[role=button],[data-p],#nav,.dseg")) dt.hidden=true;
 });
 /* Icônes de types de stats (fiche d'unité) : tracés simples, couleur de l'accent */
 const STAT_ICON={

@@ -353,3 +353,6 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #profdlg .pks.pt img,#profdlg .pks.pt img.sq{object-position:50% 9%}
 #matrix .mu .pt.s,#table .mu .pt.s{width:38px;height:38px}#matrix .mu .pt.s img,#table .mu .pt.s img,#matrix .mu .pt.s img.sq,#table .mu .pt.s img.sq{object-position:50% 9%;-webkit-mask-image:none;mask-image:none}
 #table td,#matrix td{vertical-align:middle}#matrix .rormark,#table .rormark{display:inline-flex;vertical-align:-3px;margin-right:4px}#matrix .rormark svg,#table .rormark svg{width:16px;height:16px}
+
+#table td.bar{position:relative;background-image:linear-gradient(90deg,#c8a24a38 var(--p),transparent var(--p));background-repeat:no-repeat}
+#table td.bar::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:var(--p);background:#c8a24a99}
