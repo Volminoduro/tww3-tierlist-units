@@ -2,3 +2,4 @@
 data/duels.json
 __pycache__/
 *.pyc
+data/.duels_cache/
