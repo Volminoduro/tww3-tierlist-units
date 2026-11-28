@@ -189,7 +189,7 @@ function compute(withLH){ // withLH : inclure seigneurs et héros dans le périm
   g.forEach(x=>{let p;
    if(idx.has(x)) p=(idx.get(x)+.5)/n;                         // unité de référence : rang dans le groupe, comme avant
    else {const [lo,hi]=spread(vals,x.score); p=(lo+hi)/2/n;}    // seigneur / héros : inséré sur l'échelle sans la modifier
-   x.tier=TIERS.find(t=>1-p<=t[1])[0]; });}
+   x.rk=p; x.tier=TIERS.find(t=>1-p<=t[1])[0]; });}   // rk = position (0-1) sur l'échelle de la famille : seule grandeur comparable entre mêlée et distance
  return us;
 }
 /* Pastilles de catégories : « Nom (nombre d'unités disponibles) », grisées s'il n'y en a aucune. cnt(r) = effectif pour la catégorie r (null = toutes). */
@@ -218,11 +218,11 @@ function render(){
  const cardInfo=x=>`${catIc(x.u)}${ROLES[x.u.role]||x.u.role} · ${Math.round(x.cost)} or`;
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
-  $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte). Les unités à distance sont classées entre elles (échelle de tiers à part), sur leur efficacité (Avec coût) ou leur puissance brute (Sans coût) : leurs duels contre de la mêlée ne sont pas représentatifs, le simulateur ne modélisant ni ciblage, ni couvert, ni flanquement. Les unités de mêlée pouvant tirer restent classées en mêlée.</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.score-a.score);
+  $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte). Les unités à distance sont classées entre elles (échelle de tiers à part), sur leur efficacité (Avec coût) ou leur puissance brute (Sans coût) : leurs duels contre de la mêlée ne sont pas représentatifs, le simulateur ne modélisant ni ciblage, ni couvert, ni flanquement. Les unités de mêlée pouvant tirer restent classées en mêlée.</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.rk-a.rk);
    return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u,"tall")}<div class="ct"><b>${x.u.name}</b><div class="tags">${rortag(x.u)}${gtier(x.u)}</div><small>${cardInfo(x)}</small>${cardStats(x)}${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
-  us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.score-b.score)||0)*sortDir);
+  us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.rk-b.rk)||0)*sortDir);
   const best=x=>ARCHK.reduce((p,k)=>x.pct[k]>x.pct[p]?k:p,ARCHK[0]);
   const tb=t=>`<span class="tb" style="background:var(--${t})">${t}</span>`;
   const cell=(x,k,mx)=>{const p=x.pct[k]; if(p<=0) return `<td class="hc z" title="Ne sait pas faire cet usage">–</td>`;
@@ -237,7 +237,7 @@ function render(){
   const cols=[["Unité",x=>x.u.name,x=>`<div class="mu">${portrait(x.u,"tall")}<span><b>${roricon(x.u)}${x.u.name}</b></span></div>`],
    ["Tier",x=>x.tier,x=>x.tier],
    ["Rôle",x=>ROLES[x.u.role],x=>`<span class="rl">${catIc(x.u)}${ROLES[x.u.role]||x.u.role}</span>`],
-   ["Score",x=>x.score,null,"target","#d6b25e","Score utilisé pour le tier"]]
+   ["Score",x=>Math.round(x.rk*100)/100,null,"target","#d6b25e","Position de l'unité sur l'échelle de sa famille (mêlée : duels ; distance : efficacité ou puissance) : fixe le tier"]]
    .concat(same?[]:[["Puissance",x=>x.power,null,"attack","#b996d9","Puissance brute (avant division par le coût)"]])
    .concat([["Coût eff.",x=>x.cost,null,"coin","#9a98a8","Coût effectif (recrutement + entretien selon les réglages)"],["PV eff.",x=>x.ehp,null,"hp","#5fb98a","Points de vie effectifs (armure et défense comprises)"],["Mêlée/s",x=>x.mel,null,"weapon","#e0804f","Dégâts de mêlée par seconde"],["Dist./s",x=>x.rng,null,"bow","#5b9bd6","Dégâts à distance par seconde"]]);
   const sk=cols.find(c=>c[0]===sortKey)||cols.find(c=>c[0]==="Score"); us.sort((a,b)=>{const A=sk[1](a),B=sk[1](b);return (A>B?1:A<B?-1:0)*sortDir});
