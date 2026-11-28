@@ -219,7 +219,7 @@ function render(){
  if(view==="tiers"){
   const col={S:"--S",A:"--A",B:"--B",C:"--C",D:"--D",F:"--F"};
   $("#tiers").innerHTML=`<p class="tcap">Ordre dans un tier : score décroissant, métrique « ${({value:"efficacité (puissance ÷ coût)",power:"puissance brute",duels:"résultats de duels"})[$("#metric").value]} » (score en cible, taux de victoire en duels à côté sur chaque carte). Les unités à distance sont classées entre elles (échelle de tiers à part), sur leur efficacité (Avec coût) ou leur puissance brute (Sans coût) : leurs duels contre de la mêlée ne sont pas représentatifs, le simulateur ne modélisant ni ciblage, ni couvert, ni flanquement. Les unités de mêlée pouvant tirer restent classées en mêlée.</p>`+TIERS.map(([t])=>{const l=us.filter(x=>x.tier===t).sort((a,b)=>b.rk-a.rk);
-   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}">${portrait(x.u,"tall")}<div class="ct"><b>${x.u.name}</b><div class="tags">${rortag(x.u)}${gtier(x.u)}</div><small>${cardInfo(x)}</small>${cardStats(x)}${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
+   return `<div class="row"><div class="lab" style="background:var(${col[t]})">${t}</div><div class="cards">${l.map(x=>`<div class="card${x.u.ror?" ror":""}" data-t="${x.tier}" data-id="${x.u.id}"><button type="button" class="cpin${PIN===x.u.id?" on":""}" data-pin="${x.u.id}" title="Épingler : la prochaine unité ouverte lui sera comparée">${si("pin")}</button>${portrait(x.u,"tall")}<div class="ct"><b>${x.u.name}</b><div class="tags">${rortag(x.u)}${gtier(x.u)}</div><small>${cardInfo(x)}</small>${cardStats(x)}${fn(x.u)}</div></div>`).join("")}</div></div>`}).join("");
  } else if(view==="matrix"){
   const mk=sortKey.startsWith("m:")?sortKey.slice(2):null;
   us.sort((a,b)=>((mk?a.pct[mk]-b.pct[mk]:a.rk-b.rk)||0)*sortDir);
@@ -260,17 +260,21 @@ function syncDetail(us){
  if(!x){dt.hidden=true;return;}
  const st=dt.scrollTop; detail(x); dt.scrollTop=st;
 }
+function setPin(id){ PIN=PIN===id?null:id; document.querySelectorAll(".cpin").forEach(b=>b.classList.toggle("on",b.dataset.pin===PIN)); const dt=$("#detail"); if(!dt.hidden&&dt.dataset.unit){const x=(window._us||[]).find(y=>y.u.id===dt.dataset.unit); if(x) detail(x);} }
 document.addEventListener("click",e=>{
+ const pb=e.target.closest("[data-pin]"); if(pb){ e.stopPropagation(); return setPin(pb.dataset.pin); }
  const th=e.target.closest("th[data-k]"); if(th){sortDir=sortKey===th.dataset.k?-sortDir:-1;sortKey=th.dataset.k;return render();}
  const c=e.target.closest("[data-id]"); if(c){const x=window._us.find(y=>y.u.id===c.dataset.id); if(x) detail(x);}
  if(e.target.id==="close")$("#detail").hidden=true;
- if(e.target.closest("#pin")||e.target.closest("#unpin")){ const id=$("#detail").dataset.unit; PIN=e.target.closest("#unpin")||PIN===id?null:id; const x=(window._us||[]).find(y=>y.u.id===id); if(x) detail(x); }
+ if(e.target.closest("#pin")) setPin($("#detail").dataset.unit);
+ if(e.target.closest("#unpin")) setPin(PIN);
  /* Clic dans le vide (élément non interactif, hors fiche) : ferme la fiche */
  const dt=$("#detail");
  if(dt&&!dt.hidden&&e.target.isConnected&&!e.target.closest("#detail,[data-id],button,a,input,select,textarea,label,summary,dialog,.tp,.tp-pop,th,[role=button],[data-p],#nav,.dseg")) dt.hidden=true;
 });
 /* Icônes de types de stats (fiche d'unité) : tracés simples, couleur de l'accent */
 const STAT_ICON={
+ pin:'<path d="M9 3h6l-1 6 3 3v2H7v-2l3-3z M12 14v7"/>',
  hp:'<path d="M12 20.5S4 16 4 9.5a4.2 4.2 0 0 1 8-1.8 4.2 4.2 0 0 1 8 1.8C20 16 12 20.5 12 20.5z"/>',
  armour:'<path d="M12 3l7.5 2.8v5.7c0 4.8-3.2 8.2-7.5 9.5-4.3-1.3-7.5-4.7-7.5-9.5V5.8z"/>',
  attack:'<path d="M5 5l14 14M19 5L5 19M3.5 8.5l5-5M15.5 20.5l5-5"/>',
@@ -390,12 +394,12 @@ function compareBlock(u,list){
  let duel="";
  try{ if(window.TWW3Sim&&window.DuelCalc){ _DC=_DC||DuelCalc.make(window.TWW3Sim,D.units.filter(v=>v.cost>0&&v.men>0&&v.hp>0)); const mode=duelMode(), m=_DC.duel(u,p,mode);
    if(!Number.isNaN(m)) duel=`<div class="cduel" title="Duel du simulateur, sans bonus, ${mode==="count"?"20 contre 20":"à coût de recrutement équivalent"} (indicatif)">Duel direct ${mode==="count"?"(20 contre 20)":"(coût équivalent)"} : <b class="${m>0?"good":m<0?"bad":""}">${m>0?u.name+" l'emporte":m<0?p.name+" l'emporte":"égalité"}</b> <small>(marge ${Math.round(Math.abs(m)*100)} %)</small></div>`; } }catch(e){}
- return `<div class="cmp"><h4>Comparatif <button type="button" class="unpin" id="unpin" title="Retirer l'épingle">✕</button></h4><div class="cmph"><span>📌 ${p.name}</span><span>${u.name}</span></div>${duel}<table>${rows}</table></div>`;
+ return `<div class="cmp"><h4>Comparatif <button type="button" class="unpin" id="unpin" title="Retirer l'épingle">✕</button></h4><div class="cmph"><span>${si("pin")}${p.name}</span><span>${u.name}</span></div>${duel}<table>${rows}</table></div>`;
 }
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
  const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false, wasAbilOpen=dt.querySelector("details.abil")?.open;
- dt.innerHTML=`<div class="dtop"><div class="dh"><div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><span class="dbtn"><button type="button" class="pin${PIN===u.id?" on":""}" id="pin" title="${PIN===u.id?"Retirer l'épingle":"Épingler cette unité : la prochaine unité ouverte lui sera comparée"}">📌</button><button class="x" id="close">✕</button></span></div>
+ dt.innerHTML=`<div class="dtop"><div class="dh"><div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><span class="dbtn"><button type="button" class="pin${PIN===u.id?" on":""}" id="pin" title="${PIN===u.id?"Retirer l'épingle":"Épingler cette unité : la prochaine unité ouverte lui sera comparée"}">${si("pin")}</button><button class="x" id="close">✕</button></span></div>
  ${dpoolBar(u)}
  <div class="dbrief">${fullPic(u)}${briefTiles(list)}</div></div>
  ${compareBlock(u,list)}

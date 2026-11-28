@@ -389,3 +389,5 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 #detail .cduel{font-size:12px;margin:2px 0 6px}#detail .cmp .good{color:#7cc491}#detail .cmp .bad{color:#e58b80}
 #detail .cmp table{width:100%;border-collapse:collapse;font-size:12px}#detail .cmp td{padding:2px 4px;border-bottom:1px solid #ffffff10}#detail .cmp .cp,#detail .cmp .cn{text-align:right;white-space:nowrap}#detail .cmp .cd{text-align:right;white-space:nowrap;font-weight:700}
 #detail .cmp .cg th{text-align:left;padding-top:6px;font:700 10px var(--serif);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.card{position:relative}.cpin{position:absolute;top:3px;right:3px;padding:1px 3px;line-height:0;opacity:0;background:#0008;border:1px solid var(--gold3);border-radius:2px;color:var(--gold2);cursor:pointer}.card:hover .cpin,.cpin.on{opacity:1}.cpin.on{border-color:var(--gold);color:var(--gold)}.cpin .si{width:13px;height:13px;margin:0}
+#detail .pin{line-height:0}#detail .pin .si{width:14px;height:14px;margin:0}#detail .cmph .si{width:12px;height:12px;margin-right:3px;vertical-align:-1px}
