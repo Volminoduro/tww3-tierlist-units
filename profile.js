@@ -7,7 +7,7 @@
    Combat lisent donc tous les stats modifiées, et les rangs « Top / Bottom % » se recalculent d'eux-mêmes. Seules les unités de la faction choisie sont touchées
    (un bonus « toutes les unités » ne gonfle pas les unités des autres factions). Les duels précalculés (data/duels.js) restent au profil par défaut.
    Le Combat n'ajoute pas une seconde fois l'effet du même seigneur (u._pm = « déjà modifiée par le profil », lu par battle.js). État mémorisé (PREF « profile »). */
-const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, alloc: []};
+const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, alloc: [], sv: null, fromSave: false};
 (() => {
   const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}}, SK = window.TWW3_SKILLS || {lords: {}, sets: []};
   const UN = Object.fromEntries(D.units.map(u => [u.id, u]));
@@ -83,11 +83,17 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     }
     return tree.map((t, i) => ({i, n: t.n, lv: lv[i], max: maxLv(t), effs: atLevel(t, lv[i]), innate: t.p0 > 0})).filter(x => x.lv > 0);
   }
+  /* Compétences réellement prises dans la sauvegarde (clé de compétence -> niveau), au lieu de la dépense automatique. */
+  function fromSaveAlloc(st) {
+    const tree = SK.lords[st] || [], got = (PROFILE.sv && PROFILE.sv.lords[st] || {}).skills || {};
+    return tree.map((t, i) => ({i, n: t.n, lv: Math.min(maxLv(t), got[t.k] || 0), max: maxLv(t), innate: t.p0 > 0})).filter(x => x.lv > 0).map(x => ({...x, effs: atLevel(tree[x.i], x.lv)}));
+  }
+  const usingSave = st => !!(PROFILE.fromSave && PROFILE.sv && st && PROFILE.sv.lords[st]);
   const toEff = e => ({stat: e.s, v: e.v, pct: !!e.p, units: e.u === null ? null : e.u === "lord" ? "lord" : setOf(e.u), cond: false, label: "", src: "compétence"});
   const spent = () => PROFILE.alloc.reduce((a, x) => a + x.lv - (x.innate ? 1 : 0), 0);
   function apply() {
     const st = PROFILE.on ? stOf() : null, lord = st ? FX.lords[st] : null;
-    PROFILE.alloc = st ? allocate(st, Math.max(0, PROFILE.level - 1)) : [];
+    PROFILE.alloc = !st ? [] : usingSave(st) ? fromSaveAlloc(st) : allocate(st, Math.max(0, PROFILE.level - 1));
     const eff = effOf(st).concat(PROFILE.alloc.flatMap(x => x.effs.map(toEff)));
     PROFILE.st = st; PROFILE.n = 0;
     for (const u of D.units) {
@@ -96,11 +102,11 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
       const m = modsFor(u, lord, eff); if (Object.keys(m).length) { modify(u, m); PROFILE.n++; }
     }
   }
-  const save = () => PREF.set("profile", {on: PROFILE.on, fac: PROFILE.fac, lord: PROFILE.lord, level: PROFILE.level});
+  const save = () => PREF.set("profile", {on: PROFILE.on, fac: PROFILE.fac, lord: PROFILE.lord, level: PROFILE.level, sv: PROFILE.sv, fromSave: PROFILE.fromSave});
   const changed = () => { apply(); save(); drawBar(); document.dispatchEvent(new Event("rorchange")); };
 
   { const s = PREF.get("profile", null);
-    if (s && s.fac && facs.includes(s.fac)) { PROFILE.fac = s.fac; PROFILE.lord = typeof s.lord === "string" ? s.lord : "auto"; PROFILE.on = !!s.on; PROFILE.level = Math.min(40, Math.max(1, Math.round(+s.level) || 1)); } }
+    if (s && s.fac && facs.includes(s.fac)) { PROFILE.fac = s.fac; PROFILE.lord = typeof s.lord === "string" ? s.lord : "auto"; PROFILE.on = !!s.on; PROFILE.level = Math.min(50, Math.max(1, Math.round(+s.level) || 1)); if (s.sv && s.sv.lords) { PROFILE.sv = s.sv; PROFILE.fromSave = !!s.fromSave; } } }
   if (!PROFILE.fac) PROFILE.fac = facs.find(f => f === "wh_main_emp_empire") || facs[0] || null;
   if (!facs.length) { document.querySelectorAll("[data-profui]").forEach(e => e.remove()); return; }
 
@@ -134,16 +140,40 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     dlg.innerHTML = `<div class="dlch"><h2>Ma campagne</h2><button class="x" type="button" data-close>✕</button></div>
       <p class="dlcp">Choisis ta faction et son seigneur : ses bonus de stats par défaut sont appliqués aux unités de la faction <b>partout sur le site</b> (tier list, unités par faction, fiche d'unité, combat). Les rangs « Top / Bottom % » se recalculent sur les stats modifiées.</p>
       <label class="chk dlcmain"><input type="checkbox" data-on ${PROFILE.on ? "checked" : ""}> Activer ma campagne</label>
+      <div class="profsv"><b>Ma sauvegarde</b> <input type="file" id="profsave" accept=".save,*/*" hidden><button type="button" data-svbtn>${PROFILE.sv ? "Importer une autre sauvegarde…" : "Importer ma sauvegarde (.save)…"}</button><small data-svmsg>${PROFILE.sv ? svInfo() : "Lue dans ton navigateur, rien n'est envoyé. Remplit la faction, le seigneur, son niveau et ses compétences prises, et retient les technologies recherchées."}</small>${PROFILE.sv && !PROFILE.fromSave ? `<button type="button" data-svuse>Reprendre les compétences de la sauvegarde</button>` : ""}</div>
       <div class="profrow">${picker("fac", "Faction", facBtn(PROFILE.fac), cults.map(c => `<div class="pkh">${esc(D.cultures[c])}</div>` + byCul[c].sort((a, b) => D.factions[a].localeCompare(D.factions[b], "fr")).map(f => pkItem("fac", f, crest(f, "s"), D.factions[f], f === PROFILE.fac)).join("")).join(""))}
-      ${picker("lord", "Seigneur", lordBtn(), pkItem("lord", "auto", auto ? lordIcon(auto) : "", "Auto — " + (auto ? lordLabel(auto) : "aucun seigneur de départ connu"), PROFILE.lord === "auto") + pkItem("lord", "none", "", "Aucun seigneur", PROFILE.lord === "none") + lordChoices(PROFILE.fac).map(x => pkItem("lord", x, lordIcon(x), lordLabel(x), PROFILE.lord === x)).join(""))}</div>
+      ${picker("lord", "Seigneur", lordBtn(), pkItem("lord", "auto", auto ? lordIcon(auto) : "", "Auto — " + (auto ? lordLabel(auto) : "aucun seigneur de départ connu"), PROFILE.lord === "auto") + pkItem("lord", "none", "", "Aucun seigneur", PROFILE.lord === "none") + lordChoices(PROFILE.fac).sort((a, b) => ((svLord(b) || {}).rank || 0) - ((svLord(a) || {}).rank || 0)).map(x => pkItem("lord", x, lordIcon(x), lordLabel(x) + (svLord(x) ? ` — niv. ${svLord(x).rank} (sauvegarde)` : ""), PROFILE.lord === x)).join(""))}</div>
       <div class="profrow"><label><span>Niveau du seigneur : <b data-lvtxt>${PROFILE.level}</b> <small>(${Math.max(0, PROFILE.level - 1)} point${PROFILE.level > 2 ? "s" : ""} de compétence${PROFILE.alloc.length ? `, ${spent()} dépensé${spent() > 1 ? "s" : ""} dans les bonus d'armée` : ""})</small></span>
-        <input type="range" min="1" max="40" value="${PROFILE.level}" data-level></label><button type="button" data-lvmax>Tout au max (niveau 40)</button></div>
+        <input type="range" min="1" max="50" value="${PROFILE.level}" data-level></label><button type="button" data-lvmax>Tout au max (niveau 50)</button></div>
       <h3>Effets appliqués${st ? " — " + esc(lordLabel(st)) : ""}</h3>
       <ul class="proflist">${eff.length ? eff.map(e => `<li title="${esc(e.label)} (${esc(e.src)})">${LAB[e.stat]} ${e.v > 0 ? "+" : ""}${e.v}${e.pct ? " %" : ""} — ${tgt(e)}</li>`).join("") : `<li class="none">${st ? "Aucun effet de stats par défaut (ses effets de départ sont surtout des effets de campagne)." : "Aucun seigneur : aucun effet."}</li>`}${cond ? `<li class="none">${cond} effet(s) conditionnel(s) non appliqué(s) (terrain, embuscade, race adverse…).</li>` : ""}</ul>
-      ${PROFILE.alloc.length ? `<h3>Compétences choisies automatiquement</h3><ul class="proflist">${PROFILE.alloc.map(x => `<li>${esc(x.n)} <b>${x.lv}/${x.max}</b> — ${x.effs.map(e => `${LAB[e.s]} ${e.v > 0 ? "+" : ""}${e.v}${e.p ? " %" : ""}${e.u === "lord" ? " (seigneur)" : ""}`).join(", ")}${x.innate ? " · innée" : ""}</li>`).join("")}</ul>` : ""}
+      ${PROFILE.alloc.length ? `<h3>${usingSave(st) ? "Compétences prises dans ta sauvegarde" : "Compétences choisies automatiquement"}</h3><ul class="proflist">${PROFILE.alloc.map(x => `<li>${esc(x.n)} <b>${x.lv}/${x.max}</b> — ${x.effs.map(e => `${LAB[e.s]} ${e.v > 0 ? "+" : ""}${e.v}${e.p ? " %" : ""}${e.u === "lord" ? " (seigneur)" : ""}`).join(", ")}${x.innate ? " · innée" : ""}</li>`).join("")}</ul>` : ""}
       <p class="dlcp">Le site dépense les points tout seul, en priorisant ce qui apporte le plus à la faction (heuristique) ; pas de choix compétence par compétence. Pas encore pris en compte : technologies et autres bonus de faction (chantiers à venir). Les duels précalculés du classement « duels » restent au profil par défaut. Dans le Combat, l'effet de ce même seigneur n'est pas compté deux fois.</p>
       <p class="dlcp" style="margin-bottom:16px"><button type="button" data-poff2>Désactiver et revenir aux stats du jeu</button></p>`;
   };
+
+  /* ---------- Import d'une sauvegarde (.save) : voir savereader.js ---------- */
+  const svLord = st => PROFILE.sv && PROFILE.sv.lords[st];
+  const svInfo = () => { const v = PROFILE.sv, n = Object.keys(v.lords).length; return `${esc(v.name || "Sauvegarde")} · ${esc(D.factions[v.fac] || v.fac)} · ${n} seigneur${n > 1 ? "s" : ""} lu${n > 1 ? "s" : ""}, ${v.techs.length} technologie${v.techs.length > 1 ? "s" : ""} recherchée${v.techs.length > 1 ? "s" : ""}${PROFILE.fromSave ? " · compétences de la sauvegarde appliquées" : ""}`; };
+  async function importSave(file) {
+    const msg = t => { const m = dlg.querySelector("[data-svmsg]"); if (m) m.textContent = t; };
+    if (!window.SaveReader) { msg("Lecteur de sauvegarde indisponible."); return; }
+    try {
+      msg("Lecture de " + file.name + " (" + (file.size / 1048576).toFixed(1) + " Mo)…"); await new Promise(r => setTimeout(r, 30));
+      const buf = await file.arrayBuffer(); await new Promise(r => setTimeout(r, 30));
+      const res = SaveReader.read(buf, t => msg(t));
+      const hk = res.humans.find(k => res.factions[k].chars.length) || res.humans[0];
+      if (!hk) { msg("Aucune faction jouée par un joueur dans cette sauvegarde."); return; }
+      const f = res.factions[hk], lords = {};
+      for (const c of f.chars) if (c.type === "general" && FX.lords[c.st] && !lords[c.st]) lords[c.st] = {rank: c.rank, xp: c.xp, unspent: c.unspent, skills: c.skills};
+      const best = Object.keys(lords).sort((a, b) => lords[b].rank - lords[a].rank)[0];
+      PROFILE.sv = {name: file.name.replace(/\.save$/i, "").replace(/_/g, " "), fac: hk, techs: f.techs, lords};
+      if (D.facInfo[hk]) PROFILE.fac = hk;
+      PROFILE.lord = best || "auto"; PROFILE.level = best ? Math.min(50, lords[best].rank) : PROFILE.level; PROFILE.fromSave = !!best; PROFILE.on = true;
+      changed(); draw();
+      const m = dlg.querySelector("[data-svmsg]"); if (m && !D.facInfo[hk]) m.textContent += " · faction « " + hk + " » inconnue du site : choisis-la à la main.";
+    } catch (e) { msg("Échec de lecture : " + (e && e.message || e)); console.error(e); }
+  }
   const open = () => { draw(); dlg.showModal(); };
   document.addEventListener("click", e => { if (e.target.closest("[data-pedit]")) open(); const o = e.target.closest("[data-poff]"); if (o) { PROFILE.on = false; changed(); } });
   dlg.addEventListener("click", e => { if (e.target === dlg || e.target.closest("[data-close]")) dlg.close();
@@ -153,16 +183,21 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     if (b) { const p = b.parentNode.querySelector(".pkp"), was = p.hidden; dlg.querySelectorAll(".pkp").forEach(x => { x.hidden = true; }); p.hidden = !was; if (!p.hidden) { const q = p.querySelector(".pkq"); q.value = ""; p.querySelectorAll(".pki,.pkh").forEach(x => { x.hidden = false; }); q.focus(); const sel = p.querySelector(".pki.sel"); if (sel) sel.scrollIntoView({block: "nearest"}); } return; }
     const f = e.target.closest("[data-pk-fac]"), l = e.target.closest("[data-pk-lord]");
     if (f) { PROFILE.fac = f.dataset.pkFac; PROFILE.lord = "auto"; PROFILE.on = true; changed(); draw(); return; }
-    if (l) { PROFILE.lord = l.dataset.pkLord; PROFILE.on = true; changed(); draw(); return; }
+    if (l) { PROFILE.lord = l.dataset.pkLord; PROFILE.on = true; const sl = svLord(PROFILE.lord); if (sl) { PROFILE.fromSave = true; PROFILE.level = Math.min(50, sl.rank); } changed(); draw(); return; }
     if (!e.target.closest(".pkp")) dlg.querySelectorAll(".pkp").forEach(x => { x.hidden = true; });
   });
   dlg.addEventListener("input", e => { const q = e.target.closest(".pkq"); if (!q) return; const t = q.value.trim().toLowerCase();
     q.parentNode.querySelectorAll(".pki").forEach(x => { x.hidden = !!t && !x.dataset.q.includes(t); });
     q.parentNode.querySelectorAll(".pkh").forEach(h => { let n = h.nextElementSibling, any = false; while (n && n.classList.contains("pki")) { if (!n.hidden) any = true; n = n.nextElementSibling; } h.hidden = !!t && !any; }); });
+  dlg.addEventListener("click", e => {
+    if (e.target.closest("[data-svbtn]")) dlg.querySelector("#profsave").click();
+    if (e.target.closest("[data-svuse]")) { PROFILE.fromSave = true; const l = svLord(stOf()); if (l) PROFILE.level = Math.min(50, l.rank); changed(); draw(); }
+  });
+  dlg.addEventListener("change", e => { if (e.target.id === "profsave" && e.target.files[0]) importSave(e.target.files[0]); });
   dlg.addEventListener("input", e => { if ("level" in e.target.dataset) dlg.querySelector("[data-lvtxt]").textContent = e.target.value; });     // pendant le glissement : seulement l'affichage
-  dlg.addEventListener("click", e => { if (e.target.closest("[data-lvmax]")) { PROFILE.level = 40; PROFILE.on = true; changed(); draw(); } });
+  dlg.addEventListener("click", e => { if (e.target.closest("[data-lvmax]")) { PROFILE.level = 50; PROFILE.fromSave = false; PROFILE.on = true; changed(); draw(); } });
   dlg.addEventListener("change", e => { const c = e.target;
-    if ("level" in c.dataset) { PROFILE.level = +c.value; PROFILE.on = true; }
+    if ("level" in c.dataset) { PROFILE.level = +c.value; PROFILE.fromSave = false; PROFILE.on = true; }
     else if ("on" in c.dataset) PROFILE.on = c.checked;
     else if ("fac" in c.dataset) { PROFILE.fac = c.value; PROFILE.lord = "auto"; PROFILE.on = true; }
     else if ("lord" in c.dataset) { PROFILE.lord = c.value; PROFILE.on = true; }

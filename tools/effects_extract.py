@@ -143,7 +143,7 @@ def build_effects(T, units, loc, facinfo):
                     if effs: L[lv] = effs
                 if not L: continue
                 pos[it] = len(tree)
-                tree.append({"id": it, "n": nm_(n["character_skill_key"]), "t": int(n.get("tier") or 0), "p0": int(n.get("points_on_creation") or 0),
+                tree.append({"id": it, "k": n["character_skill_key"], "n": nm_(n["character_skill_key"]), "t": int(n.get("tier") or 0), "p0": int(n.get("points_on_creation") or 0),
                              "rq": int(n.get("required_num_parents") or 0), "r": 0, "L": L})
         for t in tree: t["pa"] = [pos[p] for p in parents.get(t.pop("id"), []) if p in pos]
         if tree: skills[st] = tree

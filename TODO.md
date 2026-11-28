@@ -13,6 +13,8 @@ Chantiers décidés, pas encore commencés. Les notes ci-dessous viennent de l'e
 
 ## 1. Niveau et compétences des seigneurs / héros (profil global, voir point 0)
 
+**Import de sauvegarde fait** (`savereader.js`, bouton « Importer ma sauvegarde (.save) » dans « Ma campagne ») : lit le `.save` dans le navigateur (ESF CBAB + LZMA1, ~4 s pour 14 Mo), reprend la faction jouée, les seigneurs (rang, compétences prises avec leur niveau) et la liste des **technologies recherchées** (conservée dans `PROFILE.sv.techs`, pas encore appliquée : voir point 3). Limites : seuls les seigneurs présents dans `data/effects.js` (ceux qui ont des effets de stats) sont repris ; unités, bâtiments et DLC possédés ne sont pas lus ; testé sur une seule sauvegarde (Légion du Tertre).
+
 **État : fait pour les seigneurs** (curseur de niveau 1–40 dans « Ma campagne », dépense automatique des points, `data/skills.js` généré par `tools/effects_extract.py` / `tools/skills_only.py`). **Vérifié** : la valeur d'un niveau est le TOTAL à ce niveau (rapport médian niveau 2 / niveau 1 = 2,0, niveau 3 / niveau 1 = 3,0 sur 1 200 effets de stats) ; 1 point = 1 niveau de compétence ; `unlocked_at_rank` vaut 0 pour presque toutes les compétences (pas de seuil de niveau par compétence). **Reste** : héros (arbres non extraits), noms de compétences en français (loc FR absente ici ; noms anglais pour l'instant), valeurs de `W` (poids des stats dans l'allocation, heuristique non calibrée), effets de résistances / ward / rechargement non modélisés.
 
 **Décision** : curseur automatique (pas de choix compétence par compétence).

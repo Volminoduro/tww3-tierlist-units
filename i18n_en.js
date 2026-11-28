@@ -2,7 +2,13 @@
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
   // ---------- Ma campagne (profil global) ----------
-  "Tout au max (niveau 40)": "Max everything (level 40)",
+  "Tout au max (niveau 50)": "Max everything (level 50)",
+  "Ma sauvegarde": "My save",
+  "Compétences prises dans ta sauvegarde": "Skills taken in your save",
+  "Importer ma sauvegarde (.save)…": "Import my save (.save)…",
+  "Importer une autre sauvegarde…": "Import another save…",
+  "Reprendre les compétences de la sauvegarde": "Use the save's skills again",
+  "Lue dans ton navigateur, rien n'est envoyé. Remplit la faction, le seigneur, son niveau et ses compétences prises, et retient les technologies recherchées.": "Read in your browser, nothing is uploaded. Fills in the faction, the lord, their level and the skills taken, and remembers the researched technologies.",
   "Compétences choisies automatiquement": "Skills picked automatically",
   "Niveau du seigneur : {} ({} point{} de compétence{})": "Lord level: {} ({} skill point{}{})",
   ", # dépensé{} dans les bonus d'armée": ", # spent{} on army bonuses",
