@@ -140,7 +140,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     dlg.innerHTML = `<div class="dlch"><h2>Ma campagne</h2><button class="x" type="button" data-close>✕</button></div>
       <p class="dlcp">Choisis ta faction et son seigneur : ses bonus de stats par défaut sont appliqués aux unités de la faction <b>partout sur le site</b> (tier list, unités par faction, fiche d'unité, combat). Les rangs « Top / Bottom % » se recalculent sur les stats modifiées.</p>
       <label class="chk dlcmain"><input type="checkbox" data-on ${PROFILE.on ? "checked" : ""}> Activer ma campagne</label>
-      <div class="profsv"><b>Ma sauvegarde</b> <input type="file" id="profsave" accept=".save,*/*" hidden><button type="button" data-svbtn>${PROFILE.sv ? "Importer une autre sauvegarde…" : "Importer ma sauvegarde (.save)…"}</button><small data-svmsg>${PROFILE.sv ? svInfo() : "Lue dans ton navigateur, rien n'est envoyé. Remplit la faction, le seigneur, son niveau et ses compétences prises, et retient les technologies recherchées."}</small>${PROFILE.sv && !PROFILE.fromSave ? `<button type="button" data-svuse>Reprendre les compétences de la sauvegarde</button>` : ""}</div>
+      <div class="profsv"><b>Ma sauvegarde</b> <input type="file" id="profsave" accept=".save,*/*" hidden><button type="button" data-svbtn>${PROFILE.sv ? "Importer une autre sauvegarde…" : "Importer ma sauvegarde (.save)…"}</button><button type="button" data-svpath title="%AppData%\\The Creative Assembly\\Warhammer3\\save_games">Copier le dossier des sauvegardes</button><small data-svmsg>${PROFILE.sv ? svInfo() : "Lue dans ton navigateur, rien n'est envoyé. Remplit la faction, le seigneur, son niveau et ses compétences prises, et retient les technologies recherchées."}</small>${PROFILE.sv && !PROFILE.fromSave ? `<button type="button" data-svuse>Reprendre les compétences de la sauvegarde</button>` : ""}</div>
       <div class="profrow">${picker("fac", "Faction", facBtn(PROFILE.fac), cults.map(c => `<div class="pkh">${esc(D.cultures[c])}</div>` + byCul[c].sort((a, b) => D.factions[a].localeCompare(D.factions[b], "fr")).map(f => pkItem("fac", f, crest(f, "s"), D.factions[f], f === PROFILE.fac)).join("")).join(""))}
       ${picker("lord", "Seigneur", lordBtn(), pkItem("lord", "auto", auto ? lordIcon(auto) : "", "Auto — " + (auto ? lordLabel(auto) : "aucun seigneur de départ connu"), PROFILE.lord === "auto") + pkItem("lord", "none", "", "Aucun seigneur", PROFILE.lord === "none") + lordChoices(PROFILE.fac).sort((a, b) => ((svLord(b) || {}).rank || 0) - ((svLord(a) || {}).rank || 0)).map(x => pkItem("lord", x, lordIcon(x), lordLabel(x) + (svLord(x) ? ` — niv. ${svLord(x).rank} (sauvegarde)` : ""), PROFILE.lord === x)).join(""))}</div>
       <div class="profrow"><label><span>Niveau du seigneur : <b data-lvtxt>${PROFILE.level}</b> <small>(${Math.max(0, PROFILE.level - 1)} point${PROFILE.level > 2 ? "s" : ""} de compétence${PROFILE.alloc.length ? `, ${spent()} dépensé${spent() > 1 ? "s" : ""} dans les bonus d'armée` : ""})</small></span>
@@ -190,7 +190,14 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
     q.parentNode.querySelectorAll(".pki").forEach(x => { x.hidden = !!t && !x.dataset.q.includes(t); });
     q.parentNode.querySelectorAll(".pkh").forEach(h => { let n = h.nextElementSibling, any = false; while (n && n.classList.contains("pki")) { if (!n.hidden) any = true; n = n.nextElementSibling; } h.hidden = !!t && !any; }); });
   dlg.addEventListener("click", e => {
-    if (e.target.closest("[data-svbtn]")) dlg.querySelector("#profsave").click();
+    if (e.target.closest("[data-svbtn]")) {
+      if (window.showOpenFilePicker) {                       // Chrome / Edge : le sélecteur retient le dernier dossier (id) ; un navigateur ne peut pas imposer un chemin
+        showOpenFilePicker({id: "tww3save", startIn: "documents", types: [{description: "Sauvegarde Warhammer III", accept: {"application/octet-stream": [".save"]}}]})
+          .then(h => h.getFile()).then(f => importSave(f)).catch(err => { if (!err || err.name !== "AbortError") dlg.querySelector("#profsave").click(); });
+      } else dlg.querySelector("#profsave").click();
+    }
+    if (e.target.closest("[data-svpath]")) { const p = "%AppData%\\The Creative Assembly\\Warhammer3\\save_games", m = dlg.querySelector("[data-svmsg]");
+      (navigator.clipboard ? navigator.clipboard.writeText(p) : Promise.reject()).then(() => { m.textContent = "Chemin copié : colle-le dans la barre d'adresse de la fenêtre de sélection."; }, () => { m.textContent = "Chemin : " + p; }); }
     if (e.target.closest("[data-svuse]")) { PROFILE.fromSave = true; const l = svLord(stOf()); if (l) PROFILE.level = Math.min(50, l.rank); changed(); draw(); }
   });
   dlg.addEventListener("change", e => { if (e.target.id === "profsave" && e.target.files[0]) importSave(e.target.files[0]); });

@@ -4,6 +4,7 @@ Object.assign(I18N.dict, {
   // ---------- Ma campagne (profil global) ----------
   "Tout au max (niveau 50)": "Max everything (level 50)",
   "Ma sauvegarde": "My save",
+  "Copier le dossier des sauvegardes": "Copy the saves folder",
   "Compétences prises dans ta sauvegarde": "Skills taken in your save",
   "Importer ma sauvegarde (.save)…": "Import my save (.save)…",
   "Importer une autre sauvegarde…": "Import another save…",
