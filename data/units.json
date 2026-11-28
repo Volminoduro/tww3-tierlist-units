@@ -21382,7 +21382,8 @@
     35
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "fatigue_immune"
    ]
   },
   {
@@ -25565,7 +25566,8 @@
     38
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "fatigue_immune"
    ]
   },
   {
@@ -48079,6 +48081,9 @@
    "cultures": [],
    "pk": [
     7
+   ],
+   "at": [
+    "fatigue_immune"
    ]
   },
   {
@@ -48926,7 +48931,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "fatigue_immune"
    ]
   },
   {
@@ -49367,7 +49373,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "fatigue_immune"
    ]
   },
   {
@@ -65255,7 +65262,8 @@
    "tier": 4.0,
    "mount": "",
    "at": [
-    "charge_defense"
+    "charge_defense",
+    "unyielding_assault"
    ],
    "ror": 1,
    "regen": 0,
@@ -76463,7 +76471,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "unyielding_assault"
    ],
    "ror": 1,
    "regen": 0,
@@ -77917,7 +77926,8 @@
     82
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "unyielding_assault"
    ]
   },
   {
@@ -77974,7 +77984,8 @@
     82
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "unyielding_assault"
    ]
   },
   {
@@ -78031,7 +78042,8 @@
     82
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "unyielding_assault"
    ]
   },
   {
@@ -81769,7 +81781,8 @@
     87
    ],
    "at": [
-    "causes_fear"
+    "causes_fear",
+    "fatigue_immune"
    ]
   },
   {
@@ -82129,7 +82142,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "fatigue_immune"
    ]
   },
   {
@@ -85733,7 +85747,8 @@
     "causes_fear",
     "devastating_flanker",
     "immune_to_psychology",
-    "unbreakable"
+    "unbreakable",
+    "unyielding_assault"
    ]
   },
   {
@@ -86109,7 +86124,8 @@
    "at": [
     "causes_fear",
     "causes_terror",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -88311,7 +88327,8 @@
     90
    ],
    "at": [
-    "immune_to_psychology"
+    "immune_to_psychology",
+    "unyielding_assault"
    ]
   },
   {
@@ -95894,7 +95911,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "formed_attack"
    ],
    "regen": 0,
    "res": {
@@ -96306,6 +96324,9 @@
    "cultures": [],
    "pk": [
     57
+   ],
+   "at": [
+    "formed_attack"
    ]
   },
   {
@@ -96347,7 +96368,8 @@
    "mount": "",
    "at": [
     "charge_defense_vs_large",
-    "charge_reflection"
+    "charge_reflection",
+    "formed_attack"
    ],
    "regen": 0,
    "res": {
@@ -96475,7 +96497,8 @@
    "mount": "",
    "at": [
     "charge_defense",
-    "charge_reflection"
+    "charge_reflection",
+    "formed_attack"
    ],
    "regen": 0,
    "res": {
@@ -106536,7 +106559,8 @@
    "at": [
     "causes_fear",
     "causes_terror",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -106785,7 +106809,8 @@
    "at": [
     "causes_fear",
     "causes_terror",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -107282,7 +107307,8 @@
    "at": [
     "causes_fear",
     "causes_terror",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -107531,7 +107557,8 @@
    "at": [
     "causes_fear",
     "causes_terror",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -108172,7 +108199,8 @@
    "at": [
     "causes_fear",
     "causes_terror",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -110654,6 +110682,7 @@
    "at": [
     "charge_defense",
     "charge_reflection",
+    "formed_attack",
     "immune_to_psychology"
    ],
    "ror": 1,
@@ -111002,7 +111031,8 @@
    ],
    "at": [
     "causes_fear",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -111445,7 +111475,8 @@
    ],
    "at": [
     "causes_fear",
-    "devastating_flanker"
+    "devastating_flanker",
+    "fatigue_immune"
    ]
   },
   {
@@ -112315,6 +112346,7 @@
    "at": [
     "charge_defense",
     "charge_reflection",
+    "fatigue_immune",
     "immune_to_psychology"
    ],
    "ror": 1,
@@ -114054,6 +114086,7 @@
    "mount": "",
    "at": [
     "charge_defense",
+    "fatigue_immune",
     "immune_to_psychology"
    ],
    "regen": 0,
@@ -125747,6 +125780,7 @@
     1
    ],
    "at": [
+    "fatigue_immune",
     "immune_to_psychology"
    ]
   },
@@ -125922,7 +125956,8 @@
    ],
    "at": [
     "causes_fear",
-    "causes_terror"
+    "causes_terror",
+    "fatigue_immune"
    ]
   },
   {
@@ -125981,6 +126016,7 @@
     1
    ],
    "at": [
+    "fatigue_immune",
     "immune_to_psychology"
    ]
   },
@@ -126824,6 +126860,7 @@
    "at": [
     "causes_fear",
     "causes_terror",
+    "fatigue_immune",
     "unbreakable"
    ]
   },
@@ -130665,6 +130702,7 @@
     1
    ],
    "at": [
+    "fatigue_immune",
     "immune_to_psychology"
    ]
   },
@@ -146895,6 +146933,7 @@
     26
    ],
    "at": [
+    "fatigue_immune",
     "immune_to_psychology"
    ]
   },

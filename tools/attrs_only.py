@@ -8,7 +8,7 @@ from collections import defaultdict
 import convert_rpfm as C
 root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 T = C.load_tables(sys.argv[1], only_needed=True)
-NEW = {"causes_fear", "causes_terror", "immune_to_psychology", "unbreakable", "glorious_charge", "devastating_flanker"}
+NEW = {"causes_fear", "causes_terror", "immune_to_psychology", "unbreakable", "glorious_charge", "devastating_flanker", "formed_attack", "unyielding_assault", "fatigue_immune", "fatigue_res"}
 grp = defaultdict(set)
 for r in T.get("unit_attributes_to_groups_junctions", []):
     if r.get("attribute") in NEW: grp[r.get("attribute_group")].add(r["attribute"])
