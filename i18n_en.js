@@ -1,6 +1,9 @@
 "use strict";
 /* Dictionnaire français -> anglais. Clé = texte français affiché ; « # » = nombre, « {} » = texte quelconque (traduit récursivement, ex. un nom d'unité reste tel quel). */
 Object.assign(I18N.dict, {
+  " Jouables au lancement de campagne seulement": " Playable at campaign start only",
+  "Jouables au lancement de campagne seulement": "Playable at campaign start only",
+  "# faction{}": "# faction{}",
   "offert aux précommandes et la 1re semaine : peut manquer à la liste Steam, à cocher à la main": "given away with pre-orders and during the first week: may be missing from the Steam list, tick it by hand",
   "Tiers": "Tiers", "Tableau": "Table", "Matrice": "Matrix", "Vue tiers : unités classées par tier (touche 1)": "Tiers view: units ranked by tier (key 1)", "Vue tableau : toutes les valeurs, triables (touche 2)": "Table view: every value, sortable (key 2)", "Matrice typologique : le percentile de chaque unité par usage (touche 3)": "Typology matrix: each unit's percentile per usage (key 3)",
   // ---------- Ma campagne (profil global) ----------

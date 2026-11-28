@@ -102,8 +102,14 @@ def build_effects(T, units, loc, facinfo):
             lords[st] = {"unit": unit, "effects": out}
     # --- seigneurs de départ de chaque faction (choix « auto ») ---
     leaders = defaultdict(list)
+    # Factions jouables au lancement de campagne (écran de sélection) dont la clé diffère de celle de la table de bataille personnalisée
+    ALIAS = {"wh2_main_def_naggarond": "wh2_main_def_dark_elves", "wh2_main_hef_eataine": "wh2_main_hef_eataine_mp", "wh2_main_lzd_hexoatl": "wh2_main_lzd_lizardmen",
+             "wh2_main_skv_clan_mors": "wh2_main_skv_skaven", "wh3_main_cth_the_northern_provinces": "wh3_main_cth_cathay_mp", "wh3_main_kho_exiles_of_khorne": "wh3_main_kho_khorne",
+             "wh3_main_ksl_the_ice_court": "wh3_main_ksl_kislev", "wh3_main_nur_poxmakers_of_nurgle": "wh3_main_nur_nurgle", "wh3_main_ogr_goldtooth": "wh3_main_ogr_ogre_kingdoms",
+             "wh3_main_sla_seducers_of_slaanesh": "wh3_main_sla_slaanesh", "wh3_main_tze_oracles_of_tzeentch": "wh3_main_tze_tzeentch"}
     for r in T.get("frontend_faction_leaders", []):
-        f, st = r.get("faction"), r.get("agent_subtype_record")
+        if "political_party_chaos" in (r.get("key") or ""): continue          # variantes de la campagne Royaume du Chaos : factions croisées (Greasus sous Skrag…), ignorées
+        f, st = ALIAS.get(r.get("faction"), r.get("faction")), r.get("agent_subtype_record")
         if f in facinfo and st in lords and st not in leaders[f]: leaders[f].append(st)
     # on ne garde que les seigneurs utiles (au moins un effet exploitable) ou désignés comme seigneur de départ
     keep = {st for fl in leaders.values() for st in fl} | {st for st, l in lords.items() if any(e.get("stat") for e in l["effects"])}

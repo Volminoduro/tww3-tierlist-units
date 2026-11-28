@@ -82,7 +82,7 @@ function initPicker(facEl, defaultKey, multi = false) {
   facEl.hidden = true;
 
   const root = document.createElement("div"); root.className = "tp";
-  root.innerHTML = `<button type="button" class="tp-btn"></button><div class="tp-pop" hidden><input class="tp-q" placeholder="Filtrer races et factions…">${multi ? '<div class="tp-hint">Coche plusieurs races ou factions pour les combiner.</div>' : ""}<div class="tp-list"></div></div>`;
+  root.innerHTML = `<button type="button" class="tp-btn"></button><div class="tp-pop" hidden><input class="tp-q" placeholder="Filtrer races et factions…"><label class="tp-camp" title="Les autres factions existent en bataille personnalisée ou comme factions de l'IA, mais ne se choisissent pas à l'écran de lancement d'une campagne"><input type="checkbox" class="tp-campck"> Jouables au lancement de campagne seulement</label>${multi ? '<div class="tp-hint">Coche plusieurs races ou factions pour les combiner.</div>' : ""}<div class="tp-list"></div></div>`;
   facEl.after(root);
   const btn = root.querySelector(".tp-btn"), pop = root.querySelector(".tp-pop"), q = root.querySelector(".tp-q"), list = root.querySelector(".tp-list");
   const open = new Set();   // races dépliées : aucune au départ ; la race d'un choix de l'utilisateur est dépliée aux ouvertures suivantes
@@ -101,7 +101,7 @@ function initPicker(facEl, defaultKey, multi = false) {
     const f = facEl.value, c = cultOf(f);
     const icon = isRace(f) ? crest(mainFacOf(c), "s", D.cultures[c]) : crest(f, "s");
     const name = isRace(f) ? D.cultures[c] + " — toute la race" : D.factions[f];
-    const sub = f === ALL ? "Toutes les races" : isRace(f) ? `${byCul[c].length} factions` : D.cultures[c];
+    const sub = f === ALL ? "Toutes les races" : isRace(f) ? `${shown(c).length} faction${shown(c).length > 1 ? "s" : ""}` : D.cultures[c];
     btn.innerHTML = `${icon}<span class="tp-t"><b>${name}</b><small>${sub}</small></span><span class="tp-c">▾</span>`;
   };
   /* Factions / races sans aucune unité disponible avec les filtres actuels (bataillons de renom exclus, DLC non possédés) : grisées et non sélectionnables. */
@@ -114,14 +114,18 @@ function initPicker(facEl, defaultKey, multi = false) {
       ? `<div class="tp-all${facEl.value === ALL ? " sel" : ""}" data-f="${ALL}">${crest(ALL, "s")}<span>${D.factions[ALL]}</span></div>` : "";
     list.innerHTML = allRow + cultures.map(c => {
       const raceHit = t && D.cultures[c].toLowerCase().includes(t);
-      const fs = !t || raceHit ? byCul[c] : byCul[c].filter(f => D.factions[f].toLowerCase().includes(t));
+      const fs = !t || raceHit ? shown(c) : shown(c).filter(f => D.factions[f].toLowerCase().includes(t));
       if (!fs.length) return "";
       const isOpen = !!t || open.has(c);
       const rs = multi ? raceState(c) : 0;
-      return `<div class="tp-race${multi ? (rs === 2 ? " sel" : rs === 1 ? " part" : "") : facEl.value === RACE + c ? " sel" : ""}${has(RACE + c) ? "" : " na"}" data-c="${c}" title="${has(RACE + c) ? "Cliquer pour déplier / replier" : NA}">${crest(mainFacOf(c), "s", D.cultures[c])}<span>${D.cultures[c]}</span><small>${byCul[c].length}</small><button type="button" class="tp-pick" title="Choisir toute la race">${multi ? (rs === 2 ? "✓ Tout" : "Tout") : "Tout"}</button><i>${isOpen ? "▾" : "▸"}</i></div>` +
+      return `<div class="tp-race${multi ? (rs === 2 ? " sel" : rs === 1 ? " part" : "") : facEl.value === RACE + c ? " sel" : ""}${has(RACE + c) ? "" : " na"}" data-c="${c}" title="${has(RACE + c) ? "Cliquer pour déplier / replier" : NA}">${crest(mainFacOf(c), "s", D.cultures[c])}<span>${D.cultures[c]}</span><small>${shown(c).length}</small><button type="button" class="tp-pick" title="Choisir toute la race">${multi ? (rs === 2 ? "✓ Tout" : "Tout") : "Tout"}</button><i>${isOpen ? "▾" : "▸"}</i></div>` +
         (isOpen ? fs.map(f => { const on = multi ? covered(f, c) : f === facEl.value; return `<div class="tp-it${on ? " sel" : ""}${has(f) ? "" : " na"}" data-f="${f}"${has(f) ? "" : ` title="${NA}"`}>${multi ? `<i class="tp-cb${on ? " on" : ""}"></i>` : ""}${crest(f, "s")}<span>${D.factions[f]}</span></div>`; }).join("") : "");
     }).join("") || (allRow ? "" : '<div class="tp-none">Aucun résultat</div>');
   };
+  /* Filtre « jouables au lancement de campagne » : les factions ayant un seigneur de départ (data/effects.js, table frontend_faction_leaders) ; mémorisé, partagé par tous les sélecteurs. Une race sans aucune faction de départ garde toutes les siennes. */
+  const START = (window.TWW3_EFFECTS || {}).leaders || {}, campOn = () => PREF.get("campOnly", true) && Object.keys(START).length > 0;
+  const shown = c => { if (!campOn()) return byCul[c]; const l = byCul[c].filter(f => START[f] || f === facEl.value || sel.has(f)); return l.length ? l : byCul[c]; };
+  const campck = root.querySelector(".tp-campck"); campck.checked = campOn(); campck.onchange = () => { PREF.set("campOnly", campck.checked); render(); };
   const close = () => { pop.hidden = true; };
   const choose = v => { chosen = true; setFac(facEl, v); label(); close(); ["input", "change"].forEach(t => facEl.dispatchEvent(new Event(t, {bubbles: true}))); };
   /* Sélection multiple : coche / décoche sans fermer la liste. Une race dont toutes les factions sont cochées devient « race entière ». */
