@@ -20,7 +20,7 @@ STATS = [
     (r"stat_leadership", "ld", False), (r"stat_charge_bonus", "charge", False),
     (r"stat_weapon_strength", "ws", True), (r"stat_missile_damage", "ms", True), (r"stat_speed", "spd", True),
     (r"stat_unit_health", "hp", True), (r"stat_ammunition", "ammo", True), (r"stat_range", "range", True),
-    (r"perfect_vigour", "pv", False), (r"vigour_loss", "vig", True),                      # fatigue : attribut « vigueur parfaite » donné à des unités ; réduction de la perte de vigueur (valeur négative = moins de fatigue)
+    (r"perfect_vigour", "pv", False), (r"vigour_loss|fatigue_res", "vig", True),                      # fatigue : attribut « vigueur parfaite » donné à des unités ; réduction de la perte de vigueur (valeur négative = moins de fatigue)
 ]
 UNSUPPORTED = re.compile(r"stat_(physical_resistance|missile_resistance|magic_resistance|fire_resistance|ap_damage|miscast|reload|accuracy|damage_)")
 COND = re.compile(r"(ambush|retreat|desert|forest|snow|jungle|vs_|_when_|_while_|during|siege|night|rain|underground|settlement|garrison|reinforc|naval|_sea|_in_[a-z]+$)")
@@ -48,7 +48,7 @@ def cond_tags(key, label):
     return tags
 
 
-def build_effects(T, units, loc, facinfo):
+def build_effects(T, units, loc, facinfo, loc_fr=None):
     index = lambda rows, k: {r.get(k): r for r in rows if r.get(k)}
     ids = {u["id"] for u in units}
 
@@ -150,10 +150,13 @@ def build_effects(T, units, loc, facinfo):
         key = tuple(lst)
         if key not in set_idx: set_idx[key] = len(sets_); sets_.append(list(lst))
         return set_idx[key]
-    def nm_(k):                                  # nom de la compétence ; certains noms sont des renvois « {{tr:autre_clé}} »
-        v = loc.get("character_skills_localised_name_" + k) or ""
-        if v.startswith("{{tr:"): v = loc.get(v[5:-2]) or ""
-        return v or k
+    def nm_(k, L=None):                          # nom de la compétence (L : localisation, anglaise par défaut) ; certains noms sont des renvois « {{tr:autre_clé}} »
+        L = loc if L is None else L
+        v = L.get("character_skills_localised_name_" + k) or ""
+        for _ in range(5):
+            if not v.startswith("{{tr:"): break
+            v = L.get(v[5:-2]) or ""
+        return v or ("" if L is not loc else k)
     skills = {}
     for st in lords:
         tree, pos = [], {}
@@ -174,7 +177,7 @@ def build_effects(T, units, loc, facinfo):
                     if effs: L[lv] = effs
                 if not L: continue
                 pos[it] = len(tree)
-                tree.append({"id": it, "k": n["character_skill_key"], "n": nm_(n["character_skill_key"]), "t": int(n.get("tier") or 0), "p0": int(n.get("points_on_creation") or 0),
+                tree.append({"id": it, "k": n["character_skill_key"], "n": nm_(n["character_skill_key"]), **({"nf": nm_(n["character_skill_key"], loc_fr)} if loc_fr and nm_(n["character_skill_key"], loc_fr) else {}), "t": int(n.get("tier") or 0), "p0": int(n.get("points_on_creation") or 0),
                              "rq": int(n.get("required_num_parents") or 0), "r": 0, "L": L})
         for t in tree: t["pa"] = [pos[p] for p in parents.get(t.pop("id"), []) if p in pos]
         if tree: skills[st] = tree

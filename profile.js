@@ -82,12 +82,12 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
       if (best < 0) break;
       lv[best]++;
     }
-    return tree.map((t, i) => ({i, n: t.n, lv: lv[i], max: maxLv(t), effs: atLevel(t, lv[i]), innate: t.p0 > 0})).filter(x => x.lv > 0);
+    return tree.map((t, i) => ({i, n: (window.LANG === "en" ? t.n : (t.nf || t.n)), lv: lv[i], max: maxLv(t), effs: atLevel(t, lv[i]), innate: t.p0 > 0})).filter(x => x.lv > 0);
   }
   /* Compétences réellement prises dans la sauvegarde (clé de compétence -> niveau), au lieu de la dépense automatique. */
   function fromSaveAlloc(st) {
     const tree = SK.lords[st] || [], got = (PROFILE.sv && PROFILE.sv.lords[st] || {}).skills || {};
-    return tree.map((t, i) => ({i, n: t.n, lv: Math.min(maxLv(t), got[t.k] || 0), max: maxLv(t), innate: t.p0 > 0})).filter(x => x.lv > 0).map(x => ({...x, effs: atLevel(tree[x.i], x.lv)}));
+    return tree.map((t, i) => ({i, n: (window.LANG === "en" ? t.n : (t.nf || t.n)), lv: Math.min(maxLv(t), got[t.k] || 0), max: maxLv(t), innate: t.p0 > 0})).filter(x => x.lv > 0).map(x => ({...x, effs: atLevel(tree[x.i], x.lv)}));
   }
   const usingSave = st => !!(PROFILE.fromSave && PROFILE.sv && st && PROFILE.sv.lords[st]);
   const toEff = e => ({stat: e.s, v: e.v, pct: !!e.p, units: e.u === null ? null : e.u === "lord" ? "lord" : setOf(e.u), cond: !!e.c, c: e.c, label: "", src: "compétence"});
