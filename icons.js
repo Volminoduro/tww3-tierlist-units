@@ -105,11 +105,21 @@ function abilItem(a, isAttr) {
   const ic = a.ic ? `<img src="img/abilities/${a.ic}.png" alt="" loading="lazy" onerror="this.remove()">` : "";
   return `<div class="ab${a.sp ? " sp" : ""}${a.pa ? " pa" : ""}" title="${htmlEsc(d)}">${ic}<div><b>${htmlEsc(n)}</b>${meta.length ? `<small>${meta.join(" · ")}</small>` : ""}${d ? `<p>${htmlEsc(d)}</p>` : ""}</div></div>`;
 }
+/* Passifs intégrés aux stats (tools/passives.py) : la carte de jeu n'affiche pas les bonus des capacités passives (Frénésie +10 d'attaque…), mais ils jouent en bataille et sont comptés dans les stats du site. */
+const PAS_LAB = {ma: "Attaque", md: "Défense", ld: "Moral", charge: "Charge", speed: "Vitesse", armour: "Armure", dmg: "Dégâts de base", ap: "Dégâts perforants", rdmg: "Dégâts de tir", rap: "Perforants de tir", mass: "Masse"};
+function passiveNote(u) {
+  if (!u.base) return "";
+  const r1 = v => Math.round(v * 10) / 10, cur = {ma: u.ma, md: u.md, ld: u.ld, charge: u.charge, speed: u.speed, armour: u.armour, dmg: u.melee.dmg, ap: u.melee.ap, rdmg: u.ranged && u.ranged.dmg, rap: u.ranged && u.ranged.ap, mass: u.mass};
+  const rows = Object.keys(PAS_LAB).filter(k => u.base[k] != null && cur[k] != null && Math.abs(cur[k] - u.base[k]) > 0.05).map(k => `${PAS_LAB[k]} <b>${r1(cur[k])}</b> <small>(carte : ${r1(u.base[k])})</small>`);
+  if (!rows.length) return "";
+  const A = window.TWW3_ABIL, names = (u.pas || []).map(p => { const a = A && A.ab[p[0]]; return a ? (window.LANG === "en" ? a.ne || a.n : a.n) : p[0]; });
+  return `<h4>Passifs intégrés aux stats</h4><p class="dn">${names.join(", ")} : ces capacités passives jouent en bataille mais ne figurent pas sur la carte du jeu ; elles sont comptées dans les stats du site. ${rows.join(" · ")}.</p>`;
+}
 function abilHTML(u) {
   const A = window.TWW3_ABIL; if (!A) return `<p class="abmsg">Capacités indisponibles.</p>`;
   const list = (ks, isAttr) => (ks || []).map(k => (isAttr ? A.at : A.ab)[k]).filter(Boolean).map(a => abilItem(a, isAttr)).join("");
   const base = list(A.u[u.id]), sk = list(A.sk[u.id]), at = list(A.ua[u.id], true);
-  return (base ? `<h4>Capacités</h4><div class="abl">${base}</div>` : "")
+  return passiveNote(u) + (base ? `<h4>Capacités</h4><div class="abl">${base}</div>` : "")
     + (sk ? `<h4>Sorts et capacités par compétences</h4><div class="abl">${sk}</div>` : "")
     + (at ? `<h4>Attributs</h4><div class="abl at">${at}</div>` : "") || `<p class="abmsg">Aucune capacité.</p>`;
 }

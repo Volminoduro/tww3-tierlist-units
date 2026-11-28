@@ -16,9 +16,11 @@ land = {r.get("key"): r for r in T.get("land_units", [])}
 unit_land = {r.get("unit"): r.get("land_unit") for r in T.get("main_units", [])}
 def newattrs(uid):
     lu = land.get(unit_land.get(uid)); return grp.get(lu.get("attribute_group"), set()) if lu else set()
+cp = {r.get("unit"): (C.num(r.get("melee_cp")) + C.num(r.get("missile_cp"))) for r in T.get("main_units", []) if r.get("unit")}   # « puissance de combat » (melee_cp + missile_cp) : utilisée par le malus d'ennemis proches du moral
 def patch(units):
     n = 0
     for u in units:
+        if cp.get(u["id"]): u["cp"] = cp[u["id"]]
         add = newattrs(u["id"])
         if add:
             u["at"] = sorted(set(u.get("at", [])) | add); n += 1

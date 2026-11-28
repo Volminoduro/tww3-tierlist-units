@@ -107,7 +107,7 @@ NEEDED = {"main_units", "land_units", "battle_entities", "melee_weapons", "missi
           # DLC : unité -> paquets de contenu -> ensembles d'exigences -> produits (jeux et DLC)
           "main_unit_ownership_content_pack_junctions", "unit_attributes_to_groups_junctions", "ownership_content_pack_requirements", "ownership_content_pack_required_products", "ownership_products",
           # capacités passives de soin (régénération) : unité -> capacité -> phase -> soin
-          "land_units_to_unit_abilites_junctions", "unit_special_abilities", "special_ability_to_special_ability_phase_junctions", "special_ability_phases", "special_ability_phase_stat_effects"}
+          "land_units_to_unit_abilites_junctions", "special_ability_intensity_settings", "special_ability_to_invalid_usage_flags", "unit_special_abilities", "special_ability_to_special_ability_phase_junctions", "special_ability_phases", "special_ability_phase_stat_effects"}
 
 def load_tables(root, only_needed=False):
     tables = defaultdict(list)
@@ -302,7 +302,7 @@ def main():
         ms = missile.get((eng.get("missile_weapon") if eng and eng.get("missile_weapon") else col(lu, "missile_weapon")) or "", {})
         pj = proj.get(col(ms, "m_projectile") or "", {})
         u = {
-            "id": key,
+            "id": key, "cp": num(mu.get("melee_cp")) + num(mu.get("missile_cp")),
             # certains noms sont des renvois « {{tr:autre_clé}} » vers une autre entrée de localisation
             "name": (lambda v: loc.get(v[5:-2]) if v and v.startswith("{{tr:") else v)(loc.get(f"land_units_onscreen_name_{col(mu,'land_unit')}")) or humanise(key),
             "role": None, "group": col(mu, "group") or "",

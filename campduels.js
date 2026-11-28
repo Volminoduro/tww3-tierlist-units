@@ -1,25 +1,28 @@
 "use strict";
-/* Classement COMPLET par duels avec « Ma campagne » (bouton du bandeau). Les duels précalculés (data/duels.js) se jouent sans seigneur ; la matrice des marges (data/duels_matrix.bin) permet de ne rejouer
-   que les paires où au moins une unité appartient à la faction du profil (stats du profil déjà dans les unités, effets conditionnels du seigneur selon la race de l'adversaire), réparties sur des Web Workers
-   (duelworker.js, un par cœur). Le reste vient de la matrice précalculée ; les agrégats (taux de victoire, typologie « anti », meilleurs adversaires) sont ensuite recalculés avec le même code que le précalcul
-   (duelcalc.js) et remplacent les duels précalculés (setDU, app.js) jusqu'au prochain changement du profil. Marges de la matrice quantifiées à 1/127 : écart ≤ 0,004 sur les paires non rejouées. */
+/* Classement COMPLET par duels avec « Ma campagne » (automatique). Les duels précalculés (data/duels.js) se jouent sans seigneur ; la matrice des marges (data/duels_matrix*.bin, une par mode de duels : « cost » à coût
+   équivalent, « count » 20 contre 20) permet de ne rejouer que les paires où au moins une unité appartient à la faction du profil (stats du profil déjà dans les unités, effets conditionnels du seigneur selon la
+   race de l'adversaire), réparties sur des Web Workers (duelworker.js, un par cœur). Le reste vient de la matrice précalculée ; les agrégats (taux de victoire, typologie « anti », meilleurs adversaires) sont
+   ensuite recalculés avec le même code que le précalcul (duelcalc.js) et remplacent les duels précalculés (setDU, app.js) jusqu'au prochain changement du profil. Seul le mode affiché est recalculé ; l'autre
+   l'est quand on bascule « Avec coût / Sans coût ». Marges de la matrice quantifiées à 1/127 : écart ≤ 0,004 sur les paires non rejouées. */
 const CampDuels = (() => {
-  let matrix = null, running = false, ctl = null, timer = null; const CACHE = new Map();
-  async function loadMatrix(DU0) {
-    if (matrix) return matrix;
-    const r = await fetch("data/" + DU0.matrix.file + "?n=" + DU0.matrix.n); if (!r.ok) throw new Error("matrice des duels introuvable (" + r.status + ")");
+  const matrices = {}, CACHE = new Map(); let running = false, ctl = null, timer = null;
+  const modeNow = () => (typeof duelMode === "function" ? duelMode() : "cost");
+  async function loadMatrix(DU0, mode) {
+    if (matrices[mode]) return matrices[mode];
+    const file = DU0.matrix.files && DU0.matrix.files[mode]; if (!file) throw new Error("matrice « " + mode + " » absente (relancer tools/build_duels.js)");
+    const r = await fetch("data/" + file + "?n=" + DU0.matrix.n); if (!r.ok) throw new Error("matrice des duels introuvable (" + r.status + ")");
     const tri = new Int8Array(await r.arrayBuffer()), n = DU0.matrix.n, M = new Float32Array(n * n); let p = 0;
     for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const v = tri[p++], m = v === -128 ? NaN : v / DU0.matrix.scale; M[i * n + j] = m; M[j * n + i] = -m; }
-    return matrix = M;
+    return matrices[mode] = M;
   }
-  async function run(progress, ctl) {
+  async function run(progress, ctl, mode) {
     running = true;
     try {
       const DU0 = window.TWW3_DUELS; if (!DU0 || !DU0.matrix) throw new Error("matrice des duels absente (relancer tools/build_duels.js)");
       const units = D.units.filter(u => u.cost > 0 && u.men > 0 && u.hp > 0), n = units.length;
       if (n !== DU0.matrix.n || units.some((u, i) => u.id !== DU0.matrix.ids[i])) throw new Error("les unités ont changé depuis le précalcul : relancer tools/build_duels.js");
       progress("Téléchargement de la matrice des duels…");
-      const M = (await loadMatrix(DU0)).slice(); if (ctl.cancelled) throw new Error("annulé");                                                // copie : la matrice précalculée reste intacte
+      const M = (await loadMatrix(DU0, mode)).slice(); if (ctl.cancelled) throw new Error("annulé");   // copie : la matrice précalculée reste intacte
       const FX = window.TWW3_EFFECTS || {lords: {}}, lord = FX.lords[PROFILE.st], lordUnit = lord ? lord.unit : null;
       const prof = {fac: PROFILE.fac, lord: lordUnit, cond: ((lord && lord.effects) || []).filter(e => e.cond).concat(PROFILE.condEff || [])};
       const touched = units.map(u => (u.factions || []).includes(PROFILE.fac) || u.id === lordUnit);
@@ -29,7 +32,7 @@ const CampDuels = (() => {
       let next = 0, done = 0; const t0 = Date.now(), workers = [];
       await new Promise((resolve, reject) => {
         let alive = W; ctl.stop = () => { workers.forEach(x => x.terminate()); reject(new Error("annulé")); };
-        const feed = (w, id) => {
+        const feed = (w) => {
           if (next >= total) { if (--alive === 0) resolve(); w.terminate(); return; }
           const a = next, b = Math.min(total, a + CH); next = b;
           const chunk = Int32Array.from(pairs.slice(2 * a, 2 * b)); w.postMessage({type: "run", id: a, pairs: chunk}, [chunk.buffer]);
@@ -44,40 +47,46 @@ const CampDuels = (() => {
               done += m.out.length; const el = (Date.now() - t0) / 1000, eta = done ? Math.round(el / done * (total - done)) : 0;
               progress(`Duels rejoués : ${Math.round(done / total * 100)} % (${done.toLocaleString("fr-FR")} / ${total.toLocaleString("fr-FR")}) · reste ~${eta} s`); feed(w);
             } };
-          w.postMessage({type: "init", units, prof});
+          w.postMessage({type: "init", units, prof, mode});
         }
       });
       if (ctl.cancelled) throw new Error("annulé");
       progress("Calcul du classement…"); await new Promise(r => setTimeout(r, 20));
       let skipped = 0; for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) if (Number.isNaN(M[i * n + j])) skipped++;
-      const DC = DuelCalc.make(window.TWW3Sim, units), out = DC.aggregate("cost", M, skipped);
-      return {res: {...DU0, modes: {cost: out.units}, matrix: undefined, forProfile: true}, pairs: total, secs: Math.round((Date.now() - t0) / 1000)};
+      const DC = DuelCalc.make(window.TWW3Sim, units), out = DC.aggregate(mode, M, skipped);
+      return {units: out.units, pairs: total, secs: Math.round((Date.now() - t0) / 1000)};
     } finally { running = false; }
   }
   /* Signature de ce qui change les duels : faction, seigneur, compétences, nombre d'unités modifiées, effets conditionnels. */
   const sig = () => [PROFILE.fac, PROFILE.st, (PROFILE.alloc || []).map(x => x.i + ":" + x.lv).join(","), PROFILE.n, (PROFILE.condEff || []).length].join("|");
   const say = t => { PROFILE.duelSt = t; const el = document.querySelector(".profbar .pbst"); if (el) el.textContent = t; };
-  /* À appeler après tout changement du profil (profile.js) et au chargement : annule le calcul en cours, puis (après 0,7 s sans nouveau changement) rejoue les duels du nouveau profil. */
+  const MODE_TXT = {cost: "à coût équivalent", count: "20 contre 20"};
+  /* Duels affichés : précalculés, avec les modes déjà recalculés pour ce profil (ceux du cache) à leur place. */
+  function apply(s) {
+    const DU0 = window.TWW3_DUELS, modes = {...DU0.modes}; let any = false;
+    for (const m of Object.keys(modes)) { const h = CACHE.get(s + "|" + m); if (h) { modes[m] = h.units; any = true; } }
+    window.setDU(any ? {...DU0, modes, matrix: undefined, forProfile: true} : null);
+  }
+  /* À appeler après tout changement du profil (profile.js), du mode « coût » (app.js) et au chargement : annule le calcul en cours, puis (après 0,7 s sans nouveau changement) rejoue les duels du profil pour le mode affiché. */
   function schedule() {
     clearTimeout(timer); if (ctl) { ctl.cancelled = true; if (ctl.stop) ctl.stop(); ctl = null; }
     PROFILE.duelsOk = false;
-    if (!PROFILE.on || !PROFILE.fac) { window.setDU && window.setDU(null); say(""); return; }
-    const s = sig(), hit = CACHE.get(s);
-    if (hit) { PROFILE.duelsOk = true; window.setDU(hit.res); say(`Duels recalculés pour ma campagne ✓ (en cache)`); return; }
-    window.setDU && window.setDU(null); say("Duels : calcul pour ma campagne…");                          // en attendant : duels précalculés (sans seigneur)
+    if (!PROFILE.on || !PROFILE.fac || !window.setDU) { window.setDU && window.setDU(null); say(""); return; }
+    const s = sig(), mode = modeNow(), hit = CACHE.get(s + "|" + mode);
+    apply(s);
+    if (hit) { PROFILE.duelsOk = true; say(`Duels recalculés pour ma campagne ✓ (${MODE_TXT[mode]}, en cache)`); return; }
+    say(`Duels (${MODE_TXT[mode]}) : calcul pour ma campagne…`);                                    // en attendant : duels précalculés (sans seigneur)
     timer = setTimeout(async () => {
       const my = ctl = {cancelled: false, stop: null};
       try {
-        const r = await run(t => { if (!my.cancelled) say(t); }, my);
+        const r = await run(t => { if (!my.cancelled) say(t); }, my, mode);
         if (my.cancelled) return;
-        CACHE.set(s, r); if (CACHE.size > 3) CACHE.delete(CACHE.keys().next().value);
-        PROFILE.duelsOk = true; window.setDU(r.res); say(`Duels recalculés pour ma campagne ✓ (${r.pairs.toLocaleString("fr-FR")} paires rejouées en ${r.secs} s)`);
+        CACHE.set(s + "|" + mode, r); if (CACHE.size > 6) CACHE.delete(CACHE.keys().next().value);
+        PROFILE.duelsOk = true; apply(s); say(`Duels recalculés pour ma campagne ✓ (${MODE_TXT[mode]} : ${r.pairs.toLocaleString("fr-FR")} paires rejouées en ${r.secs} s)`);
       } catch (err) { if (!my.cancelled && !(err && err.message === "annulé")) { say("Duels : échec du recalcul (" + (err && err.message || err) + ") ; duels précalculés affichés"); console.error(err); } }
       finally { if (ctl === my) { ctl = null; running = false; } }
     }, 700);
   }
   return {run, schedule, isRunning: () => running};
 })();
-
-
 if (PROFILE.on) setTimeout(() => CampDuels.schedule(), 300);            // profil actif au chargement : recalcul automatique

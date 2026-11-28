@@ -28,6 +28,10 @@
     const n = units.length, ROLES = [...new Set(units.map(u => u.role))].sort();
     /* ---------- Duels ---------- */
     function duel(a, b, key, ma, mb) {   // ma / mb : modificateurs (mods du simulateur) de chaque camp, facultatifs
+      if (key === "count") {   // sans coût : MAX_ARMY exemplaires de chaque côté (20 contre 20)
+        const r = Sim.resolve({A: [{u: a, count: MAX_ARMY, mods: ma}], B: [{u: b, count: MAX_ARMY, mods: mb}]}, NO_BONUS, {...OPTS, hold: {A: "auto", B: "auto"}});
+        return (r.tot.A ? r.sA / r.tot.A : 0) - (r.tot.B ? r.sB / r.tot.B : 0);
+      }
       const lo = Math.max(a[key], b[key]), hi = MAX_ARMY * Math.min(a[key], b[key]);
       if (lo > hi) return NaN; // budgets impossibles à aligner avec ≤ 20 exemplaires du moins cher
       const budget = Math.max(lo, Math.min(BUDGET, hi));
@@ -70,7 +74,7 @@
         }
         opp.sort((x, y) => y[1] - x[1]);
         const dv = {}; ROLES.forEach((r, k) => dv[r] = rn[k] ? rw[k] / rn[k] : null);
-        const dps = {}; ROLES.forEach(r => { const v = dpsVs(units[i], REF[r]); dps[r] = (v.mel + v.rng) / units[i][key] * 100; }); // dégâts/s pour 100 de budget
+        const dps = {}; ROLES.forEach(r => { const v = dpsVs(units[i], REF[r]); dps[r] = (v.mel + v.rng) / (key === "count" ? 100 : units[i][key]) * 100; }); // dégâts/s pour 100 de budget
         rows.push({i, wr: cnt ? w / cnt : 0, margin: cnt ? sum / cnt : 0, duels: cnt, dv, dps, opp});
       }
       // Typologie « anti » : percentiles dans chaque famille (mêlée / distance), sur la base adaptée à la famille

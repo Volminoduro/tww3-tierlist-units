@@ -27,7 +27,7 @@ const DC = DuelCalc.make(Sim, units), n = DC.n, ROLES = DC.ROLES;
 const NOTES = [
   "Résultats issus du simulateur du site (sim.js), un modèle approximatif : pas de ciblage ni de flanquement, moral simplifié, précision des tirs fixe.",
   "Les seigneurs et héros sont inclus volontairement, mais leurs sorts, capacités, objets, compétences et montures volantes ne sont pas modélisés : leurs résultats sont indicatifs et probablement sous-estimés.",
-  "Duels 1 type d'unité contre 1 autre à coût de recrutement équivalent, de 1 à 20 exemplaires par camp, sans bonus, distance de départ 400 m.",
+  "Duels 1 type d'unité contre 1 autre, sans bonus, distance de départ 400 m : mode « cost » à coût de recrutement équivalent (de 1 à 20 exemplaires par camp) ; mode « count » 20 contre 20 sans tenir compte du coût.",
   "Typologie « anti » : unités de mêlée = taux de victoire en duel contre la catégorie ; unités à distance = efficacité de DPS contre un défenseur moyen de la catégorie (un duel contre de la mêlée n'étant pas représentatif).",
 ];
 
@@ -49,18 +49,21 @@ const t0 = Date.now();
 const result = {version: 2, budget: DuelCalc.BUDGET, maxArmy: DuelCalc.MAX_ARMY, opts: DuelCalc.OPTS, units: n, notes: NOTES, roles: ROLES,
   caveat: units.filter(u => u.role === "lord" || u.role === "hero").map(u => u.id), modes: {}};
 (async () => {
-  let M0 = null;
-  for (const key of ["cost"]) {
-    const {M, skipped: sk} = await matrix(key), r = DC.aggregate(key, M, sk); result.modes[key] = r.units; M0 = M;
+  const mats = {};
+  for (const key of ["cost", "count"]) {
+    const {M, skipped: sk} = await matrix(key), r = DC.aggregate(key, M, sk); result.modes[key] = r.units; mats[key] = M;
     console.log(`mode ${key} : ${(n * (n - 1) / 2 - r.skipped)} duels joués, ${r.skipped} paires ignorées (rapport de coût > ${DuelCalc.MAX_ARMY}), ${((Date.now() - t0) / 1000).toFixed(1)} s sur ${Math.max(1, +arg("threads", os.cpus().length))} threads`);
   }
   /* Matrice des marges (triangle supérieur, une marge par octet = round(marge × 127), −128 = paire ignorée) : sert au navigateur à ne recalculer que les paires touchées par « Ma campagne ». */
-  const tri = new Int8Array(n * (n - 1) / 2); let p = 0;
-  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const m = M0[i * n + j]; tri[p++] = Number.isNaN(m) ? -128 : Math.max(-127, Math.min(127, Math.round(m * 127))); }
-  result.matrix = {file: "duels_matrix.bin", n, scale: 127, ids: units.map(u => u.id)};
   fs.mkdirSync(OUT, {recursive: true});
-  fs.writeFileSync(path.join(OUT, "duels_matrix.bin"), Buffer.from(tri.buffer));
+  const files = {cost: "duels_matrix.bin", count: "duels_matrix_count.bin"};
+  for (const key of Object.keys(mats)) {
+    const M0 = mats[key], tri = new Int8Array(n * (n - 1) / 2); let p = 0;
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const m = M0[i * n + j]; tri[p++] = Number.isNaN(m) ? -128 : Math.max(-127, Math.min(127, Math.round(m * 127))); }
+    fs.writeFileSync(path.join(OUT, files[key]), Buffer.from(tri.buffer));
+  }
+  result.matrix = {files, n, scale: 127, ids: units.map(u => u.id)};
   fs.writeFileSync(path.join(OUT, "duels.json"), JSON.stringify(result));
   fs.writeFileSync(path.join(OUT, "duels.js"), "window.TWW3_DUELS=" + JSON.stringify(result) + ";");
-  console.log(`écrit ${path.join(OUT, "duels.js")} (${(fs.statSync(path.join(OUT, "duels.js")).size / 1e6).toFixed(2)} Mo) et duels_matrix.bin (${(tri.length / 1e6).toFixed(2)} Mo)`);
+  console.log(`écrit ${path.join(OUT, "duels.js")} (${(fs.statSync(path.join(OUT, "duels.js")).size / 1e6).toFixed(2)} Mo) et les matrices ${Object.values(files).join(", ")}`);
 })();
