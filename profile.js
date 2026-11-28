@@ -11,7 +11,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
 (() => {
   const FX = window.TWW3_EFFECTS || {leaders: {}, lords: {}}, SK = window.TWW3_SKILLS || {lords: {}, sets: []};
   const UN = Object.fromEntries(D.units.map(u => [u.id, u]));
-  const LAB = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée"};
+  const LAB = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée", vig: "Perte de vigueur", pv: "Vigueur parfaite"};
   const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
   /* Valeurs d'origine de chaque unité (avant tout profil) */
   for (const u of D.units) u._b = {ma: u.ma, md: u.md, armour: u.armour, ld: u.ld, charge: u.charge, speed: u.speed, hp: u.hp, m: {...u.melee}, r: u.ranged ? {...u.ranged} : null};
@@ -36,7 +36,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
   }
   function restore(u) {
     const b = u._b; u.ma = b.ma; u.md = b.md; u.armour = b.armour; u.ld = b.ld; u.charge = b.charge; u.speed = b.speed; u.hp = b.hp;
-    u.melee = {...b.m}; u.ranged = b.r ? {...b.r} : null; u._pm = false;
+    u.melee = {...b.m}; u.ranged = b.r ? {...b.r} : null; u._pm = false; u.vig = 0; u.pvx = false;
   }
   function modify(u, m) {
     const p = v => 1 + (v || 0) / 100;
@@ -48,6 +48,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
       if (m.range) u.ranged.range *= p(m.range);
       if (m.ammo && u.ranged.ammo) u.ranged.ammo *= p(m.ammo);
     }
+    if (m.vig) u.vig = (u.vig || 0) + m.vig; if (m.pv) u.pvx = true;                          // fatigue : lu par sim.js (u.vig en %, u.pvx = vigueur parfaite)
     u._pm = true;
   }
 
@@ -55,7 +56,7 @@ const PROFILE = {on: false, fac: null, lord: "auto", level: 1, st: null, n: 0, a
   const SETS = {}, setOf = i => (SETS[i] ??= new Set(SK.sets[i]));
   const maxLv = t => Math.max(...Object.keys(t.L).map(Number));
   /* Valeur approximative d'une unité de chaque stat (en % de puissance) ; ×  la part de la faction touchée par l'effet. Heuristique : le but est d'ordonner les compétences, pas de mesurer leur gain exact. */
-  const W = {ma: 1.5, md: 1.5, arm: 0.8, ld: 0.4, charge: 0.4, ws: 1, ms: 1, spd: 0.3, hp: 1, ammo: 0.2, range: 0.2}, BASE = {ma: 40, md: 35, arm: 45, ld: 65, charge: 35};
+  const W = {ma: 1.5, md: 1.5, arm: 0.8, ld: 0.4, charge: 0.4, ws: 1, ms: 1, spd: 0.3, hp: 1, ammo: 0.2, range: 0.2, vig: -0.05, pv: 4}, BASE = {ma: 40, md: 35, arm: 45, ld: 65, charge: 35};
   const RANGED_ONLY = new Set(["ms", "ammo", "range"]);
   let pool = null, poolFac = null; const memo = {};
   const getPool = () => { if (poolFac !== PROFILE.fac) { poolFac = PROFILE.fac; pool = D.units.filter(u => inFac(u, PROFILE.fac) && u.role !== "lord" && u.role !== "hero" && !u.ror); Object.keys(memo).forEach(k => delete memo[k]); } return pool; };

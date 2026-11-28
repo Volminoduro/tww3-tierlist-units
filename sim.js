@@ -46,6 +46,7 @@ function simulate(ARMY, BON, opts) {
             mdm: (1 + b.dmg/100) * (1 + (m.ws||0)/100), rdm: (1 + b.dmg/100) * (1 + (m.ms||0)/100),
             ma: u.ma + (m.ma||0), md: u.md + (m.md||0) + ((u.at || []).includes("formed_attack") ? SIM.FORMED_MD : 0), charge: u.charge + (m.charge||0), spd: u.speed * (1 + (m.spd||0)/100),
             range: u.ranged ? u.ranged.range * (1 + (m.range||0)/100) : 0,
+            vigK: Math.max(0, 1 + ((m.vig||0) + (u.vig||0))/100), pvOn: !!m.pv || !!u.pvx,   // perte de vigueur (% : −15 = 15 % de fatigue en moins) et vigueur parfaite (effets de seigneur, profil)
             ld: u.ld * (1 + b.mor/100) + (m.ld||0), dead: 0, at: new Set(u.at || []), up: upk(BON, side, e) * cnt, ammo: u.ranged ? (u.ranged.ammo || 30) * (1 + (m.ammo||0)/100) : 0, out: false, routed: false, flee: false, back: 0, imm: 0, M: u.ld * (1 + b.mor/100) + (m.ld||0), hist: [], fat: 0, fm: null};
   });
   const S = {A: mk("A"), B: mk("B")};
@@ -102,10 +103,10 @@ function simulate(ARMY, BON, opts) {
     if (t % 5 === 0) timeline.push([t, surv("A"), surv("B")]);
     if (!active("A") || !active("B")) break;
     for (const x of [...S.A, ...S.B]) {                                                    // fatigue : taux selon l'activité de l'unité ce tick, puis multiplicateurs du palier atteint
-      if (!SIM.FATIGUE || x.at.has("fatigue_immune")) { x.fm = FONE; continue; }
+      if (!SIM.FATIGUE || x.at.has("fatigue_immune") || x.pvOn) { x.fm = FONE; continue; }
       const cav = /^cav/.test(x.u.cls || ""), idle = hold[x.side] && t < T0, kite = x.side === KS;
       const rate = (t >= T0 && !x.out && !x.flee) ? FAT.combat : idle ? FAT.idle : walk[x.side] ? FAT.walk : (x.u.ranged && (kite || hold[x.side])) ? FAT.shoot : (t >= T0 - SIM.CHARGE_RUN && !kite) ? FAT.charging : cav ? FAT.runCav : FAT.run;
-      x.fat = clamp(x.fat + rate * SIM.FATIGUE_SCALE, 0, FMAX);
+      x.fat = clamp(x.fat + rate * SIM.FATIGUE_SCALE * (rate > 0 ? x.vigK : 1), 0, FMAX);
       const m = fatMul(x.fat); x.fm = x.at.has("unyielding_assault") && m.ma < 1 ? {...m, ma: 1} : m;
     }
     const dmgIn = {A: new Map(), B: new Map()}, meleeIn = {A: new Map(), B: new Map()}, engIn = {A: new Map(), B: new Map()}, radIn = {A: new Map(), B: new Map()};

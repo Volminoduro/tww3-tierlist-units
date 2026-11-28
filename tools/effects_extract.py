@@ -20,6 +20,7 @@ STATS = [
     (r"stat_leadership", "ld", False), (r"stat_charge_bonus", "charge", False),
     (r"stat_weapon_strength", "ws", True), (r"stat_missile_damage", "ms", True), (r"stat_speed", "spd", True),
     (r"stat_unit_health", "hp", True), (r"stat_ammunition", "ammo", True), (r"stat_range", "range", True),
+    (r"perfect_vigour", "pv", False), (r"vigour_loss", "vig", True),                      # fatigue : attribut « vigueur parfaite » donné à des unités ; réduction de la perte de vigueur (valeur négative = moins de fatigue)
 ]
 UNSUPPORTED = re.compile(r"stat_(physical_resistance|missile_resistance|magic_resistance|fire_resistance|ap_damage|miscast|reload|accuracy|damage_)")
 COND = re.compile(r"(ambush|retreat|desert|forest|snow|jungle|vs_|_when_|_while_|during|siege|night|rain|underground|settlement|garrison|reinforc|naval|_sea|_in_[a-z]+$)")

@@ -28,7 +28,7 @@ const LORD = {A: {sel: "auto"}, B: {sel: "auto"}};
 /* Composition des armées, factions et seigneurs mémorisés (PREF « army ») ; on ne sauvegarde qu'une fois la restauration faite, pour ne pas écraser l'état enregistré avec des armées vides. */
 const SAVED_ARMY = PREF.get("army", null); let armyReady = false;
 const saveArmy = () => { if (!armyReady) return; const o = {}; for (const s of ["A","B"]) { const el = document.querySelector(`.army[data-side=${s}]`); o[s] = {f: el.querySelector(".fac").value, lord: LORD[s].sel, u: ARMY[s].map(e => [e.u.id, e.count])}; } PREF.set("army", o); };
-const STAT_LABEL = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée"};
+const STAT_LABEL = {ma: "Attaque", md: "Défense", arm: "Armure", ld: "Moral", charge: "Charge", ws: "Force d'arme", ms: "Force de tir", spd: "Vitesse", hp: "PV", ammo: "Munitions", range: "Portée", vig: "Perte de vigueur", pv: "Vigueur parfaite"};
 const scopeOf = side => document.querySelector(`.army[data-side=${side}] .fac`).value;
 const lordLabel = st => { const l = FX.lords[st], u = l && UNIT[l.unit]; return u ? u.name : st.replace(/^wh\d*_[a-z0-9]+_[a-z]{3}_/, "").replace(/_/g, " "); };
 const autoLord = sc => { if (sc === ALL) return null; const f = isRace(sc) ? mainFacOf(cultOf(sc)) : sc; return (FX.leaders[f] || [])[0] || null; };
