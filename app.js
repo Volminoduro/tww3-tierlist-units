@@ -326,9 +326,9 @@ function cardStats(x){
 }
 const fmtv=v=>v>=1000?Math.round(v).toLocaleString("fr-FR"):(Math.round(v*10)/10).toString();
 const rankTxt=p=>p==null?"":p>=50?`Top ${Math.max(1,Math.round(100-p))} %`:`Bottom ${Math.max(1,Math.round(p))} %`;
-function srow(ic,label,val,fill,p,tip,clip){
+function srow(ic,label,val,fill,p,tip,clip,dl){
  const col=p==null?"var(--gold3)":`hsl(${p*1.2},55%,50%)`;
- return `<div class="sr" title="${tip||""}"><div class="sh"><span>${si(ic)}${label}</span><b>${val}</b></div><div class="sb"><div class="bar"><i style="width:${fill}%;background:${col}"></i>${clip?'<span class="cap" title="Au-delà du 95ᵉ centile du groupe : barre pleine">▸</span>':""}</div>${p==null?"":`<span class="pb" style="background:hsl(${p*1.2},55%,62%)">${rankTxt(p)}</span>`}</div></div>`;
+ return `<div class="sr" title="${tip||""}"><div class="sh"><span>${si(ic)}${label}</span><b>${val}</b>${dl||""}</div><div class="sb"><div class="bar"><i style="width:${fill}%;background:${col}"></i>${clip?'<span class="cap" title="Au-delà du 95ᵉ centile du groupe : barre pleine">▸</span>':""}</div>${p==null?"":`<span class="pb" style="background:hsl(${p*1.2},55%,62%)">${rankTxt(p)}</span>`}</div></div>`;
 }
 /* Valeurs de la fiche : une entrée par stat applicable (valeur, rang, remplissage de barre). Sert au résumé « En bref » et à la liste complète. */
 /* Groupe de comparaison de la fiche : 3 boutons avec l'effectif de chaque groupe (« Ma sélection » seulement si elle diffère de tout le jeu) */
@@ -357,7 +357,7 @@ const statTip=o=>`${o.s.k==="ehp"?EHP_TIP:""}${o.s.l} : ${o.rank}ᵉ sur ${o.n}$
 function statRows(list){ // liste complète, par groupe
  let h="",g="";
  for(const o of list){ if(o.s.g!==g){g=o.s.g;h+=`<h4>${g}</h4>`}
-  h+=srow(STAT_IC[o.s.k]||"target",o.s.l,`${fmtv(o.v)}<small> · P95 ${fmtv(o.ref)}</small>`,o.fill,o.p,statTip(o),o.clip); }
+  h+=srow(STAT_IC[o.s.k]||"target",o.s.l,`${fmtv(o.v)}<small> · P95 ${fmtv(o.ref)}</small>`,o.fill,o.p,statTip(o),o.clip,cmpTag(o)); }
  return h;
 }
 /* « En bref » : les 6 chiffres qui décident d'un recrutement, en tuiles (valeur + rang) */
@@ -365,7 +365,7 @@ const BRIEF=[["cost","Coût"],["ehp","Encaissement"],["dps","DPS / modèle"],["r
 function briefTiles(list){
  const by=Object.fromEntries(list.map(o=>[o.s.k,o])), keys=["cost","ehp"].concat(by.dps?["dps"]:[],by.rdmg?["rdmg"]:[],["spd"]).slice(0,6);
  return `<div class="brief">${keys.filter(k=>by[k]).map(k=>{const o=by[k],lab=(BRIEF.find(b=>b[0]===k)||[k,o.s.l])[1];
-  return `<div class="bt" title="${statTip(o)}"><small>${si(STAT_IC[k]||"target")}${lab}</small><b>${fmtv(o.v)}</b>${o.p==null?"":`<span class="pb" style="background:hsl(${o.p*1.2},55%,62%)">${rankTxt(o.p)}</span>`}</div>`}).join("")}</div>`;
+  return `<div class="bt" title="${statTip(o)}"><small>${si(STAT_IC[k]||"target")}${lab}</small><b>${fmtv(o.v)}</b>${cmpTag(o)}${o.p==null?"":`<span class="pb" style="background:hsl(${o.p*1.2},55%,62%)">${rankTxt(o.p)}</span>`}</div>`}).join("")}</div>`;
 }
 /* « Pour quoi l'utiliser » : les 3 meilleurs usages en évidence, les autres repliés */
 /* Fiche : factions d'où vient l'unité quand le périmètre en couvre plusieurs (toutes, une race ou une sélection multiple) */
@@ -382,27 +382,26 @@ function usageBlock(x){
 /* Épingler une unité (comme en jeu) : la prochaine unité ouverte est comparée à l'unité épinglée (stats côte à côte, écart coloré, duel direct). Valable pour la session. */
 let PIN=null, _DC=null;
 const pinnedUnit=()=>PIN?D.units.find(v=>v.id===PIN):null;
-function compareBlock(u,list){
+let CMP=null;   // stats de l'unité épinglée (clé -> {v}) quand une autre unité est ouverte
+/* Comme en jeu : l'écart avec l'unité épinglée s'affiche en étiquette au bout de chaque ligne de stat (vert = mieux, rouge = moins bien ; pour le coût, le rechargement…, moins = mieux). */
+function cmpTag(o){ const q=CMP&&CMP[o.s.k]; if(!q) return ""; const dv=o.v-q.v; if(Math.abs(dv)<1e-9) return `<em class="dl eq" title="Identique à l'unité épinglée">=</em>`;
+ const good=o.s.d*dv>0, rel=q.v?Math.round(Math.abs(dv)/Math.abs(q.v)*100):null;
+ return `<em class="dl ${good?"good":"bad"}" title="Écart avec l'unité épinglée (${fmtv(q.v)})${rel==null?"":" : "+(dv>0?"+":"−")+rel+" %"}">${dv>0?"+":"−"}${fmtv(Math.abs(dv))}</em>`; }
+function compareHead(u){
  const p=pinnedUnit(); if(!p||p.id===u.id) return "";
- const pl=Object.fromEntries(statList(p).map(o=>[o.s.k,o]));
- let rows="",g="";
- for(const o of list){ const q=pl[o.s.k]; if(!q) continue;
-  const dv=o.v-q.v, same=Math.abs(dv)<1e-9, good=o.s.d*dv>0;
-  if(o.s.g!==g){g=o.s.g;rows+=`<tr class="cg"><th colspan="4">${g}</th></tr>`}
-  const rel=q.v?Math.round(dv/Math.abs(q.v)*100):null;
-  rows+=`<tr><td>${o.s.l}</td><td class="cp">${fmtv(q.v)}</td><td class="cn">${fmtv(o.v)}</td><td class="cd ${same?"":good?"good":"bad"}">${same?"=":(dv>0?"+":"−")+fmtv(Math.abs(dv))+(rel==null?"":` <small>(${dv>0?"+":"−"}${Math.abs(rel)} %)</small>`)}</td></tr>`; }
  let duel="";
  try{ if(window.TWW3Sim&&window.DuelCalc){ _DC=_DC||DuelCalc.make(window.TWW3Sim,D.units.filter(v=>v.cost>0&&v.men>0&&v.hp>0)); const mode=duelMode(), m=_DC.duel(u,p,mode);
-   if(!Number.isNaN(m)) duel=`<div class="cduel" title="Duel du simulateur, sans bonus, ${mode==="count"?"20 contre 20":"à coût de recrutement équivalent"} (indicatif)">Duel direct ${mode==="count"?"(20 contre 20)":"(coût équivalent)"} : <b class="${m>0?"good":m<0?"bad":""}">${m>0?u.name+" l'emporte":m<0?p.name+" l'emporte":"égalité"}</b> <small>(marge ${Math.round(Math.abs(m)*100)} %)</small></div>`; } }catch(e){}
- return `<div class="cmp"><h4>Comparatif <button type="button" class="unpin" id="unpin" title="Retirer l'épingle">✕</button></h4><div class="cmph"><span>${si("pin")}${p.name}</span><span>${u.name}</span></div>${duel}<table>${rows}</table></div>`;
+   if(!Number.isNaN(m)) duel=`<div class="cmpduel" title="Duel du simulateur, sans bonus, ${mode==="count"?"20 contre 20":"à coût de recrutement équivalent"} (indicatif)">Duel direct : <b class="${m>0?"good":m<0?"bad":""}">${m>0?"cette unité l'emporte":m<0?"l'épinglée l'emporte":"égalité"}</b> <small>(marge ${Math.round(Math.abs(m)*100)} %, ${mode==="count"?"20 contre 20":"coût équivalent"})</small></div>`; } }catch(e){}
+ return `<div class="cmp"><div class="cmph">${si("pin")}<span>Comparée à <b>${p.name}</b></span><button type="button" class="unpin" id="unpin" title="Retirer l'épingle">✕</button></div>${duel}</div>`;
 }
 function detail(x){const u=x.u,m=u.melee,r=u.ranged;
  const dt=$("#detail"), st=dt.scrollTop, prevUnit=dt.dataset.unit; dt.hidden=false; dt.dataset.unit=u.id; dt.style.setProperty("--tc",`var(--${x.tier})`); dt.dataset.tier=x.tier;
+ const pu=pinnedUnit(); CMP=pu&&pu.id!==u.id?Object.fromEntries(statList(pu).map(o=>[o.s.k,o])):null;
  const list=statList(u), wasOpen=prevUnit===u.id?dt.querySelector("details.all")?.open:false, wasAbilOpen=dt.querySelector("details.abil")?.open;
  dt.innerHTML=`<div class="dtop"><div class="dh"><div><h3 title="Tier ${x.tier} — clé de l'unité dans les tables : ${u.id}">${u.name}</h3><small>${catIc(u)}${ROLES[u.role]||u.role}${mountIc(u)}</small>${rortag(u)}${gtier(u)}${attrs(u)}</div><span class="dbtn"><button type="button" class="pin${PIN===u.id?" on":""}" id="pin" title="${PIN===u.id?"Retirer l'épingle":"Épingler cette unité : la prochaine unité ouverte lui sera comparée"}">${si("pin")}</button><button class="x" id="close">✕</button></span></div>
  ${dpoolBar(u)}
  <div class="dbrief">${fullPic(u)}${briefTiles(list)}</div></div>
- ${compareBlock(u,list)}
+ ${compareHead(u)}
  ${facBlock(u)}
  ${usageBlock(x)}
  ${duelPanel(u)}

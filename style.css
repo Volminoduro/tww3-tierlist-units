@@ -384,10 +384,11 @@ aside details.adv[open]>summary{border-bottom:1px solid var(--gold3)}aside detai
 
 /* Épingle et comparatif (fiche d'unité) */
 #detail .dbtn{display:flex;gap:4px;align-items:flex-start}#detail .dbtn .x{float:none}#detail .pin{padding:1px 6px;opacity:.55;filter:grayscale(1)}#detail .pin.on{opacity:1;filter:none;border-color:var(--gold)}
-#detail .cmp{margin:6px 0}#detail .cmp h4{display:flex;justify-content:space-between;align-items:center}#detail .unpin{padding:0 6px;font-size:11px}
-#detail .cmph{display:grid;grid-template-columns:1fr 1fr;gap:6px;font:700 12px var(--serif);color:var(--gold2);margin-bottom:4px}#detail .cmph span:last-child{text-align:right}
-#detail .cduel{font-size:12px;margin:2px 0 6px}#detail .cmp .good{color:#7cc491}#detail .cmp .bad{color:#e58b80}
-#detail .cmp table{width:100%;border-collapse:collapse;font-size:12px}#detail .cmp td{padding:2px 4px;border-bottom:1px solid #ffffff10}#detail .cmp .cp,#detail .cmp .cn{text-align:right;white-space:nowrap}#detail .cmp .cd{text-align:right;white-space:nowrap;font-weight:700}
-#detail .cmp .cg th{text-align:left;padding-top:6px;font:700 10px var(--serif);letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
 .card{position:relative}.cpin{position:absolute;top:3px;right:3px;padding:1px 3px;line-height:0;opacity:0;background:#0008;border:1px solid var(--gold3);border-radius:2px;color:var(--gold2);cursor:pointer}.card:hover .cpin,.cpin.on{opacity:1}.cpin.on{border-color:var(--gold);color:var(--gold)}.cpin .si{width:13px;height:13px;margin:0}
 #detail .pin{line-height:0}#detail .pin .si{width:14px;height:14px;margin:0}#detail .cmph .si{width:12px;height:12px;margin-right:3px;vertical-align:-1px}
+
+/* Comparaison avec l'unité épinglée (comme en jeu : étiquette d'écart au bout de chaque ligne) */
+#detail .cmp{margin:6px 0;padding:6px 8px;border:1px solid var(--gold3);background:#ffffff08}#detail .cmph{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--m)}#detail .cmph b{color:var(--gold2)}#detail .cmph .si{width:13px;height:13px;margin:0;color:var(--gold)}#detail .cmph span{flex:1;min-width:0}
+#detail .unpin{padding:0 6px;font-size:11px}#detail .cmpduel{font-size:12px;margin-top:4px;display:block}#detail .cmp .good,#detail .dl.good{color:#9fe0b0}#detail .cmp .bad,#detail .dl.bad{color:#f0a198}
+#detail .dl{font-style:normal;font-size:11px;font-weight:700;margin-left:6px;padding:1px 7px 1px 10px;clip-path:polygon(7px 0,100% 0,100% 100%,7px 100%,0 50%);white-space:nowrap;background:#3a3128}#detail .dl.good{background:#2d5a3a}#detail .dl.bad{background:#6a2a24}#detail .dl.eq{color:var(--m)}
+#detail .sh b{display:flex;align-items:center}#detail .bt .dl{display:inline-block;margin:2px 0 0}
