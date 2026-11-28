@@ -242,9 +242,11 @@ function srow(ic,label,val,fill,p,tip,clip){
 }
 /* Valeurs de la fiche : une entrée par stat applicable (valeur, rang, remplissage de barre). Sert au résumé « En bref » et à la liste complète. */
 /* Groupe de comparaison de la fiche : 3 boutons avec l'effectif de chaque groupe (« Ma sélection » seulement si elle diffère de tout le jeu) */
+/* Nom du périmètre choisi dans « Race & faction » : la faction ou la race, ou « N sélections » */
+function scopeName(){ const ks=keysOf(fsel.value); if(ks.length>1) return ks.length+" sélections"; const k=ks[0]; return k.startsWith(RACE)?D.cultures[k.slice(RACE.length)]:D.factions[k]; }
 function dpoolBar(u){
  const multi=fsel.value!==ALL, cur=DPOOL==="scope"&&!multi?"all":DPOOL, n=p=>(p==="all"?D.units:p==="scope"?D.units.filter(v=>inScope(v,fsel.value)):D.units.filter(v=>v.role===u.role)).length;
- const opts=[["role_all",`${ROLES[u.role]||u.role}, tout le jeu`,`Comparer aux unités de la même catégorie (${ROLES[u.role]||u.role}) de tout le jeu`],["all","Tout le jeu","Comparer à toutes les unités du jeu"]].concat(multi?[["scope","Ma sélection","Comparer aux unités de la faction / race / sélection affichée"]]:[]);
+ const opts=[["role_all",`${ROLES[u.role]||u.role}, tout le jeu`,`Comparer aux unités de la même catégorie (${ROLES[u.role]||u.role}) de tout le jeu`],["all","Tout le jeu","Comparer à toutes les unités du jeu"]].concat(multi?[["scope",scopeName(),`Comparer aux unités de « ${scopeName()} » (le filtre « Race & faction » du tier list)`]]:[]);
  return `<div class="dpool"><small>Comparée à</small><div class="dseg" role="group">${opts.map(([p,l,t])=>`<button type="button" data-p="${p}" title="${t}" class="${p===cur?"on":""}">${l}<i>${fmtv(n(p))}</i></button>`).join("")}</div></div>`;
 }
 function statList(u){
